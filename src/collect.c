@@ -4,7 +4,7 @@
 **                                         Werner.Nickel@math.rwth-aachen.de
 */
 
-
+#include "mem.h"
 #include "pc.h"
 #include "pcarith.h"
 #include "macro.h"

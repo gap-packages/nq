@@ -10,6 +10,7 @@
 */
 
 #include <stdio.h>
+#include <string.h>
 
 /*
 **    This variable indicates whether GAP output should be produced.
@@ -33,6 +34,7 @@ extern	int	Verbose;
 */
 extern  char    *InputFile;
 
+#include "mem.h"
 #include "genexp.h"
 #include "pc.h"
 #include "pcarith.h"

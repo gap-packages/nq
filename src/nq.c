@@ -4,7 +4,6 @@
 **                                         Werner.Nickel@math.rwth-aachen.de
 */
 
-
 #include "nq.h"
 #include "engel.h"
 
@@ -268,11 +267,8 @@ char	*argv[];
 	printf( " has %d generators\n", Dimension[Class] );
 	printf( "#        with the following exponents:" );
 	for( g = NrPcGens-Dimension[Class]+1; g <= NrPcGens; g++ )
-#ifdef LONGLONG
-              printf( " %Ld", Exponent[g] );
-#else
-              printf( " %d", Exponent[g] );
-#endif
+            printf( " %d", (int)(Exponent[g]) );
+
 	printf( "\n" );
 	if(Verbose) {
 	    printf("#    runtime       : %d msec\n",RunTime()-time);
@@ -305,11 +301,8 @@ char	*argv[];
 	    printf( " has %d generators\n", Dimension[Class] );
 	    printf( "#          with the following exponents:" );
 	    for( g = NrPcGens-Dimension[Class]+1; g <= NrPcGens; g++ )
-#ifdef LONGLONG
-              printf( " %Ld", Exponent[g] );
-#else
-              printf( " %d", Exponent[g] );
-#endif
+                printf( " %d", (int)(Exponent[g]) );
+
 	    printf( "\n" );
 	    if(Verbose) {
 		printf("#    runtime       : %d msec\n",RunTime()-time);
@@ -335,7 +328,7 @@ end:
 
 	if( Gap ) printf( "];\n" );
 
-        if( Gap ) PrintGapPcPres();
+        if( Gap ) { PrintRawGapPcPres(); }
 
 	TimeOutOn();
 

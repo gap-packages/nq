@@ -7,6 +7,8 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
+#include "mem.h"
 #include "genexp.h"
 
 /*
@@ -57,10 +59,6 @@ extern node	*FirstRelation();
 extern node	*NextRelation();
 extern node     *CurrentRelation();
 extern node	*NthRelation();
-
-extern void	*Allocate();
-extern void	*ReAllocate();
-extern void	Free();
 
 extern void	SetEvalFunc();
 extern void	**EvalRelations();

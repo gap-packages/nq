@@ -4,8 +4,8 @@
 **                                         Werner.Nickel@math.rwth-aachen.de
 */
 
-
 #include <stdio.h>
+#include "mem.h"
 
 void	AllocError( str )
 char	*str;
