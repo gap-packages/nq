@@ -227,10 +227,12 @@ ExpTreePrintFunctions[ ExpTreeNodeTypes.Variable ] := function( stream, t )
 end;
 
 InstallMethod( PrintObj, [IsExprTree], function( t )
+    local   save;
 
+    save := NqGapOutput;
     NqGapOutput := true;
     Print( String( t ) );
-    NqGapOutput := false;
+    NqGapOutput := save;
 
 end );
 

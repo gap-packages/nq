@@ -5,18 +5,16 @@
 ##    @(#)$Id$
 ##
 
-if IsList( TestPackageAvailability( "gapdoc", "0.99" ) ) then
-  OLD_BANNER := BANNER; MakeReadWriteGlobal( "BANNER" ); BANNER := false;
-  RequirePackage( "gapdoc" );
-  BANNER := OLD_BANNER; MakeReadOnlyGlobal( "BANNER" );
+if TestPackageAvailability( "GAPDoc", "0.98" ) then
+    RequirePackage( "gapdoc" );
 else
-    Error( "GAPDoc not available" );
+    Info( InfoWarning, 1, "GAPDoc not available" );
 fi;
 
 if TestPackageAvailability( "polycyclic", "1.0" ) <> fail then
     RequirePackage( "polycyclic" );
 else
-    Error( "polycyclic not available" );
+    Info( InfoWarning, 1, "polycyclic not available" );
 fi;
 
 ##

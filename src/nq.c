@@ -275,7 +275,7 @@ char	*argv[];
 
         if( Gap & Verbose ) {
           fprintf( stderr, 
-                   " has %d generators with relative orders ",
+                   " %d generators with relative orders ",
                    Dimension[Class] ); 
           for( g = NrPcGens-Dimension[Class]+1; g <= NrPcGens; g++ )
             fprintf( stderr, " %d", (int)(Exponent[g]) );

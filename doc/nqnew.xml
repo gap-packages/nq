@@ -454,7 +454,7 @@ gap> r2 := LeftNormedComm( [gens[1],gens[2],gens[2],gens[1]] );
 Comm( x1, x2, x2, x1 )
 gap> pres := rec( generators := gens, relations := [r1,r2] );
 rec( generators := [ x1, x2 ], 
-  relations := [ [ x1, x2, x2 ], [ x1, x2, x2, x1 ] ] )
+  relations := [ Comm( x1, x2, x2 ), Comm( x1, x2, x2, x1 ) ] )
   </Example>
   </Section>
 
@@ -644,9 +644,9 @@ Func="NilpotentQuotient" Style="Text"/>.
 <![CDATA[
 gap> F := FreeGroup( 2 );
 <free group on the generators [ f1, f2 ]>
+gap> ## Equivalent to:  NilpotentQuotient( : group := F, class := 5 );
+gap> ##                 NilpotentQuotient( F : class := 5 );          
 gap> H := NilpotentQuotient( F, 5 );
-## Equivalent to:  NilpotentQuotient( : group := F, class := 5 );
-##                 NilpotentQuotient( F : class := 5 );          
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 gap> lcs := LowerCentralSeries( H );;
 gap> for i in [1..5] do Print( lcs[i] / lcs[i+1], "\n" ); od;
@@ -698,8 +698,9 @@ gap> F := FreeGroup( "a", "b", "w", "x", "y", "z" );
 <free group on the generators [ a, b, w, x, y, z ]>
 gap> G := F / [ LeftNormedComm( [F.3,F.4,F.5,F.6] ) ];
 <fp group of size infinity on the generators [ a, b, w, x, y, z ]>
+gap> ## The following is equivalent to: 
+gap> ##   NilpotentQuotient( G : idgens := [F.3,F.4,F.5,F.6] );
 gap> H := NilpotentQuotient( G, [F.3,F.4,F.5,F.6] );
-## Equivalent to: NilpotentQuotient( G : idgens := [F.3,F.4,F.5,F.6] );
 Pcp-group with orders [ 0, 0, 0, 0, 0 ]
 gap> NilpotencyClassOfGroup(H);
 3
@@ -718,7 +719,7 @@ gap> comm := LeftNormedComm( [et[1], et[2], et[2], et[2]] );
 Comm( x1, x2, x2, x2 )
 gap> G := rec( generators := et, relations := [comm] );
 rec( generators := [ x1, x2, x3, x4, x5 ], 
-  relations := [ [ x1, x2, x2, x2 ] ] )
+  relations := [ Comm( x1, x2, x2, x2 ) ] )
 gap> H := NilpotentQuotient( G : idgens := [et[1],et[2]] );
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 2, 2, 
   0, 6, 6, 0, 0, 2, 10, 10, 10 ]
@@ -899,7 +900,7 @@ gap> F := FreeGroup( 3 );
 gap> t := ExpressionTrees( "a", "b", "x" );
 [ a, b, x ]
 gap> tree := Comm( t[1], t[2] )^3/LeftNormedComm( [t[1],t[2],t[3],t[1]] );
-COmm( a, b )^3/Comm( a, b, x, a )
+Comm( a, b )^3/Comm( a, b, x, a )
 gap> EvaluateExpTree( tree, t, GeneratorsOfGroup(F) );
 f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f3^-1*f2^-1*f1^
 -1*f2*f1*f3*f1^-1*f2^-1*f1*f2*f1*f2^-1*f1^-1*f2*f1*f3^-1*f1^-1*f2^-1*f1*f2*f3
@@ -944,10 +945,12 @@ gap> Print( last );
     x2^2,
     x1*x2*x1*x2*x1*x2*x1*x2
 >
-gap> PrintTo( "dihedral", last2 );
+gap> PrintTo( "dihedral", last );
+gap> ## The following is equivalent to: 
+gap> ##     NilpotentQuotient( : input_file := "dihedral" );
 gap> NilpotentQuotient( "dihedral" );
-## Equivalent to: NilpotentQuotient( : input_file := "dihedral" );
-Pcp-group with orders [ 2, 2, 2, 2 ]
+Pcp-group with orders [ 2, 2, 2 ]
+gap> Exec( "rm dihedral" );
 gap> F := FreeGroup(3);
 <free group on the generators [ f1, f2, f3 ]>
 gap> H := F / [ LeftNormedComm( [F.2,F.1,F.1] ),                               
@@ -956,8 +959,8 @@ gap> H := F / [ LeftNormedComm( [F.2,F.1,F.1] ),
 gap> str := NqStringFpGroup( H, [F.3] );                                  
 "< x1, x2; x3 |\n    x1^-1*x2^-1*x1*x2*x1^-1*x2^-1*x1^-1*x2*x1^2,\n    x1^-1*x\
 2^-1*x1*x2^-1*x1^-1*x2*x1*x2,\n    x3^7\n>\n"
-gap> NilpotentQuotient( : input_string := str, class := 3 );
-Pcp-group with orders [ 0, 0, 7, 0, 7, 7, 7, 7, 7, 7, 7, 7 ]
+gap> NilpotentQuotient( : input_string := str );
+Pcp-group with orders [ 7, 7, 7 ]
 ]]>
      </Example>
      </Description>
@@ -1078,12 +1081,13 @@ gap> NilpotentQuotient(FreeGroup(2),5);
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 gap> SetInfoLevel( InfoNQ, 1 );
 gap> NilpotentQuotient(FreeGroup(2),5);
-#I  Class 1: has 2 generators with relative orders  0 0
+#I  Class 1: 2 generators with relative orders  0 0
 #I  Class 2: 1 generators with relative orders: 0
 #I  Class 3: 2 generators with relative orders: 0 0
 #I  Class 4: 3 generators with relative orders: 0 0 0
 #I  Class 5: 6 generators with relative orders: 0 0 0 0 0 0
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+gap> SetInfoLevel( InfoNQ, 0 );
 </Example>
   </Section>
   </Chapter>
@@ -1102,7 +1106,7 @@ Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
   <Example>
 gap> RequirePackage( "nq" );
 true
-gap> SetInfoLevel( InfoNQ, 1 );
+gap> ##  SetInfoLevel( InfoNQ, 1 );
 gap> ##
 gap> ##  setup calculation
 gap> ##
@@ -1118,12 +1122,9 @@ gap> rengel := LeftNormedComm( [a,x,x] );
 Comm( a, x, x )
 gap> G := rec( generators := et, relations := [rengel] );
 rec( generators := [ a, b, x ], relations := [ Comm( a, x, x ) ] )
+gap> ## The following is equivalent to:
+gap> ##   NilpotentQuotient( : input_string := NqStringExpTrees( G, [x] ) )
 gap> H := NilpotentQuotient( G, [x] );
-## Equivalent to:
-## NilpotentQuotient( : input_string := NqStringExpTrees( G, [x] ) )
-#I  Class 1: has 2 generators with relative orders  0 0
-#I  Class 2: 1 generators with relative orders: 0
-#I  Class 3:
 Pcp-group with orders [ 0, 0, 0 ]
 gap> LeftNormedComm( [ H.2,H.1,H.1 ] );
 id
@@ -1140,14 +1141,8 @@ group <M>H</M>.
 gap> rengel := LeftNormedComm( [a,x,x,x] );
 Comm( a, x, x, x )
 gap> G := rec( generators := et, relations := [rengel] );
-rec( generators := [ a, b, x ], relations := [ [ a, x, x, x ] ] )
+rec( generators := [ a, b, x ], relations := [ Comm( a, x, x, x ) ] )
 gap> H := NilpotentQuotient( G, [x] );
-#I  Class 1: has 2 generators with relative orders  0 0
-#I  Class 2: 1 generators with relative orders: 0
-#I  Class 3: 2 generators with relative orders: 0 0
-#I  Class 4: 1 generators with relative orders: 4
-#I  Class 5: 2 generators with relative orders: 2 2
-#I  Class 6: 
 Pcp-group with orders [ 0, 0, 0, 0, 0, 4, 2, 2 ]
 gap> LeftNormedComm( [ H.1,H.2,H.2,H.2 ] );
 id
@@ -1162,17 +1157,8 @@ The element <M>h</M> has order <M>4</M>.  In a nilpotent group without
 gap> rengel := LeftNormedComm( [a,x,x,x,x] );
 Comm( a, x, x, x, x )
 gap> G := rec( generators := et, relations := [rengel] );
-rec( generators := [ a, b, x ], relations := [ [ a, x, x, x, x ] ] )
+rec( generators := [ a, b, x ], relations := [ Comm( a, x, x, x, x ) ] )
 gap> H := NilpotentQuotient( G, [x] );
-#I  Class 1: has 2 generators with relative orders  0 0
-#I  Class 2: 1 generators with relative orders: 0
-#I  Class 3: 2 generators with relative orders: 0 0
-#I  Class 4: 3 generators with relative orders: 0 0 0
-#I  Class 5: 4 generators with relative orders: 2 0 12 0
-#I  Class 6: 5 generators with relative orders: 5 10 2 0 30
-#I  Class 7: 5 generators with relative orders: 5 2 5 5 5
-#I  Class 8: 1 generators with relative orders: 5
-#I  Class 9: 
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 12, 0, 5, 10, 2, 0, 30, 
   5, 2, 5, 5, 5, 5 ]
 gap> LeftNormedComm( [ H.1,H.2,H.2,H.2,H.2 ] );
@@ -1188,25 +1174,12 @@ The previous calculation shows that in a nilpotent group without
 gap> rengel := LeftNormedComm( [a,x,x,x,x,x] );
 Comm( a, x, x, x, x, x )
 gap> G := rec( generators := et, relations := [rengel] );
-rec( generators := [ a, b, x ], relations := [ [ a, x, x, x, x, x ] ] )
-gap> H := NilpotentQuotient( G, [x] );
-#I  Class 1: has 2 generators with relative orders  0 0
-#I  Class 2: 1 generators with relative orders: 0
-#I  Class 3: 2 generators with relative orders: 0 0
-#I  Class 4: 3 generators with relative orders: 0 0 0
-#I  Class 5: 6 generators with relative orders: 0 0 0 0 0 0
-#I  Class 6: 7 generators with relative orders: 6 0 30 0 0 30 0
-#I  Class 7: 14 generators with relative orders: 3 6 0 0 10 30 0 0 0 0 30 30 0 0
-#I  Class 8: 18 generators with relative orders: 3 6 5 2 0 2 408 2 0 0 0 10 10 30 
-10 0 0 0
-#I  Class 9: 19 generators with relative orders: 3 3 3 2 204 6 6 0 10 10 10 2 2 2 
-0 300 0 0 18
-#I  Class 10: 9 generators with relative orders: 3 5 2 2 2 2 18 1519 3
-#I  Class 11: 
+rec( generators := [ a, b, x ], relations := [ Comm( a, x, x, x, x, x ) ] )
+gap> H := NilpotentQuotient( G, [x], 9 );
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 30, 
   0, 0, 30, 0, 3, 6, 0, 0, 10, 30, 0, 0, 0, 0, 30, 30, 0, 0, 3, 6, 5, 2, 0, 
   2, 408, 2, 0, 0, 0, 10, 10, 30, 10, 0, 0, 0, 3, 3, 3, 2, 204, 6, 6, 0, 10, 
-  10, 10, 2, 2, 2, 0, 300, 0, 0, 18, 3, 5, 2, 2, 2, 2, 18, 1519, 3 ]
+  10, 10, 2, 2, 2, 0, 300, 0, 0, 18 ]
 gap> LeftNormedComm( [ H.1,H.2,H.2,H.2,H.2,H.2 ] );
 id
 gap> h := LeftNormedComm( [ H.2,H.1,H.1,H.1,H.1,H.1 ] );;

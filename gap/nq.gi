@@ -564,7 +564,7 @@ function( G, cl )
 
     return NqCallANU_NQ(
                    rec( group := G,
-                   class := cl ) );
+                        class := cl ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -638,7 +638,7 @@ InstallOtherMethod( NilpotentQuotient,
 function( G, idgens, cl )
 
     return NqCallANU_NQ(
-                   rec( exptress := G,
+                   rec( exptrees := G,
                         idgens   := idgens,
                         class    := cl ) );
 end );
