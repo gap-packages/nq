@@ -165,6 +165,8 @@ char	*argv[];
                         break;
                 case 'f': SemigroupFirst = !SemigroupFirst;
                         break;
+                case 'o': ReverseOrder = !ReverseOrder;
+                        break;
                 default : fprintf( stderr, "unknown option: %s\n", argv[0] );
 			  usage( NULL );
 			break;
