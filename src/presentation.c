@@ -191,9 +191,13 @@ static char	*TokenName[] =
 static void	SyntaxError( str )
 char	*str;
 
-{	fprintf( stderr, "%s, line %d, char %d: %s.\n",
-			  InFileName, TLine, TChar, str );
-	
+{	if( str == (char *)0 )
+            fprintf( stderr, "%s, line %d, char %d.\n",
+                    InFileName, TLine, TChar );
+	else
+            fprintf( stderr, "%s, line %d, char %d: %s.\n",
+                    InFileName, TLine, TChar, str );
+
 	exit( 1 );
 }
 
@@ -235,14 +239,31 @@ static void	SkipBlanks() {
 }
 
 /*
-**    Number reads a number from the input. Currently no overflow check
-**    is performed.
+**    Number reads a number from the input. 
 */
 static int	Number() {
 
-	int	n = 0;
+	unsigned int	m, n = 0, overflow = 0;
 
-	while( isdigit(Ch) ) { n = 10 * n + (Ch - '0'); ReadCh(); }
+	while( isdigit(Ch) ) { 
+            m = n;
+            n = 10 * n + (Ch - '0');
+            if( (n - (Ch-'0')) / 10 != m ) { overflow = 1; break; }
+            ReadCh();
+        }
+
+        if( overflow ) {
+            fprintf( stderr, "Integer overflow reading %u%c", m, Ch );
+            ReadCh();
+            while( isdigit(Ch) ) { fprintf(stderr,"%c",Ch); ReadCh(); }
+            fprintf( stderr, " in\n" );
+            SyntaxError( (char *)0 );
+        }
+        else 
+            if( n >= (1<<(8*sizeof(unsigned int) - 1)) ) {
+                fprintf( stderr, "Integer overflow reading %u in\n", n );
+                SyntaxError( (char *)0 );
+            }
 
 	N = n;
 }
