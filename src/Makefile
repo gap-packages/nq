@@ -14,7 +14,7 @@
 GNULIB = /usr/local/lib/libmp.a
 GNUINC = /usr/local/include
 
-CFLAGS = -g -O -I$(GNUINC) -DVERSION='"1.1d, 04 April 1994"'
+CFLAGS = -g -O -I$(GNUINC) -DVERSION='"1.1d, 18 May 1994"'
 
 OBJ = consistency.o pc.o relations.o word.o system.o \
       addgen.o tails.o eliminate.o engel.o glimt.o \
