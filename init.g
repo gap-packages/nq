@@ -5,6 +5,8 @@
 ##    @(#)$Id$
 ##
 
+RequirePackage( "polycyc" );
+
 ##
 ##    Announce the package version and test for the existence of the binary.
 DeclarePackage("nq","1.3",
