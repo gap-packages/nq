@@ -53,7 +53,7 @@ function( coll, nqrec )
     z     := nqrec.NrGenerators;
     for r in ranks do
         a := a + r;
-        Add( lcs, Subgroup( G, gens{[a..z]} ) );
+        Add( lcs, SubgroupNC( G, gens{[a..z]} ) );
     od;
 
     SetLowerCentralSeriesOfGroup( G, lcs );

@@ -1,16 +1,16 @@
-#/bin/csh
+#!/bin/sh
 unset noclobber
-foreach example (examples/*.[0-9]*)
+for example in examples/*.[0-9]*; do
     echo -n testing example `basename $example "\.[0-9]*"`:
     set class=$example:e
     src/nq $example $class | grep -v "runtime\|size\|Machine\|Input" > $example:r.tst
     diff $example:r.out $example:r.tst > /dev/null
-    if( $status != 0 ) then
+    if [ $? -ne 0 ]; then
 	echo " error."
 	echo Please mail the file $example:r.tst 
-	echo "    " to Werner.Nickel@math.rwth-aachen.de
+	echo "    " to Werner.Nickel@mathematik.tu-darmstadt.de;
     else
         echo " ok."
 	rm $example:r.tst
-    endif
-end
+    fi
+done

@@ -9,7 +9,8 @@
 \Chapter{The Nilpotent Quotient Package}
 
 This chapter describes the Interface to the ANU Nilpotent Quotient
-Program.
+Program.  Some functions rely on the functionality of the `polycyclic'
+package and cannot be used if this package is not installed.
 
 For easy reference, define the lowere central sreis of a group $G$ by
 $G_1 = G$ and $G_{i+1} = [G,G_i]$ for $i \geq 1.$
@@ -17,7 +18,8 @@ $G_1 = G$ and $G_{i+1} = [G,G_i]$ for $i \geq 1.$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \Section{The main functions}
 
-The following functions are available:
+The following functions are available and require the presence of the
+`polycyclic' package.
 
 \>NilpotentQuotient( <fp group>, <class> )
 
@@ -35,7 +37,14 @@ returns the largest nilpotent quotient of the finitely presented group
 
 \>EpimorphismNilpotentQuotient( <fp group>, <class> )
 
-This function computes an epimorphism onto $G/G_{c+1}.$
+This function computes an epimorphism onto $G/G_{c+1}.$  It requires the
+presence of the `polycyclic' package.
+
+\>LowerCentralFactors( <fp group>, <class> )
+
+This function computes the abelian invariants of the factors of the lower
+central series of the given finitely presented group up to nilpotency
+class <class>.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%

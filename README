@@ -2,6 +2,22 @@
 The ANU Nilpotent Quotient Program
 ==================================
 
+
+Table of contents
+-----------------
+
+        Nilpotent quotients
+        About this version
+        How to install the ANU NQ
+        How to use the ANU NQ
+        The input format for presentations
+        An example
+        Some remarks about the algorithm
+        Some improvements planned for further versions
+        Acknowledgements
+        Contact addresses
+
+
 Nilpotent quotients
 -------------------
 
@@ -57,9 +73,9 @@ This directory contains the following directories and files:
                         configure 
         cnf/            scripts used by configure
 
-        examples        a suite of test examples
+        examples/       a suite of test examples
         
-        src             the source code
+        src/            the source code
         
         gap/            the GAP interface
         doc/            documentation of the GAP interface

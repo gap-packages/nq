@@ -2,6 +2,7 @@
 This is a list of tasks which need to be done before nq is released as
 a GAP 4 share library package.
 
+-- The configure script should check if the installation as a share package.
 -- NilpotentQuotient() should return a quotient system.
 -- Update the test files and testNq.
 -- Add more GAP documentation.
@@ -10,6 +11,5 @@ a GAP 4 share library package.
    configure again and not make with the correct options.  This way,
    configure can remember the correct values and it will suffice make.
 -- Update installation procedure
-
--- GAP-Funktionalit"at davon abh"angig machen, on
-   RequirePackage("polycyc") erfolgreich ist.
+-- It should be possible to define the nilpotency class as part of the 
+   input file. 

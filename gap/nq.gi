@@ -368,3 +368,35 @@ function( G, engel, cl )
 
     return NqPcpGroupByCollector( coll, nqrec );
 end );
+
+InstallOtherMethod( NilpotentEngelQuotient,
+        "of a finitely presented group",
+        true,
+        [ IsFpGroup, IsPosInt ], 
+        0,
+function( G, engel )
+    local   nq,  pres,  input,  str,  output,  ret,  nqrec,  coll;
+
+    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
+
+    pres   := NqStringFpGroup( G );
+    input  := InputTextString( pres );
+    str    := "";
+    output := OutputTextString( str, true );
+
+    ##  nq -g -p < input > output 
+    ret    := Process( DirectoryCurrent(),        ## executing directory
+                      nq,                         ## executable
+                      input,                      ## input  stream
+                      output,                     ## output stream
+                      [ "-g", "-e", String(engel), "-s", "-p" ] );
+                                                  ## command line arguments
+    CloseStream( output );
+    CloseStream( input  );
+    
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
