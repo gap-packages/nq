@@ -1031,9 +1031,9 @@ if test $HAVE_GMP_INC = false; then
    echo ""
 fi
 
-echo $ac_n "checking for mpz_out_str in -lgmp""... $ac_c" 1>&6
-echo "configure:1036: checking for mpz_out_str in -lgmp" >&5
-ac_lib_var=`echo gmp'_'mpz_out_str | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for __gmpz_init in -lgmp""... $ac_c" 1>&6
+echo "configure:1036: checking for __gmpz_init in -lgmp" >&5
+ac_lib_var=`echo gmp'_'__gmpz_init | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -1045,10 +1045,10 @@ cat > conftest.$ac_ext <<EOF
 /* Override any gcc2 internal prototype to avoid an error.  */
 /* We use char because int might match the return type of a gcc2
     builtin and then its argument prototype would still apply.  */
-char mpz_out_str();
+char __gmpz_init();
 
 int main() {
-mpz_out_str()
+__gmpz_init()
 ; return 0; }
 EOF
 if { (eval echo configure:1055: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
