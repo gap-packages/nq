@@ -284,11 +284,20 @@ word	gs;
 {	if( gs->g != EOW )
 	    if( gs->g > 0 ) {
 		PrintGen( gs->g );
-		if( gs->e > 1 ) printf( "^%d", gs->e );
+		if( gs->e > (exp)1 ) 
+#ifdef LONGLONG
+                  printf( "^%Ld", gs->e );
+#else
+                  printf( "^%d", gs->e );
+#endif
 	    }
 	    else {
 		PrintGen( -gs->g );
+#ifdef LONGLONG
+		printf( "^-%Ld", gs->e );
+#else
 		printf( "^-%d", gs->e );
+#endif
 	    }
 	else {
 	    printf( "1" );
@@ -300,11 +309,20 @@ word	gs;
 	    putchar( '*' );
 	    if( gs->g > 0 ) {
 		PrintGen( gs->g );
-		if( gs->e > 1 ) printf( "^%d", gs->e );
+		if( gs->e > (exp)1 )
+#ifdef LONGLONG
+                  printf( "^%Ld", gs->e );
+#else
+                  printf( "^%d", gs->e );
+#endif
 	    }
 	    else {
 		PrintGen( -gs->g );
+#ifdef LONGLONG
+		printf( "^-%Ld", gs->e );
+#else
 		printf( "^-%d", gs->e );
+#endif
 	    }
 	    gs++;
 	}

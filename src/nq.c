@@ -300,7 +300,11 @@ char	*argv[];
 	    printf( " has %d generators\n", Dimension[Class] );
 	    printf( "#          with the following exponents:" );
 	    for( g = NrPcGens-Dimension[Class]+1; g <= NrPcGens; g++ )
-		printf( " %d", Exponent[g] );
+#ifdef LONGLONG
+              printf( " %Ld", Exponent[g] );
+#else
+              printf( " %d", Exponent[g] );
+#endif
 	    printf( "\n" );
 	    if(Verbose) {
 		printf("#    runtime       : %d msec\n",RunTime()-time);

@@ -28,12 +28,20 @@ char	c;
 	while( w->g != EOW ) {
 	    if( w->g > 0 ) {
 		printGen( w->g, c );
-		if( w->e != 1 )
+		if( w->e != (exp)1 )
+#ifdef LONGLONG
+		    printf( "^%Ld", w->e );
+#else
 		    printf( "^%d", w->e );
+#endif
 	    }
 	    else {
 		printGen( -w->g, c );
+#ifdef LONGLONG
+		printf( "^%Ld", -w->e );
+#else
 		printf( "^%d", -w->e );
+#endif
 	    }
 	    w++;
 	    if( w->g != EOW ) putchar( '*' );
