@@ -761,10 +761,6 @@ gap> for i in [1..5] do Print( AbelianInvariants(lcs[i]/lcs[i+1]), "\n" ); od;
 [ 2, 2, 2, 2, 2, 2, 2, 0, 0, 0 ]
 [ 10, 10, 10 ]
 ]]>
-
-
-
-
 </Example>
 The example above also shows that the relative orders of an abelian
 polycyclic  group need not be the abelian invariants (elementary
