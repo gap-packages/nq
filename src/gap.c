@@ -1,5 +1,12 @@
+/*****************************************************************************
+**
+**    gap.c                           NQ                       Werner Nickel
+**                                         Werner.Nickel@math.rwth-aachen.de
+*/
 
-void	printWord( w )
+#include "nq.h"
+
+void	printGapWord( w )
 word	w;
 
 {	if( w == (word)0 || w->g == EOW ) {
@@ -14,8 +21,8 @@ word	w;
 		    printf( "^%d", w->e );
 	    }
 	    else {
-                printf( "F.%d", w->g );
-		printf( "^%d", -w->e );
+                printf( "F.%d", -w->g );
+		printf( "^%d",  -w->e );
 	    }
 	    w++;
 	    if( w->g != EOW ) putchar( '*' );
@@ -26,7 +33,7 @@ word	w;
 void	PrintGapPcPres() {
 
 	gen	g;
-	long	i, j, first = 1;
+	long	i, j;
 
         /*
         **  Commands that create the appropriate free group and the
@@ -46,7 +53,7 @@ void	PrintGapPcPres() {
                 Power[i] != (word)0 && Power[i]->g != EOW ) {
                 printf( "SetPower( dt, %d, ", i );
                 printGapWord( Power[i] );
-
+                printf( " );\n" );
             }
 
         /*
@@ -56,19 +63,23 @@ void	PrintGapPcPres() {
 	    i = 1;
 	    while( i < j && Wt(i) + Wt(j) <= Class + (NrCenGens==0?0:1) ) {
 		/* print Conjugate[j][i] */
-                printf( "SetConjugate( dt, j, i, " );
+                printf( "SetConjugate( dt, %d, %d, ", j, i );
 		printGapWord( Conjugate[j][i] );
+                printf( " );\n" );
 		if( Exponent[i] == (exp)0 ) {
-                    printf( "SetConjugate( dt, j, -i, " );
+                    printf( "SetConjugate( dt, %d, %d, ", j, -i );
 		    printGapWord( Conjugate[j][-i] );
+                    printf( " );\n" );
 		}
 		if( 0 && Exponent[j] == (exp)0 ) {
-                    printf( "SetConjugate( dt, -j, i, " );
+                    printf( "SetConjugate( dt, %d, %d, ", -j, i );
 		    printGapWord( Conjugate[-j][i] );
+                    printf( " );\n" );
 		}
 		if( 0 && Exponent[i] + Exponent[j] == (exp)0 ) {
-                    printf( "SetConjugate( dt, -j, -i, " );
+                    printf( "SetConjugate( dt, %d, %d, ", -j, -i );
 		    printGapWord( Conjugate[-j][-i], 'A' );
+                    printf( " );\n" );
 		}
 		i++;
 	    }
