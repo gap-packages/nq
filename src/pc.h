@@ -27,6 +27,10 @@ extern	int	Debug;
 **            correct place. In other words, the collector starts at
 **            `Commute[i]' in the exponent vector when the i-th generator
 **            is moved to its place. The length of `Commute' is `NrPcGens'+1.
+**    CommuteList: This array holds a list of different versions of
+**            Commute[].  They are used for fast evaluation of iterated
+**            commutators, as for example Engel conditions.  CommuteList[c]
+**            is Commute[] for the class c quotient of the current group.
 **    Exponent: This array containes the exponents for the power relation
 **            of each generator. If the generator i does not have a power
 **            relation, `Exponents[i]' is zero. The length of `Exponents'
@@ -45,6 +49,7 @@ extern int	IsWeighted;
 extern int	Class;
 
 extern gen	*Commute;
+extern gen	**CommuteList;
 extern exp	*Exponent;
 extern word	*Power;
 extern word	**Conjugate;
