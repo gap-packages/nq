@@ -66,11 +66,12 @@ exp	e;
 
     while( sp >= 0 )
         if( (g = gs[ sp ]->g) != EOW ) {
+
             ag = abs( g );
-            if( g < 0 && Exponent[-g] != 0 ) 
+            if( g < 0 && Exponent[-g] != (exp)0 ) 
                 return Error( "Inverse of a generator with power relation", ag );
-            e = (ag == Commute[ag]) ? gs[ sp ]->e : 1;
-            if( (ges[ sp ] -= e) == 0 ) {
+            e = (ag == Commute[ag]) ? gs[ sp ]->e : (exp)1;
+            if( (ges[ sp ] -= e) == (exp)0 ) {
                 /* The power of the generator g will have been moved
                    completely to its correct position after this
                    collection step. Therefore advance the generator
@@ -80,30 +81,30 @@ exp	e;
             /* Now move the generator g to its correct position
                in the exponent vector lhs. */
             for( h = Commute[ag]; h > ag; h-- )
-                if( lhs[h] != 0 ) {
+                if( lhs[h] != (exp)0 ) {
                     if( ++sp == STACKHEIGHT )
                         return Error( "Out of stack space", ag );
-                    if( lhs[ h ] > 0 ) {
+                    if( lhs[ h ] > (exp)0 ) {
                         gs[ sp ]  = ws[ sp ] = C[ h ][ g ];
-                        wes[ sp ] = lhs[h]; lhs[ h ] = 0;
+                        wes[ sp ] = lhs[h]; lhs[ h ] = (exp)0;
                         ges[ sp ] = gs[ sp ]->e;
                     }
                     else {
                         gs[ sp ]  = ws[ sp ] = C[ -h ][ g ];
-                        wes[ sp ] = -lhs[h]; lhs[ h ] = 0;
+                        wes[ sp ] = -lhs[h]; lhs[ h ] = (exp)0;
                         ges[ sp ] = gs[ sp ]->e;
                     }
                 }
             lhs[ ag ] += e * sgn(g);
             if ( ((lhs[ag] << 1) >> 1) != lhs[ag] )
                 return Error( "Possible integer overflow", ag );
-            if( Exponent[ag] != 0 )
+            if( Exponent[ag] != (exp)0 )
                 while( lhs[ag] >= Exponent[ag] ) {
                     if( (rhs = P[ ag ]) != (word)0 ) {
                         if( ++sp == STACKHEIGHT )
                             return Error( "Out of stack space", ag );
                         gs[ sp ] = ws[ sp ] = rhs;
-                        wes[ sp ] = 1;
+                        wes[ sp ] = (exp)1;
                         ges[ sp ] = gs[ sp ]->e;
                     }
                     lhs[ ag ] -= Exponent[ ag ];
@@ -114,7 +115,7 @@ exp	e;
         else {
             /* the top word on the stack has been examined completely,
                now check if its exponent is zero. */
-            if( --wes[ sp ] == 0 ) {
+            if( --wes[ sp ] == (exp)0 ) {
                 /* All powers of this word have been treated, so
                    we have to move down in the stack. */
                 sp--;
@@ -141,7 +142,7 @@ word	u, v;
 	exp	ev;
 	expvec	uvec;
 	
-	y[1].g = EOW; y[1].e = 0;
+	y[1].g = EOW; y[1].e = (exp)0;
 
 	uvec = (expvec)calloc( (NrPcGens+NrCenGens+1), sizeof(exp) );
 	if( uvec == (expvec)0 ) {
@@ -155,7 +156,7 @@ word	u, v;
 	    exit( 2 );
 	}
 
-	if( Collect( uvec, u, 1 ) ) {
+	if( Collect( uvec, u, (exp)1 ) ) {
 	    Free( x );
 	    Free( uvec );
 	    return (word)0;
@@ -164,14 +165,14 @@ word	u, v;
 	for( lv = lx = 0, g = 1; g <= NrPcGens+NrCenGens; g++ ) {
 	    if( v[lv].g == g )       ev =  v[ lv++ ].e;
 	    else if( v[lv].g == -g ) ev = -v[ lv++ ].e;
-	    else                     ev = 0;
+	    else                     ev = (exp)0;
 
 	    if( ev != uvec[g] ) {
-		if( ev > uvec[g] ) {	        /* ev - uvec[g] > 0 */
+		if( ev > uvec[g] ) {	            /* ev - uvec[g] > 0 */
 		    y[0].g = x[lx].g  = g;
 		    y[0].e = x[lx++].e = ev - uvec[g];
 		}
-		else if( Exponent[g] != 0 ) {  /* ev - uvec[g] < 0 */
+		else if( Exponent[g] != (exp)0 ) {  /* ev - uvec[g] < 0 */
 		    y[0].g = x[lx].g  = g;
 		    y[0].e = x[lx++].e = ev - uvec[g] + Exponent[g];
 		}
@@ -179,7 +180,7 @@ word	u, v;
 		    y[0].g = x[lx].g   = -g;
 		    y[0].e = x[lx++].e = uvec[g] - ev;
 		}
-		if( Collect( uvec, y, 1 ) ) {
+		if( Collect( uvec, y, (exp)1 ) ) {
 		    Free( x );
 		    Free( uvec );
 		    return (word)0;
@@ -190,7 +191,7 @@ word	u, v;
 	Free( uvec );
 
 	x[lx].g = EOW;
-	x[lx++].e = 0;
+	x[lx++].e = (exp)0;
 
 	x = (word)realloc( x, lx*sizeof(gpower) );
 	if( x == (word)0 ) {
@@ -218,7 +219,7 @@ word	u, v;
 
 	ev = (expvec)Allocate( (NrPcGens+NrCenGens+1)*sizeof(exp) );
 
-	if( Collect( ev, u, 1 ) || Collect( ev, v, 1 ) ) {
+	if( Collect( ev, u, (exp)1 ) || Collect( ev, v, (exp)1 ) ) {
 	    Free( ev );
 	    return (word)0;
 	}
@@ -247,7 +248,7 @@ int	n;
 
 	while( n > 0 ) {
 	    if( n % 2 )
-		if( Collect( ev, u, 1 ) ) {
+		if( Collect( ev, u, (exp)1 ) ) {
 		    if( copied_u ) Free( u );
 		    Free( ev );
 		    return (word)0;
@@ -281,7 +282,7 @@ word    u, v;
     int i;
 
     y[0].g = y[1].g = EOW;
-    y[0].e = y[1].e = 0;
+    y[0].e = y[1].e = (exp)0;
 
     u1 = ExpVecWord( u ); u2 = ExpVecWord( u );
     v1 = ExpVecWord( v ); v2 = ExpVecWord( v );
@@ -295,17 +296,17 @@ word    u, v;
         if(  x[i] != 0 ) {
             if(  x[i] > 0 ) { y[0].g =  i; y[0].e =   x[i]; }
             else            { y[0].g = -i; y[0].e =  -x[i]; }
-            if( Collect( u1, y, 1 ) ) { w = (word)0; goto exit; }
+            if( Collect( u1, y, (exp)1 ) ) { w = (word)0; goto exit; }
         }
         if( u1[i] != 0 ) {
             if( u1[i] > 0 ) { y[0].g =  i; y[0].e =  u1[i]; }
             else            { y[0].g = -i; y[0].e = -u1[i]; }
-            if( Collect( v1, y, 1 ) ) { w = (word)0; goto exit; }
+            if( Collect( v1, y, (exp)1 ) ) { w = (word)0; goto exit; }
         }
         if( v2[i] != 0 ) {
             if( v2[i] > 0 ) { y[0].g =  i; y[0].e =  v2[i]; }
             else            { y[0].g = -i; y[0].e = -v2[i]; }
-            if( Collect( u2, y, 1 ) ) { w = (word)0; goto exit; }
+            if( Collect( u2, y, (exp)1 ) ) { w = (word)0; goto exit; }
         }
     }
     
@@ -324,7 +325,7 @@ word	v, w;
 	word	vw, wv, vwvw;
 
 	ev = ExpVecWord( v );
-	if( Collect( ev, w, 1 ) ) {
+	if( Collect( ev, w, (exp)1 ) ) {
 	    Free( ev );
 	    return (word)0;
 	}
@@ -332,7 +333,7 @@ word	v, w;
 	Free( ev );
 
 	ev = ExpVecWord( w );
-	if( Collect( ev, v, 1 ) ) {
+	if( Collect( ev, v, (exp)1 ) ) {
 	    Free( ev );
 	    Free( vw );
 	    return (word)0;
