@@ -625,7 +625,7 @@ Pcp-group with orders [ 0, 0, 0 ]
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0 ]
 Pcp-group with orders [ 2, 4, 2, 2, 0, 6, 6, 0, 0, 2 ]
 Pcp-group with orders [ 10, 10, 10 ]
-gap> for i in [1..5] do Print( AbelianInvariants(lcs[i] / lcs[i+1]), "\n" ); o$
+gap> for i in [1..5] do Print( AbelianInvariants(lcs[i]/lcs[i+1]), "\n" ); od;
 [ 0, 0, 0 ]
 [ 0, 0, 0 ]
 [ 0, 0, 0, 0, 0, 0, 0, 0 ]
@@ -633,6 +633,10 @@ gap> for i in [1..5] do Print( AbelianInvariants(lcs[i] / lcs[i+1]), "\n" ); o$
 [ 10, 10, 10 ]
 ]]>
 </Example>
+The example above also shows that the relative orders of an abelian
+polycyclic  group need not be the abelian invariants (elementary
+divisors) of the group.  Each zero corresponds to a generator of
+infinite order.  The number of zeroes is always correct.
         </Description>
         </ManSection>
 
