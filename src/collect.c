@@ -13,7 +13,7 @@ static	Error( str, g )
 char	*str;
 gen     g;
 
-{	printf( "Error in Collect() while treating generator %d:\n", g );
+{	printf( "Error in Collect() while treating generator %d:\n", (int)g );
         printf( "      %s\n", str );
 /*	exit( 7 );*/
 	
