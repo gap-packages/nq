@@ -193,7 +193,7 @@ void	ElimGenerators() {
 	/* set up an array that specifies the row which eliminates a
 	** generator. */
 	eRow = (long*)malloc( (NrCenGens+1)*sizeof(long) );
-	if( eRow == (long*) ) {
+	if( eRow == (long*)0 ) {
 	    perror( "elimGenerators(), eRow" );
 	    exit( 2 );
 	}
@@ -202,7 +202,7 @@ void	ElimGenerators() {
 
 	
 	ev = (expvec)calloc( (NrCenGens+1), sizeof(exp) );
-	if( ev == (expvec) ) {
+	if( ev == (expvec)0 ) {
 	    perror( "elimGenerators(), ev" );
 	    exit( 2 );
 	}
