@@ -711,7 +711,7 @@ function( G, nqrec )
 end );
 
 InstallOtherMethod( NqEpimorphismNilpotentQuotient,
-        "from a finitely presented group",
+        "fp-group",
         true,
         [ IsFpGroup ],
         0,
@@ -723,7 +723,7 @@ function( G )
 end );
 
 InstallOtherMethod( NqEpimorphismNilpotentQuotient,
-        "from a finitely presented group",
+        "output-file, fp-group",
         true,
         [ IsString, IsFpGroup ],
         0,
@@ -735,8 +735,8 @@ function( outfile, G )
     return NqEpimorphismByNqOutput( G, nqrec );
 end );
 
-InstallMethod( NqEpimorphismNilpotentQuotient,
-        "from a finitely presented group",
+InstallOtherMethod( NqEpimorphismNilpotentQuotient,
+        "fp-group, class",
         true,
         [ IsFpGroup, IsPosInt ],
         0,
@@ -748,7 +748,7 @@ function( G, cl )
 end );
 
 InstallOtherMethod( NqEpimorphismNilpotentQuotient,
-        "from a finitely presented group",
+        "output-file, fp group, class",
         true,
         [ IsString, IsFpGroup, IsPosInt ],
         0,
@@ -760,6 +760,61 @@ function( outfile, G, cl )
                                 output_file := outfile ) );
 
     return NqEpimorphismByNqOutput( G, nqrec );
+end );
+
+InstallOtherMethod( NqEpimorphismNilpotentQuotient,
+        "fp-group, id-gens",
+        true,
+        [ IsFpGroup, IsList ],
+        0,
+function( G, idgens )
+    local   nqrec,  coll,  A,  images,  phi;
+
+    nqrec := NqCallANU_NQ( rec( group := G, idgens := idgens ) );
+    return NqEpimorphismByNqOutput( G, nqrec : idgens := idgens );
+end );
+
+InstallOtherMethod( NqEpimorphismNilpotentQuotient,
+        "output-file, fp-group, idgens",
+        true,
+        [ IsString, IsFpGroup, IsList ],
+        0,
+function( outfile, G, idgens )
+    local   nqrec,  coll,  A,  images,  phi;
+
+    nqrec := NqCallANU_NQ( rec( group       := G, 
+                                output_file := outfile,
+                                idgens      := idgens ) );
+
+    return NqEpimorphismByNqOutput( G, nqrec : idgens := idgens );
+end );
+
+InstallOtherMethod( NqEpimorphismNilpotentQuotient,
+        "fp-group, idgens, class",
+        true,
+        [ IsFpGroup, IsList, IsPosInt ],
+        0,
+function( G, idgens, cl )
+    local   nqrec,  coll,  A,  images,  phi;
+
+    nqrec := NqCallANU_NQ( rec( group := G, class := cl, idgens := idgens ) );
+    return NqEpimorphismByNqOutput( G, nqrec : idgens := idgens );
+end );
+
+InstallOtherMethod( NqEpimorphismNilpotentQuotient,
+        "output-file, fp group, idgens, class",
+        true,
+        [ IsString, IsFpGroup, IsList, IsPosInt ],
+        0,
+function( outfile, G, idgens, cl )
+    local   nqrec,  coll,  A,  images,  phi;
+
+    nqrec := NqCallANU_NQ( rec( group := G, 
+                                class := cl,
+                                output_file := outfile,
+                                idgens := idgens ) );
+
+    return NqEpimorphismByNqOutput( G, nqrec : idgens := idgens );
 end );
 
 #############################################################################
