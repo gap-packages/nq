@@ -88,7 +88,7 @@ int     type;
 **    generator number 0 is returned.
 */
 static char	**GenNames;
-static unsigned	NrGens = 0;
+       unsigned	NrGens = 0;
 
 #define NOCREATE 0
 #define CREATE   1
