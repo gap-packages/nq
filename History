@@ -100,3 +100,10 @@ March 1998: Version 1.2 of the ANU NQ
            + GAP4 print routines (gap.c) added.  The -g option now
              prints a pc-presentation in GAP4 style at the end of a
              run. 
+
+28 Dec 1998:
+           + Evaluation of an Engel identity redefines the Commute
+             array.  As a consequence, commutator calculations are
+             carried out only with the precision required to evaluate
+             an iterated commutator.  This gives a speedup of a factor
+             of 3-4 in Engel-4 and Engel-5 groups.
