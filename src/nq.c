@@ -11,7 +11,10 @@
 int	Debug = 0;
 int	Gap = 0;
 int     AbelianInv = 0;
+int     NilpMult;
 int	Verbose = 0;
+
+extern RawMatOutput;
 
 char	*InputFile;
 
@@ -26,7 +29,7 @@ char	*error;
 
 	if( error != (char *)0 ) fprintf( stderr, "%s\n", error );
 	fprintf( stderr, "usage: %s", ProgramName );
-	fprintf( stderr, " [-a] [-d] [-g] [-v] [-s] [-f] [-c]\n" );
+	fprintf( stderr, " [-a] [-M] [-d] [-g] [-v] [-s] [-f] [-c] [-m]\n" );
 	for( i = strlen(ProgramName)+7; i > 0; i-- ) fputc( ' ', stderr );
         fprintf( stderr, " [-t <n>] [-l <n>] [-r <n>] [-n <n>] [-e <n>]\n" );
 	for( i = strlen(ProgramName)+7; i > 0; i-- ) fputc( ' ', stderr );
@@ -155,6 +158,8 @@ char	*argv[];
 			break;
 		case 'a': AbelianInv = !AbelianInv;
 		        break;
+		case 'M': NilpMult = !NilpMult;
+		        break;
 		case 'v': Verbose = !Verbose;
 			break;
 		case 'd': Debug = !Debug;
@@ -166,6 +171,8 @@ char	*argv[];
                 case 'f': SemigroupFirst = !SemigroupFirst;
                         break;
                 case 'o': ReverseOrder = !ReverseOrder;
+                        break;
+                case 'm': RawMatOutput = !RawMatOutput;
                         break;
                 default : fprintf( stderr, "unknown option: %s\n", argv[0] );
 			  usage( NULL );
@@ -241,8 +248,14 @@ char	*argv[];
 	    AddGenerators();
 	    Tails();
 	    Consistency();
+
+            if( NilpMult ) OutputMatrix( "nilp" );
+
 	    NqEvalRelations();
 	    EvalEngel();
+
+            if( NilpMult ) OutputMatrix( "mult" );
+
 	    ElimGenerators();
 	    if( NrCenGens == 0 ) goto end;
 	    ExtPcPres();
