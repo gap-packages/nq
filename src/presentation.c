@@ -756,7 +756,9 @@ void	*(*function)();
 void	*EvalNode( n )
 node	*n;
 
-{	if( n->type == TNUM )
+{	void *l, *r;
+        
+        if( n->type == TNUM )
 	    return (void *)&( n->cont.n );
 
 	if( EvalFunctions[n->type] == (void *(*)())0 ) {
@@ -767,8 +769,11 @@ node	*n;
 	if( n->type == TGEN ) 
 	    return (*EvalFunctions[TGEN])(n->cont.g);
 
-	return (*EvalFunctions[n->type])
-		       ( EvalNode(n->cont.op.l), EvalNode(n->cont.op.r) );
+        if( (l = EvalNode(n->cont.op.l)) == (void *)0 ) return l;
+        if( (r = EvalNode(n->cont.op.r)) == (void *)0 ) {
+          Free( l ); return r;
+        }
+	return (*EvalFunctions[n->type])( l, r );
 }
 
 void	**EvalRelations() {
