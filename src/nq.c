@@ -33,7 +33,7 @@ char	*error;
 	for( i = strlen(ProgramName)+7; i > 0; i-- ) fputc( ' ', stderr );
         fprintf( stderr, " [-t <n>] [-l <n>] [-r <n>] [-n <n>] [-e <n>]\n" );
 	for( i = strlen(ProgramName)+7; i > 0; i-- ) fputc( ' ', stderr );
-	fprintf( stderr, " [-y] <presentation>  [<class>]\n" );
+	fprintf( stderr, " [-y] [-o] [-p] [-E] <presentation>  [<class>]\n" );
     	exit( 1 );
 }
 
