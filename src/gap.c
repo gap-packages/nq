@@ -17,12 +17,20 @@ word	w;
 	while( w->g != EOW ) {
 	    if( w->g > 0 ) {
                 printf( "F.%d", w->g );
-		if( w->e != 1 )
+		if( w->e != (exp)1 )
+#ifdef LONGLONG
+		    printf( "^%Ld", w->e );
+#else
 		    printf( "^%d", w->e );
+#endif
 	    }
 	    else {
                 printf( "F.%d", -w->g );
-		printf( "^%d",  -w->e );
+#ifdef LONGLONG
+		    printf( "^%Ld", -w->e );
+#else
+		    printf( "^%d", -w->e );
+#endif
 	    }
 	    w++;
 	    if( w->g != EOW ) putchar( '*' );
@@ -42,7 +50,11 @@ void	PrintGapPcPres() {
 	printf( "F := FreeGroup( %d );\n", NrPcGens+NrCenGens );
         printf( "dt := DeepThoughtCollector( F, [ " );
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
+#ifdef LONGLONG
+            printf( "%Ld, ", Exponent[i] );
+#else
             printf( "%d, ", Exponent[i] );
+#endif
         printf( " ] );\n" );
 
         /*

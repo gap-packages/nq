@@ -205,7 +205,11 @@ void	printExp() {
 
 	for( i = 1, k = 1; i <= Class; i++ ) {
 	    for( j = 1; j <= Dimension[i]; j++, k++ )
+#ifdef LONGLONG
+		printf( " %Ld", Exponent[k] );
+#else
 		printf( " %d", Exponent[k] );
+#endif
 	    printf( "   " );
 	}
 }
@@ -225,5 +229,9 @@ long	*eRow;
 {	long	i;
 
 	for( i = 1; i <= NrCenGens; i++ )
+#ifdef LONGLONG
+	    printf( " %Ld", eRow[i] );
+#else
 	    printf( " %d", eRow[i] );
+#endif
 }

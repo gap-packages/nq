@@ -68,7 +68,11 @@ void	AddGenerators() {
                 if( Verbose ) {
                   printf( "#    generator %d = ", G );
                       printGen( j, 'A' );
+#ifdef LONGLONG
+                      printf( "^%Ld\n", Exponent[j] );
+#else
                       printf( "^%d\n", Exponent[j] );
+#endif
                 }
 	    }
 
