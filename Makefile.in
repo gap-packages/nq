@@ -34,11 +34,12 @@ manual:
 	fi
 
 clean:
+	rm -f *~ config.cache config.log config.status
 	(cd src; make clean)
 	(cd doc; make clean)
 
 spotless:
-	rm -f *~ config.cache config.log config.status Makefile
+	rm -f Makefile
 	(cd src; make spotless)
 	(cd doc; make spotless)
 
