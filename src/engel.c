@@ -233,10 +233,8 @@ static
 void	evalRightEngelRel( w )
 word	w;
 
-{	word	ws = w, v, v1;
-	long	n = 0, needed;
-        
-        gen     *SaveCommute = Commute;
+{	word	comm;
+	long	n,  needed;
 
 /*	printf( "evalRightEngelRel() called with : " );*/
 /*	printWord( w, 'A' );*/
@@ -244,51 +242,31 @@ word	w;
 
 	NrWords++;
 	/* Calculate [ a, w, .., w ] */
-        if( Class+1 > RightEngel ) Commute = CommuteList[n];
-	if( (v = Commutator( A, w )) == (word)0 ) {
-	    Error( A, w, 'r' );
-	    return;
-	}
-	n++;
-	while( n < RightEngel ) {
-            if( Class+1 > RightEngel ) Commute = CommuteList[n];
-          
-	    if( (v1 = Commutator( v, w )) == (word)0 ) {
-		Error( A, w, 'r' );
-		free( v );
-		return;
-	    }
-	    free( v );
-	    v = v1;
+        if( (comm = EngelCommutator( A, w, RightEngel )) == (word)0 ) {
+            Error( A, w, 'r' );
+            return;
+        }
 
-            n++;
-	}
-        Commute = SaveCommute;
-
-	needed = addRow( ExpVecWord( v ) );
+	needed = addRow( ExpVecWord( comm ) );
 	if( needed ) {
-   	    printf( "#    [ " );
-	    printWord( A, 'a' );
+   	    printf( "#    [ " ); printWord( A, 'a' );
 	    for( n = RightEngel-1; n >= 0; n-- ) {
-		printf( ", " );
-	    	printWord( ws, 'a' );
+		printf( ", " ); printWord( w, 'a' );
 	    }
 	    printf( " ]\n" );
 	}
         if( CheckFewInstances ) Needed |= needed;
         else                    Needed = 1;
 
-	free( v );
+	Free( comm );
 }
 
 static
 void	evalLeftEngelRel( w )
 word	w;
 
-{	word	ws = w, v, v1;
-	long	n = 0, needed;
-
-        gen     *SaveCommute = Commute;
+{	word	comm;
+	long	n,  needed;
 
 /*	printf( "evalLeftEngelRel() called with : " );*/
 /*	printWord( w, 'A' );*/
@@ -296,31 +274,16 @@ word	w;
 
 	NrWords++;
 	/* Calculate [ w, a, .., a ] */
-        if( Class+1 > LeftEngel ) Commute = CommuteList[n];
-	if( (v = Commutator( w, A )) == (word)0 ) {
+        
+	if( (comm = EngelCommutator( w, A, LeftEngel )) == (word)0 ) {
 	    Error( w, A, 'l' );
 	    return;
 	}
-	n++;
-	while( n < LeftEngel ) {
-            if( Class+1 > LeftEngel ) Commute = CommuteList[n];
 
-	    if( (v1 = Commutator( v, A )) == (word)0 ) {
-		Error( w, A, 'l' );
-		free( v );
-		return;
-	    }
-	    free( v );
-	    v = v1;
-
-            n++;
-	}
-        Commute = SaveCommute;
-
-	needed = addRow( ExpVecWord( v ) );
+	needed = addRow( ExpVecWord( comm ) );
 	if( needed ) {
    	    printf( "#    [ " );
-	    printWord( ws, 'a' );
+	    printWord( w, 'a' );
 	    for( n = LeftEngel-1; n >= 0; n-- ) {
 		printf( ", " );
 	    	printWord( A, 'a' );
@@ -330,7 +293,7 @@ word	w;
         if( CheckFewInstances ) Needed |= needed;
         else                    Needed = 1;
 
-	free( v );
+	Free( comm );
 }
 
 static
@@ -396,14 +359,13 @@ void	evalLREngel() {
 	word	u;
 	int	n;
 	long	cl;
-        extern  unsigned NrGens;
 
 	A = (word)Allocate( 2*sizeof(gpower) );
         u = (word)Allocate( (NrPcGens+NrCenGens+1) * sizeof(gpower) );
 
         for( n = 1; !EarlyStop && n <= NrEngelGens; n++ ) {
 
-            if( RevEngel ) A[0].g = NrGens - n + 1;
+            if( RevEngel ) A[0].g = NumberOfAbstractGens() - n + 1;
             else           A[0].g = n;
             A[0].e = (exp)1;
 	    A[1].g = EOW; A[1].e = (exp)0;

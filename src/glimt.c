@@ -546,7 +546,7 @@ expvec  ev;
             if( ev[NrPcGens+i] != 0 ) { h = i; break; }
 
         /* If ev is the null vector, free it and return. */
-        if( h == 0 ) { free(ev); return 0; }
+        if( h == 0 ) { Free(ev); return 0; }
 
         if( Verbose ) t = RunTime();
 
@@ -563,7 +563,7 @@ expvec  ev;
             fflush( RawMatFile );
         }
             
-        free( ev );
+        Free( ev );
 
         if( (v = vReduce( v, h )) != (lvec)0 ) {
 	    changedMatrix = 1;

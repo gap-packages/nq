@@ -8,8 +8,10 @@
 ##
 ##    This makefile needs to be called with 
 ##
-##                        make GAPROOT=<gap-root-dir>
+##                        make GAP_ROOT=<gap-root-dir>
 ##
+
+GAP_ROOT=../../..
 
 manual.dvi: manual.tex
 	tex manual

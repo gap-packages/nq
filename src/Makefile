@@ -14,7 +14,7 @@ OPTS = -g -O3 $(LONGLONG) $(COPTS)
 CFLAGS = $(OPTS) -DVERSION='"1.3, Jan 1999"'
 
 OBJ = consistency.o pc.o relations.o word.o system.o \
-      addgen.o tails.o eliminate.o engel.o glimt.o \
+      addgen.o tails.o eliminate.o engel.o glimt.o instances.o \
       presentation.o mem.o pcarith.o collect.o trmetab.o gap.o
 
 nq : nq.o $(OBJ)

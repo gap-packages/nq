@@ -8,33 +8,49 @@
 #include "presentation.h"
 #include "nq.h"
 
+#include "instances.h"
+
 static word	*Image;
 
-void	NqEvalRelations() {
+void    EvalSingleRelation( r )
+node    *r;
+{   
+    word    w;
+    expvec  ev;
+    
+    if( (w = (word)EvalNode( r )) != (void *)0 ) {
+        ev = ExpVecWord( w );
+        Free( w );
+        addRow( ev );
+    }
+    else {
+        printf( "Evaluation " );
+        if( !Verbose ) { printf( "of " ); PrintNode( r ); }
+        printf( "failed.\n" );
+    }
+}
+
+void	EvalAllRelations() {
 
 	long	t;
-	expvec	ev;
 	node	*r;
-	word	w;
 
 	if( Verbose ) t = RunTime();
 
 	r = FirstRelation();
 	while( !EarlyStop && r != (node *)0 ) {
-          if( Verbose ) {
-            printf( "#    Evaluating: " );
-            PrintNode( r ); printf( "\n" );
-          }
-          if( (w = (word)EvalNode( r )) != (void *)0 ) {
-            ev = ExpVecWord( w );
-            addRow( ev );
-          }
-          else {
-            printf( "Evaluation " );
-	    if( !Verbose ) { printf( "of " ); PrintNode( r ); }
-            printf( "failed.\n" );
-          }
-          r = NextRelation();
+            if( Verbose ) {
+                printf( "#    Evaluating: " );
+                PrintNode( r ); printf( "\n" );
+            }
+
+            if( NumberOfIdenticalGensNode( r ) > 0 )
+                EvalIdenticalRelation( r );
+
+            else
+                EvalSingleRelation( r );
+
+            r = NextRelation();
 	}
 
 	if( Verbose )
@@ -54,7 +70,7 @@ void	InitEpim() {
 
 	/* Set the number of central generators to the number of generators
 	** in the finite presentation. */
-	nrGens = NumberOfGens();
+	nrGens = NumberOfAbstractGens();
 	NrCenGens = nrGens;
 
 	/* Initialize Exponent[]. */
@@ -71,6 +87,10 @@ void	InitEpim() {
 	    exit( 2 );
 	}
 	for( i = 0; i <= NrCenGens; i++ ) Commute[i] = i;
+
+	/* Initialize Weight[]. */
+	Weight = (int *)Allocate( (NrCenGens+1)*sizeof(int) );
+	for( i = 1; i <= NrCenGens; i++ ) Weight[i] = Class+1;
 
 	/* initialize the epimorphism onto the pc-presentation. */
 	Image = (word*)malloc( (nrGens+1)*sizeof(word) );
@@ -100,7 +120,7 @@ int	ExtendEpim() {
 	word	w;
 
 	G = NrPcGens;
-	nrGens = NumberOfGens();
+	nrGens = NumberOfAbstractGens();
 
 	/* If there is an epimorphism, we have to add pseudo-generators
 	** to the right hand side of images which are not definitions. */
@@ -138,7 +158,7 @@ gen	*renumber;
 {	int	i, j, l, nrGens;
 	word	w;
 
-	nrGens = NumberOfGens();
+	nrGens = NumberOfAbstractGens();
 
 	/* first we eliminate ALL central generators that occur in the
 	** epimorphism. */
@@ -292,7 +312,7 @@ void	PrintEpim() {
 	    return;
 	}
 
-	nrGens = NumberOfGens();
+	nrGens = NumberOfAbstractGens();
 	for( i = 1; i <= nrGens; i++ ) {
 	    printf( "#    " );
             printf( "%s |---> ", GenName(i) );
@@ -304,4 +324,15 @@ void	PrintEpim() {
 word	Epimorphism( g )
 gen	g;
 
-{	return Image[g];	}
+{	/*  Do we have an abstract generator or an identical generator ? */
+        if( g <= NumberOfAbstractGens() )
+            return Image[g];
+
+        if( Instances == (word *)0 ) {
+            printf( "Instances not initialised\n" );
+            return (word)0;
+        }
+
+        g = IdenticalGenNumberNode[ g - NumberOfAbstractGens() ];
+        return Instances[ g ];
+}

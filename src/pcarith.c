@@ -134,6 +134,9 @@ gen	g;
 	    w[0].g = EOW;
 	}
 	else {
+            if( (*PcGenerator)(g) == (word)0 ) 
+                return (word)0;
+
 	    l = WordLength( (*PcGenerator)(g) );
 	    w = (word)Allocate( (l+1)*sizeof( gpower ) );
 	    WordCopy( (*PcGenerator)(g), w );
@@ -271,7 +274,7 @@ word	(*generator)();
 	SetEvalFunc( TMULT, (void *(*)())WordMult );
 	SetEvalFunc( TPOW,  (void *(*)())WordPow );
 	SetEvalFunc( TCONJ, (void *(*)())WordConj );
-	SetEvalFunc( TCOMM, (void *(*)())Commutator );
+	SetEvalFunc( TCOMM, (void *(*)())WordComm );
 	SetEvalFunc( TREL,  (void *(*)())WordRel );
 	SetEvalFunc( TDRELL,(void *(*)())WordRel );
 	SetEvalFunc( TDRELR,(void *(*)())WordRel );

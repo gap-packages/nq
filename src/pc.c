@@ -41,14 +41,8 @@ void	InitPcPres() {
 	    exit( 2 );
 	}
 	Generators += NrCenGens;
-	Weight = (int *)malloc( (NrCenGens+1)*sizeof(int) );
-	if( Weight == (int*)0 ) {
-	    perror( "InitPcPres, Weight" );
-	    exit( 2 );
-	}
 	for( i = -NrCenGens; i <= NrCenGens; i++ ) {
 	    if( i == 0 ) continue;
-	    if( i > 0  ) Weight[i] = Class;
 	    Generators[i] = (word)malloc( 2*sizeof(gpower) );
 	    if( Generators[i] == (word)0 ) {
 		perror( "InitPcPres(), Generators[]" );

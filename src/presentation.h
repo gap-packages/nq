@@ -15,7 +15,8 @@
 **    The following data structure will represent a node in an expression
 **    tree. The component type can indicate 3 basic objects : numbers,
 **    generators and binary operators. There are currently 5 binary
-**    operations.
+**    operations.  There is now place to also hold a ternary operation: Engel
+**    commutators.  
 */
 struct _node {
         int     type;
@@ -53,6 +54,8 @@ extern node	*ReadWord();
 extern node	*Word();
 
 extern char     *GenName();
+extern int      NumberOfAbstractGens();
+extern int      NumberOfIdenticalGens();
 extern int      NumberOfGens();
 extern int      NumberOfRels();
 extern node	*FirstRelation();
@@ -66,3 +69,8 @@ extern void	*EvalNode();
 extern void	FreeNode();
 extern void	PrintNode();
 extern void	InitPrint();
+
+extern int      NrIdenticalGensNode;
+extern gen      *IdenticalGenNumberNode;
+extern int      NumberOfIdenticalGensNode();
+

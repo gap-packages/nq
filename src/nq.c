@@ -249,7 +249,8 @@ char	*argv[];
 	printf( "#    Calculating the abelian quotient ...\n" );
 	InitEpim();
 
-	NqEvalRelations();
+        PrintPresentation( stdout );
+	EvalAllRelations();
 	EvalEngel();
 	EvalTrMetAb();
 
@@ -289,7 +290,7 @@ char	*argv[];
 
             if( NilpMult ) OutputMatrix( "nilp" );
 
-	    NqEvalRelations();
+	    EvalAllRelations();
 	    EvalEngel();
             EvalTrMetAb();
 

@@ -52,8 +52,8 @@ void	AddGenerators() {
         */ 
 	Definition = 
           (def*)realloc( Definition, 
-                         (G + (Dimension[1]+1)*NrPcGens + 1 + NumberOfGens())
-                         *sizeof(def) );
+                         (G + (Dimension[1]+1)*NrPcGens + 1
+                            +  NumberOfAbstractGens()) * sizeof(def) );
 	if( Definition == (def*)0 ) {
             perror( "AddGenerators(), Definition" );
 	    exit( 2 );

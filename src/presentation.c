@@ -90,7 +90,7 @@ int     type;
 **    generator number 0 is returned.
 */
 static char	**GenNames;
-       unsigned	NrGens = 0;
+static unsigned	NrGens = 0;
 
 #define NOCREATE 0
 #define CREATE   1
@@ -346,7 +346,8 @@ static void	Generator() {
 **    Quoted items (except 'empty') are recognized by the scanner and returned
 **    as so called tokens. The unquoted symbol | indicates alternatives.
 **
-**    presentation:    '<' genlist '|' rellist '>'
+**    presentation: '<' genlist '|' rellist '>' |
+**                  '<' genlist ; genlist '|' rellist '>'
 **
 **    genlist:         'empty' | genseq
 **    genseq:          'generator' | 'generator' ',' genseq
@@ -601,7 +602,7 @@ static node	*Relation() {
 }
 	
 /*
-**    RelList() reads a list of generators. The defining rules are:
+**    RelList() reads a list of relations. The defining rules are:
 **
 **    rellist:         'empty' | relseq
 **    relseq:          relation | relation ',' relseq
@@ -631,9 +632,13 @@ static node	**RelList() {
 }
 
 /*
-**    GenList() reads a list of generators. The defining rules are:
+**    GenList() reads a list of generators.  The list of generators may
+**    consist of abstract generators and identical generators.  Identical
+**    generators are used to specify identical relations.
 **
-**    genlist:         'empty' | genseq
+**    The defining rules are:   
+**
+**    genlist:         'empty' | genseq | genseq ; genseq
 **    genseq:          'generator' | 'generator' ',' genseq
 */
 static int	GenList() {
@@ -662,17 +667,28 @@ static int	GenList() {
 **    The following data structure holds a presentation.
 */
 struct  pres {
-        unsigned nrgens;
-        unsigned nrrels;
-        node     **rels;
+        unsigned nragens;      /* number of abstract generators  */
+        unsigned nrigens;      /* number of identical generators */
+        unsigned nrrels;       /* number of relations            */
+        node     **rels;       /* pointer to relations           */
 };
 
 static	struct pres Pres;
 
 /*
-**    NumberOfGens() returns the number of generators.
+**    NumberOfAbstractGens() returns the number of abstract generators.
 */
-int	NumberOfGens() { return Pres.nrgens; }
+int	NumberOfAbstractGens() { return Pres.nragens; }
+
+/*
+**    NumberOfIdenticalGens() returns the number of identical generators.
+*/
+int	NumberOfIdenticalGens() { return Pres.nrigens; }
+
+/*
+**    NumberOfGens() returns the number of abstract and identical generators. 
+*/
+int	NumberOfGens() { return Pres.nragens + Pres.nrigens; }
 
 /*
 **    NumberOfRels() returns the number of relations.
@@ -715,7 +731,8 @@ node	*CurrentRelation() { return Pres.rels[NextRel-1]; }
 /*
 **    Presentation reads a finite presentation. The syntax of a presentation
 **    is:
-**        presentation: '<' genlist '|' rellist '>'
+**        presentation: '<' genlist '|' rellist '>' |
+**                      '<' genlist ; genlist '|' rellist '>'
 */
 void	Presentation( fp, filename )
 FILE	*fp;
@@ -729,7 +746,14 @@ char	*filename;
 	if( Token != GEN && Token != PIPE )
 	    SyntaxError( "generator or vertical bar expected" );
 
-	Pres.nrgens = GenList();
+	Pres.nragens = GenList();
+
+        if( Token == SEMICOLON ) {
+            NextToken();
+            Pres.nrigens = GenList();
+        }
+        else
+            Pres.nrigens = 0;
 
 	if( Token != PIPE ) SyntaxError( "vertical bar expected" );
 	NextToken();
@@ -802,8 +826,53 @@ node	*n;
           } 
           return (*EvalFunctions[n->type])( l, r, e );
         }
+        else {
+          return (*EvalFunctions[n->type])( l, r );
+        }
+}
 
-	return (*EvalFunctions[n->type])( l, r );
+static 
+void	TraverseNode( n, igens )
+node	*n;
+gen     *igens;
+
+{        
+        if( n->type == TNUM ) return;
+
+	if( n->type == TGEN ) {
+            if( (*EvalFunctions[TGEN])(n->cont.g) == (void *)0 )
+
+                igens[ n->cont.g - NumberOfAbstractGens() ] = 1;
+
+            return;
+        }
+
+        TraverseNode( n->cont.op.l, igens );
+        TraverseNode( n->cont.op.r, igens );
+}
+
+int  NrIdenticalGensNode = 0;
+gen  *IdenticalGenNumberNode = (gen *)0;
+
+int  NumberOfIdenticalGensNode( n )
+node *n;
+{
+    gen  g,  nr;
+
+    if( IdenticalGenNumberNode != (gen *)0 )
+        Free( IdenticalGenNumberNode );
+
+    IdenticalGenNumberNode = 
+      (gen *)Allocate( (NumberOfIdenticalGens()+1) * sizeof(gen) ); 
+
+    TraverseNode( n, IdenticalGenNumberNode );
+
+    for( nr = 0, g = 1; g <= NumberOfIdenticalGens(); g++ )
+        if( IdenticalGenNumberNode[ g ] == 1 )
+            IdenticalGenNumberNode[ g ] = ++nr;
+
+    NrIdenticalGensNode = nr;
+    return nr;
 }
 
 void	**EvalRelations() {
@@ -995,17 +1064,26 @@ FILE	*fp;
 
 	InitPrint( fp );
 
-	if( Pres.nrgens == 0 ) return;
+	if( Pres.nragens == 0 ) return;
 
 	/* Open the presentation. */
 	fprintf( OutFp, "< " );
 
 	/* Print the generators first. */
 	PrintGen( 1 );
-	for( g = 2; g <= Pres.nrgens; g++ ) {
-	    fprintf( OutFp,", ");
+	for( g = 2; g <= Pres.nragens; g++ ) {
+	    fprintf( OutFp, ", ");
 	    PrintGen( g );
 	}
+
+        if( Pres.nrigens > 0 ) {
+            fprintf( OutFp, "; " );
+            PrintGen( Pres.nragens+1 );
+            for( g = Pres.nragens+2; g <= Pres.nragens + Pres.nrigens; g++ ) {
+                fprintf( OutFp, ", ");
+                PrintGen( g );
+            }
+        }
 
 	/* Now the delimiter. */
 	fprintf( OutFp, " |\n" );

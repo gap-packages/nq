@@ -30,5 +30,5 @@ DeclarePackage( "nq", "1.3",
 end );
 
 # install the documentation
-DeclarePackageDocumentation( "nq", "doc" );
+DeclarePackageDocumentation( "nq", "doc/newdoc/" );
 

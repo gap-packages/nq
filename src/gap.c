@@ -119,7 +119,7 @@ void	PrintGapPcPres() {
         **  Print the epimorphism.  It is sufficient to list the images.
         */
         printf( "NqImages := [\n" );
-        for( i = 1; i <= NumberOfGens(); i++ ) {
+        for( i = 1; i <= NumberOfAbstractGens(); i++ ) {
             printGapWord( Epimorphism( i ) );
             printf( ",\n" );
         }
@@ -196,7 +196,7 @@ void    PrintRawGapPcPres() {
         **  Print the epimorphism.  It is sufficient to list the images.
         */
         printf( "NqImages         := [\n" );
-        for( i = 1; i <= NumberOfGens(); i++ ) {
+        for( i = 1; i <= NumberOfAbstractGens(); i++ ) {
             printf( "  [ " );
             printRawWord( Epimorphism( i ) );
             printf( "],  # image of generator %d\n", i );
