@@ -16,7 +16,7 @@
         computing nilpotent factor groups of finitely
         presented groups<Br></Br>
         &nbsp;<Br></Br>
-        Based on the Standalone ANU Nilpotent Quotient Package
+        Based on the ANU Nilpotent Quotient Program
     </Subtitle>
     <Version>Version 2.0</Version>                      <!-- OPTIONAL -->
     <Author>
@@ -329,7 +329,7 @@
   in the ANU NQ is contained in <Cite Key="Nickel96"/>
   </Section>
 
-  <Section><Heading>Identical Relations</Heading>
+  <Section><Heading>Identical Relations</Heading><Label Name="IdRels"/>
 
   Let <M>w</M> be a word in free generators <M>x_1,\ldots,x_n</M>.  A
   group <M>G</M> satisfies the relation <M>w</M> <E>identically</E> if
@@ -338,8 +338,8 @@
   <Index>identical relation</Index> <Index>law</Index> <E>identical
   relation</E> <M>w</M> or satisfies the <E>law</E> <M>w</M>.  In
   slight abuse of notation, we call the elements <M>x_1,\ldots,x_n</M>
-  <Index>identical generator</Index> <Index>law generator</Index>
-  identical or law generators.
+  <Index>identical generator</Index> 
+  <E>identical</E> generators.
 
   <P/> Common examples of identical relations are: A group of
   nilpotency class at most <M>c</M> satisfies the law
@@ -376,7 +376,23 @@
   </Display>
   The first relation says that <M>c</M> commutes with all elements of
   the group.  The second relation turns <M>a</M> into a third right
-  Engel element.
+  Engel element.  
+
+  <P/>An element <M>a</M> is called <E>an <M>n</M>-th right
+  Engel element</E>
+  <Index>right Engel element</Index> 
+  if it satisfies the commutator law <M>[a,x,...,x]</M>
+  where the identical generator <M>x</M> occurs <M>n</M>-times.
+  Likewise, an element <M>b</M> is called an <M>n</M>-th left Engel
+  element 
+  <Index>left Engel element</Index>
+  if it satisfies the commutator law <M>[x,b,b,...b]</M>.
+
+  Let <M>G</M> be a nilpotent group.  Then <M>G</M> satisfies a given
+  law if the law is satisfied by a finite set of instances given by
+  Higman's Lemma.  The ANU NQ uses Higman's Lemma to obtain a finite
+  presentation for groups that satisfy one or several identical
+  relations.
 
   </Section>
 
@@ -498,6 +514,44 @@ rec( generators := [ x1, x2 ],
 
   </Section>
 
+  <Section><Heading>The input format of the standalone</Heading>
+
+The input format for finite presentations resembles the way many
+people write down a presentation on paper.  Here are some examples of
+presentations that the ANU NQ accepts:
+
+<Verb><![CDATA[
+    < a, b | >                       # free group of rank 2
+
+    < a, b, c; x, y | 
+                [a,b,c],             # a left normed commutator
+                [b,c,c,c]^6,         # another one raised to a power
+                a^2 = c^-3*a^2*c^3,  # a relation
+                a^(b*c) = a,         # a conjugate relation
+                (a*[b,(a*c)])^6,     # something that looks complicated
+                [x,y,y,y,y],         # an identical relation
+                [c,x,x,x,x,x]        # c is a fifth right Engel element
+    >
+]]>
+</Verb>
+
+A presentation starts with '&tlt;' followed be a list of generators
+separated by commas.  Generator names are strings that contain only
+upper and lower case letters, digits, dots and underscores and that do
+not start with a digit.  The list of generator names is separated from
+the list of relators/relations by the symbol '|'.  The list of
+generators can be followed by a list of identical generators separated
+by a semicolon.  Relators and relations are separated by commas and
+can be mixed arbitrarily.  Parentheses can be used in order to group
+subexpressions together.  Square brackets can be used in order to form
+left normed commutators.  The symbols '*' and '&circum;' can be
+used to form products and powers, respectively. The presentation
+finishes with the symbol '&tgt;'.  A comment starts with the symbol '&hash;'
+and finishes at the end of the line.  The file src/presentation.c
+contains a complete grammar for the presentations accepted by the ANU
+NQ.
+
+  </Section>
   </Chapter>  
 
   <Chapter>
@@ -543,7 +597,6 @@ gap> F := FreeGroup( 2 );
 <free group on the generators [ f1, f2 ]>
 gap> H := NilpotentQuotient( F, 5 );
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-time: 20 msec
 gap> lcs := LowerCentralSeries( H );;
 gap> for i in [1..5] do Print( lcs[i] / lcs[i+1], "\n" ); od;
 Pcp-group with orders [ 0, 0 ]
@@ -640,23 +693,64 @@ infinite order.  The number of zeroes is always correct.
         </Description>
         </ManSection>
 
-
         <ManSection>
         <Func Name="NilpotentEngelQuotient" 
-              Arg="fp-group, n[, c]"/>
+              Arg="[output-file,] fp-group, n, [, id-gens] [, c]"/>
         <Func Name="NilpotentEngelQuotient" 
-              Arg="input-file, n[, c]"/>
+              Arg="[output-file,] input-file, n, [, c]"/>
         <Description>
            This function is a special version of <Ref
-           Func="NilpotentQuotient"/> which enforces the <M>n</M>-th
-           Engel identity on the nilpotent quotients of the group
-           specified by <F>fp-group</F> or by <F>input-file</F>.
+           Func="NilpotentQuotient" Style="Text"/> which enforces the
+           <M>n</M>-th Engel identity on the nilpotent quotients of the
+           group specified by <F>fp-group</F> or by <F>input-file</F>.
 
+           <P/>The Engel condition can also be enforced by using
+           identical generators and the Engel law and <Ref
+           Func="NilpotentQuotient" Style="Text"/>.  See the examples
+           there. 
+
+           <P/> The following example computes the relatively free
+           fifth Engel group on two generators, determines its
+           (normal) torsion subgroup and computes the corresponding
+           quotient group.  The quotient modulo the torsion subgroup
+           is torsion-free.  Therefore, there is a nilpotent
+           presentation without power relations.  The examples
+           computes a nilpotent presentation for the torsion free
+           factor group through the upper central series, which is
+           isolated and will yield a set of generators of infinite
+           order.
 <Example>
-gap> NilpotentEngelQuotient( FreeGroup(2), 5 );
+gap> G := NilpotentEngelQuotient( FreeGroup(2), 5 );
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 10, 
   0, 0, 30, 0, 3, 3, 10, 2, 0, 6, 0, 0, 30, 2, 0, 9, 3, 5, 2, 6, 2, 10, 5, 5, 
   2, 0, 3, 3, 3, 3, 3, 5, 5, 3, 3 ]
+gap> NilpotencyClassOfGroup(G);
+9
+gap> T := TorsionSubgroup( G );
+Pcp-group with orders [ 3, 3, 2, 2, 3, 3, 2, 9, 3, 5, 2, 3, 2, 10, 5, 2, 3, 
+  3, 3, 3, 3, 5, 5, 3, 3 ]
+gap> IsAbelian( T );
+true
+gap> AbelianInvariants( T );
+[ 3, 3, 3, 3, 3, 3, 3, 3, 30, 30, 30, 180, 180 ]
+gap> H := G / T;
+Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 10, 
+  0, 0, 30, 0, 5, 0, 2, 0, 0, 10, 0, 2, 5, 0 ]
+gap> H := PcpGroupBySeries( UpperCentralSeries(H), "snf" );
+Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+  0, 0, 0, 0, 0 ]
+gap> ucs := UpperCentralSeries( H );;
+gap> for i in [1..NilpotencyClassOfGroup(H)] do
+> 	Print( ucs[i]/ucs[i+1], "\n" );
+> od;
+Pcp-group with orders [ 0, 0 ]
+Pcp-group with orders [ 0 ]
+Pcp-group with orders [ 0, 0 ]
+Pcp-group with orders [ 0, 0, 0 ]
+Pcp-group with orders [ 0, 0, 0, 0, 0, 0 ]
+Pcp-group with orders [ 0, 0, 0, 0 ]
+Pcp-group with orders [ 0, 0 ]
+Pcp-group with orders [ 0, 0, 0 ]
 </Example>
 
         </Description>
@@ -876,14 +970,12 @@ gap> NqDefaultOptions;
   <ManSection>
   <Var Name="NqGlobalVariables"/>  
      <Description>
-     This variable is a list of strings with the names of the global
-     variables that are used in the output stream of the ANU NQ.  When
-     the output stream is read, these global variables are assigned
-     new values.  The mechanism provided by 
-     <Ref Func="HideGlobalVariables" Style="Text" BookName="Reference" 
-     Label="HideGlobalVariables" /> 
-     is used to protect these variables from being accidentally
-     overwritten. 
+     This variable contains a list of strings with the names of the
+     global variables that are used in the output stream of the ANU
+     NQ.  While the output stream is read, these global variables are
+     assigned new values.  To avoid overwriting these variables in
+     case they contain values, their contents is saved before reading
+     the output stream and restored afterwards.
      </Description>
   </ManSection>
 
