@@ -10,17 +10,20 @@
 ##
 BINDIR=bin/@target@-@CC@
 GAP_ROOT=../..
-GNU_MP_DIR=.
+GNU_MP_LIB=.
+GNU_MP_INC=.
 
-all: compile manual
+all: compile
+
+gap: compile gapmanual
 
 compile:
-	(cd src; make GNU_MP_DIR=$(GNU_MP_DIR))
+	(cd src; make GNU_MP_LIB=$(GNU_MP_LIB) GNU_MP_INC=$(GNU_MP_INC))
 	@if test ! -d bin;  then mkdir bin; fi
 	@if test ! -d $(BINDIR);  then mkdir $(BINDIR); fi
 	mv src/nq $(BINDIR)
 
-manual:
+gapmanual:
 	@if test ! -r $(GAP_ROOT)/sysinfo.gap; then \
 	    echo "";							  \
 	    echo "    Cannot locate the (main) GAP root directory.";      \
@@ -35,12 +38,13 @@ manual:
 	fi
 
 clean:
-	rm -f *~ config.cache config.log config.status
+	rm -f *~ */*~ config.cache config.log config.status
 	(cd src; make clean)
 	(cd doc; make clean)
 
-spotless:
+spotless: clean
 	rm -f Makefile
+	rm -r bin
 	(cd src; make spotless)
 	(cd doc; make spotless)
 
