@@ -7,7 +7,7 @@ clean:
 	rm -f G?.tst  *~
 
 spotless: clean
-	rm G*.old
+	rm -f G*.old
 
 G1.tst: G1
 	@ echo -n Testing example: $<
@@ -69,14 +69,7 @@ G5.tst: G5
 	     echo "    " to nickel@mathematik.tu-darmstadt.de;        \
 	fi
 
-link:
-	@ ln -s G1 G1.18
-	@ ln -s G2 G2.11
-	@ ln -s G3 G3.20
-	@ ln -s G4 G4.12
-	@ ln -s G5 G5.12
-
-test: link
+test:
 	@ for example in G?.[0-9]*; do                                   \
 	    echo makeing test example `basename $$example`;              \
 									 \
