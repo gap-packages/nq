@@ -122,6 +122,7 @@ NilpotentQuotient := function( arg )
     fi;
     cmd := ConcatenationString( cmd, " > ", res );
 
+    Unbind( NqLowerCentralSeries );
     ExecPkg( "nq", "bin/nq", cmd, "." );
 
 ##
