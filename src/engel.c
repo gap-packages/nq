@@ -19,6 +19,7 @@ static  int     Needed;
 static	word	A;
         int     SemigroupOnly  = 0;
         int     SemigroupFirst = 0;
+        int     CheckFewInstances = 0;
 
 static
 void	Error( v, w, type )
@@ -72,7 +73,8 @@ word	v, w;
 	    }
 	    printf( " ]\n" );
 	}
-        Needed |= needed;
+        if( CheckFewInstances ) Needed |= needed;
+        else                    Needed = 1;
 
 	free( v );
 }
@@ -161,13 +163,13 @@ void	evalEngel()
 	u = (word)Allocate( (NrPcGens+NrCenGens+1) * sizeof(gpower) );
 	v = (word)Allocate( (NrPcGens+NrCenGens+1) * sizeof(gpower) );
 
-        /* For `production purposes' I don't want tot run through */
+        /* For `production purposes' I don't want tot run through      */
         /* those classes that don't yield non-trivial instances of the */
-        /* Engel law. Therefore, we stop as soon as we ran through a */
-        /* class that didn't yield any non-trivial instances. This is */
-        /* done through the static variable Needed which is set by */
-        /* evalEngelRel() as soon as a non-trivial instance has been */
-        /* found. */
+        /* Engel law. Therefore, we stop as soon as we ran through a   */
+        /* class that didn't yield any non-trivial instances. This is  */
+        /* done through the static variable Needed which is set by     */
+        /* evalEngelRel() as soon as a non-trivial instance has been   */
+        /* found if the flag CheckFewInstances (option -c) is set.     */
         Needed = 1;
 	for( c = 2; !EarlyStop && Needed && c <= Class+1; c++ ) {
             Needed = 0;
