@@ -233,6 +233,8 @@ word	w;
 	    }
 	    printf( " ]\n" );
 	}
+        if( CheckFewInstances ) Needed |= needed;
+        else                    Needed = 1;
 
 	free( v );
 }
@@ -275,6 +277,8 @@ word	w;
 	    }
 	    printf( " ]\n" );
 	}
+        if( CheckFewInstances ) Needed |= needed;
+        else                    Needed = 1;
 
 	free( v );
 }
@@ -350,13 +354,18 @@ void	evalLREngel() {
 	    A[0].g = n;   A[0].e = 1;
 	    A[1].g = EOW; A[1].e = 0;
 
-	    for( cl = 2; !EarlyStop && cl <= Class+1; cl++ ) {
+            Needed = 1;
+	    for( cl = 2; !EarlyStop && Needed && cl <= Class+1; cl++ ) {
+                Needed = 0;
 	        u[0].g = EOW; u[0].e = 0;
 	        NrWords = 0;
 	        if(Verbose) printf("#    Checking words of weight %d\n",cl-1);
 	        buildWord( u, 0, 1, cl-1 );
 	        if(Verbose) printf( "#    Checked %d words.\n", NrWords );
 	    }
+            for( ; !EarlyStop && cl <= Class+1; cl++ )
+                printf("#    NOT checking words of weight %d\n", cl );
+
         }
 	free( u ); free( A );
 }
