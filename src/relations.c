@@ -281,7 +281,8 @@ void	PrintEpim() {
 
 	nrGens = NumberOfGens();
 	for( i = 1; i <= nrGens; i++ ) {
-	    printf( "#    " ); printGen( i, 'a' ); printf( "|---> " );
+	    printf( "#    " );
+            printf( "%s |---> ", GenName(i) );
 	    printWord( Image[i], 'A' );
 	    putchar( '\n' );
 	}
