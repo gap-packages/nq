@@ -711,9 +711,9 @@ function( G, nqrec )
                         List( idgens, g->Position( freegens, g ) ) )};
 
         U := Subgroup( G, gens );
-        phi := GroupHomomorphismByImages( U, A, gens, images );
+        phi := GroupHomomorphismByImagesNC( U, A, gens, images );
     else
-        phi := GroupHomomorphismByImages( G, A, gens, images );
+        phi := GroupHomomorphismByImagesNC( G, A, gens, images );
     fi;
 
     SetFeatureObj( phi, IsFromFpGroupStdGensGeneralMappingByImages, true );
