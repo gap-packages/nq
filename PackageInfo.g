@@ -50,10 +50,10 @@ AbstractHTML   := Concatenation(
                   
 PackageDoc := rec(
   BookName  := "nq",
-  Archive   := Concatenation( ~.PackageWWWHome, "nqdoc.tar.gz" ),
+  ArchiveURLSubset := [ "doc" ],
   HTMLStart := "doc/chap0.html",
-  PDFFile   := "nqman.pdf",
-  SixFile   := "manual.six",
+  PDFFile   := "doc/manual.pdf",
+  SixFile   := "doc/manual.six",
   LongTitle := "Nilpotent Quotient Algorithm",
   Autoload  := false
 ),

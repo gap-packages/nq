@@ -14,10 +14,11 @@ GNU_MP_INC=.
 GNU_MP_LIB=$(GNU_MP_INC)
 
 WEB_DIR  = /tmp/NQ
-HTML_DOC = doc/chap0.html doc/chap1.html doc/chap2.html \
-	   doc/chap3.html doc/chap4.html doc/chap5.html \
-	   doc/chapBib.html doc/chapInd.html doc/manual.css \
-	   doc/manual.pdf
+HTML_DOC = nq-2.1/doc/chap0.html   nq-2.1/doc/chap1.html \
+	   nq-2.1/doc/chap2.html   nq-2.1/doc/chap3.html \
+	   nq-2.1/doc/chap4.html   nq-2.1/doc/chap5.html \
+	   nq-2.1/doc/chapBib.html nq-2.1/doc/chapInd.html \
+	   nq-2.1/doc/manual.css   nq-2.1/doc/manual.pdf
 
 all: compile
 
@@ -43,16 +44,18 @@ release-2.0:
 	gzip < nq-2_0.tar > nq-2_0.tgz
 
 release-2.1: clean
-	cvs export -D 'October 20, 2003 11:00' -d nq-2.1 GAP/4.0/pkg/nq
+#	cvs export -D 'October 20, 2003 11:00' -d nq-2.1 GAP/4.0/pkg/nq
 
 	find nq-2.1 -name .cvsignore -exec rm "{}" ";"
+
+	cd nq-2.1/doc; make; make clean
 
 	rm -f nq-2_1.zoo nq-2_1.tgz nq-2_1.tar
 	tar cf nq-2_1.tar nq-2.1
 	find nq-2.1 -type f -exec zoo ah nq-2_1.zoo "{}" ";"
 	gzip < nq-2_1.tar > nq-2_1.tgz
 
-WWW: gapmanual
+WWW: release-2.1
 	if [ ! -d $(WEB_DIR) ]; then mkdir $(WEB_DIR); fi
 
 	@echo '--> Moving archive files'
@@ -64,12 +67,11 @@ WWW: gapmanual
 	@echo '--> Preparing HTML manual'
 	if [ ! -d $(WEB_DIR)/doc ]; then mkdir $(WEB_DIR)/doc; fi
 	cp $(HTML_DOC) $(WEB_DIR)/doc
-	tar cvzf $(WEB_DIR)/nqdoc.tar.gz -C $(WEB_DIR) doc
 
 	@echo '--> Preparing PDF- and PS-manuals'
-	cp doc/manual.pdf $(WEB_DIR)/nqman.pdf
-	cp doc/manual.ps $(WEB_DIR)/nqman.ps
-	cp doc/manual.six $(WEB_DIR)/nqman.six
+	cp nq-2.1/doc/manual.pdf $(WEB_DIR)/nqman.pdf
+	cp nq-2.1/doc/manual.ps $(WEB_DIR)/nqman.ps
+	cp nq-2.1/doc/manual.six $(WEB_DIR)/nqman.six
 	@echo '--> Copying Package info'
 	cp PackageInfo.g $(WEB_DIR)
 
