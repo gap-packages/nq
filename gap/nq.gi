@@ -355,9 +355,11 @@ function( arg )
     Append( str, " |\n" );
 
     for r in RelatorsOfFpGroup( G ) do
-        Append( str, "    " );
-        Append( str, String( MappedWord( r, fgens, newgens ) ) );
-        Append( str, ",\n" );
+        if Length( r ) > 0 then
+            Append( str, "    " );
+            Append( str, String( MappedWord( r, fgens, newgens ) ) );
+            Append( str, ",\n" );
+        fi;
     od;
     if str[ Length(str)-1 ] = ',' then
         Unbind( str[ Length(str) ] );
