@@ -11,3 +11,5 @@ a GAP 4 share library package.
    configure can remember the correct values and it will suffice make.
 -- Update installation procedure
 
+-- GAP-Funktionalit"at davon abh"angig machen, on
+   RequirePackage("polycyc") erfolgreich ist.
