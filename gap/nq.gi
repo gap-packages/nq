@@ -22,7 +22,7 @@ function ( ) local  NqDir;
   ##  loaded by RequirePackage().
   NqDir := DirectoriesPackageLibrary( "nq", "gap" )[1];
 
-  MakeGAPDocDoc( Filename( NqDir, "../doc/" ), "nqnew",
+  MakeGAPDocDoc( Filename( NqDir, "../doc/" ), "nqman",
                  [ "nq.bib" ], "nq", "../../../" );
 end );
 

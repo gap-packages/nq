@@ -51,5 +51,5 @@ options=$*
 ##
 ##  Run the test for all documentation files (in some arbitrary order).
 ##
-# $mkxtest $options -r nq nqnew
-$mkxtest $options nqnew
+# $mkxtest $options -r nq nqman
+$mkxtest $options nqman

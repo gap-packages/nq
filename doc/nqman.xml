@@ -555,11 +555,11 @@ contains a complete grammar for the presentations accepted by the ANU
 NQ.
 
 
-Typically, the input for the standalone is put into a file by using a
-standard text editor.  The file can be passed as an argument to the
-function <Ref Func="NilpotentQuotient" Style="Text"/>.  It is also
-possible to put a presentation in the standalone's input format into a
-string and use the string as argument for <Ref
+<P/>Typically, the input for the standalone is put into a file by
+using a standard text editor.  The file can be passed as an argument
+to the function <Ref Func="NilpotentQuotient" Style="Text"/>.  It is
+also possible to put a presentation in the standalone's input format
+into a string and use the string as argument for <Ref
 Func="NilpotentQuotient" Style="Text"/>.
 
   </Section>
@@ -1026,14 +1026,14 @@ gap> Print( last );
      <Description>
      This variable contains the number of milliseconds of runtime of
      the last call of ANU NQ.
-     <Example>
+     <Log>
 gap> NilpotentEngelQuotient( FreeGroup(2), 5 );
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 10, 
   0, 0, 30, 0, 3, 3, 10, 2, 0, 6, 0, 0, 30, 2, 0, 9, 3, 5, 2, 6, 2, 10, 5, 5, 
   2, 0, 3, 3, 3, 3, 3, 5, 5, 3, 3 ]
 gap> NqRuntime;
 18200
-     </Example>
+     </Log>
      </Description>
   </ManSection>
   <ManSection>
@@ -1076,7 +1076,7 @@ gap> NqDefaultOptions;
   progress information.  This is done by setting the info class
   <C>InfoNQ</C> to <M>1</M> via the function 
   <Ref BookName="ref" Oper="SetInfoLevel" />.
-<Example>
+<Log>
 gap> NilpotentQuotient(FreeGroup(2),5);
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 gap> SetInfoLevel( InfoNQ, 1 );
@@ -1088,7 +1088,7 @@ gap> NilpotentQuotient(FreeGroup(2),5);
 #I  Class 5: 6 generators with relative orders: 0 0 0 0 0 0
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 gap> SetInfoLevel( InfoNQ, 0 );
-</Example>
+</Log>
   </Section>
   </Chapter>
 
