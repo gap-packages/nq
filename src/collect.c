@@ -289,23 +289,23 @@ word    u, v;
     x  = ExpVecWord( y );
     for( i = 1; i <= NrPcGens+NrCenGens; i++ ) {
         x[i] = u2[i]+v2[i] - (v1[i] + u1[i]);
-        if( Exponent[i] != 0 ) {
-            while( x[i] < 0 ) x[i] += Exponent[i];
+        if( Exponent[i] != (exp)0 ) {
+            while( x[i] < (exp)0 ) x[i] += Exponent[i];
             if( x[i] >= Exponent[i] ) x[i] -= Exponent[i];
         }
-        if(  x[i] != 0 ) {
-            if(  x[i] > 0 ) { y[0].g =  i; y[0].e =   x[i]; }
-            else            { y[0].g = -i; y[0].e =  -x[i]; }
+        if(  x[i] != (exp)0 ) {
+            if(  x[i] > (exp)0 ) { y[0].g =  i; y[0].e =   x[i]; }
+            else                 { y[0].g = -i; y[0].e =  -x[i]; }
             if( Collect( u1, y, (exp)1 ) ) { w = (word)0; goto exit; }
         }
-        if( u1[i] != 0 ) {
-            if( u1[i] > 0 ) { y[0].g =  i; y[0].e =  u1[i]; }
-            else            { y[0].g = -i; y[0].e = -u1[i]; }
+        if( u1[i] != (exp)0 ) {
+            if( u1[i] > (exp)0 ) { y[0].g =  i; y[0].e =  u1[i]; }
+            else                 { y[0].g = -i; y[0].e = -u1[i]; }
             if( Collect( v1, y, (exp)1 ) ) { w = (word)0; goto exit; }
         }
-        if( v2[i] != 0 ) {
-            if( v2[i] > 0 ) { y[0].g =  i; y[0].e =  v2[i]; }
-            else            { y[0].g = -i; y[0].e = -v2[i]; }
+        if( v2[i] != (exp)0 ) {
+            if( v2[i] > (exp)0 ) { y[0].g =  i; y[0].e =  v2[i]; }
+            else                 { y[0].g = -i; y[0].e = -v2[i]; }
             if( Collect( u2, y, (exp)1 ) ) { w = (word)0; goto exit; }
         }
     }

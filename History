@@ -116,3 +116,9 @@ March 1998: Version 1.2 of the ANU NQ
 10 Aug 1999:
            + turned NQ into a GAP 4 share package
            + modified the GAP 4 output routines
+
+25 Aug 1999:
+           + wrote new setup for nq using autoconf
+           + replaced in glimt.c all BSD compatible integer functions
+             by GMP functions.  Now libmp.a is not needed anymore.
+
