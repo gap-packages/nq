@@ -74,7 +74,7 @@ void	InitPcPres() {
 	for( j = 1; j <= NrCenGens; j++ ) {
 	    /* the length of Conjugate[j] is 2*(j-1)+1 */
 	    Conjugate[j] = (word*)malloc( (2*j-1)*sizeof(word) );
-	    if( Conjugate[j] == (Word*)0 ) {
+	    if( Conjugate[j] == (word*)0 ) {
 		perror( "InitPcPres(), Conjugate[]" );
 		exit( 2 );
 	    }
