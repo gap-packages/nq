@@ -5,7 +5,6 @@
 ##    @(#)$Id$
 ##
 
-ReadPkg("nq", "gap/nqaux.g");
 ReadPkg("nq", "gap/nq.gd");
 
 ReadPkg("nq", "gap/nqpcp.gi");

@@ -14,7 +14,7 @@ fi;
 ##
 ##    Announce the package version and test for the existence of the binary.
 ##
-DeclarePackage( "nq", "1.3",
+DeclarePackage( "nq", "2.0",
 
   function()
     local path;
@@ -34,4 +34,3 @@ end );
 # install the documentation
 DeclarePackageDocumentation( "nq", "doc", "ANU NQ", 
         "Computation of nilpotent quotients" );
-

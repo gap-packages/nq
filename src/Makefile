@@ -7,7 +7,7 @@
 
 ##    GNU cc has the integer data type long long.  It can be used for
 ##    exponents of words by setting the variable LONGLONG to -DLONGLONG.
-#LONGLONG = -DLONGLONG
+LONGLONG = -DLONGLONG
 
 CC=gcc
 #OPTS = -g -pg $(LONGLONG) $(COPTS)
