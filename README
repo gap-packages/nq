@@ -57,12 +57,14 @@ This directory contains the following directories and files:
           src
           testNq
 
-The  file `README'  is (what a  surprise!)  this file.   The directory
-`examples' contains a   collection  of  example input files    for the
-nilpotent quotient  program.   The directory `gap'  contains   the GAP
-interface to the ANU NQ. The program system GAP is developed by Martin
-Schoenert et al. at  the RWTH Aachen,  Germany.  The  directory  `src'
-contains the source code for the ANU NQ  and the  file `testNq' can be
+The  file `README'  is (what  a surprise!)   this file.  The directory
+`examples' contains  a collection   of example  input  files  for  the
+nilpotent  quotient program.  The   directory  `gap' contains the  GAP
+interface to   the ANU NQ.  The   program system GAP  was developed by
+Martin Schoenert et al. at the RWTH  Aachen, Germany, until July 1997.
+It is now looked after by the School of Mathematical and Computational
+Sciences at    the University of   St  Andrews.   The  directory `src'
+contains the source code for  the ANU NQ and the  file `testNq' can be
 run to test if the installation of the ANU NQ is working properly (see
 next section).  It uses the groups in the directory `examples'.
 
@@ -172,38 +174,47 @@ followed by a positive integer <n>. Their meaning is the following:
                the letters  m,   h or d,  <n>  specifies the  time  in
                minutes, hours or days, respectively.
 
-The options -a, -d, -v, -s, -f, -c and -g have the following meaning.
-Care has to be taken when the options -s or -c are used since the
-resulting nilpotent quotient need NOT satiesfy the required Engel
-condition. The reason for this is that a smaller set of test words is
-used if one of these two options are present. Although this smaller
-set of test words seems to be sufficient to enforce the required Engel
-condition, this fact has not been proven.
+The other options  have the following  meaning.  Care has to  be taken
+when   the options -s  or -c  are   used since the resulting nilpotent
+quotient need NOT satisfy   the required Engel condition. The  reason
+for this is that a smaller set of test  words is used  if one of these
+two options are present. Although this smaller set of test words seems
+to be sufficient to  enforce the required  Engel condition, this  fact
+has not been proven.
 
-        -a For each factor of the lower central series a file is
-           created in the current directory that containes an integer
-           matrix describing the factor as abelian group. The first
+        -a For  each factor  of the  lower  central series  a  file is
+           created in the current  directory that contains an integer
+           matrix describing the   factor as abelian group. The  first
            number in that file is the number of columns of the matrix.
-           Then the matrix follows in row major order. The matrix for
-           the i-th factor is put into the file
-           <presentation>.abinv.<i>. 
+           Then the matrix follows in row major  order. The matrix for
+           the  i-th    factor      is    put    into     the     file
+           <presentation>.abinv.<i>.
 
-        -s This option causes the program to check only semigroup
-           words in the generating set of the nilpotent quotient when
-           an Engel condition is enforced. If none of the options -l,
+        -p toggles printing of the pc  presentation for the  nilpotent
+           quotient at the end of a calculation.
+
+        -s This  option  causes the program  to   check only semigroup
+           words in the generating set of  the nilpotent quotient when
+           an Engel condition is enforced. If none  of the options -l,
            -r or -e are present, it is ignored.
 
         -f This option causes to check semiwords in the generating set
-           of the nilpotent quotient first and then all other words
-           that need to be checked. It is ignored if the option -s is
-           used or none of the options -l, -r or -e are present. 
+           of the  nilpotent quotient first  and then  all other words
+           that need to be checked. It is  ignored if the option -s is
+           used or none of the options -l, -r or -e are present.
 
-        -c This option stops checking the Engel law at each class if
-           all the checks of a certain weight did not yield any
+        -c This option stops  checking the Engel  law at each class if
+           all  the checks   of a certain    weight did not  yield any
            non-trivial instances of the law.
 
-        -d Switch on debug mode and perform checks during the
+        -d Switch  on  debug mode   and   perform checks   during  the
            computation. Not yet implemented.
+
+        -o In checking Engel identities, instances are process in the
+           order of increased weight.  This flag reverses the order.
+
+        -y Enforce the identities x^8  and [ [x1,x2,x3], [x4,x5,x6]  ]
+           on the nilpotent quotient.
 
         -v Switch on verbose mode.
 
@@ -213,6 +224,22 @@ condition, this fact has not been proven.
            groups. This will change as soon as GAP can handle infinite
            polycyclic groups.
 
+        -E the *last* n generators are Engel generators.  This works
+           in conjunction with option -n.
+
+        -m output  the  relation matrix for each  factor  of the lower
+           central series.  The matrices are written to files with the
+           names 'matrix.<cl>' where <cl> is replaced by the number of
+           the factor in the lower central series.  Each file contains
+           first the number of columns of the matrix and then the rows
+           of the  matrix.  The matrix is  written as each relation is
+           produced and is not in upper triangular form.
+
+        -M output the relation  matrix before and after relations have
+           been enforced.  This results   in two groups of files  with
+           names  '<pres>.nilp.<cl>' and  '<pres>.mult.<cl>'     where
+           <pres>  is  the name of the   input files  and <cl>  is the
+           class.  The matrices are in upper triangular form.
 
 The input format for presentations
 ----------------------------------
@@ -372,6 +399,6 @@ Werner Nickel
 School of Mathematical and Computational Sciences
 University of St Andrews
 St Andrews
-Fife KY16 9SS
+Fife KY16 9BS
 Scotland 
 
