@@ -7,9 +7,10 @@
 
 SetPackageInfo( rec(
 
-PkgName := "nq",
+PackageName := "nq",
+Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
 Version := "2.0",
-Date    := "15/01/2003",
+Date    := "20/10/2003",
 
 Persons := [
   rec(
@@ -39,7 +40,7 @@ PackageWWWHome :=
 ArchiveFormats := ".tar.gz",
 ArchiveURL     := Concatenation( ~.PackageWWWHome, "nq-2_0" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
-PkgInfoURL     := Concatenation( ~.PackageWWWHome, "PkgInfo.g" ),
+PackageInfoURL := Concatenation( ~.PackageWWWHome, "PkgInfo.g" ),
 
 AbstractHTML   := Concatenation( 
                "This package provides access to the ANU nilpotent quotient ",
@@ -79,7 +80,7 @@ AvailabilityTest := function()
     return true;
 end,
 
-Autoload := false,
+AutoLoad := false,
 
 Keywords := ["nilpotent", "group","finitely presented", "computational"],
 
