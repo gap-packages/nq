@@ -96,7 +96,7 @@ int	argc;
 char	*argv[];
 
 {	FILE	*fp;
-	long	t, time, start, begin;
+	long	t, time, start, begin, printEpim = 1;
 	gen	g;
 	extern	int	NrGens;
 	extern	word	Epimorphism();
@@ -156,6 +156,8 @@ char	*argv[];
 			  }
 			  SetTimeOut( t );
 			break;
+                case 'p': printEpim = !PrintEpim;
+                        break;
 		case 'g': Gap = !Gap;
 			break;
 		case 'a': AbelianInv = !AbelianInv;
@@ -284,12 +286,14 @@ char	*argv[];
 
 end:
 	TimeOutOff();
-	printf( "\n\n#    The epimorphism :\n");
-	PrintEpim();
-	printf( "\n\n#    The nilpotent quotient :\n");
-	PrintPcPres();
-	printf( "\n\n#    The definitions:\n" );
-        PrintDefs();
+        if( printEpim ) {
+          printf( "\n\n#    The epimorphism :\n");
+          PrintEpim();
+          printf( "\n\n#    The nilpotent quotient :\n");
+          PrintPcPres();
+          printf( "\n\n#    The definitions:\n" );
+          PrintDefs();
+        }
 	printf( "#    total runtime : %d msec\n", RunTime() - begin );
 	printf( "#    total size    : %d byte\n", sbrk(0) - start );
 
