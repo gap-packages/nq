@@ -378,21 +378,21 @@
   the group.  The second relation turns <M>a</M> into a third right
   Engel element.  
 
-  <P/>An element <M>a</M> is called <E>an <M>n</M>-th right
-  Engel element</E>
+  <P/>An element <M>a</M> is called <E>a right <M>n</M>-th 
+  Engel element</E> or <E>a right <M>n</M>-Engel element</E> 
   <Index>right Engel element</Index> 
   if it satisfies the commutator law <M>[a,x,...,x]</M>
   where the identical generator <M>x</M> occurs <M>n</M>-times.
-  Likewise, an element <M>b</M> is called an <M>n</M>-th left Engel
-  element 
+  Likewise, an element <M>b</M> is called an <E>left <M>n</M>-th Engel
+  element</E> or <E>left <M>n</M>-Engel element</E> 
   <Index>left Engel element</Index>
   if it satisfies the commutator law <M>[x,b,b,...b]</M>.
 
-  Let <M>G</M> be a nilpotent group.  Then <M>G</M> satisfies a given
-  law if the law is satisfied by a finite set of instances given by
-  Higman's Lemma.  The ANU NQ uses Higman's Lemma to obtain a finite
-  presentation for groups that satisfy one or several identical
-  relations.
+  <P/>Let <M>G</M> be a nilpotent group.  Then <M>G</M> satisfies a
+  given law if the law is satisfied by a certain finite set of
+  instances given by Higman's Lemma.  The ANU NQ uses Higman's Lemma
+  to obtain a finite presentation for groups that satisfy one or
+  several identical relations.
 
   </Section>
 
@@ -1112,8 +1112,10 @@ gap> H := NilpotentQuotient( G, [x] );
 #I  Class 5: 6 generators with relative orders: 0 0 0 0 0 0
 #I  Class 6: 7 generators with relative orders: 6 0 30 0 0 30 0
 #I  Class 7: 14 generators with relative orders: 3 6 0 0 10 30 0 0 0 0 30 30 0 0
-#I  Class 8: 18 generators with relative orders: 3 6 5 2 0 2 408 2 0 0 0 10 10 30 10 0 0 0
-#I  Class 9: 19 generators with relative orders: 3 3 3 2 204 6 6 0 10 10 10 2 2 2 0 300 0 0 18
+#I  Class 8: 18 generators with relative orders: 3 6 5 2 0 2 408 2 0 0 0 10 10 30 
+10 0 0 0
+#I  Class 9: 19 generators with relative orders: 3 3 3 2 204 6 6 0 10 10 10 2 2 2 
+0 300 0 0 18
 #I  Class 10: 9 generators with relative orders: 3 5 2 2 2 2 18 1519 3
 #I  Class 11: trivial
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 30, 
@@ -1132,22 +1134,21 @@ need not be a left 5-Engel element.
   </Chapter>
 
   <Chapter>
-  <Heading>Installation of the Package</Heading> The installation of
-  the program is easy.  However, it requires the GNU multiple
-  precision library (GNU MP).  GNU is the Free Software Foundation's
-  collection of UNIX compatible software. If this library is not
-  available on your system, it has to be installed first.  A copy of
-  GNU MP can be obtained via anonymous ftp from many file servers
-  around the world, for example:
-  <URL>
-        www.gnu-mp.com
-  </URL>
+  <Heading>Installation of the Package</Heading> 
 
-  You start compiling NQ by running the configure script
+  Installation of the package requires the GNU multiple precision
+  library (GNU MP).  If this library is not available on your system,
+  it has to be installed first.  A copy of GNU MP can be obtained via
+  anonymous ftp from many file servers around the world, for example:
+  <URL>www.gnu-mp.com</URL>.
+
+  Installation of the ANU NQ is done in two steps.  First the
+  configure script is run:
   <Listing> ./configure  </Listing>
-  Among other things it will tell you whether it succeeded in locating
+  Among other things it will check whether it succeeds in locating
   the GNU MP library and the corresponding include files.  If
-  configure reports no problems, you proceed by typing
+  configure reports no problems, the next step is to start the
+  compilation:
   <Listing> make </Listing>
   If the configure script told you that it could not find the GNU MP
   include files or the GNU MP libraries, you have to run make with
@@ -1156,12 +1157,11 @@ need not be a left 5-Engel element.
   following
   <Listing> make GNU_MP_INC=/home/me/gmp-2.0.2 GNU_MP_LIB=/home/me/gmp-2.0.2 </Listing>
 
-  <P/>
-  A compiled version of the program named `nq' is then placed into the
-  directory `bin/&tlt;complicated name&tgt;'.  The &tlt;complicated name&tgt;
-  component encodes the operating system and the compiler used.  This
-  allows you to compile NQ on several architectures sharing the same
-  files system.
+  <P/> A compiled version of the program named `nq' is then placed
+  into the directory `bin/&tlt;complicated name&tgt;'.  The
+  &tlt;complicated name&tgt; component encodes the operating system
+  and the compiler used.  This allows you to compile NQ on several
+  architectures sharing the same files system.
 
   <P/>
   If there are any warnings or even fatal error messages during the
@@ -1171,17 +1171,48 @@ need not be a left 5-Engel element.
   source code.  I will have a look at your problems and try to fix
   them.
  
-  <P/>
-  <B>Need to update this part</B>
+  <P/> After the compilation is finished you can check if the ANU NQ
+  is running properly on your system.  Simply type
 
-  After the compilation  is finished you   can  check if the ANU  NQ  is
-  running properly on your system.  Simply type
   <Listing> make test </Listing>
-    The file  runs some computations and compares their output
-  with the output files in the directory `examples'.  If testNq
-  reports any errors, please follow the instruction that testNq prints
-  out.
+  
+  The file runs some computations and compares their output with the
+  output files in the directory `examples'.  If testNq reports any
+  errors, please follow the instruction that testNq prints out.
 
+  <P/>The installation is completed by compiling the manual of the
+  package.  This is done from within <Package>GAP</Package>.
+
+  <Listing>
+gap> NqBuildManual();
+Composing XML document . . .
+Parsing XML document . . .
+Checking XML structure . . .
+LaTeX version and calling latex and pdflatex:
+    writing LaTeX file, 3 x latex, bibtex and makeindex, 2 x pdflatex, dvips
+Text version . . .
+#I  first run, collecting cross references, index, toc, bib and so on . . .
+#I  table of contents complete.
+#I  producing the index . . .
+#I  reading bibliography data files . . . 
+#I  writing bibliography . . .
+#I  second run through document . . .
+Writing manual.six file . . .
+And finally the HTML version . . .
+#I  first run, collecting cross references, index, toc, bib and so on . . .
+#I  table of contents complete.
+#I  producing the index . . .
+#I  reading bibliography data files . . . 
+#I  writing bibliography . . .
+#I  second run through document . . .
+gap> ?NilpotentQuotient
+Help: several entries match this topic - type ?2 to get match [2]
+
+[1] ANU NQ: NilpotentQuotient
+[2] ANU NQ: NilpotentQuotient
+[3] Reference: NilpotentQuotientOfFpLieAlgebra
+gap>
+  </Listing>
   </Chapter>
 
   </Body>
