@@ -14,10 +14,10 @@ GNU_MP_INC=.
 GNU_MP_LIB=$(GNU_MP_INC)
 
 WEB_DIR  = /www/homepages/nickel/software/NQ/
-HTML_DOC = doc/chap0.html doc/chap1.html doc/chap2.html \\
-	   doc/chap3.html doc/chap4.html doc/chap5.html \\
-	   doc/chapBib.html doc/chapInd.html doc/manual.css \\
-	   doc/nqman.pdf
+HTML_DOC = doc/chap0.html doc/chap1.html doc/chap2.html \
+	   doc/chap3.html doc/chap4.html doc/chap5.html \
+	   doc/chapBib.html doc/chapInd.html doc/manual.css \
+	   doc/manual.pdf
 
 all: compile
 
@@ -54,16 +54,16 @@ release-2.0:
 	gzip < nq-2_0.tar > nq-2_0.tgz
 
 WWW:
-	@echo 'Moving archive files'
+	@echo '--> Moving archive files'
 	cp nq-2_0.tar nq-2_0.tgz nq-2_0.zoo $(WEB_DIR)
-	@echo 'Preparing HTML manual'
+	@echo '--> Preparing HTML manual'
 	cp $(HTML_DOC) $(WEB_DIR)/doc
 	tar cvzf $(WEB_DIR)/nqdoc.tar.gz -C $(WEB_DIR) doc
-	@echo 'Preparing PDF- and PS-manuals'
+	@echo '--> Preparing PDF- and PS-manuals'
 	cp doc/manual.pdf $(WEB_DIR)/nqman.pdf
 	cp doc/manual.ps $(WEB_DIR)/nqman.ps
 	cp doc/manual.six $(WEB_DIR)/nqman.six
-	@echo 'Copying Package info'
+	@echo '--> Copying Package info'
 	cp PkgInfo.g $(WEB_DIR)
 
 test:
@@ -76,6 +76,7 @@ clean:
 	(cd examples; make clean)
 
 spotless: clean
+	rm -rf nq-2.0 nq-2_0.tar nq-2_0.tgz nq-2_0.zoo
 	rm -f Makefile
 	rm -rf bin
 	(cd src;      make spotless)
