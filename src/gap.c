@@ -9,31 +9,43 @@
 void	printGapWord( w )
 word	w;
 
-{	if( w == (word)0 || w->g == EOW ) {
+{       int nrc = 30;      /* something has already been printed */
+
+	if( w == (word)0 || w->g == EOW ) {
 	    printf( "One(F)" );
 	    return;
 	}
 	
 	while( w->g != EOW ) {
 	    if( w->g > 0 ) {
-                printf( "F.%d", w->g );
+                nrc += printf( "NqF.%d", w->g );
 		if( w->e != (exp)1 )
 #ifdef LONGLONG
-		    printf( "^%Ld", w->e );
+		    nrc += printf( "^%Ld", w->e );
 #else
-		    printf( "^%d", w->e );
+		    nrc += printf( "^%d", w->e );
 #endif
 	    }
 	    else {
-                printf( "F.%d", -w->g );
+                nrc += printf( "NqF.%d", -w->g );
 #ifdef LONGLONG
-		    printf( "^%Ld", -w->e );
+		nrc += printf( "^%Ld", -w->e );
 #else
-		    printf( "^%d", -w->e );
+		nrc += printf( "^%d", -w->e );
 #endif
 	    }
 	    w++;
-	    if( w->g != EOW ) putchar( '*' );
+	    if( w->g != EOW ) { 
+              putchar( '*' ); 
+              nrc++;
+
+              /*
+              **  Insert a line break, because GAP can't take lines that
+              **  are too long.
+              */
+              if( nrc > 70 ) { printf( "\\\n  " ); nrc = 0; }
+            }
+              
 	}
 }
 
@@ -47,15 +59,18 @@ void	PrintGapPcPres() {
         **  Commands that create the appropriate free group and the
         **  collector. 
         */
-	printf( "F := FreeGroup( %d );\n", NrPcGens+NrCenGens );
-        printf( "dt := DeepThoughtCollector( F, [ " );
+	printf( "NqF := FreeGroup( %d );\n", NrPcGens+NrCenGens );
+        printf( "NqCollector := FromTheLeftCollector( NqF );\n" );
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
-#ifdef LONGLONG
-            printf( "%Ld, ", Exponent[i] );
-#else
-            printf( "%d, ", Exponent[i] );
-#endif
-        printf( " ] );\n" );
+            if( Exponent[i] != 0 ) {
+                printf( "SetRelativeOrder( NqCollector, %d, ", i );
+#               ifdef LONGLONG
+                    printf( "%Ld", Exponent[i] );
+#               else
+                    printf( "%d", Exponent[i] );
+#               endif
+                printf( " );\n" );
+            }
 
         /*
         **  Set the power relations.
@@ -63,7 +78,7 @@ void	PrintGapPcPres() {
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
 	    if( Exponent[i] != (exp)0 && 
                 Power[i] != (word)0 && Power[i]->g != EOW ) {
-                printf( "SetPower( dt, %d, ", i );
+                printf( "SetPower( NqCollector, %d, ", i );
                 printGapWord( Power[i] );
                 printf( " );\n" );
             }
@@ -75,27 +90,37 @@ void	PrintGapPcPres() {
 	    i = 1;
 	    while( i < j && Wt(i) + Wt(j) <= Class + (NrCenGens==0?0:1) ) {
 		/* print Conjugate[j][i] */
-                printf( "SetConjugate( dt, %d, %d, ", j, i );
+                printf( "SetConjugate( NqCollector, %d, %d, ", j, i );
 		printGapWord( Conjugate[j][i] );
                 printf( " );\n" );
 		if( 0 && Exponent[i] == (exp)0 ) {
-                    printf( "SetConjugate( dt, %d, %d, ", j, -i );
+                    printf( "SetConjugate( NqCollector, %d, %d, ", j, -i );
 		    printGapWord( Conjugate[j][-i] );
                     printf( " );\n" );
 		}
 		if( 0 && Exponent[j] == (exp)0 ) {
-                    printf( "SetConjugate( dt, %d, %d, ", -j, i );
+                    printf( "SetConjugate( NqCollector, %d, %d, ", -j, i );
 		    printGapWord( Conjugate[-j][i] );
                     printf( " );\n" );
 		}
 		if( 0 && Exponent[i] + Exponent[j] == (exp)0 ) {
-                    printf( "SetConjugate( dt, %d, %d, ", -j, -i );
+                    printf( "SetConjugate( NqCollector, %d, %d, ", -j, -i );
 		    printGapWord( Conjugate[-j][-i], 'A' );
                     printf( " );\n" );
 		}
 		i++;
 	    }
 	}
+
+        /*
+        **  Print the epimorphism.  It is sufficient to list the images.
+        */
+        printf( "NqImages := [\n" );
+        for( i = 1; i <= NumberOfGens(); i++ ) {
+            printGapWord( Epimorphism( i ) );
+            printf( ",\n" );
+        }
+        printf( "];\n" );
 
 	printf( "\n#    Class : %d\n", Class );
 	printf( "#    Nr of generators of each class :" );
