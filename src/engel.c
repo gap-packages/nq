@@ -9,6 +9,7 @@
 #include "engel.h"
 
 static	int	LeftEngel = 0, RightEngel = 0, Engel = 0;
+static  int     RevEngel = 0;
 static  int     NrEngelGens = 0;
 static	int	NrWords;
 static  int     Needed;
@@ -346,12 +347,16 @@ void	evalLREngel() {
 	word	u;
 	int	n;
 	long	cl;
+        extern  unsigned NrGens;
 
 	A = (word)Allocate( 2*sizeof(gpower) );
         u = (word)Allocate( (NrPcGens+NrCenGens+1) * sizeof(gpower) );
 
         for( n = 1; !EarlyStop && n <= NrEngelGens; n++ ) {
-	    A[0].g = n;   A[0].e = 1;
+
+            if( RevEngel ) A[0].g = NrGens - n + 1;
+            else           A[0].g = n;
+            A[0].e = 1;
 	    A[1].g = EOW; A[1].e = 0;
 
             Needed = 1;
@@ -383,11 +388,12 @@ void	EvalEngel() {
 	    printf("#    Evaluated Engel condition (%d msec).\n",RunTime()-t);
 }
 
-void	InitEngel( l, r, e, n )
-int	l, r, e;
+void	InitEngel( l, r, v, e, n )
+int	l, r, v, e, n;
 
 {	LeftEngel = l;
 	RightEngel = r;
+        RevEngel = v;
 	Engel = e;
         NrEngelGens = n;
 }
