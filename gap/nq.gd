@@ -8,6 +8,8 @@
 DeclareGlobalFunction( "NqUsage" );
 DeclareGlobalFunction( "NqReadOutput" );
 DeclareGlobalFunction( "NqStringFpGroup" );
+DeclareGlobalFunction( "NqInitFromTheLeftCollector" );
+DeclareGlobalFunction( "NqPcpGroupByCollector" );
 
 DeclareOperation( "NilpotentQuotient", [ IsObject, IsPosInt ] );
 DeclareOperation( "NqEpimorphismNilpotentQuotient", [ IsObject, IsPosInt ] );

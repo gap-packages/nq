@@ -3,26 +3,33 @@
 #A  nq.gi                       Mai  1999                        Werner Nickel
 ##
 ##  This file contains the interface to my NQ program.
-
+##
 
 #############################################################################
 ##
 #F  NqUsage() . . . . . . . . . . . . . . . show usage of 'NilpotentQuotient'
 ##
-InstallGlobalFunction( NqUsage,
-function()
-    return Error("usage: NilpotentQuotient( <file>|<fpgroup> [,<class>] )");
+InstallGlobalFunction( NqUsage, function()
+
+  return Error("usage: NilpotentQuotient( <file>|<fpgroup> [,<class>] )");
+
 end );
+
+
 
 #############################################################################
 ##
 #F  NqGlobalVariables . . . . .  declare the global variables in this package
 ##
 NqGlobalVariables := [ "NqLowerCentralFactors",   ##  factors of the LCS
-                       "NqF",                     ##  the free group of the
-                                                  ##  collector
-                       "NqCollector",             ##  the collector
-                       "NqImages" ];              ##  the epimorphism
+                       "NqNrGenerators",
+                       "NqClass",
+                       "NqRanks",
+                       "NqRelativeOrders",
+                       "NqImages",                ##  the epimorphism
+                       "NqPowers",
+                       "NqConjugates",
+                     ];
 
 for var in NqGlobalVariables do
     if not IsBoundGlobal( var ) then
@@ -62,6 +69,64 @@ function( stream )
     return result;
 
 end );
+
+
+#############################################################################
+##
+#F  NqInitFromTheLeftCollector  . . . . . . . . . initialise an ftl collector
+##
+InstallGlobalFunction( NqInitFromTheLeftCollector,
+function( nqrec )
+    local   ftl,  g,  rel;
+
+    ftl := FromTheLeftCollector( nqrec.NrGenerators );
+
+    for g in [1..nqrec.NrGenerators] do
+        SetRelativeOrder( ftl, g, nqrec.RelativeOrders[ g ] );
+    od;
+
+    for rel in nqrec.Powers do
+        SetPower( ftl, rel[1], rel{[2..Length(rel)]}  );
+    od;
+
+    for rel in nqrec.Conjugates do
+        SetConjugate( ftl, rel[1], rel[2], rel{[3..Length(rel)]}  );
+    od;
+
+    SetFeatureObj( ftl, IsConfluent, true );
+    UpdatePolycyclicCollector( ftl );
+
+    return ftl;
+
+end );
+
+#############################################################################
+##
+#F  NqPcpGroupByCollector . . . . . . . . . pcp group from collector, set lcs
+##
+InstallGlobalFunction( NqPcpGroupByCollector,
+function( coll, nqrec )
+    local   G,  gens,  ranks,  lcs,  a,  z,  r;
+
+    G := PcpGroupByCollectorNC( coll );
+    gens := GeneratorsOfGroup( G );
+
+    ranks := nqrec.Ranks;
+    lcs   := [ G ];
+
+    a     := 1; 
+    z     := nqrec.NrGenerators;
+    for r in ranks do
+        a := a + r;
+        Add( lcs, Subgroup( G, gens{[a..z]} ) );
+    od;
+
+    SetLowerCentralSeriesOfGroup( G, lcs );
+    SetIsNilpotentGroup( G, true );
+
+    return G;
+end );
+
 
 
 #############################################################################
@@ -118,9 +183,11 @@ end );
 ##
 InstallMethod( NilpotentQuotient,
         "of a finitely presented group",
-        true, [ IsFpGroup, IsPosInt ], 0,
+        true,
+        [ IsFpGroup, IsPosInt ], 
+        0,
 function( G, cl )
-    local   nq,  pres,  input,  str,  output,  ret,  coll;
+    local   nq,  pres,  input,  str,  output,  ret,  nqrec,  coll;
 
     nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
 
@@ -139,45 +206,50 @@ function( G, cl )
     CloseStream( output );
     CloseStream( input  );
     
-    coll := NqReadOutput( InputTextString( str ) ).Collector;
-    SetFeatureObj( coll, IsConfluent, true );
-    return coll;
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
         "of a finitely presented group, keep output file",
-        true, [ IsString, IsFpGroup, IsPosInt ], 0,
+        true, 
+        [ IsString, IsFpGroup, IsPosInt ], 
+        0,
 function( outfile, G, cl )
-    local   nq,  pres,  input,  str,  output,  ret,  coll;
+    local   nq,  pres,  input,  output,  ret,  nqrec,  coll;
 
     nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
 
     pres   := NqStringFpGroup( G );
     input  := InputTextString( pres );
 
-    str    := "";
     output := OutputTextFile( outfile, false );
 
     ##  nq -g -p infile cl < /dev/null > output 
     ret    := Process( DirectoryCurrent(),        ## executing directory
-                      nq,                         ## executable
-                      input,                      ## input  stream
-                      output,                     ## output stream
-                      [ "-g", "-p", String(cl) ] ); 
+                       nq,                        ## executable
+                       input,                     ## input  stream
+                       output,                    ## output stream
+                       [ "-g", "-p", String(cl) ] ); 
                                                   ## command line arguments
     CloseStream( output );
     CloseStream( input  );
 
-    coll := NqReadOutput( InputTextFile( outfile ) ).Collector;
-    SetFeatureObj( coll, IsConfluent, true );
-    return coll;
+    nqrec := NqReadOutput( InputTextFile( outfile ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
 end );
 
 InstallMethod( NilpotentQuotient,
         "of a finitely presented group on file",
-        true, [ IsString, IsPosInt ], 0,
+        true,
+        [ IsString, IsPosInt ], 
+        0,
 function( infile, cl )
-    local   outfile,  output,  nq,  ret,  result,  coll;
+    local   outfile,  output,  nq,  ret,  nqrec,  coll;
 
     ##  Check if <infile> exists and is readable
 
@@ -194,28 +266,30 @@ function( infile, cl )
                                                    ## command line arguments
     CloseStream( output );
     
-    result := NqReadOutput( InputTextFile( outfile ) );
+    nqrec := NqReadOutput( InputTextFile( outfile ) );
 
     RemoveFile( outfile );
 
-    coll := result.Collector;
-    SetFeatureObj( coll, IsConfluent, true );
-    return coll;
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
 end );
 
 
 InstallOtherMethod( NilpotentQuotient,
         "of a finitely presented group on file, keep output file",
-        true, [ IsString, IsString, IsPosInt ], 0,
+        true, 
+        [ IsString, IsString, IsPosInt ], 
+        0,
 function( outfile, infile, cl )
-    local   nq,  output,  ret,  coll;
+    local   nq,  output,  ret,  nqrec,  coll;
 
     ##  Check if <infile> exists and is readable and if <outfile> can be
     ##  written.
 
     nq      := Filename( DirectoriesPackagePrograms( "nq" ) , "nq" );
 
-    output := OutputTextFile( outfile, true );
+    output := OutputTextFile( outfile, false );
     ret    := Process( DirectoryCurrent(),         ## executing directory
                        nq,                         ## executable
                        InputTextNone(),            ## input  stream
@@ -224,18 +298,20 @@ function( outfile, infile, cl )
                                                    ## command line arguments
     CloseStream( output );
 
-    coll := NqReadOutput( InputTextFile( outfile ) ).Collector;
-    SetFeatureObj( coll, IsConfluent, true );
-    return coll;
+    nqrec := NqReadOutput( InputTextFile( outfile ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
 end );
 
 InstallMethod( NqEpimorphismNilpotentQuotient,
         "of a finitely presented group",
         true,
-        [ IsFpGroup, IsPosInt ], 0, 
+        [ IsFpGroup, IsPosInt ], 
+        0, 
 function( G, cl )
-    local   nq,  pres,  input,  str,  output,  ret,  result,  F,  
-            fgens,  A,  gens,  images,  phi;
+    local   nq,  pres,  input,  str,  output,  ret,  nqrec,  coll,  A,  
+            gens,  images,  phi;
 
     nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
 
@@ -252,17 +328,15 @@ function( G, cl )
     CloseStream( output );
     CloseStream( input  );
     
-    result := NqReadOutput( InputTextString( str ) );
+    nqrec := NqReadOutput( InputTextString( str ) );
 
     ##  First we construct the group from the collector
-    F     := result.F;
-    fgens := GeneratorsOfGroup( F );
-
-    A    := PcpGroupByCollector( result.Collector );
+    coll := NqInitFromTheLeftCollector( nqrec );
+    A    := NqPcpGroupByCollector( coll, nqrec );
     gens := GeneratorsOfGroup( A );
 
-    images := List( result.Images, w->MappedWord( w, fgens, gens ) );
-
+    ##  Now we set up the epimorphism
+    images := List( nqrec, Images, w->PcpElementByWord( coll, w ) );
     phi := GroupHomomorphismByImages( G, A, GeneratorsOfGroup( G ), images );
 
     SetIsSurjective( phi, true );

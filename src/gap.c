@@ -96,17 +96,17 @@ void	PrintGapPcPres() {
                 printf( "SetConjugate( NqCollector, %d, %d, ", j, i );
 		printGapWord( Conjugate[j][i] );
                 printf( " );\n" );
-		if( 0 && Exponent[i] == (exp)0 ) {
+		if( 1 && Exponent[i] == (exp)0 ) {
                     printf( "SetConjugate( NqCollector, %d, %d, ", j, -i );
 		    printGapWord( Conjugate[j][-i] );
                     printf( " );\n" );
 		}
-		if( 0 && Exponent[j] == (exp)0 ) {
+		if( 1 && Exponent[j] == (exp)0 ) {
                     printf( "SetConjugate( NqCollector, %d, %d, ", -j, i );
 		    printGapWord( Conjugate[-j][i] );
                     printf( " );\n" );
 		}
-		if( 0 && Exponent[i] + Exponent[j] == (exp)0 ) {
+		if( 1 && Exponent[i] + Exponent[j] == (exp)0 ) {
                     printf( "SetConjugate( NqCollector, %d, %d, ", -j, -i );
 		    printGapWord( Conjugate[-j][-i], 'A' );
                     printf( " );\n" );
@@ -172,40 +172,41 @@ void    PrintRawGapPcPres() {
         **  Output the number of generators first and their relative
         **  orders.  
         */
-        printf( "NqNrGens :=  %d;\n", NrPcGens+NrCenGens );
-        printf( "NqRelOrders := [ " );
+        printf( "NqNrGenerators   :=  %d;\n", NrPcGens+NrCenGens );
+        printf( "NqRelativeOrders := [ " );
         for( i = 1; i <= NrPcGens+NrCenGens; i++ ) {
-#               ifdef LONGLONG
-                    printf( "%Ld,", Exponent[i] );
-#               else
-                    printf( "%d,", Exponent[i] );
-#               endif
+#           ifdef LONGLONG
+                printf( "%Ld,", Exponent[i] );
+#           else
+                printf( "%d,", Exponent[i] );
+#           endif
+            if( i % 30 == 0 ) printf( "\n                       " );    
         }
         printf( " ];\n" );
 
         /*
-        **  Print the epimorphism.  It is sufficient to list the images.
+        **  Print weight information.
         */
-        printf( "NqImages := [\n" );
-        for( i = 1; i <= NumberOfGens(); i++ ) {
-            printf( "[ %d,   ", i );
-            printRawWord( Epimorphism( i ) );
-            printf( "],\n" );
-        }
+        printf( "NqClass          := %d;\n", Class );
+        printf( "NqRanks          := [" );
+        for( i = 1; i <= cl; i++ ) printf( " %d,", Dimension[i] );
         printf( "];\n" );
 
         /*
-        **  Print weight information.
+        **  Print the epimorphism.  It is sufficient to list the images.
         */
-        printf( "NqClass := %d;\n", Class );
-        printf( "NqRanks := [ " );
-        for( i = 1; i <= cl; i++ ) printf( " %d,", Dimension[i] );
+        printf( "NqImages         := [\n" );
+        for( i = 1; i <= NumberOfGens(); i++ ) {
+            printf( "  [ " );
+            printRawWord( Epimorphism( i ) );
+            printf( "],  # image of generator %d\n", i );
+        }
         printf( "];\n" );
 
         /*
         **  Print the power relations.
         */
-        printf( "NqPowers := [\n" );
+        printf( "NqPowers         := [\n" );
         for( i = 1; i <= NrPcGens+NrCenGens; i++ )
             if( Exponent[i] != (exp)0 && 
                 Power[i] != (word)0 && Power[i]->g != EOW ) {
@@ -218,7 +219,7 @@ void    PrintRawGapPcPres() {
         /*
         **  Print the conjugate relations.
         */
-	printf( "NqConjugates := [\n" );
+	printf( "NqConjugates     := [\n" );
         for( j = 1; j <= NrPcGens; j++ ) {
             for( i = 1; i < j && Wt(i) + Wt(j) <= cl; i++ ) {
 
