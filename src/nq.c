@@ -33,7 +33,7 @@ char	*error;
 	for( i = strlen(ProgramName)+7; i > 0; i-- ) fputc( ' ', stderr );
         fprintf( stderr, " [-t <n>] [-l <n>] [-r <n>] [-n <n>] [-e <n>]\n" );
 	for( i = strlen(ProgramName)+7; i > 0; i-- ) fputc( ' ', stderr );
-	fprintf( stderr, " <presentation>  [<class>]\n" );
+	fprintf( stderr, " [-y] <presentation>  [<class>]\n" );
     	exit( 1 );
 }
 
@@ -41,6 +41,8 @@ static int  leftEngel  = 0,
 	    rightEngel = 0,
 	 	 engel = 0,
            nrEngelGens = 1;
+
+static int trmetab = 0;
 
 static
 void	printHeader() {
@@ -174,6 +176,8 @@ char	*argv[];
                         break;
                 case 'm': RawMatOutput = !RawMatOutput;
                         break;
+                case 'y': trmetab = 1;
+                        break;
                 default : fprintf( stderr, "unknown option: %s\n", argv[0] );
 			  usage( NULL );
 			break;
@@ -203,6 +207,7 @@ char	*argv[];
 	/* Set the number of generators. */
 	WordInit( Epimorphism );
 	InitEngel( leftEngel, rightEngel, engel, nrEngelGens );
+        InitTrMetAb( trmetab );
 	InitPrint( stdout );
 
 	printHeader();
@@ -216,6 +221,7 @@ char	*argv[];
 
 	NqEvalRelations();
 	EvalEngel();
+	EvalTrMetAb();
 
 	ElimEpim();
 
@@ -253,6 +259,7 @@ char	*argv[];
 
 	    NqEvalRelations();
 	    EvalEngel();
+            EvalTrMetAb();
 
             if( NilpMult ) OutputMatrix( "mult" );
 
