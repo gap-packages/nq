@@ -72,6 +72,7 @@ struct  def {
 typedef	struct def  def;
 
 extern def	*Definition;
+extern void     PrintDefs();
 
 extern word	*Map;
 extern int	NrImages;

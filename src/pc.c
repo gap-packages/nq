@@ -334,6 +334,41 @@ void	PrintPcPres() {
 	printf( "\n" );
 }
 
+void PrintDefs() {
+
+  
+        int i;
+        gen g, h, comm[1000];
+
+        for( g = 1; g <= NrPcGens; g++ )
+            if( Definition[g].h > 0 ) {
+                printf( "#    " );
+                printGen( g, 'A' );
+                printf( " := " );
+                if( Definition[g].g == 0 ) {
+                    /* The definition is a power relation. */
+                    printGen( Definition[g].h, 'A' );
+                    printf( "^" );
+                    printf( "%d\n", Exponent[ Definition[g].h ] );
+                }
+                else {
+                    /* The definition is a commutator relation. */
+                    i = 0; h = g;
+                    while( Definition[h].h > 0 ) {
+                      comm[i++] = Definition[h].g; h = Definition[h].h;
+                    }
+                    comm[i++] = h;
+                    printf( "[ " );
+                    while( --i > 0 ) {
+                        printGen( comm[i], 'A' );
+                        printf( ", " );
+                    }
+                    printGen( comm[i], 'A' );
+                    printf( " ]\n" );
+                }
+            }
+}
+
 void	sizePcPres() {
 
 	long	size = 0, nrPt = 0;
