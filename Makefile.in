@@ -8,7 +8,7 @@
 ##
 ##    Values imported from the configure script
 ##
-BINDIR=bin/@target@-@CC@
+BINDIR=bin/@target@-@BASECC@
 GAP_ROOT=../..
 GNU_MP_LIB=.
 GNU_MP_INC=.

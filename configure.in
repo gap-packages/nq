@@ -18,10 +18,14 @@ dnl ##
 AC_CANONICAL_SYSTEM
 
 dnl ##
-dnl ## Which C-compiler is used and export the result to the Makefile
 dnl ## Is there a way to determine the GAP root directory?
+dnl ## Which C-compiler is used? Export the result to the Makefile. On
+dnl ## some systems, the C-compiler name is a path name, so we have to
+dnl ## strip off the directory component.
 dnl ##
 AC_PROG_CC
+BASECC=`basename ${CC}`
+AC_SUBST(BASECC)
 
 dnl ##
 dnl ## Checks for programs.
