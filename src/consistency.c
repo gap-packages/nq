@@ -14,7 +14,7 @@ expvec	ev;
 
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
 #ifdef LONGLONG
-	    printf( " %Ld ", (long)(ev[i]) );
+	    printf( " %Ld ", ev[i] );
 #else
 	    printf( "%2ld ", (long)(ev[i]) );
 #endif
