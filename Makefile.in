@@ -88,6 +88,7 @@ spotless: clean
 	rm -rf nq-2.1 nq-2_1.tar nq-2_1.tgz nq-2_1.zoo
 	rm -f Makefile
 	rm -rf bin
+	rm -rf .\#*
 	(cd src;      make spotless)
 	(cd doc;      make spotless)
 	(cd examples; make spotless)
