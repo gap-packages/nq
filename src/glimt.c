@@ -10,15 +10,14 @@
 #undef min
 
 /*
-**    This module uses the arbitrary precision integer package mp.
+**    This module uses the arbitrary precision GNU integer package gmp.
 */
-#include <mp.h>
 #include <gmp.h>
 
 /*
 **    Define the data type for large integers and vectors of large integers.
 */
-typedef MINT    *large;
+typedef MP_INT  *large;
 typedef large   *lvec;
 
 /*
@@ -104,13 +103,6 @@ exp     n;
         mpz_init( l );
         mpz_set_str( l, x, 16 );
 
-        if( 0 ) { 
-          /* This code discovered a bug in some version of libgmp.a */
-          MP_INT *ll = xtom( x );
-          if( mpz_cmp( l, ll ) != 0 )
-            printf( "Problem in converting integer\n" );
-        }
-
         if( 0 ) {
 #ifdef LONGLONG
           printf( "%Ld ", n );
@@ -171,11 +163,10 @@ lvec    v;
 
 {       long    i;
 
-        for( i = 1; i <= NrCols; i++ )
-            if( ISZERO(v[i]) )
-                    printf( " 0" );
-            else    printf( " %d", SIGN(v[i])*LIMB(v[i],0) );
-
+        for( i = 1; i <= NrCols; i++ ) {
+            printf( " "); 
+            mpz_out_str( stdout, 10, v[i] );
+        }
         printf( "\n" );
 }
 
@@ -322,8 +313,7 @@ expvec  *M;
 }
 
 /*
-**    Print the contents of Matrix[]. This routine only prints the
-**    first component of each large integer.
+**    Print the contents of Matrix[].
 */
 void    printMatrix() {
 
@@ -333,10 +323,7 @@ void    printMatrix() {
         for( i = 0; i < NrRows; i++ ) {
             printf( "    %d   ", Heads[i] );
             for( j = 1; j <= NrCols; j++ )
-                if( ISZERO(Matrix[i][j]) )
-                        printf( " 0" );
-                else    printf( " %d", SIGN(Matrix[i][j])
-                                          *LIMB(Matrix[i][j],0) );
+                mpz_out_str( stdout, 10, Matrix[i][j] );
             putchar( '\n' );
         }
 }
@@ -351,6 +338,7 @@ expvec  *MatrixToExpVecs() {
 
         long    i, j, k;
         large   m;
+
         exp     c;
         expvec  *M;
 
@@ -375,12 +363,11 @@ expvec  *MatrixToExpVecs() {
             }
             for( j = Heads[i]; j <= NrCols; j++ ) {
                 m = Matrix[i][j];
-                if( abs(SIZE(m)) > 1 ) {
-                    printf( "Warning, Exponent larger than 2^15.\n" );
+                if( mpz_sizeinbase( m, 2 ) > 8 * sizeof(signed int) - 2 ) {
+                    printf( "Warning, Exponent too large.\n" );
                     exit( 4 );
                 }
-                if( ISZERO(m) ) M[i][j] = (exp)0;
-                else M[i][j] = SIGN(m) * LIMB(m,0);
+                M[i][j] = mpz_get_si( m );
             }
             freeVector( Matrix[i] );
         }
@@ -426,31 +413,31 @@ void    vNeg( v, a )
 lvec    v;
 long    a;
 
-{       while( a <= NrCols ) { NEGATE(v[a]); a++; }                }
+{       while( a <= NrCols ) { NEGATE(v[a]); a++; }                   }
 
 void    vSubOnce( v, w, a )
 lvec    v, w;
 long    a;
 
-{       while( a <= NrCols ) { msub( v[a], w[a], v[a] ); a++; }    }
+{       while( a <= NrCols ) { mpz_sub( v[a], w[a], v[a] ); a++; }    }
 
 void    vSub( v, w, a )
 lvec    v, w;
 long    a;
 
-{       large    s, t;
+{       mpz_t    q, t;
 
+        mpz_init( q ); mpz_init( t );
         if( NOTZERO(v[a]) ) {
-            s = itom(0); t = itom(0);
-            mdiv( v[a], w[a], s, t );
-            if( NOTZERO(s) )
+            mpz_tdiv_q( q, v[a], w[a] );
+            if( NOTZERO(q) )
                 while( a <= NrCols ) {
-                    mult( s, w[a], t );
-                    msub( v[a], t, v[a] );
+                    mpz_mul( t,    q,    w[a] );
+                    mpz_sub( v[a], v[a], t    );
                     a++;
                 }
-            mfree(s); mfree(t);
         }
+        mpz_clear( q ); mpz_clear( t );
 }
 
 void    lastReduce() {
@@ -604,8 +591,8 @@ expvec  ev;
         /* Check if Matrix[] is the identity matrix. */
         if( NrRows == NrCenGens ) {
             for( i = 0; i < NrRows; i++ ) 
-                if( SIZE( Matrix[i][Heads[i]] ) != 1 ||
-                    LIMB( Matrix[i][Heads[i]], 0 ) != 1 ) break;
+                /* Check if each leading entry is 1 */
+                if( mpz_sizeinbase( Matrix[i][Heads[i]], 2 ) != 1 ) break;
             if( i == NrRows ) EarlyStop = 1;
         }
         if( Verbose ) {
