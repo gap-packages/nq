@@ -11,7 +11,7 @@
 
 CC=gcc
 #OPTS = -g -pg $(LONGLONG) $(COPTS)
-OPTS = -O3 -pg -g $(LONGLONG) $(COPTS)
+OPTS = -O3 -g $(LONGLONG) $(COPTS)
 CFLAGS = $(OPTS) -DVERSION='"2.0 July 2002"'
 
 OBJ = consistency.o pc.o relations.o word.o system.o time.o \
