@@ -18,9 +18,10 @@
 struct _node {
         int     type;
         union {
-                int     n;                          /* stores numbers */
-                gen     g;                          /* stores generators */
-                struct { struct _node *l, *r; } op; /* stores bin ops */
+                int     n;                          /* stores numbers      */
+                gen     g;                          /* stores generators   */
+                struct { struct _node *l, *r;       /* stores bin ops      */
+                         struct _node *e; } op;     /* and Engel relations */
         } cont;
 };
 
@@ -40,7 +41,8 @@ typedef struct _node node;
 #define TREL   7
 #define TDRELL 8
 #define TDRELR 9
-#define TLAST  10
+#define TENGEL 10
+#define TLAST  11
 
 extern void	PrintGen();
 extern void	PrintPresentation();
