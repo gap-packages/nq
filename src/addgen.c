@@ -8,7 +8,8 @@
 
 /*
 **    Set up a list of Commute[] arrays.  The array in CommuteList[c] is
-**    Commute[] as if the current group had class c.
+**    Commute[] as if the current group had class c.  CommuteList[Class+1][]
+**    is the same as Commute[].
 **/
 void    SetupCommuteList() {
 
@@ -28,10 +29,6 @@ void    SetupCommuteList() {
         }
         for( ; g <= NrPcGens+NrCenGens; g++ ) CommuteList[c][g] = g;
     }
-
-    for( g = 1; g <= NrPcGens+NrCenGens; g++ )
-        if( CommuteList[Class+1][g] != Commute[g] )
-            printf( "something is fishy\n" );
 }
 
 /*
