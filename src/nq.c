@@ -33,7 +33,7 @@ char	*error;
 	for( i = strlen(ProgramName)+7; i > 0; i-- ) fputc( ' ', stderr );
         fprintf( stderr, " [-t <n>] [-l <n>] [-r <n>] [-n <n>] [-e <n>]\n" );
 	for( i = strlen(ProgramName)+7; i > 0; i-- ) fputc( ' ', stderr );
-	fprintf( stderr, " [-y] [-o] [-p] [-E] <presentation>  [<class>]\n" );
+	fprintf( stderr, " [-y] [-o] [-p] [-E] [<presentation>] [<class>]\n" );
     	exit( 1 );
 }
 
@@ -190,22 +190,46 @@ char	*argv[];
 	    argc--; argv++;
 	}
 
+        /*
+        ** The default is to read from stdin and have no (almost no)
+        ** class bound.
+        */
+        InputFile = "<stdin>";
+        Cl = 666;
+
+        /* Parse the remaining arguments. */
 	switch( argc ) {
-	    case 1: InputFile = argv[0];
-		     Cl = 666;
-		 break;
-	    case 2: InputFile = argv[0];
-		     Cl = atoi( argv[1] );
-		     if( Cl <= 0 ) usage( "<class> must be positive." );
-		 break;
-	    default: usage( (char *)0 );
-		 break;
+        case 0:
+          break;
+        case 1: 
+          if( !isdigit(argv[0][0]) )
+            /* The only argument left is a file name. */
+            InputFile = argv[0];
+          else 
+            /* The only argument left is the class.   */
+            Cl = atoi( argv[0] );
+          break;
+        case 2: 
+          /* Two argument left. */
+          InputFile = argv[0];
+          Cl = atoi( argv[1] );
+          break;
+        default:
+          usage( (char *)0 );
+          break;
 	}
+        if( Cl <= 0 ) usage( "<class> must be positive." );
 	
-	if( (fp = fopen( InputFile, "r" )) == NULL ) {
+        /* Open the input stream. */
+        if( strcmp( InputFile, "<stdin>" ) == 0 ) {
+          fp = stdin;
+        }
+	else {
+          if( (fp = fopen( InputFile, "r" )) == NULL ) {
 	    perror( InputFile );
 	    exit( 1 );
-	}
+          }
+        }
 
 	/* Read in the finite presentation. */
 	Presentation( fp, InputFile );
