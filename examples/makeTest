@@ -1,8 +1,0 @@
-#/bin/csh
-unset noclobber
-foreach example (*.[0-9]*)
-    echo makeing test example `basename $example "\.[0-9]*"`
-    set class=$example:e
-    echo "    ../src/nq $example $class > $example:r.out"
-    ../src/nq $example $class | grep -v "runtime\|size\|Machine\|Input" > $example:r.out
-end
