@@ -32,13 +32,24 @@
     <Copyright>                                         <!-- OPTIONAL -->
         &copyright; 1992-2002 Werner Nickel.
     </Copyright>
-    <Acknowledgements>                                  <!-- OPTIONAL -->
-        We acknowledge the help of . . . with the 
-<!-- Namen angeben! -->
-        development of this package.
-        This documentation was prepared with the
-        <Package>gapdoc</Package> package by Frank Lübeck and Max
-        Neunhöffer.
+    <Acknowledgements> <!-- OPTIONAL --> 
+    The development of this program was started while the
+    author was supported by an Australian National University PhD
+    scholarship and an Overseas Postgraduate Research Scholarship.
+
+    <P/>Further development of this program was done with support from the
+    DFG-Schwerpunkt-Projekt "`Algorithmische Zahlentheorie und
+    Algebra"'.
+
+    <P/>Over the years a number of people have made useful suggestions
+    that found their way into the code:  Mike Newman, Michael
+    Vaughan-Lee, Joachim Neubüser, Charles Sims.
+
+    <P/>I thank Volkmar Felsch and Joachim Neubüser for their careful
+    examination of the package prior to its release for GAP 4.
+
+    <P/>This documentation was prepared with the <Package>GAPDoc</Package>
+    package by Frank Lübeck and Max Neunhöffer.
     </Acknowledgements>
     </TitlePage>
 
@@ -118,7 +129,7 @@
   <P/> 
   <Index>lower central series</Index>
   The <E>lower central series</E> of <M>G</M> is defined inductively
-  as <M>G_1 = G, G_i = [G_{i-1},G]</M> for <M>i &ge; 2</M>.
+  as <M>G_1 = G, G_i = [G_{i-1},G]</M> for <M>i \ge 2</M>.
   Each term in the lower central
   series is a normal (even fully invariant) subgroup of <M>G</M>.
   The factors of the lower central series are abelian groups.  On each
@@ -152,7 +163,7 @@
   called the 
   <Index>nilpotency class</Index><Index>class</Index>
   <E>nilpotency class</E> of <M>G</M>.  In terms of the lower
-  central series a group <M>G &ne; 1</M> has nilpotency class <M>c</M>
+  central series a group <M>G \not= 1</M> has nilpotency class <M>c</M>
   if and only if
   <M>G_{c} \not= 1</M> and <M>G_{c+1} = 1</M>.
 
@@ -232,14 +243,14 @@
 
   <Display>\langle a,b\mid a^2, b^a = b^2 \rangle </Display> 
 
-  as <M>b = baa = ab^2a = b^4</M> which implies <M>b^3=1</M>.  Here
-  we have the equivalent normal words <M>b^3</M> and the empty word.
-  It can be proved that consistency can be checked by collecting a
-  finite number of words in
-  the given generating set in two essentially different ways and
-  checking if the resulting normal forms are the same in both cases.
-  See Chapter 9 of the book <Cite Key="Sims94"/> for an introduction
-  to polycyclic groups and polycyclic presentations.
+  as <M>b = baa = ab^2a = a^2b^4 = b^4</M> which implies <M>b^3=1</M>.
+  Here we have the equivalent normal words <M>b^3</M> and the empty
+  word.  It can be proved that consistency can be checked by
+  collecting a finite number of words in the given generating set in
+  two essentially different ways and checking if the resulting normal
+  forms are the same in both cases.  See Chapter 9 of the book <Cite
+  Key="Sims94"/> for an introduction to polycyclic groups and
+  polycyclic presentations.
 
   <P/>For computations in a polycyclic group one chooses a consistent
   polycyclic presentation as it offers a simple solution to the word
