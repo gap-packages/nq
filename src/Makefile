@@ -19,7 +19,7 @@ GNULIBS = $(GNULIB)/libmp.a $(GNULIB)/libgmp.a
 
 CC=gcc
 OPTS = -g -O3 $(LONGLONG) $(COPTS)
-CFLAGS = $(OPTS) -I$(GNUINC) -DVERSION='"1.2, 11 March 1998"'
+CFLAGS = $(OPTS) -I$(GNUINC) -DVERSION='"1.3, Jan 1999"'
 
 OBJ = consistency.o pc.o relations.o word.o system.o \
       addgen.o tails.o eliminate.o engel.o glimt.o \
