@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%W  nq.tex                 GAP documentation                Werner Nickel
+%%
+%H  $Id$
+%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Chapter{The Nilpotent Quotient Package}
+
+This chapter describes the Interface to the ANU Nilpotent Quotient
+Program.
+
+For easy reference, define the lowere central sreis of a group $G$ by
+$G_1 = G$ and $G_{i+1} = [G,G_i]$ for $i \geq 1.$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Section{The main functions}
+
+The following functions are available:
+
+\>NilpotentQuotient( <fp group>, <class> )
+
+\>NilpotentQuotient( <output filename>, <fp group>, <class> )
+
+\>NilpotentQuotient( <input filename>, <class> )
+
+\>NilpotentQuotient( <output filename>, <input filename>, <class> )
+
+This function computes a polycyclic presentation for $G/G_{c+1}$ where
+$G$ is  the finitely presented group  <fp group> and $c$  is the class
+specified  by the parameter  <class>.  In  other words,  this function
+returns the largest nilpotent quotient of the finitely presented group
+<fp group> of class at most <class>.
+
+\>EpimorphismNilpotentQuotient( <fp group>, <class> )
+
+This function computes an epimorphism onto $G/G_{c+1}.$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%E  Emacs . . . . . . . . . . . . . . . . . . . . . local emacs variables
+%%
+%%  Local Variables:
+%%  fill-column:    73
+%%  End:
+%%
+
+
