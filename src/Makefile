@@ -7,9 +7,9 @@
 ##    The follwoing two line define the name of the GNU multiple precision
 ##    library (GNULIB) and the directory that contains the corresponding
 ##    include files (GNUINC).
-GNULIB = /home/werner/Source/gmp-1.3.2/libmp.a \
-	 /home/werner/Source/gmp-1.3.2/libgmp.a
-GNUINC = /home/werner/Source/gmp-1.3.2/
+GNULIB =  /home/werner/Source/gmp-2.0.2/libmp.a \
+	  /home/werner/Source/gmp-2.0.2/libgmp.a 
+GNUINC = /home/werner/Source/gmp-2.0.2/
 
 OPTS = -g -O3 
 CFLAGS = $(OPTS) -I$(GNUINC) -DVERSION='"1.1e, 04 Aug 1994"'
