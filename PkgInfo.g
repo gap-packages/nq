@@ -39,17 +39,17 @@ PackageWWWHome :=
 ArchiveFormats := ".tar.gz",
 ArchiveURL     := Concatenation( ~.PackageWWWHome, "nq-2_0" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
-PkgInfoURL     := Concatenation( ~.PackageWWWHome, "PkgInfo.g" );
+PkgInfoURL     := Concatenation( ~.PackageWWWHome, "PkgInfo.g" ),
 
 AbstractHTML   := Concatenation( 
                "This package provides access to the ANU nilpotent quotient ",
                "program for computing nilpotent factor groups of finitely ",
-               "presented groups." );
+               "presented groups." ),
 
                   
 PackageDoc := rec(
   BookName  := "nq",
-  Archive   := Concatenation( ~.PackageWWWHome, "nqdoc.tar.gz" );
+  Archive   := Concatenation( ~.PackageWWWHome, "nqdoc.tar.gz" ),
   HTMLStart := "doc/chap0.html",
   PDFFile   := "nqman.pdf",
   SixFile   := "manual.six",
@@ -81,7 +81,7 @@ end,
 
 Autoload := false,
 
-Keywords := ["nilpotent", "group","finitely presented". "computational"],
+Keywords := ["nilpotent", "group","finitely presented", "computational"],
 
 ));
 
