@@ -21,10 +21,16 @@ void	NqEvalRelations() {
 
 	r = FirstRelation();
 	while( !EarlyStop && r != (node *)0 ) {
-	    w = (word)EvalNode( r );
-	    ev = ExpVecWord( w );
-	    addRow( ev );
-	    r = NextRelation();
+          if( (w = (word)EvalNode( r )) != (void *)0 ) {
+            ev = ExpVecWord( w );
+            addRow( ev );
+          }
+          else {
+            printf( "Could not evaluate the following relation\n" );
+	    PrintNode( r );
+            printf( "\n" );
+          }
+          r = NextRelation();
 	}
 
 	if( Verbose )
