@@ -336,7 +336,7 @@ function( G, cl )
     gens := GeneratorsOfGroup( A );
 
     ##  Now we set up the epimorphism
-    images := List( nqrec, Images, w->PcpElementByWord( coll, w ) );
+    images := List( nqrec, Images, w->PcpElementByGEnExpList( coll, w ) );
     phi := GroupHomomorphismByImages( G, A, GeneratorsOfGroup( G ), images );
 
     SetIsSurjective( phi, true );
