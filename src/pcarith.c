@@ -145,9 +145,14 @@ word	u, w;
 {	expvec	ev;
 
 	ev = ExpVecWord( u );
-	Collect( ev, w, 1 );
-	Free( (void *)u ); Free( (void *)w );
+        Free( (void *)u ); 
+	if( Collect( ev, w, 1 ) ) {
+          Free( (void *)w );
+          Free( (void *)ev );
+          return (word)0;
+        }
 
+        Free( (void *)w );
 	w = WordExpVec( ev );
 	Free( (void *)ev );
 	return w;
@@ -176,9 +181,13 @@ int	*pn;
 	if( n == 1 ) return w;
 
 	ev = ExpVecWord( w );
-	Collect( ev, w, n-1 );
-	Free( (void *)w );
+	if( Collect( ev, w, n-1 ) ) {
+          Free( (void *)w );
+          Free( (void *)ev );
+          return (word) 0;
+        }
 
+        Free( (void *)w );
 	w = WordExpVec( ev );
 	Free( (void *)ev );
 	return w;
@@ -194,7 +203,11 @@ word	u, w;
 	ev = ExpVecWord( u );
 	Free( (void *)u );
 
-	Collect( ev, w, 1 );
+	if( Collect( ev, w, 1 ) ) {
+          Free( (void *)ev );
+          Free( (void *)w );
+          return (word)0;
+        }
 	uw = WordExpVec( ev );
 	Free( (void *)ev );
 
@@ -213,12 +226,24 @@ word	u, w;
 
 	/* x = [u,w] = u^-1 * w^-1 * u * w   <===>   w * u * x = u * w. */
 	ev = ExpVecWord( w );
-	Collect( ev, u, 1 );
+	if( Collect( ev, u, 1 ) ) {
+          Free( (void *)u );
+          Free( (void *)w );
+          Free( (void *)ev );
+          return (word)0;
+        }
 	wu = WordExpVec( ev );
 	Free( (void *)ev );
 
 	ev = ExpVecWord( u );
-	Collect( ev, w, 1 );
+	if( Collect( ev, w, 1 ) ) {
+          Free( (void *)u );
+          Free( (void *)w );
+          Free( (void *)wu );
+          Free( (void *)ev );
+          return (word)0;
+        }
+
 	uw = WordExpVec( ev );
 	Free( (void *)ev );
 	Free( (void *)u ); Free( (void *)w );
