@@ -5,30 +5,23 @@
 ##    $Id$
 ##
 
-##    The  following two  lines define   the directory  with the GNU  multiple
-##    precision library  (GNULIB)     and the directory     that  contains the
-##    corresponding include files (GNUINC).
-GNULIB = /home/nickel/gmp-2.0.2
-GNUINC = $(GNULIB)
-
 ##    GNU cc has the integer data type long long.  It can be used for
 ##    exponents of words by setting the variable LONGLONG to -DLONGLONG.
-LONGLONG = -DLONGLONG
-
-
-GNULIBS = $(GNULIB)/libmp.a $(GNULIB)/libgmp.a 
+##LONGLONG = -DLONGLONG
 
 CC=gcc
 OPTS = -g -O3 $(LONGLONG) $(COPTS)
-CFLAGS = $(OPTS) -I$(GNUINC) -DVERSION='"1.3, Jan 1999"'
+CFLAGS = $(OPTS) -DVERSION='"1.3, Jan 1999"'
 
 OBJ = consistency.o pc.o relations.o word.o system.o \
       addgen.o tails.o eliminate.o engel.o glimt.o \
       presentation.o mem.o pcarith.o collect.o trmetab.o gap.o
 
-nq : nq.o $(OBJ) $(GNULIBS)
-	$(CC) $(CFLAGS) nq.o $(OBJ) $(GNULIBS) -o nq
+nq : nq.o $(OBJ)
+	$(CC) $(CFLAGS) nq.o $(OBJ) -L$(GNU_MP_LIB) -o nq -lgmp
 
+glimt.o: glimt.c
+	$(CC) $(CFLAGS) -I$(GNU_MP_INC) -c glimt.c
 clean :
 	rm -f *.o nq *~
 
