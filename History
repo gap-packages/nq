@@ -112,3 +112,7 @@ March 1998: Version 1.2 of the ANU NQ
            + Implementation of parsing Engel-n commutators and
              evaluation of those commutators with redefined Commute[]
              arrays. 
+
+10 Aug 1999:
+           + turned NQ into a GAP 4 share package
+           + modified the GAP 4 output routines
