@@ -58,6 +58,9 @@ WWW: gapmanual
 	@echo '--> Moving archive files'
 	cp nq-2_1.tar nq-2_1.tgz nq-2_1.zoo $(WEB_DIR)
 
+	@echo 'Copying README file'
+	cp README $(WEB_DIR) 
+
 	@echo '--> Preparing HTML manual'
 	if [ ! -d $(WEB_DIR)/doc ]; then mkdir $(WEB_DIR)/doc; fi
 	cp $(HTML_DOC) $(WEB_DIR)/doc

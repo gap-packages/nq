@@ -55,7 +55,7 @@ PackageDoc := rec(
   PDFFile   := "nqman.pdf",
   SixFile   := "manual.six",
   LongTitle := "Nilpotent Quotient Algorithm",
-  AutoLoad  := false
+  Autoload  := false
 ),
 
 Dependencies := rec(
@@ -80,7 +80,7 @@ AvailabilityTest := function()
     return true;
 end,
 
-AutoLoad := false,
+Autoload := false,
 
 Keywords := ["nilpotent", "group","finitely presented", "computational"],
 
