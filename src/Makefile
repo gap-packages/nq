@@ -11,6 +11,7 @@ GNULIB =  /home/werner/Source/gmp-2.0.2/libmp.a \
 	  /home/werner/Source/gmp-2.0.2/libgmp.a 
 GNUINC = /home/werner/Source/gmp-2.0.2/
 
+CC=gcc
 OPTS = -g -O3 
 CFLAGS = $(OPTS) -I$(GNUINC) -DVERSION='"1.1e, 04 Aug 1994"'
 
