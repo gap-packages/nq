@@ -7,7 +7,7 @@
 ##    The follwoing two line define the name of the GNU multiple precision
 ##    library (GNULIB) and the directory that contains the corresponding
 ##    include files (GNUINC).
-GNULIB = /usr/local/lib/libmp.a /usr/local/libgmp.a 
+GNULIB = /usr/local/lib/libmp.a /usr/local/lib/libgmp.a 
 GNUINC = /usr/local/include
 
 CC=gcc
