@@ -19,8 +19,17 @@
 
 typedef	short	gen;
 
-typedef	long	exp;
-typedef exp	*expvec;
+/*
+**    GNU cc has the data type long long.  We can switch it on by
+**    defining the macro LONGLONG in the Makefile.
+*/
+#ifdef LONGLONG
+typedef	long long	exp;
+#else
+typedef long     	exp;
+#endif
+
+typedef exp	        *expvec;
 
 #define EOW	((gen)0)
 
