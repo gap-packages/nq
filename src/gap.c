@@ -62,7 +62,7 @@ void	PrintGapPcPres() {
 	printf( "NqF := FreeGroup( %d );\n", NrPcGens+NrCenGens );
         printf( "NqCollector := FromTheLeftCollector( NqF );\n" );
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
-            if( Exponent[i] != 0 ) {
+            if( Exponent[i] != (exp)0 ) {
                 printf( "SetRelativeOrder( NqCollector, %d, ", i );
 #               ifdef LONGLONG
                     printf( "%Ld", Exponent[i] );
