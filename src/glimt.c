@@ -12,7 +12,7 @@
 /*
 **    This module uses the arbitrary precision integer package mp.
 */
-#include "mp.h"
+#include <mp.h>
 
 /*
 **    Define the data type for large integers and vectors of large integers.
@@ -86,24 +86,31 @@ exp     n;
 
 {       char    x[64];
         large   l;
+        int     sign = 1;
 
-        if( n < (exp)0 ) {
+        if( n < (exp)0 ) { sign = -1; n = -n; }
+
+        /*
+        ** There does not seem to be a function that converts from long long
+        ** to a large integer.  So we have to do it a bit more complicated.
+        */
 #ifdef LONGLONG
-            sprintf( x, "%Lx", -n );
+        sprintf( x, "%Lx", n );
 #else
-            sprintf( x, "%x", -n );
+        sprintf( x, "%x", n );
 #endif
-            l = xtom( x );
-            NEGATE(l);
+
+        l = (large)Allocate( sizeof(MINT) );
+        mpz_init( l );
+        mpz_set_str( l, x, 16 );
+
+        if( sign == -1 ) NEGATE(l);
+        
+        if( Debug ) { 
+          mpz_out_str( stdout, 10, l );
+          printf( " %d\n", sign * n );
         }
-        else {
-#ifdef LONGLONG
-            sprintf( x, "%Lx", n );
-#else
-            sprintf( x, "%x", n );
-#endif
-            l = xtom( x );
-        }
+
         return l;
 }
 
@@ -499,7 +506,7 @@ expvec  ev;
                 char *file;
                 int  c;
                 
-                c = Class;
+                c = Class + 1;
                 file = (char *)calloc( 12, sizeof(char) );
                 strcpy( file, "matrix.XXX" );
                 file[9] = c % 10 + '0'; c /= 10;
@@ -592,4 +599,12 @@ expvec  ev;
                 printf( "#    Integer matrix is the identity.\n" );
         }
 	return changedMatrix;
+}
+
+void printLarge( l )
+large l;
+
+{
+  mpz_out_str ( stdout, 10, l );
+  printf( "\n" );
 }
