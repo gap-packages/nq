@@ -38,7 +38,7 @@ MakeReadOnlyGlobal( "NqRuntime" );
 
 #############################################################################
 ##
-#V  NqOutput
+#V  NqGapOutput
 ##
 MakeReadWriteGlobal( "NqGapOutput" );
 NqGapOutput := false;
@@ -57,6 +57,7 @@ NqGapOutput := false;
 ##
 InstallValue( NqDefaultOptions,  [ "-g", "-p", "-C", "-s" ] );
 
+
 #############################################################################
 ##
 #V  NqOneTimeOptions . . . . . . . . . .  one time options for the nq program
@@ -67,12 +68,13 @@ InstallValue( NqDefaultOptions,  [ "-g", "-p", "-C", "-s" ] );
 MakeReadWriteGlobal( "NqOneTimeOptions" );
 NqOneTimeOptions := [];
 
-##  If this function is called with an fp-group only, we check for options on
-##  the options stack.  The following options are used:
-##      output_file
-##      input_string
-##      nilpotency_class, class
-##      identical_generators, idgens
+#############################################################################
+##
+#V  NqParameterStrings . . . . . . . .  strings for options to the standalone
+##
+##  This list contains strings for the options that are used by
+##  NilpotentQuotient().
+##
 NqParameterStrings := [ "group",        ##  These three options provide
                         "exptrees",     ##  a way for specifying a 
                         "input_file",   ##  finitely presented group.
@@ -87,6 +89,12 @@ NqParameterStrings := [ "group",        ##  These three options provide
 
                                         ##  Option to specify identical
                         "idgens",       ##  generators.
+
+
+                        "engel",        ##  Specifies an Engel law
+
+                        "options",      ##  A list of options to pass to the
+                                        ##  standalone.
 ];
 
 ##
@@ -97,7 +105,7 @@ NqParameterStrings := [ "group",        ##  These three options provide
 ##      a finitely presented group
 ##      a finitely presented group given by expression trees
 ##      an input file for the standalone
-##      a string in the input format of ther standalone
+##      a string in the input format of the standalone
 ##
 NqPrepareInput := function( params )
     local   str;
@@ -189,6 +197,10 @@ NqCompleteParameters := function( params )
 
     if IsBound( params.class ) then
         Add( params.options, String(params.class) );
+    fi;
+    if IsBound( params.engel ) then
+        Add( params.options, "-e" );
+        Add( params.options, String(params.engel) );
     fi;
 end;
 
@@ -283,8 +295,7 @@ function( stream )
         return List( result.LowerCentralFactors, NqElementaryDivisors );
     fi;
 
-    return NqPcpGroupByCollector( 
-                   NqInitFromTheLeftCollector( result ), result );
+    return result;
 end );
 
 
@@ -477,7 +488,7 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function()
 
-    return NqCallANU_NQ( rec() );
+    return NqPcpGroupByNqOutput( NqCallANU_NQ( rec() ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -487,7 +498,7 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( G )
 
-    return NqCallANU_NQ( rec( group := G ) );
+    return NqPcpGroupByNqOutput( NqCallANU_NQ( rec( group := G ) ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -497,7 +508,10 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( outfile, G )
 
-    return NqCallANU_NQ( rec( group := G, output_file := outfile ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ( 
+                           rec( group := G, 
+                                output_file := outfile ) ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -507,7 +521,8 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( infile )
 
-    return NqCallANU_NQ( rec( input_file := infile ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ( rec( input_file := infile ) ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -517,8 +532,10 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( outfile, infile )
 
-    return NqCallANU_NQ( rec( input_file  := infile,
-                              output_file := outfile ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ( 
+                           rec( input_file  := infile,
+                                output_file := outfile ) ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -528,7 +545,7 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( G )
 
-    return NqCallANU_NQ( rec( exptrees := G ) );
+    return NqPcpGroupByNqOutput( NqCallANU_NQ( rec( exptrees := G ) ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -538,9 +555,10 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( G, idgens )
     
-    return NqCallANU_NQ( 
-                   rec( group  := G,
-                        idgens := idgens ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ(
+                           rec( group  := G,
+                                idgens := idgens ) ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -550,9 +568,10 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( G, idgens )
 
-    return NqCallANU_NQ( 
-                   rec( exptrees := G,
-                        idgens   := idgens ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ(
+                           rec( exptrees := G,
+                                idgens   := idgens ) ) );
 end );
 
 InstallMethod( NilpotentQuotient,
@@ -562,9 +581,10 @@ InstallMethod( NilpotentQuotient,
         0,
 function( G, cl )
 
-    return NqCallANU_NQ(
-                   rec( group := G,
-                        class := cl ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ(
+                           rec( group := G,
+                                class := cl ) ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -574,10 +594,11 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( outfile, G, cl )
 
-    return NqCallANU_NQ( 
-                   rec( group := G,
-                        class := cl,
-                        output_file := outfile ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ(
+                           rec( group := G,
+                                class := cl,
+                                output_file := outfile ) ) );
 end );
 
 InstallMethod( NilpotentQuotient,
@@ -587,9 +608,10 @@ InstallMethod( NilpotentQuotient,
         0,
 function( infile, cl )
 
-    return NqCallANU_NQ(
-                   rec( input_file := infile,
-                        class      := cl ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ(
+                           rec( input_file := infile,
+                                class      := cl ) ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -599,10 +621,11 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( outfile, infile, cl )
 
-    return NqCallANU_NQ(
-                   rec( input_file := infile,
-                        output_file := outfile,
-                        class       := cl ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ(
+                           rec( input_file := infile,
+                                output_file := outfile,
+                                class       := cl ) ) );
 end );
 
 InstallMethod( NilpotentQuotient,
@@ -612,9 +635,10 @@ InstallMethod( NilpotentQuotient,
         0,
 function( G, cl )
 
-    return NqCallANU_NQ(
-                   rec( exptrees := G,
-                        class    := cl ) );
+    return NqPcpGroupByNqOutput(
+                   NqCallANU_NQ(
+                           rec( exptrees := G,
+                                class    := cl ) ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -624,10 +648,11 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( G, idgens, cl )
 
-    return NqCallANU_NQ(
-                   rec( group := G,
-                        idgens := idgens,
-                        class := cl ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ(
+                           rec( group := G,
+                                idgens := idgens,
+                                class := cl ) ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -637,10 +662,11 @@ InstallOtherMethod( NilpotentQuotient,
         0,
 function( G, idgens, cl )
 
-    return NqCallANU_NQ(
-                   rec( exptrees := G,
-                        idgens   := idgens,
-                        class    := cl ) );
+    return NqPcpGroupByNqOutput( 
+                   NqCallANU_NQ(
+                           rec( exptrees := G,
+                                idgens   := idgens,
+                                class    := cl ) ) );
 end );
 
 
@@ -649,71 +675,105 @@ end );
 #F  NqEpimorphismNilpotentQuotient
 ##
 ##
-InstallMethod( NqEpimorphismNilpotentQuotient,
-        "of a finitely presented group",
-        true,
-        [ IsFpGroup, IsPosInt ], 
-        0, 
-function( G, cl )
-    local   nq,  pres,  input,  str,  output,  options,  ret,  nqrec,  
-            coll,  A,  gens,  images,  phi;
+InstallGlobalFunction( NqEpimorphismByNqOutput,
+function( G, nqrec )
+    local   coll,  A,  gens,  freegens,  images,  idgens,  U,  phi;
 
-    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+    A     := NqPcpGroupByCollector( coll, nqrec );
 
-    pres    := NqStringFpGroup( G );
-    input   := InputTextString( pres );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ String(cl) ];
+    ##
+    ##  Now we set up the epimorphism.
+    ##  We need to be careful about identical generators.
+    ##
+    gens   := GeneratorsOfGroup( G );
+    idgens := ValueOption( "idgens" );
 
-    ret    := Process( DirectoryCurrent(),        ## executing directory
-                      nq,                         ## executable
-                      input,                      ## input  stream
-                      output,                     ## output stream
-                      options );                  ## command line arguments
-    CloseStream( output );
-    CloseStream( input  );
+    images   := List( nqrec.Images, w->NqPcpElementByWord( coll, w ) );
+
+
+    if idgens <> fail then
+        freegens := List( gens, UnderlyingElement );
     
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
+        gens := gens{Difference( [1..Length(gens)], 
+                        List( idgens, g->Position( freegens, g ) ) )};
 
-    ##  First we construct the group from the collector
-    coll := NqInitFromTheLeftCollector( nqrec );
-    A    := NqPcpGroupByCollector( coll, nqrec );
-    gens := GeneratorsOfGroup( A );
+        U := Subgroup( G, gens );
+        phi := GroupHomomorphismByImages( U, A, gens, images );
+    else
+        phi := GroupHomomorphismByImages( G, A, gens, images );
+    fi;
 
-    ##  Now we set up the epimorphism
-    images := List( nqrec.Images, w->NqPcpElementByWord( coll, w ) );
-    phi := GroupHomomorphismByImages( G, A, GeneratorsOfGroup( G ), images );
-
+    SetFeatureObj( phi, IsFromFpGroupStdGensGeneralMappingByImages, true );
     SetIsSurjective( phi, true );
 
     return phi;
 end );
 
-InstallMethod( LowerCentralFactors,
-        "of a finitely presented group",
+InstallOtherMethod( NqEpimorphismNilpotentQuotient,
+        "from a finitely presented group",
         true,
-        [ IsFpGroup, IsPosInt ], 
-        0, 
+        [ IsFpGroup ],
+        0,
+function( G )
+    local   nqrec,  coll,  A,  images,  phi;
+
+    nqrec := NqCallANU_NQ( rec( group := G ) );
+    return NqEpimorphismByNqOutput( G, nqrec );
+end );
+
+InstallOtherMethod( NqEpimorphismNilpotentQuotient,
+        "from a finitely presented group",
+        true,
+        [ IsString, IsFpGroup ],
+        0,
+function( outfile, G )
+    local   nqrec,  coll,  A,  images,  phi;
+
+    nqrec := NqCallANU_NQ( rec( group := G, output_file := outfile ) );
+
+    return NqEpimorphismByNqOutput( G, nqrec );
+end );
+
+InstallMethod( NqEpimorphismNilpotentQuotient,
+        "from a finitely presented group",
+        true,
+        [ IsFpGroup, IsPosInt ],
+        0,
 function( G, cl )
-    local   nq,  pres,  input,  str,  output,  options,  ret,  nqrec,  
-            eds,  M,  ed;
+    local   nqrec,  coll,  A,  images,  phi;
 
-    pres    := NqStringFpGroup( G );
-    input   := InputTextString( pres );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ String(cl) ];
+    nqrec := NqCallANU_NQ( rec( group := G, class := cl ) );
+    return NqEpimorphismByNqOutput( G, nqrec );
+end );
 
-    NqCallANU_NQ( input, output, options );
-    
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
+InstallOtherMethod( NqEpimorphismNilpotentQuotient,
+        "from a finitely presented group",
+        true,
+        [ IsString, IsFpGroup, IsPosInt ],
+        0,
+function( outfile, G, cl )
+    local   nqrec,  coll,  A,  images,  phi;
 
-    eds := List( nqrec.LowerCentralFactors, NqElementaryDivisors );
+    nqrec := NqCallANU_NQ( rec( group := G, 
+                                class := cl,
+                                output_file := outfile ) );
 
-    return eds;
+    return NqEpimorphismByNqOutput( G, nqrec );
+end );
+
+#############################################################################
+##
+#F  LowerCentralFactors
+##
+##
+InstallGlobalFunction( LowerCentralFactors,
+function( arg )
+    local   A;
+
+    A := CallFuncList( NilpotentQuotient, arg );
+
+    return A!.LowerCentralFactors;
 end );
 
 #############################################################################

@@ -43,7 +43,7 @@ InstallGlobalFunction( NqPcpGroupByCollector,
 function( coll, nqrec )
     local   G,  gens,  ranks,  lcs,  a,  z,  r;
 
-    G := PcpGroupByCollectorNC( coll );
+    G    := PcpGroupByCollector( coll );
     gens := GeneratorsOfGroup( G );
 
     ranks := nqrec.Ranks;
@@ -56,12 +56,23 @@ function( coll, nqrec )
         Add( lcs, SubgroupNC( G, gens{[a..z]} ) );
     od;
 
+    G!.LowerCentralFactors := List( nqrec.LowerCentralFactors,
+                                    NqElementaryDivisors );
+
     SetLowerCentralSeriesOfGroup( G, lcs );
     SetIsNilpotentGroup( G, true );
 
     return G;
 end );
 
+#############################################################################
+##
+#F  NqPcpGroupByNqOutput  . . . . . . . . . pcp group from nq output, set lcs
+##
+InstallGlobalFunction( NqPcpGroupByNqOutput,
+
+    nqrec -> NqPcpGroupByCollector( NqInitFromTheLeftCollector(nqrec), nqrec )
+);
 
 #############################################################################
 ##

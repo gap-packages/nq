@@ -10,11 +10,14 @@ DeclareGlobalFunction( "NqStringFpGroup" );
 DeclareGlobalFunction( "NqStringExpTrees" );
 DeclareGlobalFunction( "NqInitFromTheLeftCollector" );
 DeclareGlobalFunction( "NqPcpGroupByCollector" );
+DeclareGlobalFunction( "NqPcpGroupByNqOutput" );
 DeclareGlobalFunction( "NqPcpElementByWord" );
 DeclareGlobalFunction( "NqBuildManual" );
 DeclareGlobalFunction( "NqElementaryDivisors" );
+DeclareGlobalFunction( "NqEpimorphismByNqOutput" );
 
 DeclareGlobalFunction( "NilpotentEngelQuotient" );
+DeclareGlobalFunction( "LowerCentralFactors" );
 
 DeclareGlobalVariable( "NqGlobalVariables" );
 DeclareGlobalVariable( "NqDefaultOptions" );
@@ -22,7 +25,6 @@ DeclareGlobalVariable( "NqOneTimeOptions" );
 DeclareGlobalVariable( "NqRuntime" );
 DeclareGlobalVariable( "NqGapOutput" );
 
-DeclareOperation( "LowerCentralFactors", [ IsObject, IsPosInt ] );
 
 DeclareOperation( "NilpotentQuotient", 
         [ IsObject, IsPosInt ] );
