@@ -73,7 +73,7 @@ void	PrintGapPcPres() {
             }
 
         /*
-        **  Set the power relations.
+        **  Print the power relations.
         */
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
 	    if( Exponent[i] != (exp)0 && 
@@ -84,26 +84,29 @@ void	PrintGapPcPres() {
             }
 
         /*
-        **  Set the conjugate relations.
+        **  Print the conjugate relations.
         */
 	for( j = 1; j <= NrPcGens; j++ ) {
 	    i = 1;
 	    while( i < j && Wt(i) + Wt(j) <= Class + (NrCenGens==0?0:1) ) {
+              /*
+                printf( "Print( %d, \" \", %d, \"\\n\" );\n", j, i );
+              */
 		/* print Conjugate[j][i] */
                 printf( "SetConjugate( NqCollector, %d, %d, ", j, i );
 		printGapWord( Conjugate[j][i] );
                 printf( " );\n" );
-		if( 0 && Exponent[i] == (exp)0 ) {
+		if( 1 && Exponent[i] == (exp)0 ) {
                     printf( "SetConjugate( NqCollector, %d, %d, ", j, -i );
 		    printGapWord( Conjugate[j][-i] );
                     printf( " );\n" );
 		}
-		if( 0 && Exponent[j] == (exp)0 ) {
+		if( 1 && Exponent[j] == (exp)0 ) {
                     printf( "SetConjugate( NqCollector, %d, %d, ", -j, i );
 		    printGapWord( Conjugate[-j][i] );
                     printf( " );\n" );
 		}
-		if( 0 && Exponent[i] + Exponent[j] == (exp)0 ) {
+		if( 1 && Exponent[i] + Exponent[j] == (exp)0 ) {
                     printf( "SetConjugate( NqCollector, %d, %d, ", -j, -i );
 		    printGapWord( Conjugate[-j][-i], 'A' );
                     printf( " );\n" );
@@ -122,8 +125,8 @@ void	PrintGapPcPres() {
         }
         printf( "];\n" );
 
-	printf( "\n#    Class : %d\n", Class );
-	printf( "#    Nr of generators of each class :" );
-	for( i = 1; i <= Class; i++ ) printf( " %d", Dimension[i] );
-	printf( "\n" );
+	printf( "NqClass := %d;\n", Class );
+	printf( "NqRanks := [ " );
+	for( i = 1; i <= Class; i++ ) printf( " %d,", Dimension[i] );
+	printf( "];\n" );
 }
