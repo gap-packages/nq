@@ -96,7 +96,7 @@ exp	e;
 		    }
 		lhs[ ag ] += e * sgn(g);
 	        if ( ((lhs[ag] << 1) >> 1) != lhs[ag] )
-		    Error("Possible overflow" );
+		    Error( "Possible integer overflow" );
 		if( Exponent[ag] != 0 )
 		    while( lhs[ag] >= Exponent[ag] ) {
 			if( (rhs = P[ ag ]) != (word)0 ) {
@@ -108,7 +108,7 @@ exp	e;
 			}
 			lhs[ ag ] -= Exponent[ ag ];
 			if ( ((lhs[ag] << 1) >> 1) != lhs[ag] )
-			    return 1;;
+                            Error( "Possible integer overflow" );
 		    }
 	    }
 	    else {
