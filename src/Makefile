@@ -12,7 +12,7 @@ GNUINC = $(GNULIB)
 
 ##    GNU cc has the integer data type long long.  It can be used for
 ##    exponents of words by setting the variable LONGLONG to -DLONGLONG.
-LONGLONG = -DLONGLONG
+#LONGLONG = -DLONGLONG
 
 
 GNULIBS = $(GNULIB)/libmp.a $(GNULIB)/libgmp.a 
