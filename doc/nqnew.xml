@@ -596,6 +596,37 @@ NQ.
            generators  are treated  as identical  relations  for these
            generators.
 
+           <P/> In addition to the arguments explained above, the
+           function accepts the following options:
+
+           <List>
+           <Item><Keyword>group</Keyword> This option can be used
+           instead of the parameter <F>fp-group</F> and must be a
+           finitely presented group.
+           </Item>
+           <Item><Keyword>exptrees</Keyword> This option can be used
+           to specify a finitely presented group by expression trees.
+           </Item>
+           <Item><Keyword>input\_string</Keyword> This option can be
+           used to specify a finitely presented group by a string in
+           the input format of the standalone program.
+           </Item>
+           <Item><Keyword>input\_file</Keyword> This option specifies
+           a file with input for the standalone program.
+           </Item>
+           <Item><Keyword>output\_file</Keyword> This option specifies
+           a file for the output of the standalone.
+           </Item>
+
+           <Item><Keyword>idgens</Keyword> This options specifies a
+           list of identical generators.
+           </Item>
+           <Item><Keyword>class</Keyword> This option specifies the
+           nilpotency class up to which the nilpotent quotient will be
+           computed.
+           </Item>
+           </List>
+
            <P/>The following example computes the class-5 quotient of
            the free group on two generators.
 <Example>
@@ -603,6 +634,8 @@ NQ.
 gap> F := FreeGroup( 2 );
 <free group on the generators [ f1, f2 ]>
 gap> H := NilpotentQuotient( F, 5 );
+## Equivalent to:  NilpotentQuotient( : group := F, class := 5 );
+##                 NilpotentQuotient( F : class := 5 );          
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 gap> lcs := LowerCentralSeries( H );;
 gap> for i in [1..5] do Print( lcs[i] / lcs[i+1], "\n" ); od;
@@ -655,6 +688,7 @@ gap> F := FreeGroup( "a", "b", "w", "x", "y", "z" );
 gap> G := F / [ LeftNormedComm( [F.3,F.4,F.5,F.6] ) ];
 <fp group of size infinity on the generators [ a, b, w, x, y, z ]>
 gap> H := NilpotentQuotient( G, [F.3,F.4,F.5,F.6] );
+## Equivalent to: NilpotentQuotient( G : idgens := [F.3,F.4,F.5,F.6] );
 Pcp-group with orders [ 0, 0, 0, 0, 0 ]
 gap> NilpotencyClassOfGroup(H);
 3
@@ -674,7 +708,7 @@ gap> comm := LeftNormedComm( [et[1], et[2], et[2], et[2]] );
 gap> G := rec( generators := et, relations := [comm] );
 rec( generators := [ x1, x2, x3, x4, x5 ], 
   relations := [ [ x1, x2, x2, x2 ] ] )
-gap> H := NilpotentQuotient( G, [et[1],et[2]] );
+gap> H := NilpotentQuotient( G : idgens := [et[1],et[2]] );
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 2, 2, 
   0, 6, 6, 0, 0, 2, 10, 10, 10 ]
 gap> TorsionSubgroup( H );
@@ -713,6 +747,7 @@ infinite order.  The number of zeroes is always correct.
            Func="NilpotentQuotient" Style="Text"/> which enforces the
            <M>n</M>-th Engel identity on the nilpotent quotients of the
            group specified by <F>fp-group</F> or by <F>input-file</F>.
+           It accepts the same options as <F>NilpotentQuotient</F>.
 
            <P/>The Engel condition can also be enforced by using
            identical generators and the Engel law and <Ref

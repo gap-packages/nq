@@ -36,6 +36,12 @@ MakeReadWriteGlobal( "NqRuntime" );
 NqRuntime := 0;
 MakeReadOnlyGlobal( "NqRuntime" );
 
+#############################################################################
+##
+#V  NqOutput
+##
+MakeReadWriteGlobal( "NqOutput" );
+NqOutput := false;
 
 #############################################################################
 ##
@@ -458,6 +464,16 @@ end );
 ##
 ##  This should produce a quotient system and not a pcp group.
 ##
+InstallOtherMethod( NilpotentQuotient,
+        "of a finitely presented group",
+        true,
+        [], 
+        0,
+function()
+
+    return NqCallANU_NQ( rec() );
+end );
+
 InstallOtherMethod( NilpotentQuotient,
         "of a finitely presented group",
         true,

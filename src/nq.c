@@ -358,6 +358,9 @@ end:
 
         if( Gap ) { PrintRawGapPcPres(); }
 
+        if( Gap & Verbose )
+          fprintf( stderr, "\n" );
+
 	TimeOutOn();
 
         PrintCollectionTimes();
