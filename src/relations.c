@@ -133,7 +133,7 @@ int	ExtendEpim() {
 int	ElimAllEpim( n, M, renumber  )
 int	n;
 expvec	*M;
-int	*renumber;
+gen	*renumber;
 
 {	int	i, j, l, nrGens;
 	word	w;
