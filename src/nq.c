@@ -243,7 +243,7 @@ char	*argv[];
 
 	time = RunTime();
 
-	if( Gap ) printf( "NqLowerCentralSeries := [\n" );
+	if( Gap ) printf( "NqLowerCentralFactors := [\n" );
 
 	printf( "#    Calculating the abelian quotient ...\n" );
 	InitEpim();
