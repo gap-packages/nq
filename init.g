@@ -6,24 +6,29 @@
 ##
 
 if TestPackageAvailability( "GAPDoc", "" ) <> fail then
+    HideGlobalVariables( "BANNER" );
+    BANNER := false;
     RequirePackage( "gapdoc" );
+    UnhideGlobalVariables( "BANNER" );
 else
     Info( InfoWarning, 1, "GAPDoc not available" );
 fi;
 
-if TestPackageAvailability( "polycyclic", "1.0" ) <> fail then
-    RequirePackage( "polycyclic" );
-else
-    Info( InfoWarning, 1, "polycyclic not available" );
-fi;
-
 ##
-##    Announce the package version and test for the existence of the binary.
+##    Announce the package version and test for the existence of the package 
+##    polycyclic and the binary.
 ##
 DeclarePackage( "nq", "2.0",
 
   function()
     local path;
+
+    if TestPackageAvailability( "polycyclic", "1.0" ) <> fail then
+        RequirePackage( "polycyclic" );
+    else
+        Info( InfoWarning, 1, "polycyclic not available" );
+        return fail;
+    fi;
 
     # test for existence of the compiled binary
     path := DirectoriesPackagePrograms( "nq" );
