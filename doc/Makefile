@@ -9,6 +9,6 @@ clean:
 	   nqman.log nqman.pnr nqman.tex nqman.toc nqman.brf
 	@rm -f manual.dvi manual.html manual.pdf manual.ps manual.six
 	@rm -f chap*.html chap*.txt *~
-	@rm test/nqman.tst test/diffs
+	@rm -f test/nqman.tst test/diffs
 
 spotless: clean
