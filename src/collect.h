@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 **    collect.h                       PC                       Werner Nickel
-**                                         Werner.Nickel@math.rwth-aachen.de
+**                                         nickel@mathematik.tu-darmstadt.de
 */
 
 extern  int     UseCombiCollector;

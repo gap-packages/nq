@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 **    genexp.h                        PC                       Werner Nickel
-**                                         Werner.Nickel@math.rwth-aachen.de
+**                                         nickel@mathematik.tu-darmstadt.de
 **
 **
 **    A generator is a positive integer. The inverse of a generator is

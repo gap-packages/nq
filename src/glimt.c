@@ -1,7 +1,7 @@
 /*****************************************************************************
 **
 **    glimt.c                         NQ                       Werner Nickel
-**                                         Werner.Nickel@math.rwth-aachen.de
+**                                         nickel@mathematik.tu-darmstadt.de
 */
 
 

@@ -37,6 +37,16 @@ gapmanual:
 	    (cd doc; make GAP_ROOT=$(GAP_ROOT))                           \
 	fi
 
+release-2.0:
+	cvs export -D 'January 13, 2002 0:00' -d nq-2.0 GAP/4.0/pkg/nq
+
+	find nq-2.0 -name .cvsignore -exec rm "{}" ";"
+
+	rm -f nq-2_0.zoo nq-2_0.tgz nq-2_0.tar
+	tar cf nq-2_0.tar nq-2.0
+	find nq-2.0 -type f -exec zoo ah nq-2_0.zoo "{}" ";"
+	gzip < nq-2_0.tar > nq-2_0.tgz
+
 test:
 	(cd examples; make)
 

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 **    pcarith.c                       NQ                       Werner Nickel
-**                                         Werner.Nickel@math.rwth-aachen.de
+**                                         nickel@mathematik.tu-darmstadt.de
 **
 **    This file contains an arithmetic for elements of a group that is
 **    given by a polycyclic presentation. The elements are in generator
