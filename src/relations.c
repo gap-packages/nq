@@ -12,22 +12,25 @@
 
 static word	*Image;
 
-void    EvalSingleRelation( r )
+int     EvalSingleRelation( r )
 node    *r;
 {   
     word    w;
     expvec  ev;
+    int     needed;
     
     if( (w = (word)EvalNode( r )) != (void *)0 ) {
         ev = ExpVecWord( w );
         Free( w );
-        addRow( ev );
+        needed = addRow( ev );
     }
     else {
         printf( "Evaluation " );
         if( !Verbose ) { printf( "of " ); PrintNode( r ); }
         printf( "failed.\n" );
+        needed = 0;
     }
+    return needed;
 }
 
 void	EvalAllRelations() {
@@ -80,14 +83,6 @@ void	InitEpim() {
 	    exit( 2 );
 	}
 
-	/* Initialize Commute[]. */
-	Commute = (gen*)malloc( (NrCenGens+1) * sizeof(gen) );
-	if( Commute == (gen*)0 ) {
-	    perror( "initEpim(), Commute" );
-	    exit( 2 );
-	}
-	for( i = 0; i <= NrCenGens; i++ ) Commute[i] = i;
-
 	/* Initialize Weight[]. */
 	Weight = (int *)Allocate( (NrCenGens+1)*sizeof(int) );
 	for( i = 1; i <= NrCenGens; i++ ) Weight[i] = Class+1;
@@ -109,6 +104,13 @@ void	InitEpim() {
 	    Image[i][1].g = EOW;
 	    Image[i][1].e = (exp)0;
 	}
+
+        SetupCommuteList();
+        SetupCommute2List();
+        SetupNrPcGensList();
+
+        Commute  = CommuteList[ Class+1 ];
+        Commute2 = Commute2List[ Class+1 ];
 
 	if( Verbose )
 	    printf("#    Initialized epimorphism (%d msec).\n",RunTime()-t);
@@ -329,7 +331,7 @@ gen	g;
             return Image[g];
 
         if( Instances == (word *)0 ) {
-            printf( "Instances not initialised\n" );
+            printf( "##  Instances not initialised\n" );
             return (word)0;
         }
 

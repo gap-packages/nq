@@ -263,6 +263,7 @@ Tails() {
             }
           }
         }
+
 	N  = NrPcGens;
 	for( c = Class; c >= 1; c-- ) {
 	    n  = N;

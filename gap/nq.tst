@@ -1,7 +1,6 @@
 #############################################################################
 ##
-#A    nq.tst                     May 1994                       Werner Nickel
-#A                                                             & Frank Celler
+#A    nq.tst                   August 2002                      Werner Nickel
 ##
 
 ## set the size of the screen to a known value ##############################
@@ -88,7 +87,7 @@ NilpotentQuotient( "../examples/G5.10", 10 );
 #>  [ 3, 3, 3, 3, 3, 3, 6, 90, 0 ], 
 #>  [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 6, 18, 90 ] ]
 
-## add timings for the GAP part of the nq-stuff (basically MD) ##############
+## add timings for the GAP part of the nq-stuff              ##############
 SizeScreen(sizeScreen);;
-Print("nq        3.4   19/05/1994  ",QuoInt(200000000,time)," GAPstones\n");
+Print("nq               Aug 2002  ",QuoInt(200000000,time)," GAPstones\n");
 if IsBound( GAPSTONES )  then Add( GAPSTONES, QuoInt(200000000,time) );  fi;

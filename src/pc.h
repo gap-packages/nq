@@ -49,7 +49,11 @@ extern int	IsWeighted;
 extern int	Class;
 
 extern gen	*Commute;
+extern gen	*Commute2;
 extern gen	**CommuteList;
+extern gen	**Commute2List;
+extern int      *NrPcGensList;
+
 extern exp	*Exponent;
 extern word	*Power;
 extern word	**Conjugate;

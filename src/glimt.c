@@ -6,6 +6,7 @@
 
 
 #include "nq.h"
+#include "time.h"
 
 #undef min
 
@@ -24,7 +25,7 @@ typedef large   *lvec;
 **    The name of the structure components in MINT have changed.  I
 **    knew from the start that I shouldn't have done that.
 */
-#if __GNU_MP__+0 == 2
+#if __GNU_MP__+0 >= 2
 #    define NOTZERO(l) ((l)->_mp_size != 0)
 #    define ISZERO(l)  ((l)->_mp_size == 0)
 #    define ISNEG(l)   ((l)->_mp_size < 0)
@@ -53,6 +54,8 @@ typedef large   *lvec;
 */
 lvec     *Matrix = (lvec*)0;
 long     *Heads;
+large    MaximalEntry;
+
 static   long     changedMatrix = 0;
 
 /*
@@ -152,6 +155,10 @@ lvec    v;
 void    freeMatrix() {
 
         long    i;
+
+        if( Matrix == (lvec *)0 ) return;
+
+        mpz_clear( MaximalEntry ); Free( MaximalEntry );
 
         for( i = 0; i < NrRows; i++ ) freeVector( Matrix[i] );
         Free(Matrix);
@@ -322,8 +329,10 @@ void    printMatrix() {
         printf( " heads   vectors\n" );
         for( i = 0; i < NrRows; i++ ) {
             printf( "    %d   ", Heads[i] );
-            for( j = 1; j <= NrCols; j++ )
+            for( j = 1; j <= NrCols; j++ ) {
+                putchar( ' ' );
                 mpz_out_str( stdout, 10, Matrix[i][j] );
+            }
             putchar( '\n' );
         }
 }
@@ -365,12 +374,13 @@ expvec  *MatrixToExpVecs() {
                 m = Matrix[i][j];
                 if( mpz_sizeinbase( m, 2 ) > 8 * sizeof(signed int) - 2 ) {
                     printf( "Warning, Exponent too large.\n" );
+                    printMatrix();
                     exit( 4 );
                 }
                 M[i][j] = mpz_get_si( m );
             }
-            freeVector( Matrix[i] );
         }
+        for( i = 0; i < NrRows; i++ ) freeVector( Matrix[i] );
 
         /* Make all entries except the head entries negative. */
         for( i = 0; i < NrRows; i++ )
@@ -386,8 +396,11 @@ expvec  *MatrixToExpVecs() {
 
         free( Matrix ); Matrix = (lvec *)0;
 
-        if( Verbose )
-            printf("#    Time spent on the integer matrix: %d msec.\n",Time);
+        printf("#    Time spent on the integer matrix: %d msec.\n",Time);
+        printf("#    Maximal entry: " ); 
+        mpz_out_str ( stdout, 10, MaximalEntry );
+        printf( "\n" );
+
 
         TimeOutOff();
         if( Gap ) printGapMatrix( M );
@@ -437,6 +450,11 @@ long    a;
                 while( a <= NrCols ) {
                     mpz_mul( t,    q,    w[a] );
                     mpz_sub( v[a], v[a], t    );
+
+                    mpz_abs( t, v[a] );
+                    if( mpz_cmp( t, MaximalEntry ) > 0 )
+                      mpz_set( MaximalEntry, v[a] );
+
                     a++;
                 }
 
@@ -464,8 +482,9 @@ lvec    vReduce( v, h )
 lvec    v;
 long    h;
 
-{       long    i;
+{       long    i, j;
         lvec    w;
+        int     reduceCol;
 
         for( i = 0; i < NrRows && Heads[i] <= h; i++ ) {
             if( Heads[i] == h ) {
@@ -480,12 +499,12 @@ long    h;
                     if( ISNEG(v[h]) ) vNeg( v, h );
                     w = Matrix[i]; Matrix[i] = v; v = w;
                 }
+
                 while( h <= NrCols && ISZERO(v[h]) ) h++;
-                if( h > NrCols ) { 
-                    lastReduce(); freeVector( v ); return (lvec)0;
-                }
+                if( h > NrCols ) { freeVector( v ); v = (lvec)0; }
             }
         }
+
         return v;
 }
 
@@ -494,7 +513,9 @@ expvec  ev;
 
 {       long    h, i, t;
         lvec    v;
-        
+
+        IntMatTime -= RunTime();
+
         /* Initialize Matrix[] and Heads[] on the first call. */
         if( Matrix == (lvec *)0 ) {
             EarlyStop = 0;
@@ -508,6 +529,7 @@ expvec  ev;
                 exit( 2 );
             }
             NrCols = NrCenGens;
+            MaximalEntry = ltom( (exp)0 );
 
             if( RawMatOutput ) {
                 char *file;
@@ -546,9 +568,13 @@ expvec  ev;
             if( ev[NrPcGens+i] != 0 ) { h = i; break; }
 
         /* If ev is the null vector, free it and return. */
-        if( h == 0 ) { Free(ev); return 0; }
+        if( h == 0 ) { 
+          Free(ev); 
+          IntMatTime += RunTime();
+          return 0; 
+        }
 
-        if( Verbose ) t = RunTime();
+        t = RunTime();
 
         /* Copy the last NrCenGens entries of ev and free it. */
         v = (lvec)malloc( (NrCols+1)*sizeof(large) );
@@ -592,8 +618,10 @@ expvec  ev;
             Matrix[ i ] = v;
             Heads[ i ] = h;
             NrRows++;
-            lastReduce();
         }
+
+        if( changedMatrix ) lastReduce();
+
 
         /* Check if Matrix[] is the identity matrix. */
         if( NrRows == NrCenGens ) {
@@ -602,11 +630,12 @@ expvec  ev;
                 if( mpz_sizeinbase( Matrix[i][Heads[i]], 2 ) != 1 ) break;
             if( i == NrRows ) EarlyStop = 1;
         }
-        if( Verbose ) {
-            Time += RunTime()-t;
-            if( EarlyStop )
-                printf( "#    Integer matrix is the identity.\n" );
-        }
+
+        Time += RunTime()-t;
+        if( EarlyStop )
+            printf( "#    Integer matrix is the identity.\n" );
+
+        IntMatTime += RunTime();
 	return changedMatrix;
 }
 

@@ -262,4 +262,6 @@ void    PrintRawGapPcPres() {
 	    }
 	}
         printf( "];\n" );
+
+        printf( "NqRuntime := %d;\n", RunTime() );
 }

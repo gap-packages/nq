@@ -26,24 +26,30 @@ static
 void	EnumerateWords( r, l, instances, n, i, g, wt )
 node    *r;
 word    *instances;
-long    n,  i,  wt;
+long    l,  n,  i,  wt;
 gen	g;
 {
     long    save_wt;
     word    u = instances[ n ];
  
     if( wt == 0 ) {
-        gen g;
-        /*        for( g = 1; g <= NrIdenticalGensNode; g++ ) {
-            printWord( Instances[ g ], 'a' ); printf( ", " );
+        gen h;
+        /*
+        printf( "#  %d  %d  ", l, n ); 
+        for( h = 1; h <= NrIdenticalGensNode; h++ ) {
+            printWord( Instances[ h ], 'a' ); printf( ", " );
         }
-        printf( "\n" );*/
-        EvalSingleRelation( r );
+        printf( "\n" );
+        */
+        if( EvalSingleRelation( r ) ) {
+            printf( "#  essential: " ); 
+            for( h = 1; h <= NrIdenticalGensNode; h++ ) {
+                printWord( Instances[ h ], 'a' ); printf( ", " );
+            }
+            printf( "\n" );
+        }
         return;
     }
-    
-    if( n < NrIdenticalGensNode )
-        EnumerateWords( r, l, instances, n+1, 0, 1, wt );
     
     if( g > NrPcGens+NrCenGens ) return;
     
@@ -58,6 +64,9 @@ gen	g;
             
             if( Exponent[g] > (exp)0 && Exponent[g] == u[i].e ) break;
             EnumerateWords( r, l, instances, n, i+1, g+1, wt );
+            if( n < NrIdenticalGensNode )
+                EnumerateWords( r, l, instances, n+1, 0, 1, wt );
+    
         }
         wt = save_wt;
         g++;

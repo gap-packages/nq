@@ -122,3 +122,16 @@ March 1998: Version 1.2 of the ANU NQ
            + replaced in glimt.c all BSD compatible integer functions
              by GMP functions.  Now libmp.a is not needed anymore.
 
+June 2001:
+           + extended the input grammar to accept identical generators
+             as part of the generator list seperated from the other
+             generators by a semicolon
+           + added machinery to evaluate identical relations
+
+June 2002:
+           + added a combinatorial collector
+           + reconstruction of the integer matrix code
+
+October 2002:
+           + rewrite of the examples code
+

@@ -2,8 +2,8 @@
 ##
 #A  nqpcp.gi                    Mai  1999                        Werner Nickel
 ##
-##  This file contains functions for the interface to the share package
-##  ``polycyc''.
+##  This file contains functions for the interface to the package
+##  ``polycyclic''.
 ##
 
 #############################################################################

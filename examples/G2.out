@@ -1,49 +1,70 @@
 #
-#    The ANU Nilpotent Quotient Program (Version 1.1e, 04 Aug 1994)
+#    The ANU Nilpotent Quotient Program (Version 2.0 July 2002)
 #    Calculating a nilpotent quotient
 #    Nilpotency class: 11
+#    Size of exponents: 8 bytes
 #
 #    Calculating the abelian quotient ...
 #    The abelian quotient has 2 generators
 #        with the following exponents: 0 0
 #
 #    Calculating the class 2 quotient ...
+##  Sizes:  2  3
 #    Layer 2 of the lower central series has 1 generators
 #          with the following exponents: 0
 #
 #    Calculating the class 3 quotient ...
+##  Sizes:  2  3  5
+#    Maximal entry: 0
 #    Layer 3 of the lower central series has 1 generators
 #          with the following exponents: 0
 #
 #    Calculating the class 4 quotient ...
+##  Sizes:  2  3  4  7
+#    Maximal entry: 0
 #    Layer 4 of the lower central series has 1 generators
 #          with the following exponents: 0
 #
 #    Calculating the class 5 quotient ...
+##  Sizes:  2  3  4  5  9
+#    Maximal entry: 0
 #    Layer 5 of the lower central series has 1 generators
 #          with the following exponents: 0
 #
 #    Calculating the class 6 quotient ...
+##  Sizes:  2  3  4  5  6  11
+#    Maximal entry: 0
 #    Layer 6 of the lower central series has 1 generators
 #          with the following exponents: 2
 #
 #    Calculating the class 7 quotient ...
+##  Sizes:  2  3  4  5  6  7  14
+#    Maximal entry: 0
 #    Layer 7 of the lower central series has 2 generators
 #          with the following exponents: 2 2
 #
 #    Calculating the class 8 quotient ...
+##  Sizes:  2  3  4  5  6  7  9  20
+#    Maximal entry: 2
 #    Layer 8 of the lower central series has 2 generators
 #          with the following exponents: 2 2
 #
 #    Calculating the class 9 quotient ...
+##  Sizes:  2  3  4  5  6  7  9  11  26
+#    Maximal entry: 4
 #    Layer 9 of the lower central series has 2 generators
 #          with the following exponents: 2 2
 #
 #    Calculating the class 10 quotient ...
+##  Sizes:  2  3  4  5  6  7  9  11  13  32
+#    Maximal entry: 4
 #    Layer 10 of the lower central series has 1 generators
 #          with the following exponents: 2
 #
 #    Calculating the class 11 quotient ...
+##  Sizes:  2  3  4  5  6  7  9  11  13  14  35
+#    Integer matrix is the identity.
+#    Maximal entry: 5
 
 
 #    The epimorphism :

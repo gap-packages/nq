@@ -7,11 +7,13 @@
 
 if TestPackageAvailability( "polycyclic", "1.0" ) <> fail then
     RequirePackage( "polycyclic" );
+else
+    Error( "polycyclic not available" );
 fi;
 
 ##
 ##    Announce the package version and test for the existence of the binary.
-
+##
 DeclarePackage( "nq", "1.3",
 
   function()
@@ -30,5 +32,6 @@ DeclarePackage( "nq", "1.3",
 end );
 
 # install the documentation
-DeclarePackageDocumentation( "nq", "doc/newdoc/" );
+DeclarePackageDocumentation( "nq", "doc", "ANU NQ", 
+        "Computation of nilpotent quotients" );
 

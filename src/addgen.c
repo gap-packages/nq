@@ -10,13 +10,39 @@
 **    Set up a list of Commute[] arrays.  The array in CommuteList[c] is
 **    Commute[] as if the current group had class c.  CommuteList[Class+1][]
 **    is the same as Commute[].
-**/
+*/
+/*
+**    Old code to set the commute array.
+
+	/* We change the entries in Commute[]. A generator of weight c
+	** did commute with all generators of weight Class-c. From here
+	** on it will only commute with generators of weight Class-c+1
+	** since new generators of weight Class+1 have been introduced.
+	* /
+	Commute = (gen*)realloc( Commute, (G+1)*sizeof(gen) );
+	if( Commute == (gen*)0 ) {
+	    perror( "addGenerators(), Commute" );
+	    exit( 2 );
+	}
+	l = 1;
+	G = NrPcGens;
+	for( c = 1; 2*c <= Class+1; c++ ) {
+	    for( i = 1; i <= Dimension[c]; i++, l++ )
+		Commute[l] = G;
+	    G -= Dimension[ Class-c+1 ];
+	}
+	for( ; l <= NrPcGens+NrCenGens; l++ ) Commute[l] = l;
+*/
+
 void    SetupCommuteList() {
 
     int c;
     gen g, h;
     
-    if( CommuteList != (gen**)0 ) Free( CommuteList );
+    if( CommuteList != (gen**)0 ) {
+      for( c = 1; c <= Class; c++ ) Free( CommuteList[c] );
+      Free( CommuteList );
+    }
             
     CommuteList = (gen**)Allocate( (Class+2)*sizeof(gen*) );
     for( c = 1; c <= Class+1; c++ ) {
@@ -30,6 +56,54 @@ void    SetupCommuteList() {
         for( ; g <= NrPcGens+NrCenGens; g++ ) CommuteList[c][g] = g;
     }
 }
+
+void    SetupCommute2List() {
+
+    int    c;
+    gen    g, h;
+    
+    if( Commute2List != (gen**)0 ) {
+      for( c = 1; c <= Class; c++ ) Free( Commute2List[c] );
+      Free( Commute2List );
+    }
+            
+    Commute2List = (gen**)Allocate( (Class+2)*sizeof(gen*) );
+    for( c = 1; c <= Class+1; c++ ) {
+      Commute2List[ c ] = 
+        (gen*)Allocate( (NrPcGens + NrCenGens + 1) * sizeof(gen) );
+              
+      for( g = 1; g <= NrPcGens && 3*Wt(g) <= c; g++ ) {
+        for( h = CommuteList[c][g]; h > g && 2*Wt(h)+Wt(g) > c; h-- ) ;
+        Commute2List[c][g] = h;
+      }
+      for( ; g <= NrPcGens+NrCenGens; g++ ) Commute2List[c][g] = g;
+    }
+}
+
+SetupNrPcGensList() {
+    int    c;
+    gen    g, h;
+    
+    if( NrPcGensList != (int *)0 ) Free( NrPcGensList );
+            
+    NrPcGensList = (int *)Allocate( (Class+2)*sizeof(int) );
+
+    if( Class == 0 ) {
+      NrPcGensList[ Class+1 ] = NrCenGens;
+      return;
+    }
+
+    NrPcGensList[1] = Dimension[1];
+    for( c = 2; c <= Class; c++ )
+      NrPcGensList[ c ] = NrPcGensList[c-1] + Dimension[c];
+
+    NrPcGensList[ Class+1 ] = NrPcGensList[ Class ] + NrCenGens;
+
+    printf( "##  Sizes:" );
+    for( c = 1; c <= Class+1; c++ ) printf( "  %d", NrPcGensList[c] );
+    printf( "\n" );
+}
+
 
 /*
 **    Add new/pseudo generators to the power conjugate presentation.
@@ -161,26 +235,13 @@ void	AddGenerators() {
 
 	NrCenGens = G - NrPcGens;
 
-	/* We change the entries in Commute[]. A generator of weight c
-	** did commute with all generators of weight Class-c. From here
-	** on it will only commute with generators of weight Class-c+1
-	** since new generators of weight Class+1 have been introduced.
-	*/
-	Commute = (gen*)realloc( Commute, (G+1)*sizeof(gen) );
-	if( Commute == (gen*)0 ) {
-	    perror( "addGenerators(), Commute" );
-	    exit( 2 );
-	}
-	l = 1;
-	G = NrPcGens;
-	for( c = 1; 2*c <= Class+1; c++ ) {
-	    for( i = 1; i <= Dimension[c]; i++, l++ )
-		Commute[l] = G;
-	    G -= Dimension[ Class-c+1 ];
-	}
-	for( ; l <= NrPcGens+NrCenGens; l++ ) Commute[l] = l;
 
         SetupCommuteList();
+        SetupCommute2List();
+        SetupNrPcGensList();
+
+        Commute  = CommuteList[ Class+1 ];
+        Commute2 = Commute2List[ Class+1 ];
 
 	if( Verbose )
           printf("#    Added new/pseudo generators (%d msec).\n",RunTime()-t);

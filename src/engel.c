@@ -40,29 +40,35 @@ int     engel;
 
 {       long    n;
         word    v1; 
-        gen     *SaveCommute = Commute;
 
+
+        if( Class+1 < engel ) {
+            v1 = (word)Allocate( sizeof(gpower) );
+            v1[0].g = EOW; v1[0].e = (exp)0;
+            return v1;
+        }
 
         /*
         ** If the current class reaches the weight of the engel condition,
         ** then we want to speed up the evaluation of the engel relations by
         ** evaluating each commutator only with the required precision.  The
         ** last commutator of an Engel-n commutator has to be evaluated in 
-        ** class-(Class+1) quotient (i.e. the full group), the second last in
-        ** the class-(Class) quotient, etc.  The first commutator has to be
-        ** evaluated in the class-(Class-n) quotient.  See also the function
-        ** SetupCommuteList() in addgen.c
+        ** class (Class+1) quotient (i.e. the full group), the second last in
+        ** the class Class quotient, etc.  The first commutator has to be
+        ** evaluated in the class (Class+1-(n-1)) quotient.  See also the
+        ** function SetupCommuteList() in addgen.c
         */
+
         n = 1;
-        if( Class+1 >= engel ) Commute = CommuteList[Class+1 - engel + n];
+        Class = Class - (engel - 1);
+
 	if( (v = Commutator( v, w )) == (word)0 )
 	    return (word)0;
 
 	n++;
 	while( n <= engel ) {
-            if( Class+1 >= engel ) 
-                Commute = CommuteList[Class+1 - engel + n];
-          
+            Class++;
+ 
 	    if( (v1 = Commutator( v, w )) == (word)0 )
                 return (word)0;
 
@@ -70,8 +76,6 @@ int     engel;
 
             n++;
 	}
-        Commute = SaveCommute;
-
         return v;
 }
 

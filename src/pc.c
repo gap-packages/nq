@@ -16,7 +16,11 @@ word     *Generators;
 int	 *Weight;
  
 gen      *Commute;
+gen      *Commute2;
 gen      **CommuteList = (gen **)0;
+gen      **Commute2List = (gen **)0;
+int      *NrPcGensList = (int *)0;
+
 exp      *Exponent;
 word     *Power;
 word     **Conjugate;
@@ -224,7 +228,7 @@ void	ExtPcPres() {
 	}
 
 	/* Now the central generators have conjugate relations and so they
-	** change theit status to pc-generators. */
+	** change their status to pc-generators. */
 	NrPcGens += NrCenGens;
 	NrCenGens = 0;
 

@@ -54,7 +54,7 @@ word	w;
 {	long	l;
 	gen	g;
 
-	for( l = 0, g = 1; g <= NrPcGens+NrCenGens; g++ )
+	for( l = 0, g = 1; g <= NrPcGensList[Class > 0 ? Class+1 : 1]; g++ )
 	    if( ev[g] != (exp)0 ) {
 		if( ev[g] > (exp)0 ) { w[l].g =  g; w[l].e =  ev[g]; }
 		else                 { w[l].g = -g; w[l].e = -ev[g]; }
@@ -71,7 +71,7 @@ expvec	ev;
 	gen	g;
 	word	w;
 
-	for( l = 0, g = 1; g <= NrPcGens+NrCenGens; g++ )
+	for( l = 0, g = 1; g <= NrPcGensList[Class > 0? Class+1 : 1]; g++ )
 	    if( ev[g] != (exp)0 ) l++;
 
 	w = (word)Allocate( (l+1)*sizeof(gpower) );

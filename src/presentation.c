@@ -801,8 +801,9 @@ void	*(*function)();
 void	*EvalNode( n )
 node	*n;
 
-{	void *e, *l, *r;
-        
+{	void          *e, *l, *r;
+        extern int    Class;
+ 
         if( n->type == TNUM )
 	    return (void *)&( n->cont.n );
 
@@ -811,22 +812,42 @@ node	*n;
 	    exit( 5 );
 	}
 
-	if( n->type == TGEN ) 
-	    return (*EvalFunctions[TGEN])(n->cont.g);
+	switch( n->type ) {
+        case TGEN:                  /* TGEN is a unary node. */
+          return (*EvalFunctions[TGEN])(n->cont.g);
 
-        if( (l = EvalNode(n->cont.op.l)) == (void *)0 ) return l;
-        if( (r = EvalNode(n->cont.op.r)) == (void *)0 ) {
-          Free( l ); return r;
-        }
+        case TCOMM:                 /* Adjust the class.     */
+          Class--;
+          l = EvalNode(n->cont.op.l);
+          if( l != (void *)0 ) r = EvalNode(n->cont.op.r);
+          Class++;
 
-        if( n->type == TENGEL ) {
-          /* TENGEL is a ternary node and hence needs special attention. */
-          if( (e = EvalNode(n->cont.op.e)) == (void *)0 ) {
-            Free( l ); Free( r ); return e;
-          } 
+          if( l == (void *)0 ) return l;
+          if( r == (void *)0 ) { Free( l ); return r; }
+
+          return (*EvalFunctions[n->type])( l, r );
+
+        case TENGEL:                /* TENGEL is a ternary node. */
+
+          if( (e = EvalNode(n->cont.op.e)) == (void *)0 ) return e;
+
+          Class -= *(int *)e;
+          l = EvalNode(n->cont.op.l);
+          if( l != (void *)0 ) r = EvalNode(n->cont.op.r);
+          Class += *(int *)e;
+
+          if( l == (void *)0 ) { Free( e ); return l; }
+          if( r == (void *)0 ) { Free( e ); Free( l ); return r; }
+
           return (*EvalFunctions[n->type])( l, r, e );
-        }
-        else {
+
+        default:
+
+          if( (l = EvalNode(n->cont.op.l)) == (void *)0 ) return l;
+          if( (r = EvalNode(n->cont.op.r)) == (void *)0 ) { 
+            Free( l ); return r; 
+          }
+
           return (*EvalFunctions[n->type])( l, r );
         }
 }

@@ -117,6 +117,8 @@ char	*argv[];
 		usage( (char *)0 );
 	    }
 	    switch( argv[0][1] ) {
+                case 'h': usage( (char *)0 );
+                        break;
 		case 'r': if( --argc < 1 ) usage("-r requires an argument");
 			  argv++;
 			  if( (rightEngel = atoi(argv[0])) <= 0 ) {
@@ -184,6 +186,10 @@ char	*argv[];
                         break;
                 case 'E': revEngel = !revEngel;
                         break;
+                case 'C': UseCombiCollector = !UseCombiCollector;
+                        break;
+                case 'S': UseSimpleCollector = !UseSimpleCollector;
+                        break;
                 default : fprintf( stderr, "unknown option: %s\n", argv[0] );
 			  usage( (char *)0 );
 			break;
@@ -211,7 +217,7 @@ char	*argv[];
             Cl = atoi( argv[0] );
           break;
         case 2: 
-          /* Two argument left. */
+          /* Two arguments left. */
           InputFile = argv[0];
           Cl = atoi( argv[1] );
           break;
@@ -249,7 +255,6 @@ char	*argv[];
 	printf( "#    Calculating the abelian quotient ...\n" );
 	InitEpim();
 
-        PrintPresentation( stdout );
 	EvalAllRelations();
 	EvalEngel();
 	EvalTrMetAb();
@@ -334,6 +339,8 @@ end:
         if( Gap ) { PrintRawGapPcPres(); }
 
 	TimeOutOn();
+
+        PrintCollectionTimes();
 
 	return 0;
 }

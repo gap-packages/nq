@@ -5,37 +5,60 @@
 ##  This file contains the interface to my NQ program.
 ##
 
+##
+##  Initialize the runtime variable.
+##
+MakeReadWriteGlobal( "NqRuntime" );
+NqRuntime := 0;
+MakeReadOnlyGlobal( "NqRuntime" );
+
+##
+##  The default options are:
+##      -g      Produce GAP output including a GAP readable presentation of
+##              the nilpotent quotient
+##      -p      do not print the pc-presentation of the nilpotent quotient
+##      -C      use the combinatorial collector
+##      -s      check only instances with semigroup words - this is only
+##              relevant if one of the Engel options is used
+##
+InstallValue( NqDefaultOptions,  [ "-g", "-p", "-C", "-s" ] );
+
+NqCallANU_NQ := function( input, output, options )
+    local   nq,  ret;
+
+    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
+    options := Concatenation( NqDefaultOptions, options );
+
+    Print( "##  Calling ANU NQ with: ", options, "\n", input![2], "\n" );
+
+    ret    := Process( DirectoryCurrent(),        ## executing directory
+                      nq,                         ## executable
+                      input,                      ## input  stream
+                      output,                     ## output stream
+                      options );                  ## command line arguments
+
+    Print( "##  ANU NQ returns ", ret, "\n" );
+
+    CloseStream( input );
+    CloseStream( output );
+end;
+
+
 #############################################################################
 ##
-#F  NqUsage() . . . . . . . . . . . . . . . show usage of 'NilpotentQuotient'
+#F  NqGlobalVariables . . . . global variables to communicate with the ANU NQ
 ##
-InstallGlobalFunction( NqUsage, function()
-
-  return Error("usage: NilpotentQuotient( <file>|<fpgroup> [,<class>] )");
-
-end );
-
-
-
-#############################################################################
-##
-#F  NqGlobalVariables . . . . .  declare the global variables in this package
-##
-NqGlobalVariables := [ "NqLowerCentralFactors",   ##  factors of the LCS
-                       "NqNrGenerators",
-                       "NqClass",
-                       "NqRanks",
-                       "NqRelativeOrders",
-                       "NqImages",                ##  the epimorphism
-                       "NqPowers",
-                       "NqConjugates",
-                     ];
-
-for var in NqGlobalVariables do
-    if not IsBoundGlobal( var ) then
-        var := "to be used by the nq share package";
-    fi;
-od;
+InstallValue( NqGlobalVariables,
+        [ "NqLowerCentralFactors",   ##  factors of the LCS
+          "NqNrGenerators",
+          "NqClass",
+          "NqRanks",
+          "NqRelativeOrders",
+          "NqImages",                ##  the epimorphism
+          "NqPowers",
+          "NqConjugates",
+          "NqRuntime",
+          ] );
 
 #############################################################################
 ##
@@ -66,6 +89,11 @@ function( stream )
         UnhideGlobalVariables( var );
     od;
     
+    Print( "##  ANU NQ took ", result.Runtime, " msec\n" );
+    MakeReadWriteGlobal( "NqRuntime" );
+    NqRuntime := result.Runtime;
+    MakeReadOnlyGlobal( "NqRuntime" );
+
     return result;
 
 end );
@@ -77,17 +105,28 @@ end );
 ##
 
 InstallGlobalFunction( NqStringFpGroup,
-function( G )
-    local   F,  fgens,  V,  vgens,  str,  g,  r;
+function( arg )
+    local   G,  idgens,  F,  fgens,  V,  vgens,  str,  i,  r;
+
+    G      := arg[1];
+    idgens := [];
+    if Length(arg) = 2 then
+        idgens := arg[2];
+    fi;
 
     F     := FreeGroupOfFpGroup( G );
     fgens := GeneratorsOfGroup( F );
+
+    if not IsSubset( fgens, idgens ) then
+        Error( "identical generators are not a subset of free generators" );
+    fi;
 
     if Length( fgens ) = 0 then
         # Produce a dummy presentation, since NQ cannot handle presentations
         # without generators.
 
-        return "< x | x >\n";
+        str := "< x | x >\n";
+        return str;
     fi;
 
     V     := FreeGroup( Length( fgens ), "x" );
@@ -96,9 +135,14 @@ function( G )
     str := "";
     Append( str, "< " );
     
-    for g in vgens do
-	Append( str, String( g ) );
-        Append( str, ", " );
+    for i in [1..Length(vgens)] do
+	Append( str, String( vgens[i] ) );
+        if i = Length(fgens)-Length(idgens) then
+            ##  Insert seperator between free and identical generators.
+            Append( str, "; " );
+        else
+            Append( str, ", " );
+        fi;
     od;
     Unbind( str[ Length(str) ] );
     Unbind( str[ Length(str) ] );
@@ -116,10 +160,66 @@ function( G )
     fi;
         
     Append( str, "\n>\n" );
-
     return str;
 end );
 
+InstallGlobalFunction( NqStringExpTrees,
+function( arg )
+    local   G,  idgens,  fgens,  str,  g,  r;
+
+    G      := arg[1];
+    idgens := [];
+    if Length(arg) = 2 then
+        idgens := arg[2];
+    fi;
+
+    fgens := G.generators;
+
+    if not IsSubset( fgens, idgens ) then
+        Error( "identical generators are not a subset of free generators" );
+    fi;
+    fgens := Difference( fgens, idgens );
+
+    if Length( fgens ) = 0 then
+        # Produce a dummy presentation, since NQ cannot handle presentations
+        # without generators.
+
+        str := "< x | x >\n";
+        return str;
+    fi;
+
+    str := "";
+    Append( str, "< " );
+    
+    for g in fgens do
+	Append( str, String( g ) );
+        Append( str, ", " );
+    od;
+    Unbind( str[ Length(str) ] );
+    Unbind( str[ Length(str) ] );
+    Append( str, "; " );
+    for g in idgens do
+	Append( str, String( g ) );
+        Append( str, ", " );
+    od;
+    Unbind( str[ Length(str) ] );
+    Unbind( str[ Length(str) ] );
+
+    Append( str, " |\n" );
+
+    for r in G.relations do
+        Append( str, "    " );
+        Append( str, String( r ) );
+        Append( str, ",\n" );
+    od;
+    if str[ Length(str)-1 ] = ',' then
+        Unbind( str[ Length(str) ] );
+        Unbind( str[ Length(str) ] );
+    fi;
+        
+    Append( str, "\n>\n" );
+    return str;
+end );
 
 
 #############################################################################
@@ -127,6 +227,21 @@ end );
 #F  NilpotentQuotient( <F>, <class> ) . . . . . . . nilpotent quotient of <F>
 ##
 ##  The interface to the NQ standalone.  
+##
+##  The operation has methods for the following arguments:
+##
+##                 fp-group
+##     outfile     fp-group
+##                 fp-group      ident-gens
+##     outfile     fp-group      ident-gens
+##                 fp-group                   class
+##     outfile     fp-group                   class
+##                 fp-group      ident-gens   class
+##     outfile     fp-group      ident-gens   class
+##                 infile
+##     outfile     infile
+##                 infile                     class
+##     outfile     infile                     class
 ##
 ##  This should produce a quotient system and not a collector.
 ##
@@ -136,24 +251,14 @@ InstallMethod( NilpotentQuotient,
         [ IsFpGroup, IsPosInt ], 
         0,
 function( G, cl )
-    local   nq,  pres,  input,  str,  output,  ret,  nqrec,  coll;
+    local   pres,  input,  str,  output,  options,  nqrec,  coll;
 
-    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
+    input   := InputTextString( NqStringFpGroup( G ) );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ String(cl) ];
 
-    pres   := NqStringFpGroup( G );
-    input  := InputTextString( pres );
-    str    := "";
-    output := OutputTextString( str, true );
-
-    ##  nq -g -p cl < input > output 
-    ret    := Process( DirectoryCurrent(),        ## executing directory
-                      nq,                         ## executable
-                      input,                      ## input  stream
-                      output,                     ## output stream
-                      [ "-g", "-p", String(cl) ] );
-                                                  ## command line arguments
-    CloseStream( output );
-    CloseStream( input  );
+    NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
     coll  := NqInitFromTheLeftCollector( nqrec );
@@ -167,24 +272,13 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsString, IsFpGroup, IsPosInt ], 
         0,
 function( outfile, G, cl )
-    local   nq,  pres,  input,  output,  ret,  nqrec,  coll;
+    local   input,  output,  options,  nqrec,  coll;
 
-    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
+    input   := InputTextString( NqStringFpGroup( G ) );
+    output  := OutputTextFile( outfile, false );
+    options := [ String(cl) ]; 
 
-    pres   := NqStringFpGroup( G );
-    input  := InputTextString( pres );
-
-    output := OutputTextFile( outfile, false );
-
-    ##  nq -g -p infile cl < /dev/null > output 
-    ret    := Process( DirectoryCurrent(),        ## executing directory
-                       nq,                        ## executable
-                       input,                     ## input  stream
-                       output,                    ## output stream
-                       [ "-g", "-p", String(cl) ] ); 
-                                                  ## command line arguments
-    CloseStream( output );
-    CloseStream( input  );
+    NqCallANU_NQ( input, output, options );
 
     nqrec := NqReadOutput( InputTextFile( outfile ) );
     coll  := NqInitFromTheLeftCollector( nqrec );
@@ -198,32 +292,20 @@ InstallMethod( NilpotentQuotient,
         [ IsString, IsPosInt ], 
         0,
 function( infile, cl )
-    local   outfile,  output,  nq,  ret,  nqrec,  coll;
+    local   input,  str,  output,  options,  nqrec,  coll;
 
-    ##  Check if <infile> exists and is readable
+    input   := InputTextFile( infile );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ String(cl) ];
 
-    outfile := TmpName();
-    output  := OutputTextFile( outfile, false );
-    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
+    NqCallANU_NQ( input, output, options );
 
-    ##  nq -g -p infile cl < /dev/null > output 
-    ret     := Process( DirectoryCurrent(),        ## executing directory
-                       nq,                         ## executable
-                       InputTextNone(),            ## input  stream
-                       output,                     ## output stream
-                       [ "-g", "-p", infile, String(cl) ] );
-                                                   ## command line arguments
-    CloseStream( output );
-    
-    nqrec := NqReadOutput( InputTextFile( outfile ) );
-
-    RemoveFile( outfile );
-
+    nqrec := NqReadOutput( InputTextString( str ) );
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
 end );
-
 
 InstallOtherMethod( NilpotentQuotient,
         "of a finitely presented group on file, keep output file",
@@ -231,21 +313,13 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsString, IsString, IsPosInt ], 
         0,
 function( outfile, infile, cl )
-    local   nq,  output,  ret,  nqrec,  coll;
+    local   input,  output,  options,  nqrec,  coll;
 
-    ##  Check if <infile> exists and is readable and if <outfile> can be
-    ##  written.
+    input   := InputTextFile( infile );
+    output  := OutputTextFile( outfile, false );
+    options := [ infile, String(cl) ];
 
-    nq      := Filename( DirectoriesPackagePrograms( "nq" ) , "nq" );
-
-    output := OutputTextFile( outfile, false );
-    ret    := Process( DirectoryCurrent(),         ## executing directory
-                       nq,                         ## executable
-                       InputTextNone(),            ## input  stream
-                       output,                     ## output stream
-                       [ "-g", "-p", infile, String(cl) ] );
-                                                   ## command line arguments
-    CloseStream( output );
+    NqCallANU_NQ( input, output, options );
 
     nqrec := NqReadOutput( InputTextFile( outfile ) );
     coll  := NqInitFromTheLeftCollector( nqrec );
@@ -253,27 +327,100 @@ function( outfile, infile, cl )
     return NqPcpGroupByCollector( coll, nqrec );
 end );
 
+InstallMethod( NilpotentQuotient,
+        "of a finitely presented group",
+        true,
+        [ IsRecord, IsPosInt ], 
+        0,
+function( G, cl )
+    local   pres,  input,  str,  output,  options,  nqrec,  coll;
+
+    input   := InputTextString( NqStringExpTrees( G ) );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ String(cl) ];
+
+    NqCallANU_NQ( input, output, options );
+    
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
+InstallOtherMethod( NilpotentQuotient,
+        "of a finitely presented group with identical relations",
+        true,
+        [ IsFpGroup, IsList, IsPosInt ], 
+        0,
+function( G, idgens, cl )
+    local   pres,  input,  str,  output,  options,  nqrec,  coll;
+
+    input   := InputTextString( NqStringFpGroup( G, idgens ) );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ String(cl) ];
+
+    NqCallANU_NQ( input, output, options );
+    
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
+InstallOtherMethod( NilpotentQuotient,
+        "of a finitely presented group with identical relations",
+        true,
+        [ IsRecord, IsList, IsPosInt ], 
+        0,
+function( G, idgens, cl )
+    local   pres,  input,  str,  output,  options,  nqrec,  coll;
+
+    input   := InputTextString( NqStringExpTrees( G, idgens ) );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ String(cl) ];
+
+    NqCallANU_NQ( input, output, options );
+    
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
+
+
+
+#############################################################################
+##
+#F  NqEpimorphismNilpotentQuotient
+##
+##
+
 InstallMethod( NqEpimorphismNilpotentQuotient,
         "of a finitely presented group",
         true,
         [ IsFpGroup, IsPosInt ], 
         0, 
 function( G, cl )
-    local   nq,  pres,  input,  str,  output,  ret,  nqrec,  coll,  A,  
-            gens,  images,  phi;
+    local   nq,  pres,  input,  str,  output,  options,  ret,  nqrec,  
+            coll,  A,  gens,  images,  phi;
 
     nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
 
-    pres   := NqStringFpGroup( G );
-    input  := InputTextString( pres );
-    str    := "";
-    output := OutputTextString( str, true );
+    pres    := NqStringFpGroup( G );
+    input   := InputTextString( pres );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ String(cl) ];
+
     ret    := Process( DirectoryCurrent(),        ## executing directory
                       nq,                         ## executable
                       input,                      ## input  stream
                       output,                     ## output stream
-                      [ "-g", "-p", String(cl) ] );
-                                                  ## command line arguments
+                      options );                  ## command line arguments
     CloseStream( output );
     CloseStream( input  );
     
@@ -285,7 +432,7 @@ function( G, cl )
     gens := GeneratorsOfGroup( A );
 
     ##  Now we set up the epimorphism
-    images := List( nqrec, Images, w->NqPcpElementByWord( coll, w ) );
+    images := List( nqrec.Images, w->NqPcpElementByWord( coll, w ) );
     phi := GroupHomomorphismByImages( G, A, GeneratorsOfGroup( G ), images );
 
     SetIsSurjective( phi, true );
@@ -299,23 +446,16 @@ InstallMethod( LowerCentralFactors,
         [ IsFpGroup, IsPosInt ], 
         0, 
 function( G, cl )
-    local   nq,  pres,  input,  str,  output,  ret,  nqrec,  eds,  M,  
-            ed;
+    local   nq,  pres,  input,  str,  output,  options,  ret,  nqrec,  
+            eds,  M,  ed;
 
-    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
+    pres    := NqStringFpGroup( G );
+    input   := InputTextString( pres );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ String(cl) ];
 
-    pres   := NqStringFpGroup( G );
-    input  := InputTextString( pres );
-    str    := "";
-    output := OutputTextString( str, true );
-    ret    := Process( DirectoryCurrent(),        ## executing directory
-                      nq,                         ## executable
-                      input,                      ## input  stream
-                      output,                     ## output stream
-                      [ "-g", "-p", String(cl) ] );
-                                                  ## command line arguments
-    CloseStream( output );
-    CloseStream( input  );
+    NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
 
@@ -344,24 +484,16 @@ InstallMethod( NilpotentEngelQuotient,
         [ IsFpGroup, IsPosInt, IsPosInt ], 
         0,
 function( G, engel, cl )
-    local   nq,  pres,  input,  str,  output,  ret,  nqrec,  coll;
+    local   nq,  pres,  input,  str,  output,  options,  ret,  nqrec,  
+            coll;
 
-    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
+    pres    := NqStringFpGroup( G );
+    input   := InputTextString( pres );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ "-e", String(engel), String(cl) ];
 
-    pres   := NqStringFpGroup( G );
-    input  := InputTextString( pres );
-    str    := "";
-    output := OutputTextString( str, true );
-
-    ##  nq -g -p cl < input > output 
-    ret    := Process( DirectoryCurrent(),        ## executing directory
-                      nq,                         ## executable
-                      input,                      ## input  stream
-                      output,                     ## output stream
-                      [ "-g", "-e", String(engel), "-s", "-p", String(cl) ] );
-                                                  ## command line arguments
-    CloseStream( output );
-    CloseStream( input  );
+    NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
     coll  := NqInitFromTheLeftCollector( nqrec );
@@ -375,28 +507,21 @@ InstallOtherMethod( NilpotentEngelQuotient,
         [ IsFpGroup, IsPosInt ], 
         0,
 function( G, engel )
-    local   nq,  pres,  input,  str,  output,  ret,  nqrec,  coll;
+    local   nq,  pres,  input,  str,  output,  options,  ret,  nqrec,  
+            coll;
 
     nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
 
-    pres   := NqStringFpGroup( G );
-    input  := InputTextString( pres );
-    str    := "";
-    output := OutputTextString( str, true );
+    pres    := NqStringFpGroup( G );
+    input   := InputTextString( pres );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ "-e", String(engel) ];
 
-    ##  nq -g -p < input > output 
-    ret    := Process( DirectoryCurrent(),        ## executing directory
-                      nq,                         ## executable
-                      input,                      ## input  stream
-                      output,                     ## output stream
-                      [ "-g", "-e", String(engel), "-s", "-p" ] );
-                                                  ## command line arguments
-    CloseStream( output );
-    CloseStream( input  );
+    NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
 end );
-

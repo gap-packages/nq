@@ -13,6 +13,7 @@
 #include <string.h>
 
 #include "config.h"
+#include "system.h"
 
 /*
 **    This variable indicates whether GAP output should be produced.
@@ -66,13 +67,6 @@ extern	void	printWord();
 **    Functions manipulating exponent vectors
 */
 extern	expvec	expVector();
-
-/*
-**    The collection routines, defined in collect.c.
-*/
-extern	int	Collect();
-extern	word	Solve();
-extern	word	Invert();
 
 /*
 **    Functions manipulating the pc-presentation,

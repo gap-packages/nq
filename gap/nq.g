@@ -39,6 +39,5 @@ end;
 ## Local Variables:
 ## mode:           outline
 ## outline-regexp: "#F\\|#V\\|#E"
-## eval:           (hide-body)
 ## End:
 ##

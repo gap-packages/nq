@@ -8,6 +8,11 @@
 #include "pc.h"
 #include "pcarith.h"
 #include "macro.h"
+#include "collect.h"
+#include "time.h"
+
+int UseSimpleCollector = 0;
+int UseCombiCollector  = 0;
 
 static	Error( str, g )
 char	*str;
@@ -15,6 +20,8 @@ gen     g;
 
 {	printf( "Error in Collect() while treating generator %d:\n", (int)g );
         printf( "      %s\n", str );
+
+        SimpleCollectionTime += RunTime();
 /*	exit( 7 );*/
 	
 	return 7;
@@ -39,12 +46,12 @@ gen     g;
 
 #define STACKHEIGHT	(1 << 16)
 
-static	word	WordStack[STACKHEIGHT];
-static	exp	WordExpStack[STACKHEIGHT];
-static	word   	GenStack[STACKHEIGHT];
-static	exp	GenExpStack[STACKHEIGHT];
+word	WordStack[STACKHEIGHT];
+exp	WordExpStack[STACKHEIGHT];
+word   	GenStack[STACKHEIGHT];
+exp	GenExpStack[STACKHEIGHT];
 
-int	Collect( lhs, rhs, e )
+int	SimpleCollect( lhs, rhs, e )
 expvec	lhs;
 word	rhs;
 exp	e;
@@ -58,6 +65,8 @@ exp	e;
     gen	   g, h;
     gen	   ag;
     int	   sp = 0;
+
+    SimpleCollectionTime -= RunTime();
 
     ws[ sp ] = rhs;
     gs[ sp ] = rhs;
@@ -125,8 +134,47 @@ exp	e;
                 ges[ sp ] = gs[ sp ]->e;
             }
         }
-    
+    SimpleCollectionTime += RunTime();
     return 0;
+}
+
+int Collect ( expvec lhs, word rhs, exp e ) {
+
+  int    ret,  storeClass;
+  int    i;
+  expvec lhs2;
+
+  storeClass = Class;
+  if( Class < 0 ) Class = 0;
+
+  Commute  = CommuteList[ Class+1 ];
+  Commute2 = Commute2List[ Class+1 ];
+
+  if( UseSimpleCollector && UseCombiCollector ) {
+    lhs2 = (expvec)Allocate( (NrPcGens+NrCenGens+1) * sizeof(exp) );
+    memcpy( lhs2, lhs, (NrPcGens+NrCenGens+1) * sizeof(exp) );
+  
+    ret = SimpleCollect( lhs, rhs, e );
+    CombiCollect( lhs2, rhs, e );
+
+    if( memcmp( lhs, lhs2, (NrPcGens+NrCenGens+1) * sizeof(exp) ) != 0 ) {
+      for( i = 1; i <= NrPcGens + NrCenGens; i++ )
+        if( lhs[i] != lhs2[i] )
+          printf( "lhs[%d] = %d    lhs2[%d] = %d\n", i, lhs[i], i, lhs2[i] );
+
+      printf( "Collector mismatch\n" );
+    }
+
+    Free( lhs2 );
+  }
+  
+  else if( UseCombiCollector ) ret = CombiCollect( lhs, rhs, e );
+
+  else ret = SimpleCollect( lhs, rhs, e );
+
+  Class = storeClass;
+  return ret;
+
 }
 
 /*
@@ -272,13 +320,30 @@ int	n;
 	return u;
 }
 
+/*
+**    Solve the equation vu x = uv for x.  The solution is the commutator
+**    [u,v].  
+**
+**    In step i we have to solve the equation    v'u' x = u''v''.
+**    That equation holds for the i-th generator if
+**
+**                   v'[i] + u'[i] + x[i] = u''[i] + v''[i]
+**
+**    Hence          x[i] = u''[i] + v''[i] - (v'[i] + u'[i]).
+**    To prepare the (i+1)-th step we need to collect i^x[i] first across
+**    u' and then across v' on the left hand side of the equation.  On the
+**    right hand side of the equation we need to collect i^v''[i] across
+**    u''.  This has the effect of moving the occurrances of generator i
+**    to the left on both sides of the equation such that it can be
+**    cancelled on both sides of the equation.
+*/
 word    Commutator( u, v )
 word    u, v;
 
 {
     expvec u1, u2, v1, v2, x;
     gpower y[2];
-    word w;
+    word w = (word)0;
     int i;
 
     y[0].g = y[1].g = EOW;
@@ -296,17 +361,17 @@ word    u, v;
         if(  x[i] != (exp)0 ) {
             if(  x[i] > (exp)0 ) { y[0].g =  i; y[0].e =   x[i]; }
             else                 { y[0].g = -i; y[0].e =  -x[i]; }
-            if( Collect( u1, y, (exp)1 ) ) { w = (word)0; goto exit; }
+            if( Collect( u1, y, (exp)1 ) ) goto exit;
         }
         if( u1[i] != (exp)0 ) {
             if( u1[i] > (exp)0 ) { y[0].g =  i; y[0].e =  u1[i]; }
             else                 { y[0].g = -i; y[0].e = -u1[i]; }
-            if( Collect( v1, y, (exp)1 ) ) { w = (word)0; goto exit; }
+            if( Collect( v1, y, (exp)1 ) ) goto exit;
         }
         if( v2[i] != (exp)0 ) {
             if( v2[i] > (exp)0 ) { y[0].g =  i; y[0].e =  v2[i]; }
             else                 { y[0].g = -i; y[0].e = -v2[i]; }
-            if( Collect( u2, y, (exp)1 ) ) { w = (word)0; goto exit; }
+            if( Collect( u2, y, (exp)1 ) ) goto exit;
         }
     }
     
@@ -347,5 +412,3 @@ word	v, w;
 
 	return vwvw;
 }
-
-
