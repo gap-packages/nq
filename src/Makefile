@@ -26,3 +26,4 @@ clean :
 	rm -f *.o nq *~
 
 spotless : clean
+	rm -f config.h
