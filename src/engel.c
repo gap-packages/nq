@@ -104,6 +104,13 @@ long	wt, which;
 	    u[i].e   = 0;
  	    u[i+1].g = EOW;
 	    while( !EarlyStop && Wt(g) <= wt ) {
+                /*
+                   First we check if the Engel condition is trivially
+                   satisfied for weight reasons. The commutator
+                   [x, n y] is 1 if w(x) + n*w(y) > Class+1.
+                */
+                if( i == 1 && which == 1 &&
+                   Wt(v[0].e) + Engel * Wt(u[0].e) > Class+1 ) break;
 		u[i].e++;
 		if( Exponent[g] > 0 && Exponent[g] == u[i].e ) break;
 		wt -= Wt(g);
@@ -168,7 +175,8 @@ void	evalEngel()
 	    u[0].g = EOW; u[0].e = 0;
 	    v[0].g = EOW; v[0].e = 0;
 	    NrWords = 0;
-	    if(Verbose) printf("#    Checking pairs of words of weight %d\n",c);
+	    if(Verbose)
+                printf("#    Checking pairs of words of weight %d\n",c);
 	    buildPairs( u, 0, 1, v, c, 2 );
 	    if(Verbose) printf( "#    Checked %d words.\n", NrWords );
 	}
