@@ -12,7 +12,7 @@ GNUINC = /usr/local/include
 
 CC=gcc
 OPTS = -g -O3 
-CFLAGS = $(OPTS) -I$(GNUINC) -DVERSION='"1.1e, 04 Aug 1994"'
+CFLAGS = $(OPTS) -I$(GNUINC) -DVERSION='"1.2, 11 March 1998"'
 
 OBJ = consistency.o pc.o relations.o word.o system.o \
       addgen.o tails.o eliminate.o engel.o glimt.o \
