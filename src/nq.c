@@ -325,6 +325,9 @@ end:
 	printf( "#    total size    : %d byte\n", sbrk(0) - start );
 
 	if( Gap ) printf( "];\n" );
+
+        if( Gap ) PrintGapPcPres();
+
 	TimeOutOn();
 
 	return 0;
