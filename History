@@ -90,3 +90,13 @@ Jan 1998:
            + print statements for the definitions of new generators.
            + added option -E to reverse the order in which Engel
              generators are processes.
+
+March 1998:
+           + NQ now reads from stdin when the file name argument is missing
+
+March 1998: Version 1.2 of the ANU NQ
+        
+2 Nov 1998:
+           + GAP4 print routines (gap.c) added.  The -g option now
+             prints a pc-presentation in GAP4 style at the end of a
+             run. 
