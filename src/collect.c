@@ -9,10 +9,12 @@
 #include "pcarith.h"
 #include "macro.h"
 
-static	Error( str )
+static	Error( str, g )
 char	*str;
+gen     g;
 
-{	printf( "Error in Collect():\n        %s\n", str );
+{	printf( "Error in Collect() while treating generator %g:\n", g );
+        printf( "      %s\n", str );
 	exit( 7 );
 }
 
@@ -44,84 +46,84 @@ int	Collect( lhs, rhs, e )
 expvec	lhs;
 word	rhs;
 exp	e;
+{
+    word  *ws  = WordStack;
+    exp	  *wes = WordExpStack;
+    word  *gs  = GenStack;
+    exp	  *ges = GenExpStack;
+    word  **C  = Conjugate;
+    word   *P  = Power;
+    gen	   g, h;
+    gen	   ag;
+    int	   sp = 0;
 
-{	word	*ws  = WordStack;
-	exp	*wes = WordExpStack;
-	word   	*gs  = GenStack;
-	exp	*ges = GenExpStack;
-	word	**C  = Conjugate;
-	word	*P   = Power;
-	gen	g, h;
-	gen	ag;
-	int	sp = 0;
+    ws[ sp ] = rhs;
+    gs[ sp ] = rhs;
+    wes[ sp ] = e;
+    ges[ sp ] = rhs->e;
 
-	ws[ sp ] = rhs;
-	gs[ sp ] = rhs;
-	wes[ sp ] = e;
-	ges[ sp ] = rhs->e;
-
-	while( sp >= 0 )
-	    if( (g = gs[ sp ]->g) != EOW ) {
-		ag = abs( g );
-		if( g < 0 && Exponent[-g] != 0 ) 
-		    Error( "Inverse of a generator with power relation" );
-		e = (ag == Commute[ag]) ? gs[ sp ]->e : 1;
-		if( (ges[ sp ] -= e) == 0 ) {
-		    /* The power of the generator g will have been moved
-		       completely to its correct position after this
-		       collection step. Therefore advance the generator
-		       pointer. */
-		    gs[ sp ]++; ges[ sp ] = gs[ sp ]->e;
-		}
-		/* Now move the generator g to its correct position
-		   in the exponent vector lhs. */
-		for( h = Commute[ag]; h > ag; h-- )
-		    if( lhs[h] != 0 ) {
-			if( ++sp == STACKHEIGHT )
-			    Error( "Out of stack space" );
-			if( lhs[ h ] > 0 ) {
-			    gs[ sp ]  = ws[ sp ] = C[ h ][ g ];
-			    wes[ sp ] = lhs[h]; lhs[ h ] = 0;
-			    ges[ sp ] = gs[ sp ]->e;
-			}
-			else {
-			    gs[ sp ]  = ws[ sp ] = C[ -h ][ g ];
-			    wes[ sp ] = -lhs[h]; lhs[ h ] = 0;
-			    ges[ sp ] = gs[ sp ]->e;
-			}
-		    }
-		lhs[ ag ] += e * sgn(g);
-	        if ( ((lhs[ag] << 1) >> 1) != lhs[ag] )
-		    Error( "Possible integer overflow" );
-		if( Exponent[ag] != 0 )
-		    while( lhs[ag] >= Exponent[ag] ) {
-			if( (rhs = P[ ag ]) != (word)0 ) {
-			    if( ++sp == STACKHEIGHT )
-				Error( "Out of stack space" );
-			    gs[ sp ] = ws[ sp ] = rhs;
-			    wes[ sp ] = 1;
-			    ges[ sp ] = gs[ sp ]->e;
-			}
-			lhs[ ag ] -= Exponent[ ag ];
-			if ( ((lhs[ag] << 1) >> 1) != lhs[ag] )
-                            Error( "Possible integer overflow" );
-		    }
-	    }
-	    else {
-		/* the top word on the stack has been examined completely,
-		   now check if its exponent is zero. */
-		if( --wes[ sp ] == 0 ) {
-		    /* All powers of this word have been treated, so
-		       we have to move down in the stack. */
-		       sp--;
-		}
-		else {
-		    gs[ sp ] = ws[ sp ];
-		    ges[ sp ] = gs[ sp ]->e;
-		}
-	    }
-
-	return 0;
+    while( sp >= 0 )
+        if( (g = gs[ sp ]->g) != EOW ) {
+            ag = abs( g );
+            if( g < 0 && Exponent[-g] != 0 ) 
+                Error( "Inverse of a generator with power relation", ag );
+            e = (ag == Commute[ag]) ? gs[ sp ]->e : 1;
+            if( (ges[ sp ] -= e) == 0 ) {
+                /* The power of the generator g will have been moved
+                   completely to its correct position after this
+                   collection step. Therefore advance the generator
+                   pointer. */
+                gs[ sp ]++; ges[ sp ] = gs[ sp ]->e;
+            }
+            /* Now move the generator g to its correct position
+               in the exponent vector lhs. */
+            for( h = Commute[ag]; h > ag; h-- )
+                if( lhs[h] != 0 ) {
+                    if( ++sp == STACKHEIGHT )
+                        Error( "Out of stack space", ag );
+                    if( lhs[ h ] > 0 ) {
+                        gs[ sp ]  = ws[ sp ] = C[ h ][ g ];
+                        wes[ sp ] = lhs[h]; lhs[ h ] = 0;
+                        ges[ sp ] = gs[ sp ]->e;
+                    }
+                    else {
+                        gs[ sp ]  = ws[ sp ] = C[ -h ][ g ];
+                        wes[ sp ] = -lhs[h]; lhs[ h ] = 0;
+                        ges[ sp ] = gs[ sp ]->e;
+                    }
+                }
+            lhs[ ag ] += e * sgn(g);
+            if ( ((lhs[ag] << 1) >> 1) != lhs[ag] )
+                Error( "Possible integer overflow", ag );
+            if( Exponent[ag] != 0 )
+                while( lhs[ag] >= Exponent[ag] ) {
+                    if( (rhs = P[ ag ]) != (word)0 ) {
+                        if( ++sp == STACKHEIGHT )
+                            Error( "Out of stack space", ag );
+                        gs[ sp ] = ws[ sp ] = rhs;
+                        wes[ sp ] = 1;
+                        ges[ sp ] = gs[ sp ]->e;
+                    }
+                    lhs[ ag ] -= Exponent[ ag ];
+                    if ( ((lhs[ag] << 1) >> 1) != lhs[ag] )
+                        Error( "Possible integer overflow", ag );
+                }
+        }
+        else {
+            /* the top word on the stack has been examined completely,
+               now check if its exponent is zero. */
+            if( --wes[ sp ] == 0 ) {
+                /* All powers of this word have been treated, so
+                   we have to move down in the stack. */
+                sp--;
+            }
+            else {
+                gs[ sp ] = ws[ sp ];
+                ges[ sp ] = gs[ sp ]->e;
+            }
+        }
+    
+    return 0;
 }
 
 /*
