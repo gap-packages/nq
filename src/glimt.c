@@ -427,17 +427,24 @@ long    a;
 
 {       mpz_t    q, t;
 
-        mpz_init( q ); mpz_init( t );
         if( NOTZERO(v[a]) ) {
+            mpz_init( q );
+
             mpz_tdiv_q( q, v[a], w[a] );
-            if( NOTZERO(q) )
+            if( NOTZERO(q) ) {
+                mpz_init( t );              
+
                 while( a <= NrCols ) {
                     mpz_mul( t,    q,    w[a] );
                     mpz_sub( v[a], v[a], t    );
                     a++;
                 }
+
+                mpz_clear( t );
+            }
+
+            mpz_clear( q );
         }
-        mpz_clear( q ); mpz_clear( t );
 }
 
 void    lastReduce() {
