@@ -73,7 +73,7 @@ NqCallANU_NQ := function( input, output, options )
 
 ##  The following Print statement should be converted to an info statement
 ##
-    Print( "##  Calling ANU NQ with: ", options, "\n", input![2], "\n" );
+##    Print( "##  Calling ANU NQ with: ", options, "\n", input![2], "\n" );
 
     ret    := Process( DirectoryCurrent(),        ## executing directory
                       nq,                         ## executable
