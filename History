@@ -79,3 +79,9 @@ Maerz 1994:
 
 Oct 1996:
            + Added support for metabelian identities.
+
+Sep 1997:
+           + Added the option -p to toggle the printing of the epimorphism
+             and the nilpotent quotient at the end of a run.  I also added
+             code to print the definitions of each generator of weight at
+             least 2.
