@@ -30,7 +30,7 @@ extern	int	Debug;
 **    CommuteList: This array holds a list of different versions of
 **            Commute[].  They are used for fast evaluation of iterated
 **            commutators, as for example Engel conditions.  CommuteList[c]
-**            is Commute[] for the class c quotient of the current group.
+**            is Commute[] as if the current group had class c.
 **    Exponent: This array containes the exponents for the power relation
 **            of each generator. If the generator i does not have a power
 **            relation, `Exponents[i]' is zero. The length of `Exponents'
