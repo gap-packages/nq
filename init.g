@@ -5,7 +5,7 @@
 ##    @(#)$Id$
 ##
 
-if TestPackageAvailability( "GAPDoc", "0.98" ) then
+if TestPackageAvailability( "GAPDoc", "" ) <> fail then
     RequirePackage( "gapdoc" );
 else
     Info( InfoWarning, 1, "GAPDoc not available" );
