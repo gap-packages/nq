@@ -88,7 +88,7 @@ long	wt, which;
 
 {	long	save_wt;
 
-	if( wt == 0 && which == 1 && i > 0 && WordCmp( u, v ) != 0 ) {
+	if( wt == 0 && which == 1 && i > 0 ) {
 	    evalEngelRel( u, v );
 	    return;
 	}
@@ -107,10 +107,10 @@ long	wt, which;
                 /*
                    First we check if the Engel condition is trivially
                    satisfied for weight reasons. The commutator
-                   [x, n y] is 1 if w(x) + n*w(y) > Class+1.
+                   [u, n v] is 1 if w(u) + n*w(v) > Class+1.
                 */
-                if( i == 1 && which == 1 &&
-                   Wt(v[0].e) + Engel * Wt(u[0].e) > Class+1 ) break;
+                if( which == 1 && i == 1 &&
+                    Wt(u[0].e) + Engel*Wt(v[0].e) > Class+1 ) break;
 		u[i].e++;
 		if( Exponent[g] > 0 && Exponent[g] == u[i].e ) break;
 		wt -= Wt(g);
