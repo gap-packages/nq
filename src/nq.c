@@ -260,7 +260,8 @@ char	*argv[];
 	    goto end;
 	}
 
-	if( Cl == 1 ) goto end;
+        /*	if( Cl == 1 ) goto end;
+         */
 
 	InitPcPres();
 

@@ -82,7 +82,14 @@ function( G )
 
     F     := FreeGroupOfFpGroup( G );
     fgens := GeneratorsOfGroup( F );
-    
+
+    if Length( fgens ) = 0 then
+        # Produce a dummy presentation, since NQ cannot handle presentations
+        # without generators.
+
+        return "< x | x >\n";
+    fi;
+
     V     := FreeGroup( Length( fgens ), "x" );
     vgens := GeneratorsOfGroup( V );
     
