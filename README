@@ -35,7 +35,7 @@ Theoretical Computer Science, Volume 25, pp 175-191.
 About this version
 ------------------
 
-This   directory contains  Version  1.2  of   the  Australian National
+This   directory contains  Version  1.3  of   the  Australian National
 University Nilpotent Quotient Program (ANU NQ), an implementation of a
 nilpotent   quotient algorithm in    C.  This implementation has  been
 developed   in  a Unix  environment and   Unix  is  currently the only
@@ -47,66 +47,73 @@ groups.  DIMACS Workshop on Groups and Computation, AMS-ACM 1991).
 
 This directory contains the following directories and files:
 
-          README
-          History
-          RCS
-          examples
-          gap
-          src
-          testNq
+        README          this file
+        History         a history of changes to the program
+        ToDo            what else needs to be done
 
-The  file `README'  is (what  a surprise!)   this file.  The directory
-`examples' contains  a collection   of example  input  files  for  the
-nilpotent  quotient program.  The   directory  `gap' contains the  GAP
-interface to   the ANU NQ.  The   program system GAP  was developed by
-Martin Schoenert et al. at the RWTH  Aachen, Germany, until July 1997.
-It is now looked after by the School of Mathematical and Computational
-Sciences at    the University of   St  Andrews.   The  directory `src'
-contains the source code for  the ANU NQ and the  file `testNq' can be
-run to test if the installation of the ANU NQ is working properly (see
-next section).  It uses the groups in the directory `examples'.
+        configure       run this to compile NQ and then run `make'
+        configure.in    configure was made from this file by autoconf
+        Makefile.in     a Makefile is created from this when you run
+                        configure 
+        cnf/            scripts used by configure
+
+        examples        a suite of test examples
+        
+        src             the source code
+        
+        gap/            the GAP interface
+        doc/            documentation of the GAP interface
+        init.g          part of the GAP interface
+        read.g          part of the GAP interface
+
+        testNq          a shell script to test the compiled program
+
 
 How to install the ANU NQ
 -------------------------
 
-The installation of  the program is  easy.   However, it requires  the
-Berkeley  compatible interface of  the  GNU multiple precision library
-(GNU  MP).  GNU is the Free  Software Foundation's collection  of UNIX
-compatible software. If this library  is not available on your system,
-it has to be  installed first.  A copy of  GNU MP can be  obtained via
-anonymous ftp from many file servers around the world, for example:
+The installation of the program is easy.  However, it requires the GNU
+multiple  precision  library  (GNU  MP).    GNU is the  Free  Software
+Foundation's  collection of UNIX compatible  software. If this library
+is not available on your system, it has to be installed first.  A copy
+of GNU MP  can be obtained  via anonymous ftp  from  many file servers
+around the world, for example:
 
-        prep.ai.mit.edu:/pub/gnu/gmp-1.3.2.tar.gz
+        prep.ai.mit.edu:/pub/gnu/gmp-2.0.2.tar.gz
 
-Once GNU MP has been installed,  go into the  directory `src' and edit
-the file `Makefile'. It contains the following lines:
+It is likely  that there is an ftp  server closer to you that  carries
+GNU MP.   
 
-##    The   following  two lines   define  the directory with  the GNU
-##    multiple  precision   library (GNULIB)   and  the directory that
-##    contains the corresponding include files (GNUINC).
-GNULIB = /usr/local/lib/
-GNUINC = /usr/local/include
+You start compiling NQ by running the configure script:
 
-The definition of `GNULIB'  has to be changed  to the directory  where
-the GNU MP library is on your system.  The  definition of `GNUINC' has
-to   be changed to the  directory   on your system   that contains the
-corresponding include files.
+        ./configure
 
-After this change you start the compilation of the ANU NQ by typing
+Among other things  it will tell you  whether it succeeded in locating
+the GNU MP library and the  corresponding include files.  If configure
+reports no problems, you prcoeed by typing
 
-	make
+        make
+
+If it tells you that it could not find the GNU MP include files or the
+GNU MP  libraries,  you have to run   make with additional parameters.
+For example,  if you  have  installed GNU  MP  yourself in   your home
+directory, you would type something like the following
+
+    make GNU_MP_INC=/home/me/gmp-2.0.2 GNU_MP_LIB=/home/me/gmp-2.0.2
 
 A compiled version of the program named  `nq'  is then placed into the
-directory `src'.    If  there are  any warnings   or  even fatal error
-messages during  the compilation process,  please send a copy  to  the
-address at the  end of  this document together  with information about
-your operating system, the compiler you used and any changes you might
-have made to the source code. I will have a look  at your problems and
-try to fix them.
+directory `bin/<complicated name>'.   The <complicated name> component
+encodes the operating system and the compiler used.  This allows you
+to compile NQ on several architectures sharing the same files system.
+
+If there are  any  warnings or  even  fatal error messages  during the
+compilation process, please send  a copy to the address  at the end of
+this  document together with  information about your operating system,
+the compiler you  used  and any  changes you  might have  made  to the
+source code. I will have a look at your problems and try to fix them.
  
 After the compilation  is finished you   can  check if the ANU  NQ  is
-running properly on your system.  Go back to  the parent directory and
-type
+running properly on your system.  Simply type
 
     testNq
 
@@ -378,12 +385,12 @@ items :
 
 Acknowledgements
 ----------------
-The development of this program was started while the author was
-supported by an Australian National University PhD scholarship
-and an Overseas Postgraduate Research Scholarship.
+The   development of this  program  was started  while  the author was
+supported by an Australian National University  PhD scholarship and an
+Overseas Postgraduate Research Scholarship.
 
-Further development of this program was done while the author 
-was supported by the DFG-Schwerpunkt-Projekt "`Algorithmische
+Further development of  this program  was done  while the  author  was
+supported       by     the DFG-Schwerpunkt-Projekt    "`Algorithmische
 Zahlentheorie und Algebra"'.
 
 
@@ -391,12 +398,13 @@ Contact addresses
 -----------------
 Comments and suggestions are very welcome, my email address is 
 
-		werner@dcs.st-and.ac.uk
+		nickel@mathematik.tu-darmstadt.de
 
 Werner Nickel
-School of Mathematical and Computational Sciences
-University of St Andrews
-St Andrews
-Fife KY16 9BS
-Scotland 
+Fachbereich Mathematik, AG 2
+TU Darmstadt
+Schlossgartenstr. 7
+64289 Darmstadt
+Germany
+
 
