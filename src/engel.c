@@ -41,11 +41,9 @@ word	v, w;
 {	word	vs=v, ws=w, v1, vv = v;
 	long	n, needed;
 
-/*	printf( "evalEngelRel() called with : " );*/
-/*	printWord( v, 'A' );*/
-/*	printf( "    " );*/
-/*	printWord( w, 'A' );*/
-/*	putchar( '\n' );*/
+/*	printf( "evalEngelRel() called with : " );
+	printWord( v, 'A' ); printf( "    " );
+	printWord( w, 'A' ); putchar( '\n' ); */
 
 	NrWords++;
 	/* Calculate [ v, w, .., w ] */
@@ -88,6 +86,14 @@ long	wt, which;
 
 {	long	save_wt;
 
+
+        /* First we check if the Engel condition is trivially
+           satisfied for weight reasons. The commutator
+           [u, n v] is 1 if w(u) + n*w(v) > Class+1. */
+        if( which == 1 && i == 1 &&
+           Wt(abs(u[0].g)) + Engel*Wt(abs(v[0].g)) > Class+1 )
+            return;
+
 	if( wt == 0 && which == 1 && i > 0 ) {
 	    evalEngelRel( u, v );
 	    return;
@@ -104,13 +110,6 @@ long	wt, which;
 	    u[i].e   = 0;
  	    u[i+1].g = EOW;
 	    while( !EarlyStop && Wt(g) <= wt ) {
-                /*
-                   First we check if the Engel condition is trivially
-                   satisfied for weight reasons. The commutator
-                   [u, n v] is 1 if w(u) + n*w(v) > Class+1.
-                */
-                if( which == 1 && i == 1 &&
-                    Wt(u[0].e) + Engel*Wt(v[0].e) > Class+1 ) break;
 		u[i].e++;
 		if( Exponent[g] > 0 && Exponent[g] == u[i].e ) break;
 		wt -= Wt(g);
