@@ -114,7 +114,7 @@ March 1998: Version 1.2 of the ANU NQ
              arrays. 
 
 10 Aug 1999:
-           + turned NQ into a GAP 4 share package
+           + turned NQ into a GAP 4 package
            + modified the GAP 4 output routines
 
 25 Aug 1999:
@@ -134,4 +134,12 @@ June 2002:
 
 October 2002:
            + rewrite of the examples code
+
+
+12 February 2003:
+           + The package is released.
+
+21 February 2003:
+           + removed instances of `share package'
+           + removed obsolete files doc/manual.in gap/nqrest.gi
 

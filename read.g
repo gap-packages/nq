@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W    read.g               share package 'nq'                   Werner Nickel
+#W    read.g               GAP 4 package 'nq'                   Werner Nickel
 ##
 ##    @(#)$Id$
 ##

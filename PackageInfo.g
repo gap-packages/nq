@@ -19,7 +19,7 @@ Persons := [
   IsMaintainer  := true,
   Email         := "nickel@mathematik.tu-darmstadt.de",
   WWWHome       := "http://www.mathematik.tu-darmstadt.de/~nickel",
-  PostalAddress := Concatenation( "Fachbereich Mathematik, AG2 \n",
+  PostalAddress := Concatenation( "Fachbereich Mathematik, AG 2 \n",
                                   "TU Darmstadt\n",
                                   "Schlossgartenstr. 7\n",
                                   "64289 Darmstadt\n",
