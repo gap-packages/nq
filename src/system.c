@@ -49,9 +49,10 @@ int	sig, code;
 struct  sigcontext *scp;
 char	*addr;
 
-{	fprintf( stderr, "\n\n Process terminating with signal" );
+{	fprintf( stderr, "\n\n# Process terminating with signal" );
 	fprintf( stderr, " %s.\n\n", SignalName[sig] );
 
+	if( Gap ) printf( "[] ];\n" );
 	signal( sig, SIG_DFL );
 	kill( getpid(), sig );
 
