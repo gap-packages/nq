@@ -50,6 +50,14 @@ static  long Time = 0;
 */
 int     EarlyStop;
 
+/*
+**    Set this flag if each non-zero vector handed to addRow() is to
+**    be printed to a file.  
+*/
+int     RawMatOutput;
+FILE    *RawMatFile;
+
+
 large   ltom( n )
 int     n;
 
@@ -132,17 +140,18 @@ long   *surviving;
     return nrSurv;
 }
 
-void    outputMatrix( M )
+void    outputMatrix( M, suffix )
 expvec  *M;
+char    *suffix;
 
 {       long    i, j, nrSurv, *surviving;
         char    outputName[128];
         FILE    *fp;
 
         if( strlen(InputFile) > 100 )
-            sprintf( outputName, "NqOut.abinv.%d", Class+1 );
+            sprintf( outputName, "NqOut.%s.%d", suffix, Class+1 );
 	else
-	    sprintf( outputName, "%s.abinv.%d", InputFile, Class+1 );
+	    sprintf( outputName, "%s.%s.%d", InputFile, suffix, Class+1 );
         if( (fp=fopen( outputName, "w" )) == NULL ) {
             perror( outputName );
             fprintf( stderr,
@@ -168,6 +177,41 @@ expvec  *M;
         }
 
         Free( surviving );
+        fclose( fp );
+}
+
+void    OutputMatrix( suffix )
+char    *suffix;
+
+{       long    i, j;
+        char    outputName[128];
+        FILE    *fp;
+
+        if( strlen(InputFile) > 100 )
+            sprintf( outputName, "NqOut.%s.%d", suffix, Class+1 );
+	else
+	    sprintf( outputName, "%s.%s.%d", InputFile, suffix, Class+1 );
+        if( (fp=fopen( outputName, "w" )) == NULL ) {
+            perror( outputName );
+            fprintf( stderr,
+                     "relation matrix for class %d not written\n", Class+1 );
+        }
+
+        if( Matrix == (lvec*)0 ) {
+            fprintf( fp, "0\n" );
+            fclose( fp );
+            return;
+        }
+
+        fprintf( fp, "%d\n", NrCols );
+        for( i = 0; i < NrRows; i++ ) {
+            for( j = 1; j <= NrCols; j++ ) {
+                fputc( ' ', fp );
+                mpz_out_str( fp, 10, Matrix[i][j] );
+            }
+            fprintf( fp, "\n" );
+        }
+
         fclose( fp );
 }
 
@@ -248,12 +292,13 @@ expvec  *MatrixToExpVecs() {
         expvec  *M;
 
         if( NrRows == 0 ) {
-                freeMatrix();
-                TimeOutOff();
-                if( Gap ) printGapMatrix( (expvec*)0 );
-                if( AbelianInv ) outputMatrix( (expvec*)0 );
-                TimeOutOn();
-                return (expvec*)0;
+            freeMatrix();
+            TimeOutOff();
+            if( Gap ) printGapMatrix( (expvec*)0 );
+            if( AbelianInv ) outputMatrix( (expvec*)0, "abinv" );
+            if( RawMatOutput ) fclose( RawMatFile );
+            TimeOutOn();
+            return (expvec*)0;
         }
 
         M = (expvec*)malloc( NrRows*sizeof(expvec) );
@@ -294,8 +339,11 @@ expvec  *MatrixToExpVecs() {
 
         TimeOutOff();
         if( Gap ) printGapMatrix( M );
-        if( AbelianInv ) outputMatrix( M );
+        if( AbelianInv ) outputMatrix( M, "abinv" );
         TimeOutOn();
+
+        if( RawMatOutput ) fclose( RawMatFile );
+
         return M;
 }
 
@@ -399,6 +447,24 @@ expvec  ev;
                 exit( 2 );
             }
             NrCols = NrCenGens;
+
+            if( RawMatOutput ) {
+                char *file;
+                int  c;
+                
+                c = Class;
+                file = (char *)calloc( 12, sizeof(char) );
+                strcpy( file, "matrix.XXX" );
+                file[9] = c % 10 + '0'; c /= 10;
+                file[8] = c % 10 + '0'; c /= 10;
+                file[7] = c % 10 + '0';
+                if( (RawMatFile = fopen( file, "w" )) == NULL ) {
+                    perror( file ); exit( 1 );
+                }
+                fprintf( RawMatFile, "%d\n", NrCols );
+                fflush( RawMatFile );
+                free( file );
+            }
         }
 
 	changedMatrix = 0;
@@ -425,7 +491,15 @@ expvec  ev;
         v = (lvec)malloc( (NrCols+1)*sizeof(large) );
         if( v == NULL ) { perror( "addRow(), v" ); exit( 2 ); }
         for( i = 1; i <= NrCols; i++ )
-                v[i] = ltom( ev[NrPcGens+i] );
+            v[i] = ltom( ev[NrPcGens+i] );
+
+        if( RawMatOutput ) {
+            for( i = 1; i <= NrCols; i++ )
+                fprintf( RawMatFile, " %ld", ev[NrPcGens+i] );
+            fprintf( RawMatFile, "\n" );
+            fflush( RawMatFile );
+        }
+            
         free( ev );
 
         if( (v = vReduce( v, h )) != NULL ) {
