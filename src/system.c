@@ -150,8 +150,11 @@ void	CatchSignals() {
 /*
 **    return the cpu time in milli seconds
 */
+#ifndef NO_GETRUSAGE
+
 #include <sys/time.h>
 #include <sys/resource.h>
+
 long	RunTime() {
 
 	struct	rusage	buf;
@@ -163,6 +166,20 @@ long	RunTime() {
 	return buf.ru_utime.tv_sec*1000 + buf.ru_utime.tv_usec/1000;
 }
 
+#else 
+
+#include <sys/types.h>
+#include <sys/times.h>
+
+long RunTime () 
+{
+   struct tms buf;
+  
+   times (&buf);
+   return (buf.tms_utime * 50 / 3); 
+} 
+
+#endif
 
 /* some functions for debugging puposes */
 void	printCommute() {
