@@ -1,0 +1,13 @@
+
+This is a list of tasks which need to be done before nq is released as
+a GAP 4 share library package.
+
+-- NilpotentQuotient() should return a quotient system.
+-- Update the test files and testNq.
+-- Add more GAP documentation.
+-- Add access to the Engel options.
+-- If configure cannot find certain components, then one should run
+   configure again and not make with the correct options.  This way,
+   configure can remember the correct values and it will suffice make.
+-- Update installation procedure
+
