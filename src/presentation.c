@@ -20,9 +20,10 @@
 struct _node {
         int     type;
         union {
-                int     n;                          /* stores numbers * /
-                gen     g;                          /* stores generators * /
-                struct { struct _node *l, *r; } op; /* stores bin ops * /
+                int     n;                          /* stores numbers      * /
+                gen     g;                          /* stores generators   * /
+                struct { struct _node *l, *r;       /* stores bin ops      * /
+                         struct _node *e; } op;     /* and Engel relations * /
         } cont;
 };
 
@@ -41,7 +42,8 @@ typedef struct _node node;
 #define TREL   7
 #define TDRELL 8
 #define TDRELR 9
-#define TLAST  10
+#define TENGEL 10
+#define TLAST  11
 */
 
 /*
@@ -363,7 +365,7 @@ static void	Generator() {
 **    commutator:      '[' word ',' wordseq ']'
 **    wordseq          word | word ',' wordseq
 **
-**    snumber:         'sign' 'number' | number
+**    snumber:         'sign' 'number' | 'number'
 */
 
 /*
@@ -419,7 +421,8 @@ static node	*Snumber() {
 /*
 **    The defining rules for commutators are:
 **
-**    commutator:      '[' word ',' wordseq ']'
+**    commutator:      '[' word ',' wordseq ']' 
+**                   | '[' word ',' 'number' word ]
 **    wordseq          word | word ',' wordseq
 **
 **    A word starts either with 'generator', with '(' or with '['.
@@ -440,12 +443,30 @@ static node	*Commutator() {
 	if( Token != COMMA ) SyntaxError( "Comma expected" );
 	while( Token == COMMA ) {
 	    NextToken();
-	    if( Token != GEN && Token != LPAREN && Token != LBRACK )
+	    if( Token != GEN && Token != NUMBER &&
+                Token != LPAREN && Token != LBRACK )
 		SyntaxError("Word expected");
-	    n = GetNode( TCOMM );
-	    n->cont.op.l = o;
-	    n->cont.op.r = Word();
-	    o = n;
+
+            if( Token == NUMBER ) {
+                /* An Engel relation is on the input stream. */
+                n = GetNode( TENGEL );
+                n->cont.op.l = o;
+
+                if( N <= 0 ) SyntaxError( "Engel-n must be positive" );
+
+                n->cont.op.e = GetNode( TNUM );
+                n->cont.op.e->cont.n = N;
+                NextToken();
+
+                n->cont.op.r = Word();
+                break;
+            }
+            else {
+                n = GetNode( TCOMM );
+                n->cont.op.l = o;
+                n->cont.op.r = Word();
+                o = n;
+            }
 	}
 	if( Token != RBRACK ) SyntaxError("Right square bracket missing");
 	NextToken();
@@ -756,7 +777,7 @@ void	*(*function)();
 void	*EvalNode( n )
 node	*n;
 
-{	void *l, *r;
+{	void *e, *l, *r;
         
         if( n->type == TNUM )
 	    return (void *)&( n->cont.n );
@@ -773,6 +794,15 @@ node	*n;
         if( (r = EvalNode(n->cont.op.r)) == (void *)0 ) {
           Free( l ); return r;
         }
+
+        if( n->type == TENGEL ) {
+          /* TENGEL is a ternary node and hence needs special attention. */
+          if( (e = EvalNode(n->cont.op.e)) == (void *)0 ) {
+            Free( l ); Free( r ); return e;
+          } 
+          return (*EvalFunctions[n->type])( l, r, e );
+        }
+
 	return (*EvalFunctions[n->type])( l, r );
 }
 
@@ -825,6 +855,23 @@ int	bracket;
 	PrintNode(r);
 
 	if( bracket ) fprintf( OutFp,"]");
+}
+
+/*
+**    PrintEngel() prints a commutator using the following rule for
+**    Engel relations:
+**                              [u, n v]
+*/
+static void	PrintEngel( l, r, e )
+node	*l, *r, *e;
+
+{       fprintf( OutFp,"[" );
+	PrintNode( l ); 
+        fprintf( OutFp, ", " ); 
+        PrintNode( e );
+        fprintf( OutFp, " " ); 
+        PrintNode( r ); 
+        fprintf( OutFp,"]" );
 }
 
 /*
@@ -930,6 +977,8 @@ node	*n;
 	    case TREL:  { PrintRel ( n->cont.op.l, n->cont.op.r ); break; }
 	    case TDRELL:{ PrintDRelL( n->cont.op.l, n->cont.op.r ); break; }
 	    case TDRELR:{ PrintDRelR( n->cont.op.l, n->cont.op.r ); break; }
+	    case TENGEL:{ PrintEngel( n->cont.op.l, n->cont.op.r, 
+                                      n->cont.op.e ); break; }
 	    default:    { fprintf( OutFp,"\nunknown node type\n" ); exit(5); }
 	}
 }
