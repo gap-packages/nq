@@ -119,6 +119,8 @@ int	ExtendEpim() {
 		w[l+1].g = EOW; w[l+1].e = (exp)0;
 		if( Image[ j ] != (word)0 ) free( Image[ j ] );
 		Image[ j ] = w;
+                Definition[ G ].h = -j;
+                Definition[ G ].g = (gen)0;
 	    }
 
 	for( j = 1; j <= Dimension[1]; j++ )
