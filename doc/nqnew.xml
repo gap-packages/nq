@@ -86,7 +86,7 @@
   program.  The program takes as input a finite presentation of a
   group and successively computes factor groups modulo the terms of
   the lower central series of the group.  These factor groups are
-  computed in terms of a polycyclic presentation.
+  computed in terms of polycyclic presentations.
 
   <P/> The ANU NQ is implemented  in  the programming language  C. The
   implementation has been developed in  a Unix environment and Unix is
@@ -312,7 +312,7 @@
   <P/>Furthermore, the nilpotent cover need not satisfy the relations
   of <M>G</M>.  In other words, the epimorphism from <M>G</M> onto
   <M>G/G_{c+1}</M> cannot be lifted to an epimorphism onto the
-  nilpotent cover.  Applying the epimorphism to each relation of
+  nilpotent cover.  Applying the epimorphism to each relator of
   <M>G</M> and collecting the resulting words of the nilpotent cover
   yields a set of words in the <M>c_{ij}</M>.  This gives further
   relations between the <M>c_{ij}</M> which leads to further
@@ -359,11 +359,12 @@
   </Display>
   is a group on 3 generators <M>a,b,c</M> of exponent <M>5</M>
   satisfying the 3rd Engel law.  The presentation above is equivalent
-  to a presentation on 3 generators with an infinite set of relations,
-  where the set of relations consists of all fifth powers of words in
+  to a presentation on 3 generators with an infinite set of relators,
+  where the set of relators consists of all fifth powers of words in
   the generators and all commutators <M>[x,y,y,y]</M> where <M>x</M>
   and <M>y</M> run through all words in the generators <M>a,b,c</M>.
-  The standalone programme accepts this notation as a description of
+  The standalone programme accepts the notation introduced above as a
+  description of
   its input.  In <Package>GAP 4</Package> finitely presented groups
   are specified in a different way, see <Ref Func="NilpotentQuotient"
   Style="Text"/> for a description.
@@ -463,7 +464,7 @@ rec( generators := [ x1, x2 ],
   restricted subset of the language so that it should be easy to
   compile it in new environments.  The code is 64-bit clean.  If you
   have difficulties with porting it to a new environment, let me know
-  and I'll be hapy to assist if time permits.
+  and I'll be happy to assist if time permits.
 
   <P/>The program has two collectors:  a simple collector from the left
   as described in <Cite Key="LS90"/> and a combinatorial from the left
@@ -501,8 +502,8 @@ rec( generators := [ x1, x2 ],
   \langle x, y | x^2 = y \rangle
   </Display>
   The group is clearly isomorphic to the additive group of the
-  integers.  Applying the ANU NQ to this presnetation gives the
-  follwoing nilpotent presnetation:
+  integers.  Applying the ANU NQ to this presentation gives the
+  follwoing nilpotent presentation:
   <Display>
     \langle A,B | A^2 = B, [B,A] \rangle
   </Display>
@@ -536,7 +537,7 @@ presentations that the ANU NQ accepts:
 ]]>
 </Verb>
 
-A presentation starts with '&tlt;' followed be a list of generators
+A presentation starts with '&tlt;' followed by a list of generators
 separated by commas.  Generator names are strings that contain only
 upper and lower case letters, digits, dots and underscores and that do
 not start with a digit.  The list of generator names is separated from
@@ -637,7 +638,7 @@ gap>
 ]]>
 </Example>
 In the following example identical generators are used in order to
-express that fact that the group is nilpotent of class <M>3</M>.  The
+express the fact that the group is nilpotent of class <M>3</M>.  The
 result is the free nilpotent group of class <M>3</M> on two generators.
 <Example>
 <![CDATA[
