@@ -16,6 +16,7 @@ word     *Generators;
 int	 *Weight;
  
 gen      *Commute;
+gen      **CommuteList = (gen **)0;
 exp      *Exponent;
 word     *Power;
 word     **Conjugate;
