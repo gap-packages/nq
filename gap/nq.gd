@@ -10,6 +10,9 @@ DeclareGlobalFunction( "NqReadOutput" );
 DeclareGlobalFunction( "NqStringFpGroup" );
 DeclareGlobalFunction( "NqInitFromTheLeftCollector" );
 DeclareGlobalFunction( "NqPcpGroupByCollector" );
+DeclareGlobalFunction( "NqPcpElementByWord" );
+
+DeclareOperation( "LowerCentralFactors", [ IsObject, IsPosInt ] );
 
 DeclareOperation( "NilpotentQuotient", 
         [ IsObject, IsPosInt ] );
