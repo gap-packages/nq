@@ -181,7 +181,7 @@ int	*pn;
 	if( n == 1 ) return w;
 
 	ev = ExpVecWord( w );
-	if( Collect( ev, w, n-1 ) ) {
+	if( Collect( ev, w, (exp)(n-1) ) ) {
           Free( (void *)w );
           Free( (void *)ev );
           return (word) 0;
