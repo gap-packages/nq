@@ -1,11 +1,7 @@
 /****************************************************************************
 **
 **    system.c                        NQ                       Werner Nickel
-**                                                    werner@pell.anu.edu.au
-**
-**    Copyright 1993                            Mathematics Research Section
-**                                           School of Mathematical Sciences 
-**                                            Australian National University
+**                                         Werner.Nickel@math.rwth-aachen.de
 */
 
 #include <stdio.h>
@@ -53,6 +49,8 @@ char	*addr;
 	fprintf( stderr, " %s.\n\n", SignalName[sig] );
 
 	if( Gap ) printf( "];\n" );
+        fflush( stdout );
+
 	signal( sig, SIG_DFL );
 	kill( getpid(), sig );
 

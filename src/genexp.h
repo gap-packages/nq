@@ -1,11 +1,8 @@
 /****************************************************************************
 **
 **    genexp.h                        PC                       Werner Nickel
-**                                                    werner@pell.anu.edu.au
+**                                         Werner.Nickel@math.rwth-aachen.de
 **
-**    Copyright 1993                            Mathematics Research Section
-**                                           School of Mathematical Sciences 
-**                                            Australian National University
 **
 **    A generator is a positive integer. The inverse of a generator is
 **    denoted by its negative.

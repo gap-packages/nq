@@ -1,11 +1,7 @@
 /****************************************************************************
 **
 **    engel.c                         NQ                       Werner Nickel
-**                                                    werner@pell.anu.edu.au
-**
-**    Copyright 1993                            Mathematics Research Section
-**                                           School of Mathematical Sciences 
-**                                            Australian National University
+**                                         Werner.Nickel@math.rwth-aachen.de
 */
 
 

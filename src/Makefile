@@ -1,11 +1,7 @@
 ##############################################################################
 ##
-##    Makefile                        NQ                       Werner Nickel
-##                                                    werner@pell.anu.edu.au
-##
-##    Copyright 1993                            Mathematics Research Section
-##                                           School of Mathematical Sciences 
-##                                            Australian National University
+##    Makefile                      NQ                         Werner Nickel
+##                                         Werner.Nickel@math.rwth-aachen.de
 ##
 
 ##    The follwoing two line define the name of the GNU multiple precision
