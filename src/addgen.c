@@ -194,7 +194,7 @@ void	AddGenerators() {
 		}
 
 	if( G == NrPcGens ) {
-	    printf( "Warning : no new generators in addGenerators()\n" );
+	    printf( "##  Warning : no new generators in addGenerators()\n" );
 	    return;
 	}
 

@@ -167,8 +167,11 @@ ExpTreePrintFunctions[ ExpTreeNodeTypes.Comm ] := function( stream, t )
     local   saveFlag;
     
     if not ExpTreePrintingLeftNormed then
-        PrintTo( stream, "[ " );
-#        PrintTo( stream, "Comm( " );
+        if NqOutput then
+            PrintTo( stream, "[ " );
+        else
+            PrintTo( stream, "Comm( " );
+        fi;
     fi;
 
     saveFlag := ExpTreePrintingLeftNormed;
@@ -180,8 +183,11 @@ ExpTreePrintFunctions[ ExpTreeNodeTypes.Comm ] := function( stream, t )
     PrintTo( stream, t!.right );
 
     if not ExpTreePrintingLeftNormed then
-        PrintTo( stream, " ]" );
-#        PrintTo( stream, " )" );
+        if NqOutput then
+            PrintTo( stream, " ]" );
+        else
+            PrintTo( stream, " )" );
+        fi;
     fi;
 end;
 
@@ -232,9 +238,13 @@ InstallMethod( ViewObj, [IsExprTree], Print );
 InstallMethod( String, [IsExprTree], function( t )
     local   string,  stream;
 
+    ExpTreeString := true;
     string := [];
     stream := OutputTextString( string, false );
     ExpTreePrintFunctions[ t!.type ]( stream, t );
+
+    ExpTreeString := false;
+
     return string;
 end );
 

@@ -29,6 +29,7 @@ DeclareOperation( "NilpotentQuotient",
 DeclareOperation( "NilpotentQuotientIdentical", 
         [ IsObject, IsObject, IsPosInt ] );
 
-
 DeclareOperation( "NqEpimorphismNilpotentQuotient", 
         [ IsObject, IsPosInt ] );
+
+DeclareInfoClass( "InfoNQ" );

@@ -36,6 +36,7 @@ MakeReadWriteGlobal( "NqRuntime" );
 NqRuntime := 0;
 MakeReadOnlyGlobal( "NqRuntime" );
 
+
 #############################################################################
 ##
 #V  NqDefaultOptions. . . . . . . . . . .  default options for the nq program
@@ -54,38 +55,166 @@ InstallValue( NqDefaultOptions,  [ "-g", "-p", "-C", "-s" ] );
 ##
 #V  NqOneTimeOptions . . . . . . . . . .  one time options for the nq program
 ##
-##  This variable can be used to pass a list of option to the next call of
+##  This variable can be used to pass a list of options to the next call of
 ##  the nq program.
+##
 MakeReadWriteGlobal( "NqOneTimeOptions" );
 NqOneTimeOptions := [];
+
+##  If this function is called with an fp-group only, we check for options on
+##  the options stack.  The following options are used:
+##      output_file
+##      input_string
+##      nilpotency_class, class
+##      identical_generators, idgens
+NqParameterStrings := [ "group",        ##  These three options provide
+                        "exptrees",     ##  a way for specifying a 
+                        "input_file",   ##  finitely presented group.
+                        "input_string",         
+                      
+                        "output_file",  ##  This option is used to keep 
+                                        ##  the output of the standalone.  
+
+                                        ##  Option to specify the
+                        "class",        ##  nilpotency class of the
+                                        ##  quotient. 
+
+                                        ##  Option to specify identical
+                        "idgens",       ##  generators.
+];
+
+##
+##  There are several different ways to specify the finitely presented group
+##  for the nilpotent quotient algorithm:
+##
+##  As 
+##      a finitely presented group
+##      a finitely presented group given by expression trees
+##      an input file for the standalone
+##      a string in the input format of ther standalone
+##
+NqPrepareInput := function( params )
+    local   str;
+
+    if IsBound( params.group ) then
+        str := NqStringFpGroup( params.group, params.idgens );
+        params.input_string := str;
+        params.input_stream := InputTextString( str );
+    fi;
+
+    if IsBound( params.exptrees ) then
+        str := NqStringExpTrees( params.exptrees, params.idgens );
+        params.input_string := str;
+        params.input_stream := InputTextString( str );
+    fi;
+
+    if IsBound( params.input_string ) then
+        str := params.input_string;
+        params.input_string := str;
+        params.input_stream := InputTextString( str );
+    fi;
+
+    if IsBound( params.input_file ) then
+        params.input_stream := InputTextFile( params.input_file );
+    fi;
+end;
+
+##
+##  There are several different ways to specify the output for the nilpotent
+##  quotient algorithm: 
+##
+##  As 
+##      an output stream
+##      an output file (which is kept for later use)
+##
+NqPrepareOutput := function( params )
+
+    if IsBound( params.output_file ) then
+      params.output_stream := OutputTextFile( params.output_file, false );
+
+    else
+      params.output_string := "";
+      params.output_stream := OutputTextString( params.output_string, false );
+    fi;
+end;
+
+NqCompleteParameters := function( params )
+    local   opt_rec,  options,  opt;
+
+    if OptionsStack <> [] then
+        opt_rec := OptionsStack[ Length(OptionsStack) ];
+        options := RecNames( opt_rec );
+
+        for opt in options do
+            if not opt in NqParameterStrings then
+                Error( "unknown option ", op );
+                return fail;
+            fi;
+            
+            if IsBound( params.(opt) ) then
+                Error( "Option ", opt, " already given as argument" );
+                return fail;
+            fi;
+            
+            if IsBound( params.(opt) ) then
+                InfoWarning( "overwriting parameter with option '", opt, "'" );
+            fi;
+            params.(opt) := opt_rec.(opt);
+        od;
+    fi;
+
+    if not IsBound( params.idgens ) then
+        params.idgens := [];
+    fi;
+
+    NqPrepareInput( params );
+    NqPrepareOutput( params );
+
+    if not IsBound( params.options ) then
+        params.options := [];
+    fi;
+    if InfoLevel( InfoNQ ) > 0 then
+        Add( params.options, "-v" );
+    fi;
+    params.options := Concatenation( NqDefaultOptions, 
+                              params.options,
+                              NqOneTimeOptions );
+    NqOneTimeOptions := [];
+
+    if IsBound( params.class ) then
+        Add( params.options, String(params.class) );
+    fi;
+end;
 
 #############################################################################
 ##
 #F  NqCallANU_NQ . . . . . . . . . . . the function that calls the nq program
 ##
-NqCallANU_NQ := function( input, output, options )
+NqCallANU_NQ := function( params )
     local   nq,  ret;
 
-    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
-    options := Concatenation( NqDefaultOptions, NqOneTimeOptions, options );
+    NqCompleteParameters( params );
 
-    NqOneTimeOptions := [];
+    nq      := Filename( DirectoriesPackagePrograms("nq") , "nq" );
 
-##  The following Print statement should be converted to an info statement
-##
-##    Print( "##  Calling ANU NQ with: ", options, "\n", input![2], "\n" );
+    Info( InfoNQ, 3, "Calling ANU NQ with: ", params, "\n" );
 
-    ret    := Process( DirectoryCurrent(),        ## executing directory
-                      nq,                         ## executable
-                      input,                      ## input  stream
-                      output,                     ## output stream
-                      options );                  ## command line arguments
+    ret    := Process( DirectoryCurrent(),           ## executing directory
+                      nq,                            ## executable
+                      params.input_stream,           ## input  stream
+                      params.output_stream,          ## output stream
+                      params.options );              ## command line arguments
 
-##  Dito.
-##    Print( "##  ANU NQ returns ", ret, "\n" );
+    Info( InfoNQ, 3, "ANU NQ returns ", ret, "\n" );
 
-    CloseStream( input );
-    CloseStream( output );
+    CloseStream( params.input_stream );
+    CloseStream( params.output_stream );
+
+    if IsBound( params.output_file ) then
+        return NqReadOutput( InputTextFile( params.output_file ) );
+    else
+        return NqReadOutput( InputTextString( params.output_string ) );
+    fi;
 end;
 
 
@@ -148,7 +277,8 @@ function( stream )
         return List( result.LowerCentralFactors, NqElementaryDivisors );
     fi;
 
-    return result;
+    return NqPcpGroupByCollector( 
+                   NqInitFromTheLeftCollector( result ), result );
 end );
 
 
@@ -157,14 +287,8 @@ end );
 #F  NqStringFpGroup( <fp> ) . . . . . . .  finitely presented group to string
 ##
 InstallGlobalFunction( NqStringFpGroup,
-function( arg )
-    local   G,  idgens,  F,  fgens,  V,  vgens,  str,  i,  r;
-
-    G      := arg[1];
-    idgens := [];
-    if Length(arg) = 2 then
-        idgens := arg[2];
-    fi;
+function( G, idgens )
+    local   F,  fgens,  str,  newgens,  pos,  i,  r;
 
     F     := FreeGroupOfFpGroup( G );
     fgens := GeneratorsOfGroup( F );
@@ -181,29 +305,32 @@ function( arg )
         return str;
     fi;
 
-    V     := FreeGroup( Length( fgens ), "x" );
-    vgens := GeneratorsOfGroup( V );
+    newgens := GeneratorsOfGroup( FreeGroup( Length( fgens ), "x" ) );
     
     str := "";
     Append( str, "< " );
     
-    for i in [1..Length(vgens)] do
-	Append( str, String( vgens[i] ) );
-        if i = Length(fgens)-Length(idgens) then
-            ##  Insert seperator between free and identical generators.
-            Append( str, "; " );
-        else
-            Append( str, ", " );
-        fi;
+    pos := List( idgens, g->Position( fgens, g ) );
+    for i in Difference( [1..Length(fgens)], pos ) do
+	Append( str, String( newgens[i] ) );
+        Append( str, ", " );
     od;
-    Unbind( str[ Length(str) ] );
-    Unbind( str[ Length(str) ] );
+    Unbind( str[ Length(str) ] ); Unbind( str[ Length(str) ] );
 
+    ##  Insert seperator between free and identical generators.
+    Append( str, "; " );
+
+    for i in pos do
+	Append( str, String( newgens[i] ) );
+        Append( str, ", " );
+    od;
+    Unbind( str[ Length(str) ] ); Unbind( str[ Length(str) ] );
+    
     Append( str, " |\n" );
 
     for r in RelatorsOfFpGroup( G ) do
         Append( str, "    " );
-        Append( str, String( MappedWord( r, fgens, vgens ) ) );
+        Append( str, String( MappedWord( r, fgens, newgens ) ) );
         Append( str, ",\n" );
     od;
     if str[ Length(str)-1 ] = ',' then
@@ -220,14 +347,8 @@ end );
 #F  NqStringExpTrees( <fp> ) . . . . . . . . . . . expression trees to string
 ##
 InstallGlobalFunction( NqStringExpTrees,
-function( arg )
-    local   G,  idgens,  fgens,  str,  g,  r;
-
-    G      := arg[1];
-    idgens := [];
-    if Length(arg) = 2 then
-        idgens := arg[2];
-    fi;
+function( G, idgens )
+    local   fgens,  str,  g,  r;
 
     fgens := G.generators;
 
@@ -243,7 +364,10 @@ function( arg )
         str := "< x | x >\n";
         return str;
     fi;
-
+    
+    # Set flag to signal the print functions (which are called by String)
+    # that we want commutators in square bracket.  I don't like that hack. 
+    NqOutput := true;
     str := "";
     Append( str, "< " );
     
@@ -274,6 +398,9 @@ function( arg )
     fi;
         
     Append( str, "\n>\n" );
+
+    # reset flag
+    NqOutput := false;
     return str;
 end );
 
@@ -322,6 +449,13 @@ end );
 ##                 infile                     class
 ##     outfile     infile                     class
 ##
+##  If this function is called with an fp-group only, we check for options on
+##  the options stack.  The following options are used:
+##      output_file
+##      input_string
+##      nilpotency_class, class
+##      identical_generators, idgens
+##
 ##  This should produce a quotient system and not a pcp group.
 ##
 InstallOtherMethod( NilpotentQuotient,
@@ -330,21 +464,8 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsFpGroup ], 
         0,
 function( G )
-    local   pres,  input,  str,  output,  options,  nqrec,  coll;
 
-    input   := InputTextString( NqStringFpGroup( G ) );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ ];
-
-    NqCallANU_NQ( input, output, options );
-    
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ( rec( group := G ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -353,20 +474,8 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsString, IsFpGroup ], 
         0,
 function( outfile, G )
-    local   input,  output,  options,  nqrec,  coll;
 
-    input   := InputTextString( NqStringFpGroup( G ) );
-    output  := OutputTextFile( outfile, false );
-    options := [ ]; 
-
-    NqCallANU_NQ( input, output, options );
-
-    nqrec := NqReadOutput( InputTextFile( outfile ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ( rec( group := G, output_file := outfile ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -375,21 +484,8 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsString ], 
         0,
 function( infile )
-    local   input,  str,  output,  options,  nqrec,  coll;
 
-    input   := InputTextFile( infile );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ ];
-
-    NqCallANU_NQ( input, output, options );
-
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ( rec( input_file := infile ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -398,20 +494,9 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsString, IsString ], 
         0,
 function( outfile, infile )
-    local   input,  output,  options,  nqrec,  coll;
 
-    input   := InputTextFile( infile );
-    output  := OutputTextFile( outfile, false );
-    options := [ infile ];
-
-    NqCallANU_NQ( input, output, options );
-
-    nqrec := NqReadOutput( InputTextFile( outfile ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ( rec( input_file  := infile,
+                              output_file := outfile ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -420,21 +505,8 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsRecord ], 
         0,
 function( G )
-    local   pres,  input,  str,  output,  options,  nqrec,  coll;
 
-    input   := InputTextString( NqStringExpTrees( G ) );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ ];
-
-    NqCallANU_NQ( input, output, options );
-    
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ( rec( exptrees := G ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -443,21 +515,10 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsFpGroup, IsList ], 
         0,
 function( G, idgens )
-    local   pres,  input,  str,  output,  options,  nqrec,  coll;
-
-    input   := InputTextString( NqStringFpGroup( G, idgens ) );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ ];
-
-    NqCallANU_NQ( input, output, options );
     
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ( 
+                   rec( group  := G,
+                        idgens := idgens ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -466,21 +527,10 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsRecord, IsList ], 
         0,
 function( G, idgens )
-    local   pres,  input,  str,  output,  options,  nqrec,  coll;
 
-    input   := InputTextString( NqStringExpTrees( G, idgens ) );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ ];
-
-    NqCallANU_NQ( input, output, options );
-    
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ( 
+                   rec( exptrees := G,
+                        idgens   := idgens ) );
 end );
 
 InstallMethod( NilpotentQuotient,
@@ -489,21 +539,10 @@ InstallMethod( NilpotentQuotient,
         [ IsFpGroup, IsPosInt ], 
         0,
 function( G, cl )
-    local   pres,  input,  str,  output,  options,  nqrec,  coll;
 
-    input   := InputTextString( NqStringFpGroup( G ) );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ String(cl) ];
-
-    NqCallANU_NQ( input, output, options );
-    
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ(
+                   rec( group := G,
+                   class := cl ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -512,20 +551,11 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsString, IsFpGroup, IsPosInt ], 
         0,
 function( outfile, G, cl )
-    local   input,  output,  options,  nqrec,  coll;
 
-    input   := InputTextString( NqStringFpGroup( G ) );
-    output  := OutputTextFile( outfile, false );
-    options := [ String(cl) ]; 
-
-    NqCallANU_NQ( input, output, options );
-
-    nqrec := NqReadOutput( InputTextFile( outfile ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ( 
+                   rec( group := G,
+                        class := cl,
+                        output_file := outfile ) );
 end );
 
 InstallMethod( NilpotentQuotient,
@@ -534,21 +564,10 @@ InstallMethod( NilpotentQuotient,
         [ IsString, IsPosInt ], 
         0,
 function( infile, cl )
-    local   input,  str,  output,  options,  nqrec,  coll;
 
-    input   := InputTextFile( infile );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ String(cl) ];
-
-    NqCallANU_NQ( input, output, options );
-
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ(
+                   rec( input_file := infile,
+                        class      := cl ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -557,20 +576,11 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsString, IsString, IsPosInt ], 
         0,
 function( outfile, infile, cl )
-    local   input,  output,  options,  nqrec,  coll;
 
-    input   := InputTextFile( infile );
-    output  := OutputTextFile( outfile, false );
-    options := [ infile, String(cl) ];
-
-    NqCallANU_NQ( input, output, options );
-
-    nqrec := NqReadOutput( InputTextFile( outfile ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ(
+                   rec( input_file := infile,
+                        output_file := outfile,
+                        class       := cl ) );
 end );
 
 InstallMethod( NilpotentQuotient,
@@ -579,21 +589,10 @@ InstallMethod( NilpotentQuotient,
         [ IsRecord, IsPosInt ], 
         0,
 function( G, cl )
-    local   pres,  input,  str,  output,  options,  nqrec,  coll;
 
-    input   := InputTextString( NqStringExpTrees( G ) );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ String(cl) ];
-
-    NqCallANU_NQ( input, output, options );
-    
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ(
+                   rec( exptrees := G,
+                        class    := cl ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -602,21 +601,11 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsFpGroup, IsList, IsPosInt ], 
         0,
 function( G, idgens, cl )
-    local   pres,  input,  str,  output,  options,  nqrec,  coll;
 
-    input   := InputTextString( NqStringFpGroup( G, idgens ) );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ String(cl) ];
-
-    NqCallANU_NQ( input, output, options );
-    
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ(
+                   rec( group := G,
+                        idgens := idgens,
+                        class := cl ) );
 end );
 
 InstallOtherMethod( NilpotentQuotient,
@@ -625,24 +614,12 @@ InstallOtherMethod( NilpotentQuotient,
         [ IsRecord, IsList, IsPosInt ], 
         0,
 function( G, idgens, cl )
-    local   pres,  input,  str,  output,  options,  nqrec,  coll;
 
-    input   := InputTextString( NqStringExpTrees( G, idgens ) );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ String(cl) ];
-
-    NqCallANU_NQ( input, output, options );
-    
-    nqrec := NqReadOutput( InputTextString( str ) );
-    if IsList( nqrec ) then return nqrec; fi;
-
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
+    return NqCallANU_NQ(
+                   rec( exptress := G,
+                        idgens   := idgens,
+                        class    := cl ) );
 end );
-
-
 
 
 #############################################################################

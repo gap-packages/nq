@@ -252,7 +252,7 @@ char	*argv[];
 
 	if( Gap ) printf( "NqLowerCentralFactors := [\n" );
 
-        if( Gap ) fprintf( stderr, "#I  Class 1:" );
+        if( Gap & Verbose ) fprintf( stderr, "#I  Class 1:" );
 
 	printf( "#    Calculating the abelian quotient ...\n" );
 	InitEpim();
@@ -273,7 +273,7 @@ char	*argv[];
 
 	InitPcPres();
 
-        if( Gap ) {
+        if( Gap & Verbose ) {
           fprintf( stderr, 
                    " has %d generators with relative orders ",
                    Dimension[Class] ); 
@@ -297,7 +297,7 @@ char	*argv[];
 
 	while( Class < Cl ) {
 	    time = RunTime();
-            if( Gap ) {
+            if( Gap & Verbose ) {
               fprintf( stderr, "#I  Class %d:", Class+1 );
             }
 	    printf( "#    Calculating the class %d quotient ...\n", Class+1 );
@@ -318,7 +318,7 @@ char	*argv[];
 	    if( NrCenGens == 0 ) goto end;
 	    ExtPcPres();
 
-            if( Gap ) {
+            if( Gap & Verbose ) {
               fprintf( stderr, " %d generators", Dimension[Class] );
               fprintf( stderr, " with relative orders:" );
               for( g = NrPcGens-Dimension[Class]+1; g <= NrPcGens; g++ )
@@ -343,8 +343,6 @@ char	*argv[];
 end:
 	TimeOutOff();
         
-        if( Gap ) fprintf( stderr, " trivial\n" );
-
         if( printEpim ) {
           printf( "\n\n#    The epimorphism :\n");
           PrintEpim();
