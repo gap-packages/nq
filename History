@@ -88,3 +88,5 @@ Sep 1997:
 
 Jan 1998:
            + print statements for the definitions of new generators.
+           + added option -E to reverse the order in which Engel
+             generators are processes.
