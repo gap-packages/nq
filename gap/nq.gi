@@ -73,64 +73,6 @@ end );
 
 #############################################################################
 ##
-#F  NqInitFromTheLeftCollector  . . . . . . . . . initialise an ftl collector
-##
-InstallGlobalFunction( NqInitFromTheLeftCollector,
-function( nqrec )
-    local   ftl,  g,  rel;
-
-    ftl := FromTheLeftCollector( nqrec.NrGenerators );
-
-    for g in [1..nqrec.NrGenerators] do
-        SetRelativeOrder( ftl, g, nqrec.RelativeOrders[ g ] );
-    od;
-
-    for rel in nqrec.Powers do
-        SetPower( ftl, rel[1], rel{[2..Length(rel)]}  );
-    od;
-
-    for rel in nqrec.Conjugates do
-        SetConjugate( ftl, rel[1], rel[2], rel{[3..Length(rel)]}  );
-    od;
-
-    SetFeatureObj( ftl, IsConfluent, true );
-    UpdatePolycyclicCollector( ftl );
-
-    return ftl;
-
-end );
-
-#############################################################################
-##
-#F  NqPcpGroupByCollector . . . . . . . . . pcp group from collector, set lcs
-##
-InstallGlobalFunction( NqPcpGroupByCollector,
-function( coll, nqrec )
-    local   G,  gens,  ranks,  lcs,  a,  z,  r;
-
-    G := PcpGroupByCollectorNC( coll );
-    gens := GeneratorsOfGroup( G );
-
-    ranks := nqrec.Ranks;
-    lcs   := [ G ];
-
-    a     := 1; 
-    z     := nqrec.NrGenerators;
-    for r in ranks do
-        a := a + r;
-        Add( lcs, Subgroup( G, gens{[a..z]} ) );
-    od;
-
-    SetLowerCentralSeriesOfGroup( G, lcs );
-    SetIsNilpotentGroup( G, true );
-
-    return G;
-end );
-
-
-
-#############################################################################
-##
 #F  NqStringFpGroup( <fp> ) . . . . . . .  finitely presented group to string
 ##
 
@@ -336,12 +278,48 @@ function( G, cl )
     gens := GeneratorsOfGroup( A );
 
     ##  Now we set up the epimorphism
-    images := List( nqrec, Images, w->PcpElementByGenExpList( coll, w ) );
+    images := List( nqrec, Images, w->NqPcpElementByWord( coll, w ) );
     phi := GroupHomomorphismByImages( G, A, GeneratorsOfGroup( G ), images );
 
     SetIsSurjective( phi, true );
 
     return phi;
+end );
+
+InstallMethod( LowerCentralFactors,
+        "of a finitely presented group",
+        true,
+        [ IsFpGroup, IsPosInt ], 
+        0, 
+function( G, cl )
+    local   nq,  pres,  input,  str,  output,  ret,  nqrec,  eds,  M,  
+            ed;
+
+    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
+
+    pres   := NqStringFpGroup( G );
+    input  := InputTextString( pres );
+    str    := "";
+    output := OutputTextString( str, true );
+    ret    := Process( DirectoryCurrent(),        ## executing directory
+                      nq,                         ## executable
+                      input,                      ## input  stream
+                      output,                     ## output stream
+                      [ "-g", "-p", String(cl) ] );
+                                                  ## command line arguments
+    CloseStream( output );
+    CloseStream( input  );
+    
+    nqrec := NqReadOutput( InputTextString( str ) );
+
+    eds := [];
+    for M in nqrec.LowerCentralFactors do
+        ed := ElementaryDivisorsMat( M );
+        ed := Concatenation( ed, List( [Length(ed)+1..Length(M[1])], x->0 ) );
+        ed := ed{[ PositionNot( ed, 1 ) .. Length(ed) ]};
+        Add( eds, ed );
+    od;
+    return eds;
 end );
 
 
@@ -383,4 +361,3 @@ function( G, engel, cl )
 
     return NqPcpGroupByCollector( coll, nqrec );
 end );
-
