@@ -49,7 +49,6 @@ word	v, w;
 	printWord( w, 'A' ); putchar( '\n' ); */
 
 	NrWords++;
-        n = 0;
 	/* Calculate [ v, w, .., w ] */
         if( Class+1 > Engel ) Commute = CommuteList[n];
 	if( (v = Commutator( v, w )) == (word)0 ) {
@@ -214,7 +213,9 @@ void	evalRightEngelRel( w )
 word	w;
 
 {	word	ws = w, v, v1;
-	long	n, needed;
+	long	n = 0, needed;
+        
+        gen     *SaveCommute = Commute;
 
 /*	printf( "evalRightEngelRel() called with : " );*/
 /*	printWord( w, 'A' );*/
@@ -222,12 +223,15 @@ word	w;
 
 	NrWords++;
 	/* Calculate [ a, w, .., w ] */
+        if( Class+1 > RightEngel ) Commute = CommuteList[n];
 	if( (v = Commutator( A, w )) == (word)0 ) {
 	    Error( A, w, 'r' );
 	    return;
 	}
-	n = RightEngel-1;
-	while( n-- > 0 ) {
+	n++;
+	while( n < RightEngel ) {
+            if( Class+1 > RightEngel ) Commute = CommuteList[n];
+          
 	    if( (v1 = Commutator( v, w )) == (word)0 ) {
 		Error( A, w, 'r' );
 		free( v );
@@ -235,7 +239,10 @@ word	w;
 	    }
 	    free( v );
 	    v = v1;
+
+            n++;
 	}
+        Commute = SaveCommute;
 
 	needed = addRow( ExpVecWord( v ) );
 	if( needed ) {
@@ -258,7 +265,9 @@ void	evalLeftEngelRel( w )
 word	w;
 
 {	word	ws = w, v, v1;
-	long	n, needed;
+	long	n = 0, needed;
+
+        gen     *SaveCommute = Commute;
 
 /*	printf( "evalLeftEngelRel() called with : " );*/
 /*	printWord( w, 'A' );*/
@@ -266,12 +275,15 @@ word	w;
 
 	NrWords++;
 	/* Calculate [ w, a, .., a ] */
+        if( Class+1 > LeftEngel ) Commute = CommuteList[n];
 	if( (v = Commutator( w, A )) == (word)0 ) {
 	    Error( w, A, 'l' );
 	    return;
 	}
-	n = LeftEngel-1;
-	while( n-- > 0 ) {
+	n++;
+	while( n < LeftEngel ) {
+            if( Class+1 > LeftEngel ) Commute = CommuteList[n];
+
 	    if( (v1 = Commutator( v, A )) == (word)0 ) {
 		Error( w, A, 'l' );
 		free( v );
@@ -279,7 +291,10 @@ word	w;
 	    }
 	    free( v );
 	    v = v1;
+
+            n++;
 	}
+        Commute = SaveCommute;
 
 	needed = addRow( ExpVecWord( v ) );
 	if( needed ) {
@@ -388,41 +403,72 @@ void	evalLREngel() {
 	free( u ); free( A );
 }
 
+void    RedefineCommute( weight )
+int     weight;
+
+{
+
+    int c;  gen g, h;
+    
+    if( Class+1 > weight ) {
+          
+        /* For examining Engel conditions we try a trick with the
+           collector. */
+
+        if( CommuteList != (gen**)0 ) Free( CommuteList );
+            
+        CommuteList = (gen**)Allocate( weight * sizeof(gen*) );
+        for( c = 0; c < weight; c++ ) {
+            CommuteList[ c ] = 
+                (gen*)Allocate( (NrPcGens + NrCenGens + 1) * sizeof(gen) );
+              
+            /*   We create a Commute list as if the group has class 
+            **   `Class+1' - (weight - c - 1)
+            */
+              
+            for( g = 1; g <= NrPcGens; g++ ) {
+              for( h = g+1; Wt(g)+Wt(h) <= Class+1 - (weight-c-1); h++ ) ;
+              CommuteList[c][g] = h-1;
+            }
+            for( ; g <= NrPcGens+NrCenGens; g++ ) CommuteList[c][g] = g;
+        }
+    }
+
+}
+
 void	EvalEngel() {	
 
 	long	t;
 
 	if( Verbose ) t = RunTime();
 
-	if( LeftEngel || RightEngel ) evalLREngel();
+        /*   If a left Engel and a right Engel condition is used, we have to  
+        **   make sure that we use the smaller value for redefining the
+        **   Commute array because otherwise we calculate commutators with the
+        **   wrong precision.
+        */
+	if( LeftEngel || RightEngel ) {
+            if( !LeftEngel  ) {
+                RedefineCommute( RightEngel );
+                evalLREngel();
+            }
+            else if( !RightEngel ) {
+                RedefineCommute(  LeftEngel );
+                evalLREngel();
+            }
+            else if( LeftEngel <= RightEngel ) {
+                RedefineCommute( LeftEngel );
+                evalLREngel();
+            }
+            else {
+                RedefineCommute( RightEngel );
+                evalLREngel();
+            }
+        }
 
 	if( Engel ) {
-          if( Class+1 > Engel ) {
-            int c;  gen g, h;
-          
-            /* For examining Engel conditions we try a trick with the
-               collector. */
-
-            if( CommuteList != (gen**)0 ) Free( CommuteList );
-            
-            CommuteList = (gen**)Allocate( Engel * sizeof(gen*) );
-            for( c = 0; c < Engel; c++ ) {
-              CommuteList[ c ] = 
-                (gen*)Allocate( (NrPcGens + NrCenGens + 1) * sizeof(gen) );
-              
-              /*   We create a Commute list as if the group has class 
-              **   `Class+1' - (Engel - c - 1)
-              */
-              
-              for( g = 1; g <= NrPcGens; g++ ) {
-                for( h = g+1; Wt(g)+Wt(h) <= Class+1 - (Engel-c-1); h++ ) ;
-                CommuteList[c][g] = h-1;
-              }
-              for( ; g <= NrPcGens+NrCenGens; g++ ) CommuteList[c][g] = g;
-            }
-          }
-
-          evalEngel();
+            RedefineCommute( Engel );
+            evalEngel();
         }
 
 	if( Verbose )
