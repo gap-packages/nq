@@ -2,7 +2,7 @@
 GAP=gap4ws
 
 gapdoc:
-	@echo 'MakeGAPDocDoc( "./", "nqman", [], "nq" );;' | $(GAP) -q -T
+	@echo 'RequirePackage("gapdoc"); MakeGAPDocDoc( "./", "nqman", [], "nq" );;' | $(GAP) -q -T
 
 clean:
 	@rm -f nqman.aux nqman.bbl nqman.blg nqman.idx nqman.ilg nqman.ind\
