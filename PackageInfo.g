@@ -1,8 +1,8 @@
 #############################################################################
 ##  
-##  PkgInfo.g                      NQ                           Werner Nickel
+##  PackageInfo.g                  NQ                           Werner Nickel
 ##  
-##  Based on Frank Lübeck's template for PkgInfo.g.
+##  Based on Frank Lübeck's template for PackageInfo.g.
 ##  
 
 SetPackageInfo( rec(
@@ -40,7 +40,7 @@ PackageWWWHome :=
 ArchiveFormats := ".tar.gz",
 ArchiveURL     := Concatenation( ~.PackageWWWHome, "nq" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PkgInfo.g" ),
+PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
 AbstractHTML   := Concatenation( 
                "This package provides access to the ANU nilpotent quotient ",
