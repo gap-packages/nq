@@ -86,7 +86,7 @@ large   ltom( n )
 exp     n;
 
 {       char    x[64];
-        MP_INT  *l;
+        MP_INT  *l = (MP_INT*)Allocate( sizeof(MP_INT) );
         int     sign = 1;
 
         if( n < (exp)0 ) { sign = -1; n = -n; }
@@ -98,20 +98,32 @@ exp     n;
 #ifdef LONGLONG
         sprintf( x, "%Lx", n );
 #else
-        sprintf( x, "%x", n );
+        sprintf( x,  "%x", n );
 #endif
 
-        l = (large)Allocate( sizeof(MP_INT) );
         mpz_init( l );
         mpz_set_str( l, x, 16 );
 
-        if( sign == -1 ) NEGATE(l);
-        
-        if( Debug ) { 
-          mpz_out_str( stdout, 10, l );
-          printf( " %d\n", sign * n );
+        if( 0 ) { 
+          /* This code discovered a bug in some version of libgmp.a */
+          MP_INT *ll = xtom( x );
+          if( mpz_cmp( l, ll ) != 0 )
+            printf( "Problem in converting integer\n" );
         }
 
+        if( 0 ) {
+#ifdef LONGLONG
+          printf( "%Ld ", n );
+#else
+          printf(  "%d ", n );
+#endif
+          mpz_out_str ( stdout, 10, l );
+          printf( "\n" );
+        }
+          
+
+        if( sign == -1 ) NEGATE(l);
+        
         return l;
 }
 
@@ -142,7 +154,7 @@ lvec    v;
 {       long    i;
 
         for( i = 1; i <= NrCols; i++ ) { mpz_clear( v[i] ); Free( v[i] ); }
-        free( v );
+        Free( v );
 }
 
 void    freeMatrix() {
@@ -150,7 +162,7 @@ void    freeMatrix() {
         long    i;
 
         for( i = 0; i < NrRows; i++ ) freeVector( Matrix[i] );
-        free(Matrix);
+        Free(Matrix);
         Matrix = (lvec*)0;
 }
 
