@@ -107,3 +107,8 @@ March 1998: Version 1.2 of the ANU NQ
              carried out only with the precision required to evaluate
              an iterated commutator.  This gives a speedup of a factor
              of 3-4 in Engel-4 and Engel-5 groups.
+
+3 Jan 1999:
+           + Implementation of parsing Engel-n commutators and
+             evaluation of those commutators with redefined Commute[]
+             arrays. 
