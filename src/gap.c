@@ -66,7 +66,7 @@ void	PrintGapPcPres() {
                 printf( "SetConjugate( dt, %d, %d, ", j, i );
 		printGapWord( Conjugate[j][i] );
                 printf( " );\n" );
-		if( Exponent[i] == (exp)0 ) {
+		if( 0 && Exponent[i] == (exp)0 ) {
                     printf( "SetConjugate( dt, %d, %d, ", j, -i );
 		    printGapWord( Conjugate[j][-i] );
                     printf( " );\n" );
