@@ -37,12 +37,27 @@ void    SetupCommuteList() {
 void	AddGenerators() {
 
 	long	t;
-	int	c, i, j, l, G;
+        gen     i, j;
+	int	c, l, G;
 	word	w;
 	
 	if( Verbose ) t = RunTime();
 
 	G = NrPcGens;
+
+        /* 
+        ** Extend the definitions array by a safe amount.  We could compute
+        ** the exact number of new generators to be introduced, but is it
+        ** worth the effort?
+        */ 
+	Definition = 
+          (def*)realloc( Definition, 
+                         (G + (Dimension[1]+1)*NrPcGens + 1 + NumberOfGens())
+                         *sizeof(def) );
+	if( Definition == (def*)0 ) {
+            perror( "AddGenerators(), Definition" );
+	    exit( 2 );
+	}
 
 	G += ExtendEpim();
 
@@ -65,6 +80,8 @@ void	AddGenerators() {
 		w[l+1].g = EOW; w[l+1].e = (exp)0;
 		if( Power[ j ] != (word)0 ) free( Power[ j ] );
 		Power[ j ] = w;
+                Definition[ G ].h = j;
+                Definition[ G ].g = (gen)0;
                 if( Verbose ) {
                   printf( "#    generator %d = ", G );
                       printGen( j, 'A' );
@@ -91,6 +108,8 @@ void	AddGenerators() {
 		    if( Conjugate[j][i] != Generators[j] )
 			free( Conjugate[j][i] );
 		    Conjugate[j][i] = w;
+                    Definition[ G ].h = j;
+                    Definition[ G ].g = i;
                     if( Verbose ) {
                       printf( "#    generator %d = [", G );
                       printGen( j, 'A' );
@@ -113,19 +132,32 @@ void	AddGenerators() {
 
 	/* Fourthly enlarge the necessary arrays, so that the collector
 	   works. */
+
+        /* Shrink Definition[] to the right size. */
+	Definition = (def*)realloc( Definition, (G+1)*sizeof(def) );
+
+        /* Enlarge Exponent[] ... */
+	Exponent = (exp *)realloc( Exponent, (G+1)*sizeof(exp) );
+	if( Exponent == (exp *)0 ) {
+	    perror( "addGenerators(), Exponent" );
+	    exit( 2 );
+	}
+	for( i = NrPcGens+1; i <= G; i++ ) Exponent[i] = (exp)0;
+
+        /* ... and Power[].       */
+	Power = (word *)realloc( Power, (G+1)*sizeof(word) );
+	if( Power == (word *)0 ) {
+	    perror( "addGenerators(), Power" );
+	    exit( 2 );
+	}
+	for( i = NrPcGens+1; i <= G; i++ ) Power[i] = (word)0;
+
 	Weight = (int *)realloc( Weight, (G+1)*sizeof(long) );
 	if( Weight == (int *)0 ) {
 	    perror( "addGenerators(), Weight" );
 	    exit( 2 );
 	}
 	for( i = NrPcGens+1; i <= G; i++ ) Weight[i] = Class+1;
-
-	Exponent = (exp*)realloc( Exponent, (G+1)*sizeof(exp) );
-	if( Exponent == (exp*)0 ) {
-	    perror( "addGenerators(), Exponent" );
-	    exit( 2 );
-	}
-	for( i = NrPcGens+1; i <= G; i++ ) Exponent[i] = (exp)0;
 
 	NrCenGens = G - NrPcGens;
 
