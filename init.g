@@ -12,7 +12,7 @@
 DeclarePackage( "nq", "2.0",
 
   function()
-    local path;
+    local   is_available,  path;
 
     is_available := TestPackageAvailability( "GAPDoc", "" );
     if is_available = fail then
