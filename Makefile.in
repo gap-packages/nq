@@ -13,7 +13,7 @@ GAP_ROOT=$(PWD)/../..
 GNU_MP_INC=.
 GNU_MP_LIB=$(GNU_MP_INC)
 
-WEB_DIR  = /tmp/NQ
+WEB_DIR  = /www/homepages/nickel/software/NQ/
 HTML_DOC = nq-2.1/doc/chap0.html   nq-2.1/doc/chap1.html \
 	   nq-2.1/doc/chap2.html   nq-2.1/doc/chap3.html \
 	   nq-2.1/doc/chap4.html   nq-2.1/doc/chap5.html \
@@ -44,7 +44,7 @@ release-2.0:
 	gzip < nq-2_0.tar > nq-2_0.tgz
 
 release-2.1: clean
-#	cvs export -D 'October 20, 2003 11:00' -d nq-2.1 GAP/4.0/pkg/nq
+	cvs export -D 'October 20, 2003 11:00' -d nq-2.1 GAP/4.0/pkg/nq
 
 	find nq-2.1 -name .cvsignore -exec rm "{}" ";"
 

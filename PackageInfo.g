@@ -38,7 +38,7 @@ PackageWWWHome :=
         "http://www.mathematik.tu-darmstadt.de/~nickel/software/NQ/",
 
 ArchiveFormats := ".tar.gz",
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "nq-2_0" ),
+ArchiveURL     := Concatenation( ~.PackageWWWHome, "nq" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PkgInfo.g" ),
 
