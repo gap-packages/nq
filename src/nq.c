@@ -156,7 +156,7 @@ char	*argv[];
 			  }
 			  SetTimeOut( t );
 			break;
-                case 'p': printEpim = !PrintEpim;
+                case 'p': printEpim = !printEpim;
                         break;
 		case 'g': Gap = !Gap;
 			break;
