@@ -34,13 +34,7 @@
         </Email>
         <Homepage>www.mathematik.tu-darmstadt.de/~nickel</Homepage>
     </Author>
-    <Date>October 2002</Date>                           <!-- OPTIONAL -->
-    <Abstract>                                          <!-- OPTIONAL -->
-        This package takes as input a finitely presented group
-        together with a positive integer <M>c</M>.  It computes a
-        polycyclic presentation for the largest nilpotent factor group
-        of class at most <M>c</M>.
-    </Abstract> 
+    <Date>December 2002</Date>                           <!-- OPTIONAL -->
     <Copyright>                                         <!-- OPTIONAL -->
         &copyright; 1992-2002 Werner Nickel.
     </Copyright>
@@ -335,21 +329,21 @@
   <Section><Heading>Identical Relations</Heading><Label Name="IdRels"/>
 
   Let <M>w</M> be a word in free generators <M>x_1,\ldots,x_n</M>.  A
-  group <M>G</M> satisfies the relation <M>w</M> <E>identically</E> if
+  group <M>G</M> satisfies the relation <M>w=1</M> <E>identically</E> if
   each map from <M>x_1,\ldots,x_n</M> into <M>G</M> maps <M>w</M> to
-  the identity.  We also say that <M>G</M> satisfies the
+  the identity element of <M>G</M>.  We also say that <M>G</M> satisfies the
   <Index>identical relation</Index> <Index>law</Index> <E>identical
-  relation</E> <M>w</M> or satisfies the <E>law</E> <M>w</M>.  In
+  relation</E> <M>w=1</M> or satisfies the <E>law</E> <M>w</M>.  In
   slight abuse of notation, we call the elements <M>x_1,\ldots,x_n</M>
   <Index>identical generator</Index> 
   <E>identical</E> generators.
 
   <P/> Common examples of identical relations are: A group of
   nilpotency class at most <M>c</M> satisfies the law
-  <M>[x_1,\ldots,x_{c+1}]</M>.  A group that satisfies the law
-  <M>[x,y,\ldots,y]</M> where <M>y</M> occurs <M>n</M>-times, is
+  <M>[x_1,\ldots,x_{c+1}]=1</M>.  A group that satisfies the law
+  <M>[x,y,\ldots,y]=1</M> where <M>y</M> occurs <M>n</M>-times, is
   called an <M>n</M>-Engel group.  A group that satisfies the law
-  <M>x^d</M> is a group of exponent <M>d</M>.
+  <M>x^d=1</M> is a group of exponent <M>d</M>.
 
   <P/>
   To describe finitely presented groups that satisfy one or more laws,
@@ -441,7 +435,9 @@
   be extended.
 
   <P/>Evaluation of an expression tree is done recursively and
-  requires as many operations as there are nodes in the tree.
+  requires as many operations as there are nodes in the tree.  An
+  expression tree can be evaluated in a specific group by the function
+  <Ref Func="EvaluateExpTree" Style="Text">.
 
   <P/>A presentation specified by expression trees is a record with
   the components <F>.generators</F> and <F>.relations</F>.  See 
@@ -453,9 +449,9 @@ true
 gap> gens := ExpressionTrees( 2 );
 [ x1, x2 ]
 gap> r1 := LeftNormedComm( [gens[1],gens[2],gens[2]] );
-[ x1, x2, x2 ]
+Comm( x1, x2, x2 )
 gap> r2 := LeftNormedComm( [gens[1],gens[2],gens[2],gens[1]] );
-[ x1, x2, x2, x1 ]
+Comm( x1, x2, x2, x1 )
 gap> pres := rec( generators := gens, relations := [r1,r2] );
 rec( generators := [ x1, x2 ], 
   relations := [ [ x1, x2, x2 ], [ x1, x2, x2, x1 ] ] )
@@ -704,7 +700,7 @@ third Engel law for the free group on <M>3</M> generators.
 gap> et := ExpressionTrees( 5 );                            
 [ x1, x2, x3, x4, x5 ]
 gap> comm := LeftNormedComm( [et[1], et[2], et[2], et[2]] );
-[ x1, x2, x2, x2 ]
+Comm( x1, x2, x2, x2 )
 gap> G := rec( generators := et, relations := [comm] );
 rec( generators := [ x1, x2, x3, x4, x5 ], 
   relations := [ [ x1, x2, x2, x2 ] ] )
@@ -864,11 +860,11 @@ Pcp-group with orders [ 0, 0, 0 ]
 gap> t := ExpressionTrees( 3 );                      
 [ x1, x2, x3 ]
 gap> tree := Comm( t[1], t[2] )^3/LeftNormedComm( [t[1],t[2],t[3],t[1]] );
-[ x1, x2 ]^3/[ x1, x2, x3, x1 ]
+Comm( x1, x2 )^3/Comm( x1, x2, x3, x1 )
 gap> t := ExpressionTrees( "a", "b", "x" );
 [ a, b, x ]
 gap> tree := Comm( t[1], t[2] )^3/LeftNormedComm( [t[1],t[2],t[3],t[1]] );
-[ a, b ]^3/[ a, b, x, a ]
+Comm( a, b )^3/Comm( a, b, x, a )
      </Example>
      </Description>
      </ManSection>
@@ -888,7 +884,7 @@ gap> F := FreeGroup( 3 );
 gap> t := ExpressionTrees( "a", "b", "x" );
 [ a, b, x ]
 gap> tree := Comm( t[1], t[2] )^3/LeftNormedComm( [t[1],t[2],t[3],t[1]] );
-[ a, b ]^3/[ a, b, x, a ]
+COmm( a, b )^3/Comm( a, b, x, a )
 gap> EvaluateExpTree( tree, t, GeneratorsOfGroup(F) );
 f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f3^-1*f2^-1*f1^
 -1*f2*f1*f3*f1^-1*f2^-1*f1*f2*f1*f2^-1*f1^-1*f2*f1*f3^-1*f1^-1*f2^-1*f1*f2*f3
@@ -976,7 +972,7 @@ gap> x := ExpressionTrees( 3 );
 [ x1, x2, x3 ]
 gap> rels := [LeftNormedComm( [x[2],x[1],x[1]] ),                              
 >             LeftNormedComm( [x[2],x[1],x[2]] ), x[3]^7 ];
-[ [ x2, x1, x1 ], [ x2, x1, x2 ], x3^7 ]
+[ Comm( x2, x1, x1 ), Comm( x2, x1, x2 ), x3^7 ]
 gap> NqStringExpTrees( rec( generators := x, relations := rels ) );
 "< x1, x2, x3 |\n    [ x2, x1, x1 ],\n    [ x2, x1, x2 ],\n    x3^7\n>\n"
 gap> Print( last );
@@ -1122,7 +1118,7 @@ element and a right 2-Engel element is a homomorphic image of the
 group <M>H</M>.
 <Example>
 gap> rengel := LeftNormedComm( [a,x,x,x] );
-[ a, x, x, x ]
+Comm( a, x, x, x )
 gap> G := rec( generators := et, relations := [rengel] );
 rec( generators := [ a, b, x ], relations := [ [ a, x, x, x ] ] )
 gap> H := NilpotentQuotient( G, [x] );
@@ -1144,7 +1140,7 @@ The element <M>h</M> has order <M>4</M>.  In a nilpotent group without
 <M>2</M>-torsion a right 3-Engel element is left 3-Engel.
 <Example>
 gap> rengel := LeftNormedComm( [a,x,x,x,x] );
-[ a, x, x, x, x ]
+Comm( a, x, x, x, x )
 gap> G := rec( generators := et, relations := [rengel] );
 rec( generators := [ a, b, x ], relations := [ [ a, x, x, x, x ] ] )
 gap> H := NilpotentQuotient( G, [x] );
@@ -1170,7 +1166,7 @@ The last calculation shows that in a nilpotent group without
 <M>2,3,5</M>-torsion a right 4-Engel element is left 4-Engel. 
 <Example>
 gap> rengel := LeftNormedComm( [a,x,x,x,x,x] );
-[ a, x, x, x, x, x ]
+Comm( a, x, x, x, x, x )
 gap> G := rec( generators := et, relations := [rengel] );
 rec( generators := [ a, b, x ], relations := [ [ a, x, x, x, x, x ] ] )
 gap> H := NilpotentQuotient( G, [x] );

@@ -293,8 +293,12 @@ end );
 #F  NqStringFpGroup( <fp> ) . . . . . . .  finitely presented group to string
 ##
 InstallGlobalFunction( NqStringFpGroup,
-function( G, idgens )
-    local   F,  fgens,  str,  newgens,  pos,  i,  r;
+function( arg )
+    local   G,  idgens,  F,  fgens,  str,  newgens,  pos,  i,  r;
+
+    G      := arg[1];
+    idgens := [];
+    if Lenght( arg ) = 2 then idgens := arg[2]; fi;
 
     F     := FreeGroupOfFpGroup( G );
     fgens := GeneratorsOfGroup( F );
@@ -353,8 +357,12 @@ end );
 #F  NqStringExpTrees( <fp> ) . . . . . . . . . . . expression trees to string
 ##
 InstallGlobalFunction( NqStringExpTrees,
-function( G, idgens )
-    local   fgens,  str,  g,  r;
+function( arg )
+    local   G,  idgens,  fgens,  str,  NqOutput,  g,  r;
+
+    G      := arg[1];
+    idgens := [];
+    if Lenght( arg ) = 2 then idgens := arg[2]; fi;
 
     fgens := G.generators;
 
