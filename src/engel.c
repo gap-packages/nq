@@ -105,7 +105,8 @@ long	wt, which;
 	if( g > NrPcGens ) return;
 
 	save_wt = wt;
-	while( !EarlyStop && g <= NrPcGens && Wt(g) <= wt ) {
+	while( !EarlyStop && 
+               g <= NrPcGens && Wt(g) <= Class+1 - Engel && Wt(g) <= wt ) {
 	    u[i].g   = g;
 	    u[i].e   = 0;
  	    u[i+1].g = EOW;
@@ -128,7 +129,8 @@ long	wt, which;
 	u[i].e = 0;
 	if( EarlyStop || SemigroupOnly || !SemigroupFirst ) return;
 
-        while( !EarlyStop && g <= NrPcGens && Wt(g) <= wt ) {
+	while( !EarlyStop && 
+               g <= NrPcGens && Wt(g) <= Class+1 - Engel && Wt(g) <= wt ) {
 	    u[i].g   = -g;
 	    u[i].e   = 0;
  	    u[i+1].g = EOW;
