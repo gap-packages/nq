@@ -221,38 +221,28 @@ word	u, w;
 word	WordComm( u, w )
 word	u, w;
 
-{	word	wu, uw, x;
-	expvec	ev;
+{	word	x;
 
-	/* x = [u,w] = u^-1 * w^-1 * u * w   <===>   w * u * x = u * w. */
-	ev = ExpVecWord( w );
-	if( Collect( ev, u, (exp)1 ) ) {
-          Free( (void *)u );
-          Free( (void *)w );
-          Free( (void *)ev );
-          return (word)0;
-        }
-	wu = WordExpVec( ev );
-	Free( (void *)ev );
+	x = Commutator( u, w );
 
-	ev = ExpVecWord( u );
-	if( Collect( ev, w, (exp)1 ) ) {
-          Free( (void *)u );
-          Free( (void *)w );
-          Free( (void *)wu );
-          Free( (void *)ev );
-          return (word)0;
-        }
-
-	uw = WordExpVec( ev );
-	Free( (void *)ev );
-	Free( (void *)u ); Free( (void *)w );
-
-	x = Solve( wu, uw );
-	Free( (void *)wu ); Free( (void *)uw );
-
+        Free( u ); Free( w );
 	return	x;
 }
+
+word	WordEngel( u, w, e )
+word	u, w;
+int     *e;
+
+{	word	x;
+        extern word EngelCommutator(); 
+
+	x = EngelCommutator( u, w, *e );
+
+        Free( u ); Free( w );
+	return	x;
+}
+
+
 
 word	WordRel( u, w )
 word	u, w;
@@ -278,10 +268,11 @@ word	(*generator)();
 	SetEvalFunc( TMULT, (void *(*)())WordMult );
 	SetEvalFunc( TPOW,  (void *(*)())WordPow );
 	SetEvalFunc( TCONJ, (void *(*)())WordConj );
-	SetEvalFunc( TCOMM, (void *(*)())WordComm );
+	SetEvalFunc( TCOMM, (void *(*)())Commutator );
 	SetEvalFunc( TREL,  (void *(*)())WordRel );
 	SetEvalFunc( TDRELL,(void *(*)())WordRel );
 	SetEvalFunc( TDRELR,(void *(*)())WordRel );
+	SetEvalFunc( TENGEL,(void *(*)())WordEngel );
 }
 
 void	WordPrint( gs )
