@@ -85,3 +85,6 @@ Sep 1997:
              and the nilpotent quotient at the end of a run.  I also added
              code to print the definitions of each generator of weight at
              least 2.
+
+Jan 1998:
+           + print statements for the definitions of new generators.
