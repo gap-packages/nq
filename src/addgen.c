@@ -40,8 +40,11 @@ void	AddGenerators() {
 		w[l+1].g = EOW; w[l+1].e = 0;
 		if( Power[ j ] != (word)0 ) free( Power[ j ] );
 		Power[ j ] = w;
-                if( Verbose )
-                  printf( "#    generator %d = %d^%d\n", G, j, Exponent[j] );
+                if( Verbose ) {
+                  printf( "#    generator %d = ", G );
+                      printGen( j, 'A' );
+                      printf( "^%d\n", Exponent[j] );
+                }
 	    }
 
 	/* Conjugates */
@@ -59,8 +62,13 @@ void	AddGenerators() {
 		    if( Conjugate[j][i] != Generators[j] )
 			free( Conjugate[j][i] );
 		    Conjugate[j][i] = w;
-                    if( Verbose )
-                      printf( "#    generator %d = [%d,%d]\n", G, j, i );
+                    if( Verbose ) {
+                      printf( "#    generator %d = [", G );
+                      printGen( j, 'A' );
+                      printf( ", " );
+                      printGen( i, 'A' );
+                      printf( "]\n" );
+                    }
 		}
 
 	if( G == NrPcGens ) {
