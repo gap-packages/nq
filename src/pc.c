@@ -35,13 +35,13 @@ void	InitPcPres() {
 	Class = 1;
 
 	Generators = (word*)malloc( (2*NrCenGens+1)*sizeof(word) );
-	if( Generators == NULL ) {
+	if( Generators == (word*)0 ) {
 	    perror( "InitPcPres(), Generators" );
 	    exit( 2 );
 	}
 	Generators += NrCenGens;
 	Weight = (int *)malloc( (NrCenGens+1)*sizeof(int) );
-	if( Weight == NULL ) {
+	if( Weight == (int*)0 ) {
 	    perror( "InitPcPres, Weight" );
 	    exit( 2 );
 	}
@@ -49,7 +49,7 @@ void	InitPcPres() {
 	    if( i == 0 ) continue;
 	    if( i > 0  ) Weight[i] = Class;
 	    Generators[i] = (word)malloc( 2*sizeof(gpower) );
-	    if( Generators[i] == NULL ) {
+	    if( Generators[i] == (word)0 ) {
 		perror( "InitPcPres(), Generators[]" );
 		exit( 2 );
 	    }
@@ -59,14 +59,14 @@ void	InitPcPres() {
 	PcGenName = (char **)Allocate( (NrCenGens+1)*sizeof(char *) );
 
 	Dimension = (int*)malloc( (Class+1)*sizeof(int) );
-	if( Dimension == NULL ) {
+	if( Dimension == (int*)0 ) {
 	    perror( "InitPcPres(), Dimension" );
 	    exit( 2 );
 	}
 	Dimension[Class] = NrCenGens;
 
 	Conjugate = (word**)malloc( (2*NrCenGens+1)*sizeof(word*) );
-	if( Conjugate == NULL ) {
+	if( Conjugate == (word**)0 ) {
 	    perror( "InitPcPres(), Conjugate" );
 	    exit( 2 );
 	}
@@ -74,7 +74,7 @@ void	InitPcPres() {
 	for( j = 1; j <= NrCenGens; j++ ) {
 	    /* the length of Conjugate[j] is 2*(j-1)+1 */
 	    Conjugate[j] = (word*)malloc( (2*j-1)*sizeof(word) );
-	    if( Conjugate[j] == NULL ) {
+	    if( Conjugate[j] == (Word*)0 ) {
 		perror( "InitPcPres(), Conjugate[]" );
 		exit( 2 );
 	    }
@@ -83,7 +83,7 @@ void	InitPcPres() {
 		Conjugate[j][i] = Generators[j];
 	    if( Exponent[j] == 0 ) {
 		Conjugate[-j] = (word*)malloc( (2*j-1)*sizeof(word) );
-		if( Conjugate[-j] == NULL ) {
+		if( Conjugate[-j] == (word*)0 ) {
 		    perror( "InitPcPres(), Conjugate[]" );
 		    exit( 2 );
 		}
@@ -111,13 +111,13 @@ void	ExtPcPres() {
 	Class++;
 
 	Weight = (int *)realloc( Weight, (NrPcGens+NrCenGens+1)*sizeof(int) );
-	if( Weight == NULL ) {
+	if( Weight == (int *)0 ) {
 	    perror( "InitPcPres, Weight" );
 	    exit( 2 );
 	}
 
 	tmp = (word*)malloc( (2*(NrPcGens+NrCenGens)+1)*sizeof(word) );
-	if( tmp == NULL ) {
+	if( tmp == (word *)0 ) {
 	    perror( "InitPcPres(), tmp" );
 	    exit( 2 );
 	}
@@ -128,7 +128,7 @@ void	ExtPcPres() {
 	    if( i > NrPcGens ) Weight[i] = Class;
 	    if( i < -NrPcGens || i > NrPcGens  ) {
 		tmp[i] = (word)malloc( 2*sizeof(gpower) );
-		if( tmp[i] == NULL ) {
+		if( tmp[i] == (word)0 ) {
 		    perror( "InitPcPres(), tmp[]" );
 		    exit( 2 );
 		}
@@ -142,7 +142,7 @@ void	ExtPcPres() {
 	Generators = tmp;
 
 	Dimension = (int*)realloc( Dimension, (Class+1)*sizeof(int) );
-	if( Dimension == NULL ) {
+	if( Dimension == (int*)0 ) {
 	    perror( "InitPcPres(), Dimension" );
 	    exit( 2 );
 	}
@@ -151,7 +151,7 @@ void	ExtPcPres() {
 
 	/* Now Conjugate[] has to be enlarged. */
 	ttmp = (word**)malloc( (2*(NrPcGens+NrCenGens)+1)*sizeof(word*) );
-	if( ttmp == NULL ) {
+	if( ttmp == (word**)0 ) {
 	    perror( "extPcPres(), tmp" );
 	    exit( 2 );
 	}
@@ -189,7 +189,7 @@ void	ExtPcPres() {
 	    newsize += Dimension[ Class - c + 1 ];
 	    for( i = 1; i<= Dimension[c]; i++ ) {
 		tmp = (word*)malloc( (2*min(N-1,newsize)+1)*sizeof(word) );
-		if( tmp == NULL ) {
+		if( tmp == (word*)0 ) {
 		    perror( "extPcPres(), tmp" );
 		    exit( 2 );
 		}
@@ -211,7 +211,7 @@ void	ExtPcPres() {
 		** be done is exactly the same as before just for negative N.
 		*/
 		tmp = (word*)malloc( (2*min(N-1,newsize)+1)*sizeof(word) );
-		if( tmp == NULL ) {
+		if( tmp == (word*)0 ) {
 		    perror( "extPcPres(), tmp" );
 		    exit( 2 );
 		}

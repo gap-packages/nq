@@ -21,6 +21,29 @@ typedef MINT    *large;
 typedef large   *lvec;
 
 /*
+**    The name of the structure components in MINT have changed.  I
+**    knew from the start that I shouldn't have done that.
+*/
+#if __GNU_MP__+0 == 2
+#    define NOTZERO(l) ((l)->_mp_size != 0)
+#    define ISZERO(l)  ((l)->_mp_size == 0)
+#    define ISNEG(l)   ((l)->_mp_size < 0)
+#    define NEGATE(l)  ((l)->_mp_size = -(l)->_mp_size)
+#    define SIGN(l)    (sgn((l)->_mp_size))
+#    define SIZE(l)    ((l)->_mp_size)
+#    define LIMB(l,i)  ((l)->_mp_d[i])
+#else
+#    define NOTZERO(l) ((l)->size != 0)
+#    define ISZERO(l)  ((l)->size == 0)
+#    define ISNEG(l)   ((l)->size < 0)
+#    define NEGATE(l)  ((l)->size = -(l)->size)
+#    define SIGN(l)    (sgn((l)->size))
+#    define SIZE(l)    ((l)->size)
+#    define LIMB(l,i)  ((l)->d[i])
+#endif
+
+
+/*
 **    The variable 'Matrix' contains the pointer to the integer matrix.
 **    The variable 'Heads' contains the pointer to an array whose i-th
 **    component contains the position of the first non-zero entry in
@@ -28,7 +51,7 @@ typedef large   *lvec;
 **    the integer matrix changed during the reduction of an integer
 **    vector.
 */
-lvec     *Matrix = NULL;
+lvec     *Matrix = (lvec*)0;
 long     *Heads;
 static   long     changedMatrix = 0;
 
@@ -67,7 +90,7 @@ int     n;
         if( abs(n) >= 1<<15 ) {
                 sprintf( x, "%x", abs(n) );
                 l = xtom( x );
-                if( n < 0 ) l->size = -l->size;
+                if( n < 0 ) NEGATE(l);
                 return l;
         }
         else    return itom( n );
@@ -109,7 +132,7 @@ void    freeMatrix() {
 
         for( i = 0; i < NrRows; i++ ) freeVector( Matrix[i] );
         free(Matrix);
-        Matrix = NULL;
+        Matrix = (lvec*)0;
 }
 
 void    printVector( v )
@@ -118,9 +141,9 @@ lvec    v;
 {       long    i;
 
         for( i = 1; i <= NrCols; i++ )
-            if( v[i]->size == 0 )
+            if( ISZERO(v[i]) )
                     printf( " 0" );
-            else    printf( " %d", sgn(v[i]->size)*v[i]->d[0] );
+            else    printf( " %d", SIGN(v[i])*LIMB(v[i],0) );
 
         printf( "\n" );
 }
@@ -271,10 +294,10 @@ void    printMatrix() {
         for( i = 0; i < NrRows; i++ ) {
             printf( "    %d   ", Heads[i] );
             for( j = 1; j <= NrCols; j++ )
-                if( Matrix[i][j]->size == 0 )
+                if( ISZERO(Matrix[i][j]) )
                         printf( " 0" );
-                else    printf( " %d", sgn(Matrix[i][j]->size)
-                                          *Matrix[i][j]->d[0] );
+                else    printf( " %d", SIGN(Matrix[i][j])
+                                          *LIMB(Matrix[i][j],0) );
             putchar( '\n' );
         }
 }
@@ -302,20 +325,22 @@ expvec  *MatrixToExpVecs() {
         }
 
         M = (expvec*)malloc( NrRows*sizeof(expvec) );
-        if( M == NULL ) { perror( "MatrixToExpVecs(), M" ); exit( 2 ); }
+        if( M == (expvec*)0 ) { perror( "MatrixToExpVecs(), M" ); exit( 2 ); }
 
         /* Convert. */
         for( i = 0; i < NrRows; i++ ) {
             M[i] = (expvec)calloc( NrCols+1, sizeof(exp) );
-            if( M[i] == NULL ) { perror("MatrixToExpVecs(), M[]"); exit(2); }
+            if( M[i] == (expvec)0 ) { 
+                perror("MatrixToExpVecs(), M[]"); exit(2);
+            }
             for( j = Heads[i]; j <= NrCols; j++ ) {
                 m = Matrix[i][j];
-                if( abs(m->size) > 1 ) {
+                if( abs(SIZE(m)) > 1 ) {
                     printf( "Warning, Exponent larger than 2^15.\n" );
                     exit( 4 );
                 }
-                if( m->size == 0 ) M[i][j] = 0;
-                else M[i][j] = m->size * m->d[0];
+                if( ISZERO(m) ) M[i][j] = 0;
+                else M[i][j] = SIGN(m) * LIMB(m,0);
             }
             freeVector( Matrix[i] );
         }
@@ -361,7 +386,7 @@ void    vNeg( v, a )
 lvec    v;
 long    a;
 
-{       while( a <= NrCols ) { v[a]->size = -v[a]->size; a++; }    }
+{       while( a <= NrCols ) { NEGATE(v[a]); a++; }                }
 
 void    vSubOnce( v, w, a )
 lvec    v, w;
@@ -375,10 +400,10 @@ long    a;
 
 {       large    s, t;
 
-        if( v[a]->size != 0 ) {
+        if( NOTZERO(v[a]) ) {
             s = itom(0); t = itom(0);
             mdiv( v[a], w[a], s, t );
-            if( s->size != 0 )
+            if( NOTZERO(s) )
                 while( a <= NrCols ) {
                     mult( s, w[a], t );
                     msub( v[a], t, v[a] );
@@ -410,19 +435,21 @@ long    h;
 
         for( i = 0; i < NrRows && Heads[i] <= h; i++ ) {
             if( Heads[i] == h ) {
-                while( v[h]->size != 0 && Matrix[i][h]->size != 0  ) {
+                while( NOTZERO(v[h]) && NOTZERO(Matrix[i][h]) ) {
                     vSub( v, Matrix[i], h );
-                    if( v[h]->size != 0 ) {
+                    if( NOTZERO(v[h]) ) {
 			changedMatrix = 1;
 			vSub( Matrix[i], v, h );
 		    }
                 }
-                if( v[h]->size != 0 ) { /* v replaces th i-th row. */
-                    if( v[h]->size < 0 ) vNeg( v, h );
+                if( NOTZERO(v[h]) ) { /* v replaces th i-th row. */
+                    if( ISNEG(v[h]) ) vNeg( v, h );
                     w = Matrix[i]; Matrix[i] = v; v = w;
                 }
-                while( h <= NrCols && v[h]->size == 0 ) h++;
-                if( h > NrCols ) { lastReduce(); freeVector( v ); return NULL; }
+                while( h <= NrCols && ISZERO(v[h]) ) h++;
+                if( h > NrCols ) { 
+                    lastReduce(); freeVector( v ); return (lvec)0;
+                }
             }
         }
         return v;
@@ -435,14 +462,14 @@ expvec  ev;
         lvec    v;
         
         /* Initialize Matrix[] and Heads[] on the first call. */
-        if( Matrix == NULL ) {
+        if( Matrix == (lvec *)0 ) {
             EarlyStop = 0;
             Time = 0;
-            if( (Matrix = (lvec*)malloc( 200 * sizeof(lvec) )) == NULL ) {
+            if( (Matrix = (lvec*)malloc( 200 * sizeof(lvec) )) == (lvec *)0 ) {
                 perror( "addRow, Matrix " );
                 exit( 2 );
             }
-            if( (Heads = (long*)malloc( 200 * sizeof(long) )) == NULL ) {
+            if( (Heads = (long*)malloc( 200 * sizeof(long) )) == (long*)0 ) {
                 perror( "addRow, Heads " );
                 exit( 2 );
             }
@@ -489,7 +516,7 @@ expvec  ev;
 
         /* Copy the last NrCenGens entries of ev and free it. */
         v = (lvec)malloc( (NrCols+1)*sizeof(large) );
-        if( v == NULL ) { perror( "addRow(), v" ); exit( 2 ); }
+        if( v == (lvec)0 ) { perror( "addRow(), v" ); exit( 2 ); }
         for( i = 1; i <= NrCols; i++ )
             v[i] = ltom( ev[NrPcGens+i] );
 
@@ -502,23 +529,23 @@ expvec  ev;
             
         free( ev );
 
-        if( (v = vReduce( v, h )) != NULL ) {
+        if( (v = vReduce( v, h )) != (lvec)0 ) {
 	    changedMatrix = 1;
             if( NrRows % 200 == 0 ) {
                 Matrix = (lvec*)realloc( Matrix, (NrRows+200) * sizeof(lvec) );
-                if( Matrix == NULL ) {
+                if( Matrix == (lvec*)0 ) {
                     perror( "addRow(), Matrix" );
                     exit( 2 );
                 }
                 Heads = (long*)realloc( Heads, (NrRows+200) * sizeof(long) );
-                if( Heads == NULL ) {
+                if( Heads == (long*)0 ) {
                     perror( "addRow(), Heads" );
                     exit( 2 );
                 }
             }
             /* Insert ev such that Heads[] is in increasing order. */
-            while( h <= NrCols && v[h]->size == 0 ) h++;
-            if( v[h]->size < 0 ) vNeg( v, h );
+            while( h <= NrCols && ISZERO(v[h]) ) h++;
+            if( ISNEG( v[h] ) ) vNeg( v, h );
             for( i = NrRows; i > 0; i-- )
                 if( Heads[i-1] > h ) {
                     Matrix[i] = Matrix[i-1];
@@ -535,8 +562,8 @@ expvec  ev;
         /* Check if Matrix[] is the identity matrix. */
         if( NrRows == NrCenGens ) {
             for( i = 0; i < NrRows; i++ ) 
-                if( Matrix[i][Heads[i]]->size != 1 ||
-                    Matrix[i][Heads[i]]->d[0] != 1 ) break;
+                if( SIZE( Matrix[i][Heads[i]] ) != 1 ||
+                    LIMB( Matrix[i][Heads[i]], 0 ) != 1 ) break;
             if( i == NrRows ) EarlyStop = 1;
         }
         if( Verbose ) {

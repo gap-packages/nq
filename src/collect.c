@@ -144,13 +144,13 @@ word	u, v;
 	y[1].g = EOW; y[1].e = 0;
 
 	uvec = (expvec)calloc( (NrPcGens+NrCenGens+1), sizeof(exp) );
-	if( uvec == NULL ) {
+	if( uvec == (expvec)0 ) {
 	    perror( "Solve(), uvec" );
 	    exit( 2 );
 	}
 
 	x = (word)malloc( (NrPcGens+NrCenGens+1)*sizeof(gpower) );
-	if( x == NULL ) {
+	if( x == (word)0 ) {
 	    perror( "Solve(), x" );
 	    exit( 2 );
 	}
@@ -193,7 +193,7 @@ word	u, v;
 	x[lx++].e = 0;
 
 	x = (word)realloc( x, lx*sizeof(gpower) );
-	if( x == NULL ) {
+	if( x == (word)0 ) {
 	    perror( "Solve(), x (resize)" );
 	    exit( 2 );
 	}

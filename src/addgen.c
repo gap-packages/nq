@@ -85,14 +85,14 @@ void	AddGenerators() {
 	/* Fourthly enlarge the necessary arrays, so that the collector
 	   works. */
 	Weight = (int *)realloc( Weight, (G+1)*sizeof(long) );
-	if( Weight == NULL ) {
+	if( Weight == (int *)0 ) {
 	    perror( "addGenerators(), Weight" );
 	    exit( 2 );
 	}
 	for( i = NrPcGens+1; i <= G; i++ ) Weight[i] = Class+1;
 
 	Exponent = (exp*)realloc( Exponent, (G+1)*sizeof(exp) );
-	if( Exponent == NULL ) {
+	if( Exponent == (exp*)0 ) {
 	    perror( "addGenerators(), Exponent" );
 	    exit( 2 );
 	}
@@ -106,7 +106,7 @@ void	AddGenerators() {
 	** since new generators of weight Class+1 have been introduced.
 	*/
 	Commute = (gen*)realloc( Commute, (G+1)*sizeof(gen) );
-	if( Commute == NULL ) {
+	if( Commute == (gen*)0 ) {
 	    perror( "addGenerators(), Commute" );
 	    exit( 2 );
 	}

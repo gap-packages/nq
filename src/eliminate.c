@@ -56,7 +56,7 @@ expvec	ev, *M;
 	long	j, k, l, s;
 
 	w = (word)malloc( (NrPcGens+NrCenGens+1)*sizeof(gpower) );
-	if( w == NULL ) {
+	if( w == (word)0 ) {
 	    perror( "elimRHS(), w" );
 	    exit( 2 );
 	}
@@ -129,7 +129,7 @@ void	ElimGenerators() {
 	/* first assign a new number to each central generator which is
 	   not to be eliminated. */
 	renumber = (gen*) calloc( NrCenGens+1, sizeof(gen) );
-	if( renumber == NULL ) {
+	if( renumber == (gen*)0 ) {
 	    perror( "elimGenerators(), renumber" );
 	    exit( 2 );
 	}
@@ -149,7 +149,7 @@ void	ElimGenerators() {
 	/* extend the memory for Power[], note that n is the number of
 	   generators to be eliminated. */
 	Power = (word*)realloc( Power,(NrPcGens+NrCenGens+1-n)*sizeof(word) );
-	if( Power == NULL ) {
+	if( Power == (word*)0 ) {
 	    perror( "elimGenerators(), Power" );
 	    exit( 2 );
 	}
@@ -157,7 +157,7 @@ void	ElimGenerators() {
 	/* extend the memory for Definition[]. */
 	Definition =
 	    (def*)realloc( Definition, (NrPcGens+NrCenGens+1-n)*sizeof(def) );
-	if( Definition == NULL ) {
+	if( Definition == (def*)0 ) {
 	    perror( "elimGenerators(), Definition" );
 	    exit( 2 );
 	}
@@ -193,7 +193,7 @@ void	ElimGenerators() {
 	/* set up an array that specifies the row which eliminates a
 	** generator. */
 	eRow = (long*)malloc( (NrCenGens+1)*sizeof(long) );
-	if( eRow == NULL ) {
+	if( eRow == (long*) ) {
 	    perror( "elimGenerators(), eRow" );
 	    exit( 2 );
 	}
@@ -202,7 +202,7 @@ void	ElimGenerators() {
 
 	
 	ev = (expvec)calloc( (NrCenGens+1), sizeof(exp) );
-	if( ev == NULL ) {
+	if( ev == (expvec) ) {
 	    perror( "elimGenerators(), ev" );
 	    exit( 2 );
 	}
@@ -221,7 +221,7 @@ void	ElimGenerators() {
 		    Definition[ renumber[k] ].g  = i;
 		    if( eRow[ k ] != -1 ) {
 			w = (word)malloc( (NrCenGens+1-n)*sizeof(gpower) );
-			if( w == NULL ) {
+			if( w == (word)0 ) {
 			    perror( "elimGenerators(), w" );
 			    exit( 2 );
 			}
