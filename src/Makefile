@@ -4,11 +4,14 @@
 ##                                                   werner@dcs.st-and.ac.uk
 ##
 
-##    The follwoing two line define the name of the GNU multiple precision
-##    library (GNULIB) and the directory that contains the corresponding
-##    include files (GNUINC).
-GNULIB = /usr/local/lib/libmp.a /usr/local/lib/libgmp.a 
+##    The  following two  lines define   the directory  with the GNU  multiple
+##    precision library  (GNULIB)     and the directory     that  contains the
+##    corresponding include files (GNUINC).
+GNULIB = /usr/local/lib/
 GNUINC = /usr/local/include
+
+
+GNULIBS = $(GNULIB)/libmp.a $(GNULIB)/libgmp.a 
 
 CC=gcc
 OPTS = -g -O3 
@@ -18,8 +21,8 @@ OBJ = consistency.o pc.o relations.o word.o system.o \
       addgen.o tails.o eliminate.o engel.o glimt.o \
       presentation.o mem.o pcarith.o collect.o trmetab.o
 
-nq : nq.o $(OBJ) $(GNULIB)
-	$(CC) $(CFLAGS) nq.o $(OBJ) $(GNULIB) -o nq
+nq : nq.o $(OBJ) $(GNULIBS)
+	$(CC) $(CFLAGS) nq.o $(OBJ) $(GNULIBS) -o nq
 
 clean :
 	rm -f *.o nq *~
