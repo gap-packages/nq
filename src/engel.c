@@ -16,6 +16,7 @@ static	word	A;
         int     SemigroupOnly  = 0;
         int     SemigroupFirst = 0;
         int     CheckFewInstances = 0;
+        int     ReverseOrder = 0;
 
 static
 void	Error( v, w, type )
@@ -166,21 +167,31 @@ void	evalEngel()
         /* done through the static variable Needed which is set by     */
         /* evalEngelRel() as soon as a non-trivial instance has been   */
         /* found if the flag CheckFewInstances (option -c) is set.     */
-        Needed = 1;
-	for( c = 2; !EarlyStop && Needed && c <= Class+1; c++ ) {
-            Needed = 0;
-	    u[0].g = EOW; u[0].e = 0;
-	    v[0].g = EOW; v[0].e = 0;
-	    NrWords = 0;
-	    if(Verbose)
-                printf("#    Checking pairs of words of weight %d\n",c);
-	    buildPairs( u, 0, 1, v, c, 2 );
-	    if(Verbose) printf( "#    Checked %d words.\n", NrWords );
-	}
-
-	for( ; !EarlyStop && c <= Class+1; c++ )
-	    printf("#    NOT checking pairs of words of weight %d\n",c);
-            
+        if( ReverseOrder )   
+            for( c = Class+1; !EarlyStop && c >= 2; c-- ) {
+                u[0].g = EOW; u[0].e = 0;
+                v[0].g = EOW; v[0].e = 0;
+                NrWords = 0;
+                if(Verbose)
+                    printf("#    Checking pairs of words of weight %d\n",c);
+                buildPairs( u, 0, 1, v, c, 2 );
+                if(Verbose) printf( "#    Checked %d words.\n", NrWords );
+            }
+        else {
+            Needed = 1;
+            for( c = 2; !EarlyStop && Needed && c <= Class+1; c++ ) {
+                Needed = 0;
+                u[0].g = EOW; u[0].e = 0;
+                v[0].g = EOW; v[0].e = 0;
+                NrWords = 0;
+                if(Verbose)
+                    printf("#    Checking pairs of words of weight %d\n",c);
+                buildPairs( u, 0, 1, v, c, 2 );
+                if(Verbose) printf( "#    Checked %d words.\n", NrWords );
+            }
+            for( ; !EarlyStop && c <= Class+1; c++ )
+                printf("#    NOT checking pairs of words of weight %d\n",c);
+        }
 	free( u ); free( v );
 }
 
