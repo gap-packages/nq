@@ -8,6 +8,8 @@
 #include <signal.h>
 #include <sys/time.h>
 
+#include "config.h"
+
 #include "nq.h"
 
 static
@@ -150,7 +152,7 @@ void	CatchSignals() {
 /*
 **    return the cpu time in milli seconds
 */
-#ifndef NO_GETRUSAGE
+#ifdef HAVE_GETRUSAGE
 
 #include <sys/time.h>
 #include <sys/resource.h>
