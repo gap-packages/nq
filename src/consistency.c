@@ -13,7 +13,11 @@ expvec	ev;
 {	long	i;
 
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
+#ifdef LONGLONG
+	    printf( " %Ld ", (long)(ev[i]) );
+#else
 	    printf( "%2ld ", (long)(ev[i]) );
+#endif
 }
 
 do_cba( c, b, a )
