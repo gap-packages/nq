@@ -8,6 +8,8 @@
 #include "nq.h"
 #include "engel.h"
 
+static  gen     **CommuteList = (gen**)0;
+
 static	int	LeftEngel = 0, RightEngel = 0, Engel = 0;
 static  int     RevEngel = 0;
 static  int     NrEngelGens = 0;
@@ -37,21 +39,27 @@ static
 void	evalEngelRel( v, w )
 word	v, w;
 
-{	word	vs=v, ws=w, v1, vv = v;
-	long	n, needed;
+{	word	vs = v, ws = w, v1, vv = v;
+	long	n = 0, needed;
+
+        gen    *SaveCommute = Commute;
 
 /*	printf( "evalEngelRel() called with : " );
 	printWord( v, 'A' ); printf( "    " );
 	printWord( w, 'A' ); putchar( '\n' ); */
 
 	NrWords++;
+        n = 0;
 	/* Calculate [ v, w, .., w ] */
+        if( Class+1 > Engel ) Commute = CommuteList[n];
 	if( (v = Commutator( v, w )) == (word)0 ) {
 	    Error( vv, w, 'e' );
 	    return;
 	}
-	n = Engel-1;
-	while( n-- > 0 ) { 
+	n++;
+	while( n < Engel ) {
+            if( Class+1 > Engel ) Commute = CommuteList[n];
+          
 	    if( (v1 = Commutator( v, w )) == (word)0 ) {
 		Error( vv, w, 'e' );
 		free( v );
@@ -59,7 +67,10 @@ word	v, w;
 	    }
 	    free( v );
 	    v = v1;
+
+            n++;
 	}
+        Commute = SaveCommute;
 
 	needed = addRow( ExpVecWord( v ) );
 	if( needed ) {
@@ -384,7 +395,35 @@ void	EvalEngel() {
 	if( Verbose ) t = RunTime();
 
 	if( LeftEngel || RightEngel ) evalLREngel();
-	if( Engel ) evalEngel();
+
+	if( Engel ) {
+          if( Class+1 > Engel ) {
+            int c;  gen g, h;
+          
+            /* For examining Engel conditions we try a trick with the
+               collector. */
+
+            if( CommuteList != (gen**)0 ) Free( CommuteList );
+            
+            CommuteList = (gen**)Allocate( Engel * sizeof(gen*) );
+            for( c = 0; c < Engel; c++ ) {
+              CommuteList[ c ] = 
+                (gen*)Allocate( (NrPcGens + NrCenGens + 1) * sizeof(gen) );
+              
+              /*   We create a Commute list as if the group has class 
+              **   `Class+1' - (Engel - c - 1)
+              */
+              
+              for( g = 1; g <= NrPcGens; g++ ) {
+                for( h = g+1; Wt(g)+Wt(h) <= Class+1 - (Engel-c-1); h++ ) ;
+                CommuteList[c][g] = h-1;
+              }
+              for( ; g <= NrPcGens+NrCenGens; g++ ) CommuteList[c][g] = g;
+            }
+          }
+
+          evalEngel();
+        }
 
 	if( Verbose )
 	    printf("#    Evaluated Engel condition (%d msec).\n",RunTime()-t);
@@ -396,6 +435,8 @@ int	l, r, v, e, n;
 {	LeftEngel = l;
 	RightEngel = r;
         RevEngel = v;
-	Engel = e;
+	
+        Engel = e;
+
         NrEngelGens = n;
 }
