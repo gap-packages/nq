@@ -192,6 +192,9 @@ expvec  *M;
 
         surviving = (long *)Allocate( NrCols * sizeof(long) );
         nrSurv = survivingCols( M, surviving );
+
+        if( nrSurv == 0 ) { Free( surviving ); return; }
+
         printf( "[\n" );
         for( i = 0, first = 1; i < NrRows; i++ ) {
             if( M[i][Heads[i]] != 1 ) {
