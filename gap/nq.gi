@@ -29,7 +29,9 @@ NqCallANU_NQ := function( input, output, options )
     nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
     options := Concatenation( NqDefaultOptions, options );
 
-    Print( "##  Calling ANU NQ with: ", options, "\n", input![2], "\n" );
+##  The followoing Print statement should be converted to an info statement
+##
+##    Print( "##  Calling ANU NQ with: ", options, "\n", input![2], "\n" );
 
     ret    := Process( DirectoryCurrent(),        ## executing directory
                       nq,                         ## executable
@@ -37,7 +39,8 @@ NqCallANU_NQ := function( input, output, options )
                       output,                     ## output stream
                       options );                  ## command line arguments
 
-    Print( "##  ANU NQ returns ", ret, "\n" );
+##  Dito.
+##    Print( "##  ANU NQ returns ", ret, "\n" );
 
     CloseStream( input );
     CloseStream( output );
@@ -89,7 +92,6 @@ function( stream )
         UnhideGlobalVariables( var );
     od;
     
-    Print( "##  ANU NQ took ", result.Runtime, " msec\n" );
     MakeReadWriteGlobal( "NqRuntime" );
     NqRuntime := result.Runtime;
     MakeReadOnlyGlobal( "NqRuntime" );
