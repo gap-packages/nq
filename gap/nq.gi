@@ -173,7 +173,12 @@ NqCompleteParameters := function( params )
             if IsBound( params.(opt) ) then
                 InfoWarning( "overwriting parameter with option '", opt, "'" );
             fi;
-            params.(opt) := opt_rec.(opt);
+
+            if opt = "group" and IsRecord( opt_rec.(opt) ) then
+                params.exptrees := opt_rec.(opt);
+            else
+                params.(opt) := opt_rec.(opt);
+            fi;
         od;
     fi;
 

@@ -38,7 +38,7 @@ gapmanual:
 	fi
 
 release-2.0:
-	cvs export -D 'January 13, 2002 0:00' -d nq-2.0 GAP/4.0/pkg/nq
+	cvs export -D 'February 11, 2003 11:00' -d nq-2.0 GAP/4.0/pkg/nq
 
 	find nq-2.0 -name .cvsignore -exec rm "{}" ";"
 

@@ -628,13 +628,7 @@ Func="NilpotentQuotient" Style="Text"/>.
            <Item><Keyword>group</Keyword> 
            <Index Subkey="group">options</Index>
            This option can be used
-           instead of the parameter <F>fp-group</F> and must be a
-           finitely presented group.
-           </Item>
-           <Item><Keyword>exptrees</Keyword>
-           <Index Subkey="exptrees">options</Index>
-           This option can be used
-           to specify a finitely presented group by expression trees.
+           instead of the parameter <F>fp-group</F>.
            </Item>
            <Item><Keyword>input\_string</Keyword>
            <Index Subkey="input\_string">options</Index>
@@ -767,6 +761,10 @@ gap> for i in [1..5] do Print( AbelianInvariants(lcs[i]/lcs[i+1]), "\n" ); od;
 [ 2, 2, 2, 2, 2, 2, 2, 0, 0, 0 ]
 [ 10, 10, 10 ]
 ]]>
+
+
+
+
 </Example>
 The example above also shows that the relative orders of an abelian
 polycyclic  group need not be the abelian invariants (elementary
