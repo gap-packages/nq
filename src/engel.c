@@ -160,7 +160,7 @@ void	evalEngel()
 	u = (word)Allocate( (NrPcGens+NrCenGens+1) * sizeof(gpower) );
 	v = (word)Allocate( (NrPcGens+NrCenGens+1) * sizeof(gpower) );
 
-        /* For `production purposes' I don't want tot run through      */
+        /* For `production purposes' I don't want to run through       */
         /* those classes that don't yield non-trivial instances of the */
         /* Engel law. Therefore, we stop as soon as we ran through a   */
         /* class that didn't yield any non-trivial instances. This is  */
