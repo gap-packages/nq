@@ -85,9 +85,9 @@ void	InitEpim() {
 		exit( 2 );
 	    }
 	    Image[i][0].g = i;
-	    Image[i][0].e = 1;
+	    Image[i][0].e = (exp)1;
 	    Image[i][1].g = EOW;
-	    Image[i][1].e = 0;
+	    Image[i][1].e = (exp)0;
 	}
 
 	if( Verbose )
@@ -115,8 +115,8 @@ int	ExtendEpim() {
 		if( Image[j] != (word)0 ) l = WordLength( Image[ j ] );
 		w = (word)malloc( (l+2)*sizeof(gpower) );
 		if( Image[j] != (word)0 ) WordCopy( Image[ j ], w );
-		w[l].g   = G;   w[l].e   = 1;
-		w[l+1].g = EOW; w[l+1].e = 0;
+		w[l].g   = G;   w[l].e   = (exp)1;
+		w[l+1].g = EOW; w[l+1].e = (exp)0;
 		if( Image[ j ] != (word)0 ) free( Image[ j ] );
 		Image[ j ] = w;
 	    }
@@ -192,7 +192,8 @@ void	ElimEpim() {
 	for( h = 1, i = 0; h <= NrCenGens; h++ )
 	    if( i >= NrRows || h != Heads[i] )
 	        renumber[ h ] = h - n;
-	    else if( M[i][h] != 1 ) { /* h will become a torsion element */
+	    else if( M[i][h] != (exp)1 ) {
+                                      /* h will become a torsion element */
 		renumber[ h ] = h - n;
 		Exponent[ renumber[h] ] = M[i][h];
 		i++;
@@ -238,21 +239,21 @@ void	ElimEpim() {
 
 	    /* Copy the exponent vector M[i] into w. */
 	    for( l = 0, j = h+1; j <= NrCols; j++ )
-		if( M[i][j] > 0 ) {
+		if( M[i][j] > (exp)0 ) {
 		    w[l].g = -renumber[j];
 		    w[l].e = M[i][j];
 		    l++;
 		}
-		else if( M[i][j] < 0 ) {
+		else if( M[i][j] < (exp)0 ) {
 		    w[l].g = renumber[j];
 		    w[l].e = -M[i][j];
 		    l++;
 		}
 	    w[l].g = EOW;
-	    w[l].e = 0;
+	    w[l].e = (exp)0;
 	    l++;
 
-	    if( M[i][h] == 1 ) {
+	    if( M[i][h] == (exp)1 ) {
 		/* generator h has to be eliminated. */
 		free( Image[h] );
 		Image[h] = (word)realloc( w, l*sizeof(gpower) );

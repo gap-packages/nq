@@ -29,17 +29,17 @@ typedef large   *lvec;
 #    define ISZERO(l)  ((l)->_mp_size == 0)
 #    define ISNEG(l)   ((l)->_mp_size < 0)
 #    define NEGATE(l)  ((l)->_mp_size = -(l)->_mp_size)
-#    define SIGN(l)    (sgn((l)->_mp_size))
+#    define SIGN(l)    (exp)(sgn((l)->_mp_size))
 #    define SIZE(l)    ((l)->_mp_size)
-#    define LIMB(l,i)  ((l)->_mp_d[i])
+#    define LIMB(l,i)  (exp)((l)->_mp_d[i])
 #else
 #    define NOTZERO(l) ((l)->size != 0)
 #    define ISZERO(l)  ((l)->size == 0)
 #    define ISNEG(l)   ((l)->size < 0)
 #    define NEGATE(l)  ((l)->size = -(l)->size)
-#    define SIGN(l)    (sgn((l)->size))
+#    define SIGN(l)    (exp)(sgn((l)->size))
 #    define SIZE(l)    ((l)->size)
-#    define LIMB(l,i)  ((l)->d[i])
+#    define LIMB(l,i)  (exp)((l)->d[i])
 #endif
 
 
@@ -156,7 +156,7 @@ long   *surviving;
 
     for( i = 0; i < NrRows; i++ ) {
         for( ; h < Heads[i]; h++ ) surviving[nrSurv++] = h;
-        if( M[i][h] != 1 )         surviving[nrSurv++] = h;
+        if( M[i][h] != (exp)1 )    surviving[nrSurv++] = h;
         h++;
     }
     for( ; h <= NrCols; h++ ) surviving[nrSurv++] = h;
@@ -192,7 +192,7 @@ char    *suffix;
 
         fprintf( fp, "%d    # Number of colums\n", nrSurv );
         for( i = 0; i < NrRows; i++ ) {
-            if( M[i][Heads[i]] != 1 ) {
+            if( M[i][Heads[i]] != (exp)1 ) {
                 for( j = 0; j < nrSurv; j++ )
                     fprintf( fp, " %d", M[i][surviving[j]] );
                 fprintf( fp, "\n" );
@@ -260,7 +260,7 @@ expvec  *M;
 
         printf( "[\n" );
         for( i = 0, first = 1; i < NrRows; i++ ) {
-            if( M[i][Heads[i]] != 1 ) {
+            if( M[i][Heads[i]] != (exp)1 ) {
                 if( !first ) printf( ",\n" );
                 else         first = 0;
                 printf( "[" );
@@ -310,8 +310,9 @@ void    printMatrix() {
 */
 expvec  *MatrixToExpVecs() {
 
-        long    c, i, j, k;
+        long    i, j, k;
         large   m;
+        exp     c;
         expvec  *M;
 
         if( NrRows == 0 ) {
@@ -339,7 +340,7 @@ expvec  *MatrixToExpVecs() {
                     printf( "Warning, Exponent larger than 2^15.\n" );
                     exit( 4 );
                 }
-                if( ISZERO(m) ) M[i][j] = 0;
+                if( ISZERO(m) ) M[i][j] = (exp)0;
                 else M[i][j] = SIGN(m) * LIMB(m,0);
             }
             freeVector( Matrix[i] );
@@ -349,10 +350,10 @@ expvec  *MatrixToExpVecs() {
         for( i = 0; i < NrRows; i++ )
             for( j = i-1; j >= 0; j-- )
                 if( abs( M[j][ Heads[i] ]) >= M[i][ Heads[i] ] ||
-                    M[j][ Heads[i] ] > 0 ) {
+                    M[j][ Heads[i] ] > (exp)0 ) {
                     c = M[j][ Heads[i] ] / M[i][ Heads[i] ];
-                    if( M[j][ Heads[i] ] > 0 &&
-                        M[j][ Heads[i] ] % M[i][ Heads[i] ] != 0 ) c++;
+                    if( M[j][ Heads[i] ] > (exp)0 &&
+                        M[j][ Heads[i] ] % M[i][ Heads[i] ] != (exp)0 ) c++;
                     for( k = Heads[i]; k <= NrCols; k++ )
                         M[j][k] -= c * M[i][k];
                 }

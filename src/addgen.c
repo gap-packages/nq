@@ -30,14 +30,14 @@ void	AddGenerators() {
 	/* Secondly new generators are defined. */
 	/* Powers */
 	for( j = 1; j <= NrPcGens; j++ )
-	    if( Exponent[j] != 0 ) {
+	    if( Exponent[j] != (exp)0 ) {
 		G++;
 		l = 0;
 		if( Power[j] != (word)0 ) l = WordLength( Power[ j ] );
 		w = (word)malloc( (l+2)*sizeof(gpower) );
 		if( Power[j] != (word)0 ) WordCopy( Power[ j ], w );
-		w[l].g   = G;   w[l].e   = 1;
-		w[l+1].g = EOW; w[l+1].e = 0;
+		w[l].g   = G;   w[l].e   = (exp)1;
+		w[l+1].g = EOW; w[l+1].e = (exp)0;
 		if( Power[ j ] != (word)0 ) free( Power[ j ] );
 		Power[ j ] = w;
                 if( Verbose ) {
@@ -57,8 +57,8 @@ void	AddGenerators() {
 		    l = WordLength( Conjugate[ j ][ i ] );
 		    w = (word)malloc( (l+2)*sizeof(gpower) );
 		    WordCopy( Conjugate[j][i], w );
-		    w[l].g   = G;   w[l].e   = 1;
-		    w[l+1].g = EOW; w[l+1].e = 0;
+		    w[l].g   = G;   w[l].e   = (exp)1;
+		    w[l+1].g = EOW; w[l+1].e = (exp)0;
 		    if( Conjugate[j][i] != Generators[j] )
 			free( Conjugate[j][i] );
 		    Conjugate[j][i] = w;
@@ -96,7 +96,7 @@ void	AddGenerators() {
 	    perror( "addGenerators(), Exponent" );
 	    exit( 2 );
 	}
-	for( i = NrPcGens+1; i <= G; i++ ) Exponent[i] = 0;
+	for( i = NrPcGens+1; i <= G; i++ ) Exponent[i] = (exp)0;
 
 	NrCenGens = G - NrPcGens;
 

@@ -108,15 +108,15 @@ long	wt, which;
 	while( !EarlyStop && 
                g <= NrPcGens && Wt(g) <= Class+1 - Engel && Wt(g) <= wt ) {
 	    u[i].g   = g;
-	    u[i].e   = 0;
+	    u[i].e   = (exp)0;
  	    u[i+1].g = EOW;
 	    while( !EarlyStop && Wt(g) <= wt ) {
 		u[i].e++;
-		if( Exponent[g] > 0 && Exponent[g] == u[i].e ) break;
+		if( Exponent[g] > (exp)0 && Exponent[g] == u[i].e ) break;
 		wt -= Wt(g);
 		buildPairs( u, i+1, g+1, v, wt, which );
                 /* now build the same word with negative exponent */
-                if( !EarlyStop && !SemigroupOnly && Exponent[g] == 0 ) {
+                if( !EarlyStop && !SemigroupOnly && Exponent[g] == (exp)0 ) {
                     u[i].g *= -1;
                     buildPairs( u, i+1, g+1, v, wt, which );
                     u[i].g *= -1;
@@ -126,22 +126,22 @@ long	wt, which;
 	    g++;
 	}
 	u[i].g = EOW;
-	u[i].e = 0;
+	u[i].e = (exp)0;
 	if( EarlyStop || SemigroupOnly || !SemigroupFirst ) return;
 
 	while( !EarlyStop && 
                g <= NrPcGens && Wt(g) <= Class+1 - Engel && Wt(g) <= wt ) {
 	    u[i].g   = -g;
-	    u[i].e   = 0;
+	    u[i].e   = (exp)0;
  	    u[i+1].g = EOW;
 	    while( !EarlyStop && Wt(g) <= wt ) {
 		u[i].e++;
-		if( Exponent[g] > 0 && Exponent[g] == u[i].e ) break;
+		if( Exponent[g] > (exp)0 && Exponent[g] == u[i].e ) break;
 		wt -= Wt(g);
 		buildPairs( u, i+1, g+1, v, wt, which );
                 if( EarlyStop ) return;
                 /* now build the same word with negative exponent */
-                if( !EarlyStop && !SemigroupOnly && Exponent[g] == 0 ) {
+                if( !EarlyStop && !SemigroupOnly && Exponent[g] == (exp)0 ) {
                     u[i].g *= -1;
                     buildPairs( u, i+1, g+1, v, wt, which );
                     u[i].g *= -1;
@@ -151,7 +151,7 @@ long	wt, which;
 	    g++;
 	}
 	u[i].g = EOW;
-	u[i].e = 0;
+	u[i].e = (exp)0;
 }
 
 static
@@ -172,8 +172,8 @@ void	evalEngel()
         /* found if the flag CheckFewInstances (option -c) is set.     */
         if( ReverseOrder )   
             for( c = Class+1; !EarlyStop && c >= 2; c-- ) {
-                u[0].g = EOW; u[0].e = 0;
-                v[0].g = EOW; v[0].e = 0;
+                u[0].g = EOW; u[0].e = (exp)0;
+                v[0].g = EOW; v[0].e = (exp)0;
                 NrWords = 0;
                 if(Verbose)
                     printf("#    Checking pairs of words of weight %d\n",c);
@@ -184,8 +184,8 @@ void	evalEngel()
             Needed = 1;
             for( c = 2; !EarlyStop && Needed && c <= Class+1; c++ ) {
                 Needed = 0;
-                u[0].g = EOW; u[0].e = 0;
-                v[0].g = EOW; v[0].e = 0;
+                u[0].g = EOW; u[0].e = (exp)0;
+                v[0].g = EOW; v[0].e = (exp)0;
                 NrWords = 0;
                 if(Verbose)
                     printf("#    Checking pairs of words of weight %d\n",c);
@@ -305,16 +305,16 @@ gen	g;
 	save_wt = wt;
 	while( !EarlyStop && g <= NrPcGens && Wt(g) <= wt ) {
 	    u[i].g   = g;
-	    u[i].e   = 0;
+	    u[i].e   = (exp)0;
 	    u[i+1].g = EOW;
 	    while( !EarlyStop && Wt(g) <= wt ) {
 		u[i].e++;
-		if( Exponent[g] > 0 && Exponent[g] == u[i].e ) break;
+		if( Exponent[g] > (exp)0 && Exponent[g] == u[i].e ) break;
 		wt -= Wt(g);
 		buildWord( u, i+1, g+1, wt );
                 /* now build the same word with negative exponent */
                 if( !EarlyStop && !SemigroupOnly &&
-                    !SemigroupFirst && Exponent[g] == 0 ) {
+                    !SemigroupFirst && Exponent[g] == (exp)0 ) {
                     u[i].g *= -1;
                     buildWord( u, i+1, g+1, wt );
                     u[i].g *= -1;
@@ -324,15 +324,15 @@ gen	g;
 	    g++;
 	}
 	u[i].g = EOW;
-	u[i].e = 0;
+	u[i].e = (exp)0;
         if( EarlyStop || SemigroupOnly || !SemigroupFirst ) return;
 	while( !EarlyStop && g <= NrPcGens && Wt(g) <= wt ) {
 	    u[i].g   = -g;
-	    u[i].e   = 0;
+	    u[i].e   = (exp)0;
 	    u[i+1].g = EOW;
 	    while( !EarlyStop && Wt(g) <= wt ) {
 		u[i].e++;
-		if( Exponent[g] > 0 && Exponent[g] == u[i].e ) break;
+		if( Exponent[g] > (exp)0 && Exponent[g] == u[i].e ) break;
 		wt -= Wt(g);
 		buildWord( u, i+1, g+1, wt );
 	    }
@@ -340,7 +340,7 @@ gen	g;
 	    g++;
 	}
 	u[i].g = EOW;
-	u[i].e = 0;
+	u[i].e = (exp)0;
 }
 
 static
@@ -358,13 +358,13 @@ void	evalLREngel() {
 
             if( RevEngel ) A[0].g = NrGens - n + 1;
             else           A[0].g = n;
-            A[0].e = 1;
-	    A[1].g = EOW; A[1].e = 0;
+            A[0].e = (exp)1;
+	    A[1].g = EOW; A[1].e = (exp)0;
 
             Needed = 1;
 	    for( cl = 2; !EarlyStop && Needed && cl <= Class+1; cl++ ) {
                 Needed = 0;
-	        u[0].g = EOW; u[0].e = 0;
+	        u[0].g = EOW; u[0].e = (exp)0;
 	        NrWords = 0;
 	        if(Verbose) printf("#    Checking words of weight %d\n",cl-1);
 	        buildWord( u, 0, 1, cl-1 );

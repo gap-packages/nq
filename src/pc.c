@@ -53,8 +53,8 @@ void	InitPcPres() {
 		perror( "InitPcPres(), Generators[]" );
 		exit( 2 );
 	    }
-	    Generators[i][0].g = i;   Generators[i][0].e = 1;
-	    Generators[i][1].g = EOW; Generators[i][1].e = 0;
+	    Generators[i][0].g = i;   Generators[i][0].e = (exp)1;
+	    Generators[i][1].g = EOW; Generators[i][1].e = (exp)0;
 	}
 	PcGenName = (char **)Allocate( (NrCenGens+1)*sizeof(char *) );
 
@@ -81,7 +81,7 @@ void	InitPcPres() {
 	    Conjugate[j] += j-1;
 	    for( i = -(j-1); i <= j-1; i++ )
 		Conjugate[j][i] = Generators[j];
-	    if( Exponent[j] == 0 ) {
+	    if( Exponent[j] == (exp)0 ) {
 		Conjugate[-j] = (word*)malloc( (2*j-1)*sizeof(word) );
 		if( Conjugate[-j] == (word*)0 ) {
 		    perror( "InitPcPres(), Conjugate[]" );
@@ -132,8 +132,8 @@ void	ExtPcPres() {
 		    perror( "InitPcPres(), tmp[]" );
 		    exit( 2 );
 		}
-		tmp[i][0].g = i;   tmp[i][0].e = 1;
-		tmp[i][1].g = EOW; tmp[i][1].e = 0;
+		tmp[i][0].g = i;   tmp[i][0].e = (exp)1;
+		tmp[i][1].g = EOW; tmp[i][1].e = (exp)0;
 	    }
 	    else
 		tmp[i] = Generators[i];
@@ -205,7 +205,7 @@ void	ExtPcPres() {
 		for( j = oldsize+1; j <= min(N-1,newsize); j++ )
 		    Conjugate[N][j] = Conjugate[N][-j] = Generators[N];
 
-		if( Exponent[ N ] != 0 ) { N--; continue; }
+		if( Exponent[ N ] != (exp)0 ) { N--; continue; }
 		/* If the generator N is of infinite order, it also has
 		** conjugate relations `on the other side'. All that has to
 		** be done is exactly the same as before just for negative N.
@@ -257,7 +257,7 @@ void	PrintPcPres() {
 	}
 	printf( " |" );
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
-	    if( Exponent[i] != 0 ) {
+	    if( Exponent[i] != (exp)0 ) {
 		if( first ) { putchar( '\n' ); first = 0; }
 		else	    printf( ",\n" );
 		if( Gap ) putchar( '#' );
@@ -286,7 +286,7 @@ void	PrintPcPres() {
 			printf( "           =: " );
 		else	printf( "           =  " );
 		printWord( Conjugate[j][i], 'A' );
-		if( Exponent[i] == 0 ) {
+		if( Exponent[i] == (exp)0 ) {
 		    if( first ) { putchar( '\n' ); first = 0; }
 		    else          printf( ",\n" );
 		    if( Gap ) putchar( '#' );
@@ -298,7 +298,7 @@ void	PrintPcPres() {
 		    printf( "^-1)      =  " );
 		    printWord( Conjugate[j][-i], 'A' );
 		}
-		if( 0 && Exponent[j] == 0 ) {
+		if( 0 && Exponent[j] == (exp)0 ) {
 		    if( first ) { putchar( '\n' ); first = 0; }
 		    else          printf( ",\n" );
 		    if( Gap ) putchar( '#' );
@@ -310,7 +310,7 @@ void	PrintPcPres() {
 		    printf( "      =  " );
 		    printWord( Conjugate[-j][i], 'A' );
 		}
-		if( 0 && Exponent[i] + Exponent[j] == 0 ) {
+		if( 0 && Exponent[i] + Exponent[j] == (exp)0 ) {
 		    if( first ) { putchar( '\n' ); first = 0; }
 		    else          printf( ",\n" );
 		    if( Gap ) putchar( '#' );
@@ -394,7 +394,7 @@ void	sizePcPres() {
 	nrPt += 1;
 	size += NrPcGens * sizeof(word);       /* Power[]. */
 	for( g = 1; g <= NrPcGens; g++ )
-	    if( Exponent[g] != 0 ) {
+	    if( Exponent[g] != (exp)0 ) {
 		nrPt += 1;
 		size += sizeof(gpower)*(WordLength(Power[g])+1);
 	    }
@@ -404,7 +404,7 @@ void	sizePcPres() {
 	for( h = 1; h <= NrPcGens; h++ ) {
 	  nrPt += 1;
 	  size += sizeof(word);
-	  if( Exponent[h] == 0 ) {
+	  if( Exponent[h] == (exp)0 ) {
 	    nrPt += 1;
 	    size += sizeof(word);
 	  }
@@ -413,17 +413,17 @@ void	sizePcPres() {
 	      nrPt += 1;
 	      size += sizeof(word);
 	      size += sizeof(gpower)*(WordLength(Conjugate[h][g])+1);
-	      if( Exponent[h] == 0 ) {
+	      if( Exponent[h] == (exp)0 ) {
 		nrPt += 1;
 	        size += sizeof(word);
 	 	size += sizeof(gpower)*(WordLength(Conjugate[-h][ g])+1);
 	      }
-	      if( Exponent[g] == 0 ) {
+	      if( Exponent[g] == (exp)0 ) {
 		nrPt += 1;
 	        size += sizeof(word);
 		size += sizeof(gpower)*(WordLength(Conjugate[ h][-g])+1);
 	      }
-	      if( Exponent[h] + Exponent[g] == 0 ) {
+	      if( Exponent[h] + Exponent[g] == (exp)0 ) {
 		nrPt += 1;
 	        size += sizeof(word);
 		size += sizeof(gpower)*(WordLength(Conjugate[-h][-g])+1);

@@ -7,14 +7,13 @@
 
 #include "nq.h"
 
-static
 void	printEv( ev )
 expvec	ev;
 
 {	long	i;
 
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
-	    printf( "%2d ", ev[i] );
+	    printf( "%2ld ", (long)(ev[i]) );
 }
 
 do_cba( c, b, a )
@@ -27,13 +26,13 @@ gen	c, b, a;
 
 	/* the left hand side first : c (b a) = c a b^a */
 	ev1 = ExpVecWord( Generators[c] );
-	Collect( ev1, Generators[a], 1 );
-	Collect( ev1, Conjugate[b][a], 1 );
+	Collect( ev1, Generators[a], (exp)1 );
+	Collect( ev1, Conjugate[b][a], (exp)1 );
 
 	/* then the right hand side : (c b) a */
 	ev2 = ExpVecWord( Generators[c] );
-	Collect( ev2, Generators[b], 1 );
-	Collect( ev2, Generators[a], 1 );
+	Collect( ev2, Generators[b], (exp)1 );
+	Collect( ev2, Generators[a], (exp)1 );
 
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) ev1[i] -= ev2[i];
 	free( ev2 );
@@ -55,8 +54,8 @@ gen	c, b;
 
 	/* (c b) b^-1 */
 	ev = ExpVecWord( Generators[c] );
-	Collect( ev, Generators[ b], 1 );
-	Collect( ev, Generators[-b], 1 );
+	Collect( ev, Generators[ b], (exp)1 );
+	Collect( ev, Generators[-b], (exp)1 );
 	ev[ c ] -= 1;
 
 	if( Debug ) {
@@ -70,8 +69,8 @@ gen	c, b;
 
 	/* (c b^-1) b */
 	ev = ExpVecWord( Generators[c] );
-	Collect( ev, Generators[-b], 1 );
-	Collect( ev, Generators[ b], 1 );
+	Collect( ev, Generators[-b], (exp)1 );
+	Collect( ev, Generators[ b], (exp)1 );
 	ev[ c ] -= 1;
 
 	if( Debug ) {
@@ -91,8 +90,8 @@ gen	c, b;
 
 	/* c^-1 (c b) = c^-1 b c^b */
 	ev = ExpVecWord( Generators[-c] );
-	Collect( ev, Generators[b], 1 );
-	Collect( ev, Conjugate[c][b], 1 );
+	Collect( ev, Generators[b], (exp)1 );
+	Collect( ev, Conjugate[c][b], (exp)1 );
 	ev[abs(b)] -= sgn(b);
 
 	if( Debug ) {
@@ -113,7 +112,7 @@ gen	c, b;
 
 	/* c (b^n) */
 	ev1 = ExpVecWord( Generators[c] );
-	Collect( ev1, Power[b], 1 );
+	Collect( ev1, Power[b], (exp)1 );
 
 	/* (c b) b^(n-1) */
 	ev2 = ExpVecWord( Generators[c] );
@@ -140,13 +139,14 @@ gen	c, b;
 
 	/* (c^n) b */
 	ev1 = ExpVecWord( Power[c] );
-	Collect( ev1, Generators[b], 1 );
+	Collect( ev1, Generators[b], (exp)1 );
 
 	/* c^(n-1) (c b) = c^(n-1) b c^b */
 	ev2 = ExpVecWord( Generators[c] );
-	if( Exponent[c] > 2 ) Collect( ev2, Generators[c], Exponent[c]-2 );
-	Collect( ev2, Generators[b], 1 );
-	Collect( ev2, Conjugate[c][b], 1 );
+	if( Exponent[c] > (exp)2 )
+            Collect( ev2, Generators[c], Exponent[c]-(exp)2 );
+	Collect( ev2, Generators[b], (exp)1 );
+	Collect( ev2, Conjugate[c][b], (exp)1 );
 
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) ev1[i] -= ev2[i];
 
@@ -169,11 +169,11 @@ gen	c;
 
 	/* c^n c */
 	ev1 = ExpVecWord( Power[c] );
-	Collect( ev1, Generators[c], 1 );
+	Collect( ev1, Generators[c], (exp)1 );
 
 	/* c c^n */
 	ev2 = ExpVecWord( Generators[c] );
-	Collect( ev2, Power[c], 1 );
+	Collect( ev2, Power[c], (exp)1 );
 
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) ev1[i] -= ev2[i];
 
@@ -207,7 +207,7 @@ void	Consistency() {
 	**                                      Exponent[b] == 0
 	*/
 	for( b = 1; !EarlyStop && b <= NrPcGens; b++ )
-	    if( Exponent[b] == 0 )
+	    if( Exponent[b] == (exp)0 )
 		for( c = b+1; !EarlyStop && c <= NrPcGens; c++ )
 		    do_cbb( c, b );
 
@@ -217,11 +217,11 @@ void	Consistency() {
 	**                                     Exponent[c] == 0.
 	*/
 	for( c = 1; !EarlyStop && c <= NrPcGens; c++ )
-	    if( Exponent[c] == 0 ) {
+	    if( Exponent[c] == (exp)0 ) {
 		for( b = 1; !EarlyStop && b <= min(c-1,Dimension[1]); b++ )
 		    do_ccb( c, b );
 		for( b = 1; !EarlyStop && b < c; b++ )
-		    if( Exponent[b] == 0 ) do_ccb( c, -b );
+		    if( Exponent[b] == (exp)0 ) do_ccb( c, -b );
 	    }
 
 	/*
@@ -229,7 +229,7 @@ void	Consistency() {
 	**                                  Exponent[b] == n > 0.
 	*/
 	for( b = 1; !EarlyStop && b <= NrPcGens; b++ )
-	    if( Exponent[b] > 0 )
+	    if( Exponent[b] > (exp)0 )
 		for( c = b+1; !EarlyStop && c <= NrPcGens; c++ )
 		    do_cbn( c, b );
 
@@ -238,18 +238,18 @@ void	Consistency() {
 	**                                  Exponent[c] == n > 0.
 	*/
 	for( c = 1; !EarlyStop && c <= NrPcGens; c++ )
-	    if( Exponent[c] > 0 ) {
+	    if( Exponent[c] > (exp)0 ) {
 		for( b = 1; !EarlyStop && b <= min(c-1,Dimension[1]); b++ )
 		    do_cnb( c, b );
 		for( b = 1; !EarlyStop && b < c; b++ )
-		    if( Exponent[b] == 0 ) do_cnb( c, -b );
+		    if( Exponent[b] == (exp)0 ) do_cnb( c, -b );
 	    }
 
 	/*
 	**    c^n * c = c * c^n for all generators c, Exponent[c] == n > 0.
 	*/
 	for( c = 1; !EarlyStop && c <= NrPcGens; c++ )
-	    if( Exponent[c] > 0 )
+	    if( Exponent[c] > (exp)0 )
 		do_cnc( c );
 
 	if( Verbose )

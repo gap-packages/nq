@@ -117,15 +117,15 @@ long	wt, which;
         u = ul[ which ];
 	while( !EarlyStop && g <= NrPcGens && Wt(g) <= wt ) {
 	    u[i].g   = g;
-	    u[i].e   = 0;
+	    u[i].e   = (exp)0;
  	    u[i+1].g = EOW;
 	    while( !EarlyStop && Wt(g) <= wt ) {
 		u[i].e++;
-		if( Exponent[g] > 0 && Exponent[g] == u[i].e ) break;
+		if( Exponent[g] > (exp)0 && Exponent[g] == u[i].e ) break;
 		wt -= Wt(g);
 		buildTuple( ul, i+1, g+1, wt, which );
                 /* now build the same word with negative exponent */
-                if( !EarlyStop && !SemigroupOnly && Exponent[g] == 0 ) {
+                if( !EarlyStop && !SemigroupOnly && Exponent[g] == (exp)0 ) {
                     u[i].g *= -1;
                     buildTuple( ul, i+1, g+1, wt, which );
                     u[i].g *= -1;
@@ -135,21 +135,21 @@ long	wt, which;
 	    g++;
 	}
 	u[i].g = EOW;
-	u[i].e = 0;
+	u[i].e = (exp)0;
 	if( EarlyStop || SemigroupOnly || !SemigroupFirst ) return;
 
         while( !EarlyStop && g <= NrPcGens && Wt(g) <= wt ) {
 	    u[i].g   = -g;
-	    u[i].e   = 0;
+	    u[i].e   = (exp)0;
  	    u[i+1].g = EOW;
 	    while( !EarlyStop && Wt(g) <= wt ) {
 		u[i].e++;
-		if( Exponent[g] > 0 && Exponent[g] == u[i].e ) break;
+		if( Exponent[g] > (exp)0 && Exponent[g] == u[i].e ) break;
 		wt -= Wt(g);
 		buildTuple( ul, i+1, g+1, wt, which );
                 if( EarlyStop ) return;
                 /* now build the same word with negative exponent */
-                if( !EarlyStop && !SemigroupOnly && Exponent[g] == 0 ) {
+                if( !EarlyStop && !SemigroupOnly && Exponent[g] == (exp)0 ) {
                     u[i].g *= -1;
                     buildTuple( ul, i+1, g+1, wt, which );
                     u[i].g *= -1;
@@ -159,7 +159,7 @@ long	wt, which;
 	    g++;
 	}
 	u[i].g = EOW;
-	u[i].e = 0;
+	u[i].e = (exp)0;
 }
 
 EvalTrMetAb() {
@@ -174,14 +174,14 @@ EvalTrMetAb() {
 
     u = ul[0];
     for( i = 1; i <= NrCenGens; i++ ) {
-        u[0].g = i;   u[0].e = 1;
-        u[1].g = EOW; u[1].e = 0;
+        u[0].g = i;   u[0].e = (exp)1;
+        u[1].g = EOW; u[1].e = (exp)0;
         eval8Power( u );
     }
         
     for( c = 2; !EarlyStop && c <= Class+1; c++ ) {
         for( i = 0; i < 6; i++ ) {
-            ul[i][0].g = EOW; ul[i][0].e = 0;
+            ul[i][0].g = EOW; ul[i][0].e = (exp)0;
         }
         NrWords = 0;
         if(Verbose)

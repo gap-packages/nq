@@ -52,13 +52,13 @@ word	w;
 	gen	g;
 
 	for( l = 0, g = 1; g <= NrPcGens+NrCenGens; g++ )
-	    if( ev[g] != 0 ) {
-		if( ev[g] > 0 ) { w[l].g =  g; w[l].e =  ev[g]; }
-		else            { w[l].g = -g; w[l].e = -ev[g]; }
+	    if( ev[g] != (exp)0 ) {
+		if( ev[g] > (exp)0 ) { w[l].g =  g; w[l].e =  ev[g]; }
+		else                 { w[l].g = -g; w[l].e = -ev[g]; }
 		l++;
 	    }
 
-	w[l].g = EOW; w[l].e = 0;
+	w[l].g = EOW; w[l].e = (exp)0;
 }
 
 word	WordExpVec( ev )
@@ -69,7 +69,7 @@ expvec	ev;
 	word	w;
 
 	for( l = 0, g = 1; g <= NrPcGens+NrCenGens; g++ )
-	    if( ev[g] != 0 ) l++;
+	    if( ev[g] != (exp)0 ) l++;
 
 	w = (word)Allocate( (l+1)*sizeof(gpower) );
 
@@ -146,7 +146,7 @@ word	u, w;
 
 	ev = ExpVecWord( u );
         Free( (void *)u ); 
-	if( Collect( ev, w, 1 ) ) {
+	if( Collect( ev, w, (exp)1 ) ) {
           Free( (void *)w );
           Free( (void *)ev );
           return (word)0;
@@ -203,7 +203,7 @@ word	u, w;
 	ev = ExpVecWord( u );
 	Free( (void *)u );
 
-	if( Collect( ev, w, 1 ) ) {
+	if( Collect( ev, w, (exp)1 ) ) {
           Free( (void *)ev );
           Free( (void *)w );
           return (word)0;
@@ -226,7 +226,7 @@ word	u, w;
 
 	/* x = [u,w] = u^-1 * w^-1 * u * w   <===>   w * u * x = u * w. */
 	ev = ExpVecWord( w );
-	if( Collect( ev, u, 1 ) ) {
+	if( Collect( ev, u, (exp)1 ) ) {
           Free( (void *)u );
           Free( (void *)w );
           Free( (void *)ev );
@@ -236,7 +236,7 @@ word	u, w;
 	Free( (void *)ev );
 
 	ev = ExpVecWord( u );
-	if( Collect( ev, w, 1 ) ) {
+	if( Collect( ev, w, (exp)1 ) ) {
           Free( (void *)u );
           Free( (void *)w );
           Free( (void *)wu );

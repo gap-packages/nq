@@ -14,17 +14,15 @@ expvec	*ev;
 {	int	i, l = 0;
 	expvec	ev1, ev2;
 
-/*	if( c == 6 && b == 3 && a == 2 && Class == 7  ) Debug = 1;*/
-
 	/* (c b) a */
 	ev1 = ExpVecWord( Generators[c] );
-	Collect( ev1, Generators[b], 1 );
-	Collect( ev1, Generators[a], 1 );
+	Collect( ev1, Generators[b], (exp)1 );
+	Collect( ev1, Generators[a], (exp)1 );
 
 	/* c (b a) = c a b^a */
 	ev2 = ExpVecWord( Generators[c] );
-	Collect( ev2, Generators[a], 1 );
-	Collect( ev2, Conjugate[b][a], 1 );
+	Collect( ev2, Generators[a], (exp)1 );
+	Collect( ev2, Conjugate[b][a], (exp)1 );
 
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) 
 	    if( (ev1[i] -= ev2[i]) != 0 ) {
@@ -47,8 +45,8 @@ expvec	*ev;
 
 	/* (c b^-1) b */
 	ev1 = ExpVecWord( Generators[c] );
-	Collect( ev1, Generators[ b], 1 );
-	Collect( ev1, Generators[-b], 1 );
+	Collect( ev1, Generators[ b], (exp)1 );
+	Collect( ev1, Generators[-b], (exp)1 );
 	ev1[ c ] -= 1;
 
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
@@ -71,8 +69,8 @@ expvec	*ev;
 
 	/* c^-1 (c b) = c^-1 b c^b */
 	ev1 = ExpVecWord( Generators[c] );
-	Collect( ev1, Generators[b], 1 );
-	Collect( ev1, Conjugate[-c][b], 1 );
+	Collect( ev1, Generators[b], (exp)1 );
+	Collect( ev1, Conjugate[-c][b], (exp)1 );
 	ev1[abs(b)] -= sgn(b);
 
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
@@ -92,6 +90,9 @@ gen	n, m;
 {	long	lw, lt;
 	expvec	t;
 	word	w;
+
+        if( n == 4 && m == 3 )
+          1;
 
 	if( n > 0 )
 	     if( m > 0 ) lt = tail_cba( n,Definition[m].h,Definition[m].g,&t);
@@ -132,11 +133,11 @@ Tails() {
 		    for( i = 1; n > m && i <= Dim[b]; i++ ) {
 			if( b != 1 )
 			    Tail(  n,  m );    
-			if( Exponent[m] == 0 )
+			if( Exponent[m] == (exp)0 )
 			    Tail(  n, -m );
-			if( Exponent[n] == 0 )
+			if( Exponent[n] == (exp)0 )
 			    Tail( -n,  m );
-			if( Exponent[m]+Exponent[n] == 0 )
+			if( Exponent[m]+Exponent[n] == (exp)0 )
 			    Tail( -n, -m );
 			m++;
 		    }
