@@ -1,7 +1,8 @@
 ##############################################################################
 ##
 ##    Makefile                      NQ                         Werner Nickel
-##                                                   werner@dcs.st-and.ac.uk
+##
+##    $Id$
 ##
 
 ##    The  following two  lines define   the directory  with the GNU  multiple
@@ -30,3 +31,5 @@ nq : nq.o $(OBJ) $(GNULIBS)
 
 clean :
 	rm -f *.o nq *~
+
+spotless : clean
