@@ -437,16 +437,21 @@ end );
 #F  NqElementaryDivisors( <M> ) . . . . . . . . . . . . . elementary divisors
 ##
 ##  The function 'ElementaryDivisorsMat' only returns the non-zero elementary
-##  divisors  of a Matrix. Here the zeroes are  added  in  order  to  make it
-##  easier to recognize  the  isomorphism type of the abelian group presented
-##  by  the  integer  matrix. At  the  same time strip  1's from the  list of
-##  elementary divisors.
+##  divisors of a matrix. Here zeroes are added in order to make it easier to
+##  recognize  the isomorphism  type of  the abelian  group presented  by the
+##  integer matrix.  At the same time  strip 1's from the  list of elementary
+##  divisors.
 ##
 InstallGlobalFunction( NqElementaryDivisors,
 function( M )
     local   ed,  i;
 
-    ed := ElementaryDivisorsMat( M );
+    if M <> [ [] ] then
+        ed := ElementaryDivisorsMat( M );
+    else
+        ed := [];
+    fi;
+
     ed := Concatenation( ed, List( [Length(ed)+1..Length(M[1])], x->0 ) );
     i := 1;
     while i <= Length(ed) and ed[i] = 1  do i := i+1;  od;
