@@ -10,15 +10,21 @@ dnl determine the system name
 AC_CANONICAL_SYSTEM
 
 dnl Which C-compiler is used and export the result to the Makefile
+dnl Is there a way to determine the GAP root directory?
 AC_PROG_CC
 
 dnl Checks for programs.
 
 dnl Checks for libraries.
-AC_CHECK_LIB(  mp, xtom, HAVE_GMP=yes )
-AC_CHECK_LIB( gmp, mpz_out_str, HAVE_MP=yes )
-AC_SUBST( HAVE_LIBGMP)
-AC_SUBST( HAVE_MP)
+AC_CHECK_LIB(  mp, xtom, HAVE_MP=true, HAVE_MP=false )
+AC_CHECK_LIB( gmp, mpz_out_str, HAVE_GMP=true, HAVE_GMP=false )
+if test $HAVE_MP = false -o $HAVE_GMP = false; then
+   echo ""; 
+   echo "    Warning: cannot locate the GNU MP library.  Find the directory";
+   echo "    with the GNU MP library and when you run make add the argument";
+   echo "    GNU_MP_LIB=<gnu-mp-dir> to the command line.";
+   echo ""
+fi
 
 dnl Checks for header files.
 AC_CHECK_HEADERS(sys/time.h)

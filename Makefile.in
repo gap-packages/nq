@@ -10,11 +10,12 @@
 ##
 BINDIR=bin/@target@-@CC@
 GAP_ROOT=../..
+GNU_MP_DIR=.
 
 all: compile manual
 
 compile:
-	(cd src; make)
+	(cd src; make GNU_MP_DIR=$(GNU_MP_DIR))
 	@if test ! -d bin;  then mkdir bin; fi
 	@if test ! -d $(BINDIR);  then mkdir $(BINDIR); fi
 	mv src/nq $(BINDIR)
