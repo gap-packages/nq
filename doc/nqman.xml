@@ -100,6 +100,17 @@
   <P/>
   Comments,  bug reports and  suggestions are  very welcome.
 
+  <P/> This manual contains references to parts of the &GAP; Reference
+  Manual which are typeset in a slightly idiosyncratic way.  The
+  following example shows how such references are printed: 'For
+  further information on creating a free group see <Ref BookName="ref"
+  Func="FreeGroup"/>.'  The text in bold face refers to the &GAP;
+  Reference Manual.
+
+  <P/>Each item in the list of references at the end of this manual is
+  followed by a list of numbers that specify the pages of the manual
+  where the reference occurs.
+
   </Chapter>
 
   <Chapter><Heading>General remarks</Heading>
@@ -333,7 +344,7 @@
   each map from <M>x_1,\ldots,x_n</M> into <M>G</M> maps <M>w</M> to
   the identity element of <M>G</M>.  We also say that <M>G</M> satisfies the
   <Index>identical relation</Index> <Index>law</Index> <E>identical
-  relation</E> <M>w=1</M> or satisfies the <E>law</E> <M>w</M>.  In
+  relation</E> <M>w=1</M> or satisfies the <E>law</E> <M>w=1</M>.  In
   slight abuse of notation, we call the elements <M>x_1,\ldots,x_n</M>
   <Index>identical generator</Index> 
   <E>identical</E> generators.
@@ -372,19 +383,19 @@
   <Display>
   \langle a,b,c; x | [x,c], [a,x,x,x] \rangle
   </Display>
-  The first relation says that <M>c</M> commutes with all elements of
-  the group.  The second relation turns <M>a</M> into a third right
-  Engel element.  
+  The first relator specifies a law which says that <M>c</M> commutes
+  with all elements of   the group.  The second turns  <M>a</M> into a
+  third right Engel element.   
 
   <P/>An element <M>a</M> is called <E>a right <M>n</M>-th 
   Engel element</E> or <E>a right <M>n</M>-Engel element</E> 
   <Index>right Engel element</Index> 
-  if it satisfies the commutator law <M>[a,x,...,x]</M>
+  if it satisfies the commutator law <M>[a,x,...,x]=1</M>
   where the identical generator <M>x</M> occurs <M>n</M>-times.
   Likewise, an element <M>b</M> is called an <E>left <M>n</M>-th Engel
   element</E> or <E>left <M>n</M>-Engel element</E> 
   <Index>left Engel element</Index>
-  if it satisfies the commutator law <M>[x,b,b,...b]</M>.
+  if it satisfies the commutator law <M>[x,b,b,...b]=1</M>.
 
   <P/>Let <M>G</M> be a nilpotent group.  Then <M>G</M> satisfies a
   given law if the law is satisfied by a certain finite set of
@@ -394,7 +405,7 @@
 
   </Section>
 
-  <Section Label="ExpTrees"><Heading>Expression trees</Heading>
+  <Section Label="ExpTrees"><Heading>Expression Trees</Heading>
   Expressions involving commutators play an important role in the
   context of nilpotent groups.  Expanding an iterated commutator
   produces a complicated and long expression.  For example, 
@@ -441,7 +452,7 @@
 
   <P/>A presentation specified by expression trees is a record with
   the components <F>.generators</F> and <F>.relations</F>.  See 
-  section <Ref Sect="ExpTrees"/> for a description of the functions
+  section <Ref Sect="FunctionsExpTrees"/> for a description of the functions
   that produce and manipulate expression trees.
   <Example>
 gap> RequirePackage( "nq" );
@@ -504,7 +515,7 @@ rec( generators := [ x1, x2 ],
   </Display>
   The group is clearly isomorphic to the additive group of the
   integers.  Applying the ANU NQ to this presentation gives the
-  follwoing nilpotent presentation:
+  following nilpotent presentation:
   <Display>
     \langle A,B | A^2 = B, [B,A] \rangle
   </Display>
@@ -596,7 +607,9 @@ Func="NilpotentQuotient" Style="Text"/>.
            is specified.  If <F>c</F> is not given, then the function
            attempts to compute the largest nilpotent quotient of
            <M>G</M> and it will terminate only if <M>G</M> has a
-           largest nilpotent quotient.
+           largest nilpotent quotient.  See section <Ref
+           Sect="DiagnosticOutput"/> for a possibility to follow the
+           progress of the computation.
 
            <P/>  The optional  argument  <F>id-gens</F> is  a list  of
            generators  of  the  free  group  underlying  the  finitely
@@ -702,7 +715,7 @@ gap>
 In the following example identical generators are used in order to
 express the fact that the group is nilpotent of class <M>3</M>.  A
 group is nilpotent of class <M>3</M> if it satisfies the identical
-relation <M>[x_1,x_2,x_3,x_4]</M> (cf. Section <Ref
+relation <M>[x_1,x_2,x_3,x_4]=1</M> (cf. Section <Ref
 Sect="IdRels"/>). The result is the free nilpotent group of class
 <M>3</M> on two generators.
 <Example>
@@ -905,7 +918,7 @@ gap> LowerCentralFactors( FreeGroup(2), 6 );
 
      </Section>
 
-     <Section><Heading>Expression Trees</Heading>
+     <Section Label="FunctionsExpTrees"><Heading>Expression Trees</Heading>
 
      <ManSection>
      <Func Name="ExpressionTrees" Arg="m[, prefix]" />
@@ -1124,7 +1137,7 @@ gap> NqDefaultOptions;
 
   </Section>
 
-  <Section><Heading>Diagnostic Output</Heading>
+  <Section Label="DiagnosticOutput"><Heading>Diagnostic Output</Heading>
   While the standalone program is running it can be asked to display
   progress information.  This is done by setting the info class
   <C>InfoNQ</C> to <M>1</M> via the function 
