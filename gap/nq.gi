@@ -482,7 +482,7 @@ end );
 ##  This should produce a quotient system and not a pcp group.
 ##
 InstallOtherMethod( NilpotentQuotient,
-        "of a finitely presented group",
+        "no argument",
         true,
         [], 
         0,
@@ -711,12 +711,27 @@ function( G, nqrec )
 end );
 
 InstallOtherMethod( NqEpimorphismNilpotentQuotient,
+        "no argument",
+        true,
+        [ ],
+        0,
+function( )
+    local   input_rec,  nqrec,  G;
+
+    input_rec := rec();
+    nqrec := NqCallANU_NQ( input_rec );
+    G := input_rec.group;
+
+    return NqEpimorphismByNqOutput( G, nqrec );
+end );
+
+InstallOtherMethod( NqEpimorphismNilpotentQuotient,
         "fp-group",
         true,
         [ IsFpGroup ],
         0,
 function( G )
-    local   nqrec,  coll,  A,  images,  phi;
+    local   nqrec;
 
     nqrec := NqCallANU_NQ( rec( group := G ) );
     return NqEpimorphismByNqOutput( G, nqrec );
@@ -728,7 +743,7 @@ InstallOtherMethod( NqEpimorphismNilpotentQuotient,
         [ IsString, IsFpGroup ],
         0,
 function( outfile, G )
-    local   nqrec,  coll,  A,  images,  phi;
+    local   nqrec;
 
     nqrec := NqCallANU_NQ( rec( group := G, output_file := outfile ) );
 
@@ -741,7 +756,7 @@ InstallOtherMethod( NqEpimorphismNilpotentQuotient,
         [ IsFpGroup, IsPosInt ],
         0,
 function( G, cl )
-    local   nqrec,  coll,  A,  images,  phi;
+    local   nqrec;
 
     nqrec := NqCallANU_NQ( rec( group := G, class := cl ) );
     return NqEpimorphismByNqOutput( G, nqrec );
@@ -753,7 +768,7 @@ InstallOtherMethod( NqEpimorphismNilpotentQuotient,
         [ IsString, IsFpGroup, IsPosInt ],
         0,
 function( outfile, G, cl )
-    local   nqrec,  coll,  A,  images,  phi;
+    local   nqrec;
 
     nqrec := NqCallANU_NQ( rec( group := G, 
                                 class := cl,
@@ -768,7 +783,7 @@ InstallOtherMethod( NqEpimorphismNilpotentQuotient,
         [ IsFpGroup, IsList ],
         0,
 function( G, idgens )
-    local   nqrec,  coll,  A,  images,  phi;
+    local   nqrec;
 
     nqrec := NqCallANU_NQ( rec( group := G, idgens := idgens ) );
     return NqEpimorphismByNqOutput( G, nqrec : idgens := idgens );
@@ -780,7 +795,7 @@ InstallOtherMethod( NqEpimorphismNilpotentQuotient,
         [ IsString, IsFpGroup, IsList ],
         0,
 function( outfile, G, idgens )
-    local   nqrec,  coll,  A,  images,  phi;
+    local   nqrec;
 
     nqrec := NqCallANU_NQ( rec( group       := G, 
                                 output_file := outfile,
@@ -795,7 +810,7 @@ InstallOtherMethod( NqEpimorphismNilpotentQuotient,
         [ IsFpGroup, IsList, IsPosInt ],
         0,
 function( G, idgens, cl )
-    local   nqrec,  coll,  A,  images,  phi;
+    local   nqrec;
 
     nqrec := NqCallANU_NQ( rec( group := G, class := cl, idgens := idgens ) );
     return NqEpimorphismByNqOutput( G, nqrec : idgens := idgens );
@@ -807,7 +822,7 @@ InstallOtherMethod( NqEpimorphismNilpotentQuotient,
         [ IsString, IsFpGroup, IsList, IsPosInt ],
         0,
 function( outfile, G, idgens, cl )
-    local   nqrec,  coll,  A,  images,  phi;
+    local   nqrec;
 
     nqrec := NqCallANU_NQ( rec( group := G, 
                                 class := cl,
