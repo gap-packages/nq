@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "config.h"
+
 /*
 **    This variable indicates whether GAP output should be produced.
 */

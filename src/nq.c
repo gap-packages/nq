@@ -18,6 +18,7 @@ extern RawMatOutput;
 char	*InputFile;
 
 static char	*ProgramName;
+static char	HostName[256] = "host name unknown";
 static int	Cl;
 
 static
@@ -44,16 +45,24 @@ static int   leftEngel = 0,
 
 static int trmetab = 0;
 
+static  char *Ordinal( int n ) {
+
+  switch( n ) {
+  case 1:    return "st";
+  case 2:    return "nd";
+  case 3:    return "rd";
+  default:   return "th";
+  }
+}
+
 static
 void	printHeader() {
 
-	char	*s, hostname[128];
-
-	gethostname( hostname, 128 );
+	char	hostname[128];
 
 	printf( "#\n" );
-	printf(
-	  "#    The ANU Nilpotent Quotient Program (Version %s)\n", VERSION );
+	printf( "#    The ANU Nilpotent Quotient Program (Version %s)\n",
+                VERSION );
 	printf( "#    Calculating a nilpotent quotient\n" );
 	printf( "#    Input: %s", InputFile );
 	if( leftEngel ) {
@@ -61,34 +70,22 @@ void	printHeader() {
                 printf( " & the first %d generators are", nrEngelGens );
             else
 		printf( " &" );
-	    s = "th";
-	    if( leftEngel == 1 ) s = "st";
-	    if( leftEngel == 2 ) s = "nd";
-	    if( leftEngel == 3 ) s = "rd";
-	    printf( " %d%s left Engel", leftEngel, s );
+	    printf( " %d%s left Engel", leftEngel, Ordinal( leftEngel ) );
 	}
 	if( rightEngel ) {
             if( nrEngelGens > 1 )
                 printf( " & the first %d generators are", nrEngelGens );
             else
 		printf( " &" );
-	    s = "th";
-	    if( rightEngel == 1 ) s = "st";
-	    if( rightEngel == 2 ) s = "nd";
-	    if( rightEngel == 3 ) s = "rd";
-	    printf( " %d%s right Engel", rightEngel, s );
+	    printf( " %d%s right Engel", rightEngel, Ordinal( rightEngel ) );
 	}
 	if( engel ) {
-	    s = "th";
-	    if( engel == 1 ) s = "st";
-	    if( engel == 2 ) s = "nd";
-	    if( engel == 3 ) s = "rd";
-	    printf( " %d%s Engel", engel, s );
+	    printf( " %d%s Engel", engel, Ordinal( engel ) );
 	}
 	printf( "\n" );
 	if( Cl != 666 ) printf( "#    Nilpotency class: %d\n", Cl );
 	printf( "#    Program: %s", ProgramName );
-	printf( "     Machine: %s\n", hostname );
+	printf( "     Machine: %s\n", &(HostName[0]) );
         printf( "#    Size of exponents: %d bytes\n#\n", sizeof(exp) );
 }
 
@@ -107,6 +104,10 @@ char	*argv[];
 	begin = RunTime();
 
 	ProgramName = argv[0]; argc--; argv++;
+
+#ifdef HAVE_GETHOSTNAME        
+	gethostname( &(HostName[0]), 256 );
+#endif
 
 	setbuf( stdout, NULL );
 
