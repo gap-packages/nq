@@ -116,35 +116,35 @@ char	*argv[];
 		usage( (char *)0 );
 	    }
 	    switch( argv[0][1] ) {
-		case 'r': if( --argc <= 1 ) usage("-r requires an argument");
+		case 'r': if( --argc < 1 ) usage("-r requires an argument");
 			  argv++;
 			  if( (rightEngel = atoi(argv[0])) <= 0 ) {
 			      fprintf( stderr, "%s\n", argv[0] );
 			      usage( "<n> must be positive." );
 			  }
 			break;
-		case 'l': if( --argc <= 1 ) usage("-l requires an argument.");
+		case 'l': if( --argc < 1 ) usage("-l requires an argument.");
 			  argv++;
 			  if( (leftEngel = atoi(argv[0])) <= 0 ) {
 			      fprintf( stderr, "%s\n", argv[0] );
 			      usage( "<n> must be positive." );
 			  }
 			break;
-		case 'n': if( --argc <= 1 ) usage("-n requires an argument.");
+		case 'n': if( --argc < 1 ) usage("-n requires an argument.");
 			  argv++;
 			  if( (nrEngelGens = atoi(argv[0])) <= 0 ) {
 			      fprintf( stderr, "%s\n", argv[0] );
 			      usage( "<n> must be positive." );
 			  }
 			break;
-		case 'e': if( --argc <= 1 ) usage("-e requires an argument");
+		case 'e': if( --argc < 1 ) usage("-e requires an argument");
 			  argv++;
 			  if( (engel = atoi(argv[0])) <= 0 ) {
 			      fprintf( stderr, "%s\n", argv[0] );
 			      usage( "<n> must be positive." );
 			  }
 			break;
-		case 't': if( --argc <= 1 ) usage("-t requires an argument");
+		case 't': if( --argc < 1 ) usage("-t requires an argument");
 			  argv++;
 			  if( (t = atoi(argv[0])) <= 0 ) {
 			      fprintf( stderr, "%s\n", argv[0] );
