@@ -7,6 +7,34 @@
 #include "nq.h"
 
 /*
+**    Set up a list of Commute[] arrays.  The array in CommuteList[c] is
+**    Commute[] as if the current group had class c.
+**/
+void    SetupCommuteList() {
+
+    int c;
+    gen g, h;
+    
+    if( CommuteList != (gen**)0 ) Free( CommuteList );
+            
+    CommuteList = (gen**)Allocate( (Class+2)*sizeof(gen*) );
+    for( c = 1; c <= Class+1; c++ ) {
+        CommuteList[ c ] = 
+          (gen*)Allocate( (NrPcGens + NrCenGens + 1) * sizeof(gen) );
+              
+        for( g = 1; g <= NrPcGens; g++ ) {
+            for( h = g+1; Wt(g)+Wt(h) <= c; h++ ) ;
+            CommuteList[c][g] = h-1;
+        }
+        for( ; g <= NrPcGens+NrCenGens; g++ ) CommuteList[c][g] = g;
+    }
+
+    for( g = 1; g <= NrPcGens+NrCenGens; g++ )
+        if( CommuteList[Class+1][g] != Commute[g] )
+            printf( "something is fishy\n" );
+}
+
+/*
 **    Add new/pseudo generators to the power conjugate presentation.
 */
 void	AddGenerators() {
@@ -119,6 +147,8 @@ void	AddGenerators() {
 	}
 	for( ; l <= NrPcGens+NrCenGens; l++ ) Commute[l] = l;
 
+        SetupCommuteList();
+
 	if( Verbose )
-	    printf("#    Added new/pseudo generators (%d msec).\n",RunTime()-t);
+          printf("#    Added new/pseudo generators (%d msec).\n",RunTime()-t);
 }
