@@ -37,8 +37,9 @@ char	*error;
     	exit( 1 );
 }
 
-static int  leftEngel  = 0,
+static int   leftEngel = 0,
 	    rightEngel = 0,
+              revEngel = 0,
 	 	 engel = 0,
            nrEngelGens = 1;
 
@@ -180,6 +181,8 @@ char	*argv[];
                         break;
                 case 'y': trmetab = 1;
                         break;
+                case 'E': revEngel = !revEngel;
+                        break;
                 default : fprintf( stderr, "unknown option: %s\n", argv[0] );
 			  usage( NULL );
 			break;
@@ -208,7 +211,7 @@ char	*argv[];
 	Presentation( fp, InputFile );
 	/* Set the number of generators. */
 	WordInit( Epimorphism );
-	InitEngel( leftEngel, rightEngel, engel, nrEngelGens );
+	InitEngel( leftEngel, rightEngel, revEngel, engel, nrEngelGens );
         InitTrMetAb( trmetab );
 	InitPrint( stdout );
 
