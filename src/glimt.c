@@ -13,6 +13,7 @@
 **    This module uses the arbitrary precision integer package mp.
 */
 #include <mp.h>
+#include <gmp.h>
 
 /*
 **    Define the data type for large integers and vectors of large integers.
@@ -85,7 +86,7 @@ large   ltom( n )
 exp     n;
 
 {       char    x[64];
-        large   l;
+        MP_INT  *l;
         int     sign = 1;
 
         if( n < (exp)0 ) { sign = -1; n = -n; }
@@ -100,7 +101,7 @@ exp     n;
         sprintf( x, "%x", n );
 #endif
 
-        l = (large)Allocate( sizeof(MINT) );
+        l = (large)Allocate( sizeof(MP_INT) );
         mpz_init( l );
         mpz_set_str( l, x, 16 );
 
@@ -140,7 +141,7 @@ lvec    v;
 
 {       long    i;
 
-        for( i = 1; i <= NrCols; i++ ) mfree( v[i] );
+        for( i = 1; i <= NrCols; i++ ) { mpz_clear( v[i] ); Free( v[i] ); }
         free( v );
 }
 
@@ -527,8 +528,10 @@ expvec  ev;
         ** are zero. */
         for( i = 1; i <= NrPcGens; i++ )
             if( ev[i] != 0 ) {
-                printf( "Warning, exponent vector is not a tail.\n" );
+                printf( "Warning, exponent vector is not a tail" );
+                printf( " at position %d.\n", i );
                 printEv( ev );
+                printf( "\n" );
                 break;
             }
 
