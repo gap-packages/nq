@@ -82,8 +82,18 @@ end,
 
 Autoload := false,
 
-Keywords := ["nilpotent", "group","finitely presented", "computational"],
-
+Keywords := [ "nilpotent quotient algorithm",
+              "nilpotent presentations",
+              "finitely presented groups",
+              "finite presentations   ",
+              "commutators",
+              "lower central series",
+              "identical relations",
+              "expression trees",
+              "nilpotent Engel groups",
+              "right and left Engel elements",
+              "computational"
+              ]
 ));
 
 
