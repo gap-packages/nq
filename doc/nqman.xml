@@ -610,31 +610,44 @@ Func="NilpotentQuotient" Style="Text"/>.
            function accepts the following options as shown in the
            first example below:
 
+           <Index>options</Index>
            <List>
-           <Item><Keyword>group</Keyword> This option can be used
+           <Item><Keyword>group</Keyword> 
+           <Index Subkey="group">options</Index>
+           This option can be used
            instead of the parameter <F>fp-group</F> and must be a
            finitely presented group.
            </Item>
-           <Item><Keyword>exptrees</Keyword> This option can be used
+           <Item><Keyword>exptrees</Keyword>
+           <Index Subkey="exptrees">options</Index>
+           This option can be used
            to specify a finitely presented group by expression trees.
            </Item>
-           <Item><Keyword>input\_string</Keyword> This option can be
+           <Item><Keyword>input\_string</Keyword>
+           <Index Subkey="input\_string">options</Index>
+           This option can be
            used to specify a finitely presented group by a string in
            the input format of the standalone program.
            </Item>
-           <Item><Keyword>input\_file</Keyword> This option specifies
+           <Item><Keyword>input\_file</Keyword>
+           <Index Subkey="input\_file">options</Index>
+           This option specifies
            a file with input for the standalone program.
            </Item>
-           <Item><Keyword>output\_file</Keyword> This option specifies
+           <Item><Keyword>output\_file</Keyword> 
+           <Index Subkey="ouput\_file">options</Index>
+           This option specifies
            a file for the output of the standalone.
            </Item>
 
-           <Item><Keyword>idgens</Keyword> This options specifies a
-           list of identical generators.
+           <Item><Keyword>idgens</Keyword>
+           <Index Subkey="idgens">options</Index>
+           This options specifies a list of identical generators.
            </Item>
-           <Item><Keyword>class</Keyword> This option specifies the
-           nilpotency class up to which the nilpotent quotient will be
-           computed.
+           <Item><Keyword>class</Keyword> 
+           <Index Subkey="class">options</Index>
+           This option specifies the nilpotency class up to which the
+           nilpotent quotient will be computed.
            </Item>
            </List>
 
