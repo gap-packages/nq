@@ -121,11 +121,26 @@ lvec    v;
         printf( "\n" );
 }
 
+long survivingCols( M, surviving )
+expvec *M;
+long   *surviving;
+{
+    long nrSurv = 0, h = 1, i;
+
+    for( i = 0; i < NrRows; i++ ) {
+        for( ; h < Heads[i]; h++ ) surviving[nrSurv++] = h;
+        if( M[i][h] != 1 )         surviving[nrSurv++] = h;
+        h++;
+    }
+    for( ; h <= NrCols; h++ ) surviving[nrSurv++] = h;
+    return nrSurv;
+}
+
 void    outputMatrix( M )
 expvec  *M;
 
-{       long    i, j;
-        char    *outputName[128];
+{       long    i, j, nrSurv, *surviving;
+        char    outputName[128];
         FILE    *fp;
 
         if( strlen(InputFile) > 100 )
@@ -144,19 +159,26 @@ expvec  *M;
             return;
         }
 
-        fprintf( fp, "%d    # Number of colums\n", NrCols );
+        surviving = (long *)Allocate( NrCols * sizeof(long) );
+        nrSurv = survivingCols( M, surviving );
+
+        fprintf( fp, "%d    # Number of colums\n", nrSurv );
         for( i = 0; i < NrRows; i++ ) {
-            for( j = 1; j <= NrCols; j++ )
-                fprintf( fp, " %d", M[i][j] );
-            fprintf( fp, "\n" );
+            if( M[i][Heads[i]] != 1 ) {
+                for( j = 0; j < nrSurv; j++ )
+                    fprintf( fp, " %d", M[i][surviving[j]] );
+                fprintf( fp, "\n" );
+            }
         }
+
+        Free( surviving );
         fclose( fp );
 }
 
 void    printGapMatrix( M )
 expvec  *M;
 
-{       long    i, j;
+{       long    i, j, first, nrSurv, *surviving;
 
         if( M == (expvec*)0 ) {
             printf( "[\n[" );
@@ -168,19 +190,30 @@ expvec  *M;
             return;
         }
 
+        surviving = (long *)Allocate( NrCols * sizeof(long) );
+        nrSurv = survivingCols( M, surviving );
         printf( "[\n" );
-        for( i = 0; i < NrRows; i++ ) {
-            printf( "[" );
-            for( j = 1; j <= NrCols; j++ ) {
-                printf( " %d", M[i][j] );
-                if( j < NrCols ) putchar( ',' );
+        for( i = 0, first = 1; i < NrRows; i++ ) {
+            if( M[i][Heads[i]] != 1 ) {
+                if( !first ) printf( ",\n" );
+                else         first = 0;
+                printf( "[" );
+                for( j = 0; j < nrSurv; j++ ) {
+                    printf( " %d", M[i][surviving[j]] );
+                    if( j < nrSurv ) putchar( ',' );
+                }
+                printf( "]" );
             }
-            printf( "]" );
-            if( i < NrRows-1 ) putchar( ',' );
-            putchar( '\n' );
         }
-        printf( " ]," );
+        if( first ) {
+            printf( "[" );
+            for( j = 0; j < nrSurv-1; j++ ) printf( " 0," );
+            printf( " 0]\n" );
+        }
+        printf( "]," );
         putchar( '\n' );
+
+        Free( surviving );
 }
 
 /*
@@ -240,6 +273,7 @@ expvec  *MatrixToExpVecs() {
                 if( m->size == 0 ) M[i][j] = 0;
                 else M[i][j] = m->size * m->d[0];
             }
+            freeVector( Matrix[i] );
         }
 
         /* Make all entries except the head entries negative. */
@@ -254,7 +288,8 @@ expvec  *MatrixToExpVecs() {
                         M[j][k] -= c * M[i][k];
                 }
 
-        freeMatrix();
+        free( Matrix ); Matrix = (lvec *)0;
+
         if( Verbose )
             printf("#    Time spent on the integer matrix: %d msec.\n",Time);
 
