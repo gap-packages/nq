@@ -1,10 +1,34 @@
 ##############################################################################
 ##
-#A  nq.gi                       Mai  1999                        Werner Nickel
+#A  nq.gi                     Oktober 2002                       Werner Nickel
 ##
 ##  This file contains the interface to my NQ program.
 ##
 
+#############################################################################
+##
+#F  NqBuildManual( ) . . . . . . . . . . . . . . . . . . . . build the manual
+##
+##  This function builds the manual of the NQ package in the file formats
+##  &LaTeX;, DVI, Postscript, PDF and HTML.
+##
+##  This is done using the GAPDoc package by Frank L\"ubeck and
+##  Max Neunh\"offer.
+##
+InstallGlobalFunction( NqBuildManual,
+function ( ) local  NqDir;
+
+  ##  We take the first package directory.  In most cases this is the one 
+  ##  loaded by RequirePackage().
+  NqDir := DirectoriesPackageLibrary( "nq", "gap" )[1];
+
+  MakeGAPDocDoc( Filename( NqDir, "../doc/" ), "nqnew",
+                 [ "nq.bib" ], "nq", "../../../" );
+end );
+
+#############################################################################
+##
+#V  NqRuntime . . . . . . . . . . reports the run time used by the nq program
 ##
 ##  Initialize the runtime variable.
 ##
@@ -12,6 +36,9 @@ MakeReadWriteGlobal( "NqRuntime" );
 NqRuntime := 0;
 MakeReadOnlyGlobal( "NqRuntime" );
 
+#############################################################################
+##
+#V  NqDefaultOptions. . . . . . . . . . .  default options for the nq program
 ##
 ##  The default options are:
 ##      -g      Produce GAP output including a GAP readable presentation of
@@ -23,15 +50,30 @@ MakeReadOnlyGlobal( "NqRuntime" );
 ##
 InstallValue( NqDefaultOptions,  [ "-g", "-p", "-C", "-s" ] );
 
+#############################################################################
+##
+#V  NqOneTimeOptions . . . . . . . . . .  one time options for the nq program
+##
+##  This variable can be used to pass a list of option to the next call of
+##  the nq program.
+MakeReadWriteGlobal( "NqOneTimeOptions" );
+NqOneTimeOptions := [];
+
+#############################################################################
+##
+#F  NqCallANU_NQ . . . . . . . . . . . the function that calls the nq program
+##
 NqCallANU_NQ := function( input, output, options )
     local   nq,  ret;
 
     nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
-    options := Concatenation( NqDefaultOptions, options );
+    options := Concatenation( NqDefaultOptions, NqOneTimeOptions, options );
 
-##  The followoing Print statement should be converted to an info statement
+    NqOneTimeOptions := [];
+
+##  The following Print statement should be converted to an info statement
 ##
-##    Print( "##  Calling ANU NQ with: ", options, "\n", input![2], "\n" );
+    Print( "##  Calling ANU NQ with: ", options, "\n", input![2], "\n" );
 
     ret    := Process( DirectoryCurrent(),        ## executing directory
                       nq,                         ## executable
@@ -49,7 +91,7 @@ end;
 
 #############################################################################
 ##
-#F  NqGlobalVariables . . . . global variables to communicate with the ANU NQ
+#F  NqGlobalVariables . . global variables to communicate with the nq program
 ##
 InstallValue( NqGlobalVariables,
         [ "NqLowerCentralFactors",   ##  factors of the LCS
@@ -65,7 +107,7 @@ InstallValue( NqGlobalVariables,
 
 #############################################################################
 ##
-#F  NqReadOutput  . . . . . . . . . . . . . .  read output from nq standalone
+#F  NqReadOutput  . . . . . . . . . . . . . . . . read output from nq program
 ##
 InstallGlobalFunction( NqReadOutput,
 function( stream )
@@ -105,7 +147,6 @@ end );
 ##
 #F  NqStringFpGroup( <fp> ) . . . . . . .  finitely presented group to string
 ##
-
 InstallGlobalFunction( NqStringFpGroup,
 function( arg )
     local   G,  idgens,  F,  fgens,  V,  vgens,  str,  i,  r;
@@ -165,6 +206,10 @@ function( arg )
     return str;
 end );
 
+#############################################################################
+##
+#F  NqStringExpTrees( <fp> ) . . . . . . . . . . . expression trees to string
+##
 InstallGlobalFunction( NqStringExpTrees,
 function( arg )
     local   G,  idgens,  fgens,  str,  g,  r;
@@ -245,8 +290,153 @@ end );
 ##                 infile                     class
 ##     outfile     infile                     class
 ##
-##  This should produce a quotient system and not a collector.
+##  This should produce a quotient system and not a pcp group.
 ##
+InstallOtherMethod( NilpotentQuotient,
+        "of a finitely presented group",
+        true,
+        [ IsFpGroup ], 
+        0,
+function( G )
+    local   pres,  input,  str,  output,  options,  nqrec,  coll;
+
+    input   := InputTextString( NqStringFpGroup( G ) );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ ];
+
+    NqCallANU_NQ( input, output, options );
+    
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
+InstallOtherMethod( NilpotentQuotient,
+        "of a finitely presented group, keep output file",
+        true, 
+        [ IsString, IsFpGroup ], 
+        0,
+function( outfile, G )
+    local   input,  output,  options,  nqrec,  coll;
+
+    input   := InputTextString( NqStringFpGroup( G ) );
+    output  := OutputTextFile( outfile, false );
+    options := [ ]; 
+
+    NqCallANU_NQ( input, output, options );
+
+    nqrec := NqReadOutput( InputTextFile( outfile ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
+InstallOtherMethod( NilpotentQuotient,
+        "of a finitely presented group on file",
+        true,
+        [ IsString ], 
+        0,
+function( infile )
+    local   input,  str,  output,  options,  nqrec,  coll;
+
+    input   := InputTextFile( infile );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ ];
+
+    NqCallANU_NQ( input, output, options );
+
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
+InstallOtherMethod( NilpotentQuotient,
+        "of a finitely presented group on file, keep output file",
+        true, 
+        [ IsString, IsString ], 
+        0,
+function( outfile, infile )
+    local   input,  output,  options,  nqrec,  coll;
+
+    input   := InputTextFile( infile );
+    output  := OutputTextFile( outfile, false );
+    options := [ infile ];
+
+    NqCallANU_NQ( input, output, options );
+
+    nqrec := NqReadOutput( InputTextFile( outfile ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
+InstallOtherMethod( NilpotentQuotient,
+        "of a finitely presented group",
+        true,
+        [ IsRecord ], 
+        0,
+function( G )
+    local   pres,  input,  str,  output,  options,  nqrec,  coll;
+
+    input   := InputTextString( NqStringExpTrees( G ) );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ ];
+
+    NqCallANU_NQ( input, output, options );
+    
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
+InstallOtherMethod( NilpotentQuotient,
+        "of a finitely presented group with identical relations",
+        true,
+        [ IsFpGroup, IsList ], 
+        0,
+function( G, idgens )
+    local   pres,  input,  str,  output,  options,  nqrec,  coll;
+
+    input   := InputTextString( NqStringFpGroup( G, idgens ) );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ ];
+
+    NqCallANU_NQ( input, output, options );
+    
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
+InstallOtherMethod( NilpotentQuotient,
+        "of a finitely presented group with identical relations",
+        true,
+        [ IsRecord, IsList ], 
+        0,
+function( G, idgens )
+    local   pres,  input,  str,  output,  options,  nqrec,  coll;
+
+    input   := InputTextString( NqStringExpTrees( G, idgens ) );
+    str     := "";
+    output  := OutputTextString( str, true );
+    options := [ ];
+
+    NqCallANU_NQ( input, output, options );
+    
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
+end );
+
 InstallMethod( NilpotentQuotient,
         "of a finitely presented group",
         true,
@@ -400,7 +590,6 @@ end );
 #F  NqEpimorphismNilpotentQuotient
 ##
 ##
-
 InstallMethod( NqEpimorphismNilpotentQuotient,
         "of a finitely presented group",
         true,
@@ -471,59 +660,21 @@ function( G, cl )
     return eds;
 end );
 
-
 #############################################################################
 ##
-#F  NilpotentEngelQuotient( <F>, <engel, <class> ) . . . . . . . .  nq of <F>
+#F  NilpotentEngelQuotient( <F>, <engel>, <class> ) . . . . . Engel nq of <F>
 ##
-##  The interface to the NQ standalone.  
-##
-##  This should produce a quotient system and not a collector.
-##
-InstallMethod( NilpotentEngelQuotient,
-        "of a finitely presented group",
-        true,
-        [ IsFpGroup, IsPosInt, IsPosInt ], 
-        0,
-function( G, engel, cl )
-    local   nq,  pres,  input,  str,  output,  options,  ret,  nqrec,  
-            coll;
+InstallGlobalFunction( NilpotentEngelQuotient,
+function( arg )
+    local   n,  i;
 
-    pres    := NqStringFpGroup( G );
-    input   := InputTextString( pres );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ "-e", String(engel), String(cl) ];
+    ## The first integer is the Engel parameter.
+    n := First( arg, IsInt );
+    i := Position( arg, n );
 
-    NqCallANU_NQ( input, output, options );
-    
-    nqrec := NqReadOutput( InputTextString( str ) );
-    coll  := NqInitFromTheLeftCollector( nqrec );
+    arg := Concatenation( arg{[1..i-1]}, arg{[i+1..Length(arg)]} );
 
-    return NqPcpGroupByCollector( coll, nqrec );
+    NqOneTimeOptions := [ "-e", String(n) ];
+    return CallFuncList( NilpotentQuotient, arg );
 end );
-
-InstallOtherMethod( NilpotentEngelQuotient,
-        "of a finitely presented group",
-        true,
-        [ IsFpGroup, IsPosInt ], 
-        0,
-function( G, engel )
-    local   nq,  pres,  input,  str,  output,  options,  ret,  nqrec,  
-            coll;
-
-    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
-
-    pres    := NqStringFpGroup( G );
-    input   := InputTextString( pres );
-    str     := "";
-    output  := OutputTextString( str, true );
-    options := [ "-e", String(engel) ];
-
-    NqCallANU_NQ( input, output, options );
     
-    nqrec := NqReadOutput( InputTextString( str ) );
-    coll  := NqInitFromTheLeftCollector( nqrec );
-
-    return NqPcpGroupByCollector( coll, nqrec );
-end );

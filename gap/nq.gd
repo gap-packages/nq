@@ -1,8 +1,8 @@
 ##############################################################################
 ##
-#A  nq.gd                       Mai  1999                        Werner Nickel
+#A  nq.gd                   Oktober 2002                         Werner Nickel
 ##
-##  This file contains the interface to my NQ program.
+##  This file contains the declaration part of the interface to my NQ program.
 
 
 DeclareGlobalFunction( "NqReadOutput" );
@@ -11,9 +11,13 @@ DeclareGlobalFunction( "NqStringExpTrees" );
 DeclareGlobalFunction( "NqInitFromTheLeftCollector" );
 DeclareGlobalFunction( "NqPcpGroupByCollector" );
 DeclareGlobalFunction( "NqPcpElementByWord" );
+DeclareGlobalFunction( "NqBuildManual" );
+
+DeclareGlobalFunction( "NilpotentEngelQuotient" );
 
 DeclareGlobalVariable( "NqGlobalVariables" );
 DeclareGlobalVariable( "NqDefaultOptions" );
+DeclareGlobalVariable( "NqOneTimeOptions" );
 DeclareGlobalVariable( "NqRuntime" );
 
 DeclareOperation( "LowerCentralFactors", [ IsObject, IsPosInt ] );
@@ -24,8 +28,6 @@ DeclareOperation( "NilpotentQuotient",
 DeclareOperation( "NilpotentQuotientIdentical", 
         [ IsObject, IsObject, IsPosInt ] );
 
-DeclareOperation( "NilpotentEngelQuotient", 
-        [ IsObject, IsPosInt, IsPosInt ] );
 
 DeclareOperation( "NqEpimorphismNilpotentQuotient", 
         [ IsObject, IsPosInt ] );
