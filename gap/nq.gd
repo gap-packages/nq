@@ -11,5 +11,11 @@ DeclareGlobalFunction( "NqStringFpGroup" );
 DeclareGlobalFunction( "NqInitFromTheLeftCollector" );
 DeclareGlobalFunction( "NqPcpGroupByCollector" );
 
-DeclareOperation( "NilpotentQuotient", [ IsObject, IsPosInt ] );
-DeclareOperation( "NqEpimorphismNilpotentQuotient", [ IsObject, IsPosInt ] );
+DeclareOperation( "NilpotentQuotient", 
+        [ IsObject, IsPosInt ] );
+
+DeclareOperation( "NilpotentEngelQuotient", 
+        [ IsObject, IsPosInt, IsPosInt ] );
+
+DeclareOperation( "NqEpimorphismNilpotentQuotient", 
+        [ IsObject, IsPosInt ] );

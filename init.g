@@ -10,6 +10,7 @@ RequirePackage( "polycyc" );
 ##
 ##    Announce the package version and test for the existence of the binary.
 DeclarePackage("nq","1.3",
+
   function()
     local path,file;
     # test for existence of the compiled binary
@@ -19,9 +20,10 @@ DeclarePackage("nq","1.3",
         Info(InfoWarning,1,
              "Package ``nq'': The executable program is not compiled");
     fi;
-    return true; ## file<>fail;
+    return file <> fail;
+
 end );
 
 # install the documentation
-DeclarePackageAutoDocumentation( "nq", "doc" );
+DeclarePackageDocumentation( "nq", "doc" );
 

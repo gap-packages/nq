@@ -336,11 +336,51 @@ function( G, cl )
     gens := GeneratorsOfGroup( A );
 
     ##  Now we set up the epimorphism
-    images := List( nqrec, Images, w->PcpElementByGEnExpList( coll, w ) );
+    images := List( nqrec, Images, w->PcpElementByGenExpList( coll, w ) );
     phi := GroupHomomorphismByImages( G, A, GeneratorsOfGroup( G ), images );
 
     SetIsSurjective( phi, true );
 
     return phi;
+end );
+
+
+#############################################################################
+##
+#F  NilpotentEngelQuotient( <F>, <engel, <class> ) . . . . . . . .  nq of <F>
+##
+##  The interface to the NQ standalone.  
+##
+##  This should produce a quotient system and not a collector.
+##
+InstallMethod( NilpotentEngelQuotient,
+        "of a finitely presented group",
+        true,
+        [ IsFpGroup, IsPosInt, IsPosInt ], 
+        0,
+function( G, engel, cl )
+    local   nq,  pres,  input,  str,  output,  ret,  nqrec,  coll;
+
+    nq      := Filename( DirectoriesPackagePrograms( "nq") , "nq" );
+
+    pres   := NqStringFpGroup( G );
+    input  := InputTextString( pres );
+    str    := "";
+    output := OutputTextString( str, true );
+
+    ##  nq -g -p cl < input > output 
+    ret    := Process( DirectoryCurrent(),        ## executing directory
+                      nq,                         ## executable
+                      input,                      ## input  stream
+                      output,                     ## output stream
+                      [ "-g", "-e", String(engel), "-s", "-p", String(cl) ] );
+                                                  ## command line arguments
+    CloseStream( output );
+    CloseStream( input  );
+    
+    nqrec := NqReadOutput( InputTextString( str ) );
+    coll  := NqInitFromTheLeftCollector( nqrec );
+
+    return NqPcpGroupByCollector( coll, nqrec );
 end );
 
