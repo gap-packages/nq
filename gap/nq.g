@@ -145,31 +145,6 @@ end;
 
 #############################################################################
 ##
-#F  LeftNormedComm( <a>, ... )	. . . . . . . . . . . left normed commutators
-##
-##  The following function computes left normed commutators.
-##
-LeftNormedComm := function( arg )
-    local   c, i, l;
-
-    if Length(arg) = 1 and IsList(arg[1])  then
-        l := arg[1];
-    else
-	l := arg;
-    fi;
-
-    c := Comm( l[1], l[2] );
-    for i  in [3..Length(l)]  do
-        c := Comm( c, l[i] );
-    od;
-    return c;
-
-end;
-
-
-#############################################################################
-##
-
 #E  Emacs . . . . . . . . . . . . . . . . . . . . . . . local emacs variables
 ##
 ## Local Variables:
