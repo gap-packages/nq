@@ -369,8 +369,8 @@
   The standalone programme accepts the notation introduced above as a
   description of
   its input.  In <Package>GAP 4</Package> finitely presented groups
-  are specified in a different way, see <Ref Func="NilpotentQuotient"
-  Style="Text"/> for a description.
+  are specified in a different way, see 
+  <Ref Func="NilpotentQuotient" Style="Text"/> for a description.
 
   <P/>
   This notation can also be used in words that mix group and identical
@@ -915,7 +915,7 @@ f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f3^-1*f2^-1*f1^
      returns a string in the input format of the ANU NQ.  If the list
      <F>idgens</F> is present, then it must contain generators of the
      free group underlying the finitely presented group (see <Ref
-     BookName="ref" Label="FreeGroupOfFpGroup" Style="Text"/>).  The generators in
+     BookName="ref" Oper="FreeGroupOfFpGroup"/>).  The generators in
      <F>idgens</F> are treated as identical generators.
      <Example>
 <![CDATA[
@@ -993,13 +993,13 @@ gap> Print( last );
      <ManSection>
      <Func Name="NqElementaryDivisors" Arg="int-mat" />
      <Description>
-     The function <Ref BookName="ref" Label="ElementaryDivisorsMat"
-     Style="Text"/> only returns the non-zero elementary divisors of
-     an integer matrix.  This function computes the elementary
-     divisors of <F>int-mat</F> and adds the appropriate number of
-     zeroes in order to make it easier to recognize the isomorphism type
-     of the abelian group presented by the integer matrix.  At the
-     same time ones are stripped from the list of elementary divisors.
+     The function <Ref BookName="ref" Oper="ElementaryDivisorsMat"/>
+     only returns the non-zero elementary divisors of an integer
+     matrix.  This function computes the elementary divisors of
+     <F>int-mat</F> and adds the appropriate number of zeroes in order
+     to make it easier to recognize the isomorphism type of the
+     abelian group presented by the integer matrix.  At the same time
+     ones are stripped from the list of elementary divisors.
      </Description>
      </ManSection>
   </Section>
@@ -1058,8 +1058,8 @@ gap> NqDefaultOptions;
   <Section><Heading>Diagnostic Output</Heading>
   While the standalone program is running it can be asked to display
   progress information.  This is done by setting the info class
-  <C>InfoNQ</C> to <M>1</M> via the function <Ref BookName="ref"
-  Label="SetInfoLevel" Style="Text"/>.
+  <C>InfoNQ</C> to <M>1</M> via the function 
+  <Ref BookName="ref" Oper="SetInfoLevel" />.
 <Example>
 gap> NilpotentQuotient(FreeGroup(2),5);
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
@@ -1224,7 +1224,7 @@ need not be a left 5-Engel element.
   additional parameters.  For example, if you have installed GNU MP
   yourself in your home directory, you would type something like the
   following
-  <Listing> make GNU_MP_INC=/home/me/gmp-2.0.2 GNU_MP_LIB=/home/me/gmp-2.0.2 </Listing>
+  <Listing> make GNU_MP_INC=/home/me/gmp-4.1.1 GNU_MP_LIB=/home/me/gmp-4.1.1 </Listing>
 
   <P/> A compiled version of the program named `nq' is then placed
   into the directory `bin/&tlt;complicated name&tgt;'.  The
