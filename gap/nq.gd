@@ -20,7 +20,7 @@ DeclareGlobalVariable( "NqGlobalVariables" );
 DeclareGlobalVariable( "NqDefaultOptions" );
 DeclareGlobalVariable( "NqOneTimeOptions" );
 DeclareGlobalVariable( "NqRuntime" );
-DeclareGlobalVariable( "NqOutput" );
+DeclareGlobalVariable( "NqGapOutput" );
 
 DeclareOperation( "LowerCentralFactors", [ IsObject, IsPosInt ] );
 

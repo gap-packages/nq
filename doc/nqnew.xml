@@ -437,7 +437,7 @@
   <P/>Evaluation of an expression tree is done recursively and
   requires as many operations as there are nodes in the tree.  An
   expression tree can be evaluated in a specific group by the function
-  <Ref Func="EvaluateExpTree" Style="Text">.
+  <Ref Func="EvaluateExpTree" Style="Text"/>.
 
   <P/>A presentation specified by expression trees is a record with
   the components <F>.generators</F> and <F>.relations</F>.  See 
@@ -516,7 +516,7 @@ rec( generators := [ x1, x2 ],
 
   </Section>
 
-  <Section><Heading>The input format of the standalone</Heading>
+  <Section><Heading>The input format of the standalone</Heading><Label Name="InputForm"/>
 
 The input format for finite presentations resembles the way many
 people write down a presentation on paper.  Here are some examples of
@@ -554,6 +554,14 @@ and finishes at the end of the line.  The file src/presentation.c
 contains a complete grammar for the presentations accepted by the ANU
 NQ.
 
+
+Typically, the input for the standalone is put into a file by using a
+standard text editor.  The file can be passed as an argument to the
+function <Ref Func="NilpotentQuotient" Style="Text"/>.  It is also
+possible to put a presentation in the standalone's input format into a
+string and use the string as argument for <Ref
+Func="NilpotentQuotient" Style="Text"/>.
+
   </Section>
   </Chapter>  
 
@@ -565,19 +573,25 @@ NQ.
 
         <ManSection>
         <Func Name="NilpotentQuotient" 
-              Arg="[output-file,] fp-group [, id-gens] [, c]"/>
-        <Func Name="NilpotentQuotient" 
-              Arg="[output-file,] input-file [, c]"/>
-        <Description>
-           The   parameter  <F>fp-group</F>   is  either   a  finitely
-           presented group  or a  record specifying a  presentation by
+              Arg="[output-file,] fp-group [, id-gens] [, c]"/>   
+
+        <Func Name="NilpotentQuotient"
+              Arg="[output-file,] input-file [,c]"/> 
+
+         <Description>
+           The parameter <F>fp-group</F> is either a finitely
+           presented group or a record specifying a presentation by
            expression trees (see section <Ref Sect="ExpTrees"/>).  The
            parameter <F>input-file</F> is a string specifying the name
-           of  a file containing  a finite  presentation in  the input
-           format of the ANU NQ.  Let <M>G</M> be the group defined by
-           <F>fp-group</F> or the group defined in <F>input-file</F>.
+           of a file containing a finite presentation in the input
+           format (cf. section <Ref Label="InputForm"/>) of the ANU
+           NQ.  Such a file can be prepared by a text editor or with
+           the help of the function <Ref Func="NqStringFpGroup"
+           Style="Text"/>. 
 
-           <P/> The function computes a nilpotent presentation for
+           <P/> Let <M>G</M> be the group defined by <F>fp-group</F>
+           or the group defined in <F>input-file</F>.  The function
+           computes a nilpotent presentation for
            <M>G/\gamma_{c+1}(G)</M> if the optional parameter <F>c</F>
            is specified.  If <F>c</F> is not given, then the function
            attempts to compute the largest nilpotent quotient of
@@ -593,7 +607,8 @@ NQ.
            generators.
 
            <P/> In addition to the arguments explained above, the
-           function accepts the following options:
+           function accepts the following options as shown in the
+           first example below:
 
            <List>
            <Item><Keyword>group</Keyword> This option can be used
@@ -896,6 +911,7 @@ f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f3^-1*f2^-1*f1^
 
   <Section><Heading>Auxiliary Functions</Heading>
      <ManSection>
+
      <Func Name="NqReadOutput" Arg="stream" />
      <Description>
      The only argument <F>stream</F> is an output stream of the ANU
@@ -904,43 +920,44 @@ f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f3^-1*f2^-1*f1^
      NQ, see <Ref Var="NqGlobalVariables" Style="Text"/>.
      </Description>
      </ManSection>
+
      <ManSection>
      <Func Name="NqStringFpGroup" Arg="fp-group [,idgens]" />
      <Description>
      The function takes a finitely presented group <F>fp-group</F> and
      returns a string in the input format of the ANU NQ.  If the list
      <F>idgens</F> is present, then it must contain generators of the
-     free group underlying the finitely presented group (see <Ref
-     BookName="ref" Oper="FreeGroupOfFpGroup"/>).  The generators in
+     free group underlying the finitely presented group <Ref
+     BookName="ref" Oper="FreeGroupOfFpGroup"/>.  The generators in
      <F>idgens</F> are treated as identical generators.
      <Example>
 <![CDATA[
 gap> F := FreeGroup(2);
 <free group on the generators [ f1, f2 ]>
-gap> G := F / [F.1^2, F.2^2, (F.1*F.2)^5];
+gap> G := F / [F.1^2, F.2^2, (F.1*F.2)^4];
 <fp group on the generators [ f1, f2 ]>
 gap> NqStringFpGroup( G );
-"< x1, x2 |\n    x1^2,\n    x2^2,\n    x1*x2*x1*x2*x1*x2*x1*x2*x1*x2\n>\n"
+"< x1, x2 |\n    x1^2,\n    x2^2,\n    x1*x2*x1*x2*x1*x2*x1*x2\n>\n"
 gap> Print( last );
 < x1, x2 |
     x1^2,
     x2^2,
-    x1*x2*x1*x2*x1*x2*x1*x2*x1*x2
+    x1*x2*x1*x2*x1*x2*x1*x2
 >
+gap> PrintTo( "dihedral", last2 );
+gap> NilpotentQuotient( "dihedral" );
+## Equivalent to: NilpotentQuotient( : input_file := "dihedral" );
+Pcp-group with orders [ 2, 2, 2, 2 ]
 gap> F := FreeGroup(3);
 <free group on the generators [ f1, f2, f3 ]>
 gap> H := F / [ LeftNormedComm( [F.2,F.1,F.1] ),                               
 >               LeftNormedComm( [F.2,F.1,F.2] ), F.3^7 ];
 <fp group on the generators [ f1, f2, f3 ]>
-gap> NqStringFpGroup( H, [F.3] );                                  
+gap> str := NqStringFpGroup( H, [F.3] );                                  
 "< x1, x2; x3 |\n    x1^-1*x2^-1*x1*x2*x1^-1*x2^-1*x1^-1*x2*x1^2,\n    x1^-1*x\
 2^-1*x1*x2^-1*x1^-1*x2*x1*x2,\n    x3^7\n>\n"
-gap> Print( last );
-< x1, x2; x3 |
-    x1^-1*x2^-1*x1*x2*x1^-1*x2^-1*x1^-1*x2*x1^2,
-    x1^-1*x2^-1*x1*x2^-1*x1^-1*x2*x1*x2,
-    x3^7
->
+gap> NilpotentQuotient( : input_string := str, class := 3 );
+Pcp-group with orders [ 0, 0, 7, 0, 7, 7, 7, 7, 7, 7, 7, 7 ]
 ]]>
      </Example>
      </Description>
@@ -1085,6 +1102,7 @@ Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
   <Example>
 gap> RequirePackage( "nq" );
 true
+gap> SetInfoLevel( InfoNQ, 1 );
 gap> ##
 gap> ##  setup calculation
 gap> ##
@@ -1097,13 +1115,15 @@ gap> ##  define the group for n = 2,3,4,5
 gap> ##
 gap> 
 gap> rengel := LeftNormedComm( [a,x,x] );
-[ a, x, x ]
+Comm( a, x, x )
 gap> G := rec( generators := et, relations := [rengel] );
-rec( generators := [ a, b, x ], relations := [ [ a, x, x ] ] )
+rec( generators := [ a, b, x ], relations := [ Comm( a, x, x ) ] )
 gap> H := NilpotentQuotient( G, [x] );
+## Equivalent to:
+## NilpotentQuotient( : input_string := NqStringExpTrees( G, [x] ) )
 #I  Class 1: has 2 generators with relative orders  0 0
 #I  Class 2: 1 generators with relative orders: 0
-#I  Class 3: trivial
+#I  Class 3:
 Pcp-group with orders [ 0, 0, 0 ]
 gap> LeftNormedComm( [ H.2,H.1,H.1 ] );
 id
@@ -1127,7 +1147,7 @@ gap> H := NilpotentQuotient( G, [x] );
 #I  Class 3: 2 generators with relative orders: 0 0
 #I  Class 4: 1 generators with relative orders: 4
 #I  Class 5: 2 generators with relative orders: 2 2
-#I  Class 6: trivial
+#I  Class 6: 
 Pcp-group with orders [ 0, 0, 0, 0, 0, 4, 2, 2 ]
 gap> LeftNormedComm( [ H.1,H.2,H.2,H.2 ] );
 id
@@ -1152,7 +1172,7 @@ gap> H := NilpotentQuotient( G, [x] );
 #I  Class 6: 5 generators with relative orders: 5 10 2 0 30
 #I  Class 7: 5 generators with relative orders: 5 2 5 5 5
 #I  Class 8: 1 generators with relative orders: 5
-#I  Class 9: trivial
+#I  Class 9: 
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 12, 0, 5, 10, 2, 0, 30, 
   5, 2, 5, 5, 5, 5 ]
 gap> LeftNormedComm( [ H.1,H.2,H.2,H.2,H.2 ] );
@@ -1162,7 +1182,7 @@ g9*g10^2*g11^10*g12^5*g13^2*g14^8*g15*g16^6*g17^10*g18*g20^4*g21^4*g22^2*g23^2
 gap> Order( h );
 60
 </Example>
-The last calculation shows that in a nilpotent group without
+The previous calculation shows that in a nilpotent group without
 <M>2,3,5</M>-torsion a right 4-Engel element is left 4-Engel. 
 <Example>
 gap> rengel := LeftNormedComm( [a,x,x,x,x,x] );
@@ -1182,7 +1202,7 @@ gap> H := NilpotentQuotient( G, [x] );
 #I  Class 9: 19 generators with relative orders: 3 3 3 2 204 6 6 0 10 10 10 2 2 2 
 0 300 0 0 18
 #I  Class 10: 9 generators with relative orders: 3 5 2 2 2 2 18 1519 3
-#I  Class 11: trivial
+#I  Class 11: 
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 30, 
   0, 0, 30, 0, 3, 6, 0, 0, 10, 30, 0, 0, 0, 0, 30, 30, 0, 0, 3, 6, 5, 2, 0, 
   2, 408, 2, 0, 0, 0, 10, 10, 30, 10, 0, 0, 0, 3, 3, 3, 2, 204, 6, 6, 0, 10, 
@@ -1209,18 +1229,20 @@ need not be a left 5-Engel element.
 
   Installation of the ANU NQ is done in two steps.  First the
   configure script is run:
-  <Listing> ./configure  </Listing>
+  <Listing Type="Installation"> ./configure  </Listing>
   Among other things it will check whether it succeeds in locating
   the GNU MP library and the corresponding include files.  If
   configure reports no problems, the next step is to start the
   compilation:
-  <Listing> make </Listing>
+  <Listing Type="Installation"> make </Listing>
   If the configure script told you that it could not find the GNU MP
   include files or the GNU MP libraries, you have to run make with
   additional parameters.  For example, if you have installed GNU MP
   yourself in your home directory, you would type something like the
   following
-  <Listing> make GNU_MP_INC=/home/me/gmp-4.1.1 GNU_MP_LIB=/home/me/gmp-4.1.1 </Listing>
+  <Listing Type="Installation"> 
+  make GNU_MP_INC=/home/me/gmp-4.1.1 GNU_MP_LIB=/home/me/gmp-4.1.1/.libs
+  </Listing>
 
   <P/> A compiled version of the program named `nq' is then placed
   into the directory `bin/&tlt;complicated name&tgt;'.  The
@@ -1239,7 +1261,7 @@ need not be a left 5-Engel element.
   <P/> After the compilation is finished you can check if the ANU NQ
   is running properly on your system.  Simply type
 
-  <Listing> make test </Listing>
+  <Listing Type="Installation"> make test </Listing>
   
   The file runs some computations and compares their output with the
   output files in the directory `examples'.  If testNq reports any
@@ -1248,7 +1270,7 @@ need not be a left 5-Engel element.
   <P/>The installation is completed by compiling the manual of the
   package.  This is done from within <Package>GAP</Package>.
 
-  <Listing>
+  <Listing Type="Installation">
 gap> NqBuildManual();
 Composing XML document . . .
 Parsing XML document . . .

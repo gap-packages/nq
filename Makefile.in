@@ -10,8 +10,8 @@
 ##
 BINDIR=bin/@target@-@BASECC@
 GAP_ROOT=$(PWD)/../..
-GNU_MP_LIB=.
 GNU_MP_INC=.
+GNU_MP_LIB=$(GNU_MP_INC)
 
 all: compile
 

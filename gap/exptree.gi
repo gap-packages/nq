@@ -167,10 +167,10 @@ ExpTreePrintFunctions[ ExpTreeNodeTypes.Comm ] := function( stream, t )
     local   saveFlag;
     
     if not ExpTreePrintingLeftNormed then
-        if NqOutput then
-            PrintTo( stream, "[ " );
-        else
+        if NqGapOutput then
             PrintTo( stream, "Comm( " );
+        else
+            PrintTo( stream, "[ " );
         fi;
     fi;
 
@@ -183,10 +183,10 @@ ExpTreePrintFunctions[ ExpTreeNodeTypes.Comm ] := function( stream, t )
     PrintTo( stream, t!.right );
 
     if not ExpTreePrintingLeftNormed then
-        if NqOutput then
-            PrintTo( stream, " ]" );
-        else
+        if NqGapOutput then
             PrintTo( stream, " )" );
+        else
+            PrintTo( stream, " ]" );
         fi;
     fi;
 end;
@@ -228,7 +228,10 @@ end;
 
 InstallMethod( PrintObj, [IsExprTree], function( t )
 
+    NqGapOutput := true;
     Print( String( t ) );
+    NqGapOutput := false;
+
 end );
 
 InstallMethod( Display, [IsExprTree], Print );

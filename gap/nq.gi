@@ -40,8 +40,8 @@ MakeReadOnlyGlobal( "NqRuntime" );
 ##
 #V  NqOutput
 ##
-MakeReadWriteGlobal( "NqOutput" );
-NqOutput := false;
+MakeReadWriteGlobal( "NqGapOutput" );
+NqGapOutput := false;
 
 #############################################################################
 ##
@@ -298,7 +298,7 @@ function( arg )
 
     G      := arg[1];
     idgens := [];
-    if Lenght( arg ) = 2 then idgens := arg[2]; fi;
+    if Length( arg ) = 2 then idgens := arg[2]; fi;
 
     F     := FreeGroupOfFpGroup( G );
     fgens := GeneratorsOfGroup( F );
@@ -358,11 +358,11 @@ end );
 ##
 InstallGlobalFunction( NqStringExpTrees,
 function( arg )
-    local   G,  idgens,  fgens,  str,  NqOutput,  g,  r;
+    local   G,  idgens,  fgens,  str,  g,  r;
 
     G      := arg[1];
     idgens := [];
-    if Lenght( arg ) = 2 then idgens := arg[2]; fi;
+    if Length( arg ) = 2 then idgens := arg[2]; fi;
 
     fgens := G.generators;
 
@@ -381,7 +381,6 @@ function( arg )
     
     # Set flag to signal the print functions (which are called by String)
     # that we want commutators in square bracket.  I don't like that hack. 
-    NqOutput := true;
     str := "";
     Append( str, "< " );
     
@@ -414,7 +413,6 @@ function( arg )
     Append( str, "\n>\n" );
 
     # reset flag
-    NqOutput := false;
     return str;
 end );
 
