@@ -8,15 +8,21 @@
                           The title page
                                                                       -->
   <TitlePage>                                           <!-- REQUIRED -->
-    <Title>The ANU Nilpotent Quotient Package</Title>   <!-- REQUIRED -->
-    <Subtitle>Computing nilpotent factor groups of finitely presented
-              groups </Subtitle>                        <!-- OPTIONAL -->
+    <Title>                                             <!-- REQUIRED -->
+        <Package>NQ</Package>
+    </Title>
+    <Subtitle>                                          <!-- OPTIONAL -->
+        A &GAP; 4 Package, computing nilpotent factor
+        groups of finitely presented groups.
+        <Package>NQ</Package> is  based on the
+        Standalone ANU Nilpotent Quotient Package.
+    </Subtitle>
     <Version>Version 2.0</Version>                      <!-- OPTIONAL -->
     <Author>Werner Nickel                               <!-- REQUIRED -->
             <Email>nickel@mathematik.tu-darmstadt.de</Email>
             <Homepage>www.mathematik.tu-darmstadt.de/~nickel</Homepage>
     </Author>
-    <Date>August 2002</Date>                            <!-- OPTIONAL -->
+    <Date>October 2002</Date>                            <!-- OPTIONAL -->
     <Abstract>                                          <!-- OPTIONAL -->
         This package takes as input a finitely presented group
         together with a positive integer <M>c</M>.  It computes a
@@ -27,14 +33,14 @@
         &copyright; 1992-2002 Werner Nickel.
     </Copyright>
     <Acknowledgements>                                  <!-- OPTIONAL -->
-        We acknowledge the help of all people who have supported the
+        We acknowledge the help of . . . with the 
+<!-- Namen angeben! -->
         development of this package.
-    </Acknowledgements>
-    <Colophon>                                          <!-- OPTIONAL -->
         This documentation was prepared with the
         <Package>gapdoc</Package> package by Frank Lübeck and Max
-        Neunhöffer.</Colophon> 
-  </TitlePage>
+        Neunhöffer.
+    </Acknowledgements>
+    </TitlePage>
 
 
 
@@ -59,13 +65,13 @@
   the lower central series of the group.  These factor groups are
   computed in terms of a polycyclic presentation.
 
-  <P/>  It  is  implemented   in  the  programming  language  C.   The
+  <P/> The ANU NQ is implemented  in  the programming language  C. The
   implementation has been developed in  a Unix environment and Unix is
   currently the only operating system  supported.  It runs on a number
   of different Unix versions, e.g.  Solaris and Linux.
 
   <P/> For integer matrix computations it relies on the GNU MP package
-  and requires this ackage to be installed on your system.  
+  and requires this package to be installed on your system.  
   
   <P/> This package relies  on the functionality for polycyclic groups
   provided  by the  &GAP; package  <Package>polycyclic</Package> <Cite
@@ -102,9 +108,9 @@
   <Index>commutator</Index> The <E>commutator</E> of two elements
   <M>h_1</M> and <M>h_2</M> of a group <M>G</M> is the element
   <M>h_1^{-1}h_2^{-1}h_1h_2</M> and is denoted by <M>[h_1,h_2]</M>.
-  It is defined by the equation <M>h_1h_2 = h_2h_1[h_1,h_2]</M> and
+  It satisfies the equation <M>h_1h_2 = h_2h_1[h_1,h_2]</M> and
   can be interpreted as the correction term that has to be introduced
-  into an equation if two elements of a group are interchanged.
+  into a word if two elements of a group are interchanged.
   Iterated commutators are written in <E>left-normed fashion</E>:
   <Index>left-normed commutator</Index>
   <M>[h_1,h_2,\ldots,h_{n-1},h_n]=[[h_1,h_2,\ldots,h_{n-1}],h_n]</M>.
@@ -112,8 +118,9 @@
   <P/> 
   <Index>lower central series</Index>
   The <E>lower central series</E> of <M>G</M> is defined inductively
-  as <M>G_1 = G, G_i = [G_{i-1},G]</M>.  Each term in the lower
-  central series is a normal (even invariant) subgroup of <M>G</M>.
+  as <M>G_1 = G, G_i = [G_{i-1},G]</M> for <M>i &ge; 2</M>.
+  Each term in the lower central
+  series is a normal (even fully invariant) subgroup of <M>G</M>.
   The factors of the lower central series are abelian groups.  On each
   factor the induced action of <M>G</M> via conjugation is the trivial
   action.
@@ -132,7 +139,7 @@
   subsequent factors are finite.  Then the exponent of the
   <M>k+1</M>-th factor is a divisor of the exponent of the <M>k</M>-th
   factor of the lower central series.  In particular, the exponents of
-  all factors of the lower central series are a priori bounded by the
+  all factors of the lower central series are bounded by the
   exponent of the first finite factor of the lower central series.
   </Section>
 
@@ -145,7 +152,8 @@
   called the 
   <Index>nilpotency class</Index><Index>class</Index>
   <E>nilpotency class</E> of <M>G</M>.  In terms of the lower
-  central series <M>G</M> has nilpotency class <M>c</M> if and only if
+  central series a group <M>G &ne; 1</M> has nilpotency class <M>c</M>
+  if and only if
   <M>G_{c} \not= 1</M> and <M>G_{c+1} = 1</M>.
 
   <P/>Examples of nilpotent groups are finite <M>p</M>-groups, the
@@ -156,7 +164,7 @@
   <P/>Finiteness of a nilpotent group can be decided by the group's
   commutator factor group.  A nilpotent group is finite if and only if
   its commutator factor group is finite.  A group whose commutator
-  factor group is finite can only have finite nilpotent quotients
+  factor group is finite can only have finite nilpotent quotient
   groups.
 
   <P/> By refining the lower central series of a finitely generated
@@ -166,7 +174,8 @@
   <Index>polycyclic</Index><E>polycyclic</E>.  Such a <E>polycyclic
   series</E> gives rise to a <Index>polycyclic generating
   sequence</Index> polycyclic generating sequence by choosing a
-  generator <M>a_i</M> for each cyclic factor.  Let <M>I</M> be the
+  generator <M>a_i</M> for each cyclic factor <M>G_i/G_{i+1}</M>.
+  Let <M>I</M> be the
   set of indices such that <M>G_i/G_{i+1}</M> is finite.  A simple
   induction argument shows that every element of the group can be
   written uniquely as a <E>normal word</E> <M>a_1^{e_1}\ldots
@@ -200,7 +209,7 @@
   presentation has the form
   <Display>
   \langle a,\ldots,a_n | 
-      a^{m_i}   = w_{ii}(a_{i+1},\ldots,a_n) 
+      a_i^{m_i}   = w_{ii}(a_{i+1},\ldots,a_n) 
                  \mbox{ for } i\in I;\; 
       [a_j,a_i] = w_{ij}(a_{j+1},\ldots,a_n)
                  \mbox{ for } 1\leq i &lt; j\leq n\rangle
@@ -223,24 +232,26 @@
 
   <Display>\langle a,b\mid a^2, b^a = b^2 \rangle </Display> 
 
-  as <M>b = baa = ab^2a = ab^4</M> which implies <M>b^3=1</M>.  Here
+  as <M>b = baa = ab^2a = b^4</M> which implies <M>b^3=1</M>.  Here
   we have the equivalent normal words <M>b^3</M> and the empty word.
-  Consistency can be checked by collecting a finite number of words in
+  It can be proved that consistency can be checked by collecting a
+  finite number of words in
   the given generating set in two essentially different ways and
   checking if the resulting normal forms are the same in both cases.
   See Chapter 9 of the book <Cite Key="Sims94"/> for an introduction
-  to polycyclic groups ans polycyclic presentations.
+  to polycyclic groups and polycyclic presentations.
 
   <P/>For computations in a polycyclic group one chooses a consistent
   polycyclic presentation as it offers a simple solution to the word
   problem: Equality between two words is decided by collecting both
   words to their respective normal forms and comparing the normal
   forms.  Nilpotent groups and nilpotent presentations are special
-  cases of polycyclic groups and polycyclic presentations.  The
+  cases of polycyclic groups and polycyclic presentations.  Nilpotent
+  presentations allow specially efficient collection methods.  The
   package <Package>Polycyclic</Package> provides algorithms to compute
   with polycyclic groups given by a polycyclic presentation.
 
-  <P/>However, inconsistent nilpotent presentation arise naturally in
+  <P/>However, inconsistent nilpotent presentations arise naturally in
   the nilpotent quotient algorithm.  There is an algorithm based on
   the test words for consistency mentioned above to modify the arising
   inconsistent presentations suitably to obtain a consistent one for
@@ -276,7 +287,7 @@
   power and commutator relations.  The resulting presentation is a
   nilpotent presentation for the <E>nilpotent cover</E> of
   <M>G/G_{c+1}</M>.  The nilpotent cover is the largest central
-  extension generated of <M>G/G_{c+1}</M> generated by <M>d</M>
+  extension of <M>G/G_{c+1}</M> generated by <M>d</M>
   elements.  It is is uniquely determined up to isomorphism.
   
   <P/>The presentation of the nilpotent cover is in general
@@ -322,14 +333,14 @@
   <P/> Common examples of identical relations are: A group of
   nilpotency class at most <M>c</M> satisfies the law
   <M>[x_1,\ldots,x_{c+1}]</M>.  A group that satisfies the law
-  <M>[x,y,\ldots,y]</M> where the <M>y</M>s occur <M>n</M>-times, is
+  <M>[x,y,\ldots,y]</M> where <M>y</M> occurs <M>n</M>-times, is
   called an <M>n</M>-Engel group.  A group that satisfies the law
   <M>x^d</M> is a Burnside group of exponent <M>d</M>.
 
   <P/>
   We describe finitely presented groups that satisfy one or more laws
   by specifying the identical generators as part of the generator
-  list, seperated from the group generators by a semicolon: For
+  list, separated from the group generators by a semicolon: For
   example
   <Display>
   \langle a,b,c; x,y | x^5, [x,y,y,y]\rangle
@@ -356,7 +367,7 @@
   <Section Label="ExpTrees"><Heading>Expression trees</Heading>
   Expressions involving commutators play an important role in the
   context of nilpotent groups.  Expanding an iterated commutator
-  produces complicated and long expression.  For example, 
+  produces a complicated and long expression.  For example, 
   <Display>
             [x,y,z] = y^{-1}x^{-1}yxz^{-1}x^{-1}y^{-1}xyz.
   </Display>
@@ -394,7 +405,7 @@
   be extended.
 
   <P/>Evaluation of an expression tree is done recursively and
-  requires a many operations as there are nodes in the tree.
+  requires as many operations as there are nodes in the tree.
 
   <P/>A presentation specified by expression trees is a record with
   the components <F>.generators</F> and <F>.relations</F>.
@@ -422,15 +433,15 @@ rec( generators := [ x1, x2 ],
   have difficulties with porting it to a new environment, let me know
   and I'll be hapy to assist if time permits.
 
-  <P/>The program has to collectors:  a simple collector from the left
-  as described in <Cite Key="LS90"/> and a combinatorial from the lect
+  <P/>The program has two collectors:  a simple collector from the left
+  as described in <Cite Key="LS90"/> and a combinatorial from the left
   collector as described in <Cite Key="VL90a"/>.  The combinatorial
   collector is always faster than the simple collector, therefore, it
   is the collector used by this package by default.  This can be
   changed by modifying the global variable <Ref Var="NqDefaultOptions"
   Style="Text"/>.
 
-  <P/>In a polycyclic group with generators that do not have a power
+  <P/>In a polycyclic group with generators that do not have power
   relations, exponents may become arbitrarily large.  Experience shows
   that this happens rarely in the computations done by the ANU NQ.
   Exponents are represented by 32-bit integers.  The collectors
@@ -446,13 +457,13 @@ rec( generators := [ x1, x2 ],
   multiple precision package GNU MP (reference!!!).  Experience shows
   that the integer matrices are usually fairly sparse and Kanan-Bachem
   seems to be sufficient in this context.  However, the implementation
-  might benefit from a more effiecient strategy for computing Hermite
+  might benefit from a more efficient strategy for computing Hermite
   Normal Forms.  This is a topic for further investigations.
 
   <P/>As the program does not compute the Smith Normal Form for each 
-  factors of the lower central series but only the Hermite Normal
-  Form, it does not obtain a smallest generating are not given on a
-  minimal set.
+  factor of the lower central series but only the Hermite Normal
+  Form, it does not obtain a smallest generating set.
+  <!-- Der letzte Satz war vestuemmelt. Ist die Rekonstruktion ok? -->
 
   </Section>
 
@@ -523,12 +534,12 @@ Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 10,
               Arg="[output-file,] fp-group [, id-gens] [, c]"/>
         <Description>
            This function computes an epimorphism from the group
-           <M>G</M> given by the finite presnetation <F>fp-group</F>
+           <M>G</M> given by the finite presentation <F>fp-group</F>
            onto <M>G/G_{c+1}.</M> If <F>c</F> is not given, then the
            largest nilpotent quotient of <M>G</M> is computed and an
            epimorphism from <M>G</M> onto the largest nilpotent
            quotient of <F>G</F>.  If <F>G</F> does not have a largest
-           nilotent quotient, the function will not terminate if
+           nilpotent quotient, the function will not terminate if
            <F>c</F> is not given.
            
            <P/> The optional argument <F>id-gens</F> is a list of
