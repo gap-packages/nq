@@ -1,3 +1,9 @@
+##############################################################################
+##
+##    Makefile                      NQ                         Werner Nickel
+##
+##    $Id$
+##
 
 all:
 	(cd src; make)
@@ -5,3 +11,13 @@ all:
 	@if test ! -d bin/@GAPARCH@;  then mkdir bin/@GAPARCH@; fi
 	mv src/nq bin/@GAPARCH@/
 	(cd doc; make)
+
+clean:
+	rm Makefile
+	(cd src; make clean)
+	(cd doc; make clean)
+
+spotless:
+	rm Makefile
+	(cd src; make spotless)
+	(cd doc; make spotless)
