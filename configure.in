@@ -30,3 +30,4 @@ AC_TYPE_SIGNAL
 AC_CHECK_FUNCS(gethostname)
 
 AC_OUTPUT(Makefile)
+
