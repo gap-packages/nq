@@ -78,7 +78,7 @@ int     EarlyStop;
 **    be printed to a file.  
 */
 int     RawMatOutput;
-FILE    *RawMatFile;
+FILE    *RawMatFile = NULL;
 
 
 large   ltom( n )
@@ -319,7 +319,7 @@ expvec  *MatrixToExpVecs() {
             TimeOutOff();
             if( Gap ) printGapMatrix( (expvec*)0 );
             if( AbelianInv ) outputMatrix( (expvec*)0, "abinv" );
-            if( RawMatOutput ) fclose( RawMatFile );
+            if( RawMatOutput && RawMatFile != NULL ) fclose( RawMatFile );
             TimeOutOn();
             return (expvec*)0;
         }
