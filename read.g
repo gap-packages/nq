@@ -6,13 +6,12 @@
 ##
 
 ##
-##    Read the actual code.  When this file is read, it has been tried to
-##    load ``polycyc''.  Therefore we can use RequirePackage() to check if
-##    ``polycyc'' is available.
+##    Read the actual code.  See if we have the package 'polycyclic' or
+##    not.  We need at least version 1.0.
 ##
 ReadPkg("nq", "gap/nq.gd");
 
-if RequirePackage( "polycyc" ) = true then
+if TestPackageAvailability( "polycyclic", "1.0" ) <> fail then
 
     ReadPkg("nq", "gap/nqpcp.gi");
 

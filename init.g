@@ -5,7 +5,9 @@
 ##    @(#)$Id$
 ##
 
-RequirePackage( "polycyc" );
+if TestPackageAvailability( "polycyclic", "1.0" ) <> fail then
+    RequirePackage( "polycyclic" );
+fi;
 
 ##
 ##    Announce the package version and test for the existence of the binary.
@@ -28,5 +30,5 @@ DeclarePackage( "nq", "1.3",
 end );
 
 # install the documentation
-DeclarePackageDocumentation( "nq", "doc" );
+#DeclarePackageDocumentation( "nq", "doc" );
 

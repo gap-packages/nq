@@ -67,4 +67,5 @@ end );
 ##
 #F  NqPcpElementByWord  . . . . . .  pcp element from generator exponent list
 ##
-InstallGlobalFunction( NqPcpElementByWord, PcpElementByWord );
+InstallGlobalFunction( "NqPcpElementByWord",
+        function( coll, w ) return PcpElementByGenExpList( coll, w ); end );

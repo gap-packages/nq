@@ -36,4 +36,4 @@ end );
 ##
 #F  NqPcpElementByWord  . . . . . .  pcp element from generator exponent list
 ##
-InstallGlobalFunction( NqPcpElementByWord, x->Ignore(x) );
+InstallGlobalFunction( NqPcpElementByWord, Ignore );
