@@ -15,7 +15,7 @@ CFLAGS = $(OPTS) -I$(GNUINC) -DVERSION='"1.1e, 04 Aug 1994"'
 
 OBJ = consistency.o pc.o relations.o word.o system.o \
       addgen.o tails.o eliminate.o engel.o glimt.o \
-      presentation.o mem.o pcarith.o collect.o
+      presentation.o mem.o pcarith.o collect.o trmetab.o
 
 nq : nq.o $(OBJ) $(GNULIB)
 	$(CC) $(CFLAGS) nq.o $(OBJ) $(GNULIB) -o nq
