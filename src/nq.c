@@ -113,7 +113,7 @@ char	*argv[];
 	while( argc > 0 && argv[0][0] == '-' ) {
 	    if( argv[0][2] != '\0' ) {
 		fprintf( stderr, "unknown option: %s\n", argv[0] );
-		usage( NULL );
+		usage( (char *)0 );
 	    }
 	    switch( argv[0][1] ) {
 		case 'r': if( --argc <= 1 ) usage("-r requires an argument");
@@ -184,7 +184,7 @@ char	*argv[];
                 case 'E': revEngel = !revEngel;
                         break;
                 default : fprintf( stderr, "unknown option: %s\n", argv[0] );
-			  usage( NULL );
+			  usage( (char *)0 );
 			break;
 	    }
 	    argc--; argv++;
@@ -198,7 +198,7 @@ char	*argv[];
 		     Cl = atoi( argv[1] );
 		     if( Cl <= 0 ) usage( "<class> must be positive." );
 		 break;
-	    default: usage( NULL );
+	    default: usage( (char *)0 );
 		 break;
 	}
 	

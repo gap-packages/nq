@@ -21,14 +21,18 @@ void	NqEvalRelations() {
 
 	r = FirstRelation();
 	while( !EarlyStop && r != (node *)0 ) {
+          if( Verbose ) {
+            printf( "#    Evaluating: " );
+            PrintNode( r ); printf( "\n" );
+          }
           if( (w = (word)EvalNode( r )) != (void *)0 ) {
             ev = ExpVecWord( w );
             addRow( ev );
           }
           else {
-            printf( "Could not evaluate the following relation\n" );
-	    PrintNode( r );
-            printf( "\n" );
+            printf( "Evaluation " );
+	    if( !Verbose ) { printf( "of " ); PrintNode( r ); }
+            printf( "failed.\n" );
           }
           r = NextRelation();
 	}
@@ -55,14 +59,14 @@ void	InitEpim() {
 
 	/* Initialize Exponent[]. */
 	Exponent = (exp*) calloc( (NrCenGens+1), sizeof(exp) );
-	if( Exponent == NULL ) {
+	if( Exponent == (exp*)0 ) {
 	    perror( "initEpim(), Exponent" );
 	    exit( 2 );
 	}
 
 	/* Initialize Commute[]. */
 	Commute = (gen*)malloc( (NrCenGens+1) * sizeof(gen) );
-	if( Commute == NULL ) {
+	if( Commute == (gen*)0 ) {
 	    perror( "initEpim(), Commute" );
 	    exit( 2 );
 	}
@@ -70,13 +74,13 @@ void	InitEpim() {
 
 	/* initialize the epimorphism onto the pc-presentation. */
 	Image = (word*)malloc( (nrGens+1)*sizeof(word) );
-	if( Image == NULL ) {
+	if( Image == (word*)0 ) {
 	    perror( "initEpim(), Image" );
 	    exit( 2 );
 	}
 	for( i = 1; i <= nrGens; i++ ) {
 	    Image[i] = (word)malloc( 2*sizeof(struct gpower) );
-	    if( Image[i] == NULL ) {
+	    if( Image[i] == (word)0 ) {
 		perror( "initEpim(), Image[]" );
 		exit( 2 );
 	    }
@@ -178,7 +182,7 @@ void	ElimEpim() {
 	M = MatrixToExpVecs();
 
 	renumber = (gen*) malloc( (NrCenGens+1) * sizeof(gen) );
-	if( renumber == NULL ) {
+	if( renumber == (gen*)0 ) {
 	    perror( "ElimEpim(), renumber" );
 	    exit( 2 );
 	}
@@ -201,14 +205,14 @@ void	ElimEpim() {
 	/* allocate memory for Power[], note that n is the number of
 	   generators to be eliminated. */
 	Power = (word*) malloc( (NrCenGens-n+1) * sizeof(word) );
-	if( Power == NULL ) {
+	if( Power == (word*)0 ) {
 	    perror( "ElimEpim(), Power" );
 	    exit( 2 );
 	}
 
 	/* allocate memory for Definition[]. */
 	Definition = (def*)malloc( (NrCenGens-n+1)*sizeof(def) );
-	if( Definition == NULL ) {
+	if( Definition == (def*)0 ) {
 	    perror( "ElimEpim(), Definition" );
 	    exit( 2 );
 	}
@@ -227,7 +231,7 @@ void	ElimEpim() {
 
 	    /* From here on we have that  h = Heads[i]. */
 	    w = (word)malloc( (NrCenGens+1-h)*sizeof(gpower) );
-	    if( w == NULL ) {
+	    if( w == (word)0 ) {
 		perror( "ElimEpim(), w" );
 		exit( 2 );
 	    }
@@ -280,7 +284,7 @@ void	PrintEpim() {
 
 	long	i, nrGens;
 
-	if( Image == NULL ) {
+	if( Image == (word*)0 ) {
 	    printf( "#    No map set.\n" );
 	    return;
 	}
