@@ -1,23 +1,44 @@
 ##############################################################################
 ##
-##    Makefile                      NQ                         Werner Nickel
+##    Makefile.in                     NQ                         Werner Nickel
 ##
 ##    $Id$
 ##
 
-all:
+##
+##    Values imported from the configure script
+##
+BINDIR=bin/@target@-@CC@
+GAP_ROOT=../..
+
+all: compile manual
+
+compile:
 	(cd src; make)
 	@if test ! -d bin;  then mkdir bin; fi
-	@if test ! -d bin/@GAPARCH@;  then mkdir bin/@GAPARCH@; fi
-	mv src/nq bin/@GAPARCH@/
-	(cd doc; make)
+	@if test ! -d $(BINDIR);  then mkdir $(BINDIR); fi
+	mv src/nq $(BINDIR)
+
+manual:
+	@if test ! -r $(GAP_ROOT)/sysinfo.gap; then \
+	    echo "";							  \
+	    echo "    Cannot locate the (main) GAP root directory.";      \
+	    echo "    Determine the directory first and then run";        \
+	    echo "    make again with the GAP root directory specified."; \
+	    echo "";							  \
+	    echo "    usage: make [ GAP_ROOT=<gap-root>]";		  \
+	    echo "";							  \
+	    exit 1;                                                       \
+	else                                                              \
+	    (cd doc; make GAP_ROOT=$(GAP_ROOT))                           \
+	fi
 
 clean:
-	rm Makefile
 	(cd src; make clean)
 	(cd doc; make clean)
 
 spotless:
-	rm Makefile
+	rm -f *~ config.cache config.log config.status Makefile
 	(cd src; make spotless)
 	(cd doc; make spotless)
+
