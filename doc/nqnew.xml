@@ -520,7 +520,8 @@ The input format for finite presentations resembles the way many
 people write down a presentation on paper.  Here are some examples of
 presentations that the ANU NQ accepts:
 
-<Verb><![CDATA[
+<Verb>
+<![CDATA[
     < a, b | >                       # free group of rank 2
 
     < a, b, c; x, y | 
