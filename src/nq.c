@@ -89,7 +89,8 @@ void	printHeader() {
 	printf( "\n" );
 	if( Cl != 666 ) printf( "#    Nilpotency class: %d\n", Cl );
 	printf( "#    Program: %s", ProgramName );
-	printf( "     Machine: %s\n#\n", hostname );
+	printf( "     Machine: %s\n", hostname );
+        printf( "#    Size of exponents: %d bytes\n#\n", sizeof(exp) );
 }
 
 main( argc, argv )
