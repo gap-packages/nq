@@ -12,29 +12,17 @@
 DeclarePackage( "nq", "2.0",
 
   function()
-    local   is_available,  path;
-
-    is_available := TestPackageAvailability( "GAPDoc", "" );
-    if is_available = fail then
+    local   path;
+    
+    if TestPackageAvailability( "GAPDoc", "" ) = fail then
         Info( InfoWarning, 1, 
               "Loading the nq package: GAPDoc not available" );
-    elif is_available <> true then
-        HideGlobalVariables( "BANNER" );
-        BANNER := false;
-        RequirePackage( "gapdoc" );
-        UnhideGlobalVariables( "BANNER" );
     fi;
 
-    is_available := TestPackageAvailability( "polycyclic", "1.0" );
-    if is_available = fail then
+    if TestPackageAvailability( "polycyclic", "1.0" ) = fail then
         Info( InfoWarning, 1, 
               "Loading the nq package: package polycyclic must be available" );
         return fail;
-    elif is_available <> true then
-        HideGlobalVariables( "BANNER" );
-        BANNER := false;
-        RequirePackage( "polycyclic" );
-        UnhideGlobalVariables( "BANNER" );
     fi;
 
     # test for existence of the compiled binary
@@ -52,3 +40,19 @@ end );
 # install the documentation
 DeclarePackageDocumentation( "nq", "doc", "ANU NQ", 
         "Computation of nilpotent quotients" );
+
+
+if IsList( TestPackageAvailability( "polycyclic", "1.0" ) ) then
+    HideGlobalVariables( "BANNER" );
+    BANNER := false;
+    RequirePackage( "polycyclic" );
+    UnhideGlobalVariables( "BANNER" );
+fi;
+
+if IsList( TestPackageAvailability( "GAPDoc", "" ) ) then
+    HideGlobalVariables( "BANNER" );
+    BANNER := false;
+    RequirePackage( "GAPDoc", "" );
+    UnhideGlobalVariables( "BANNER" );
+fi;
+
