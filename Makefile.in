@@ -1,0 +1,7 @@
+
+all:
+	(cd src; make)
+	@if test ! -d bin;  then mkdir bin; fi
+	@if test ! -d bin/@GAPARCH@;  then mkdir bin/@GAPARCH@; fi
+	mv src/nq bin/@GAPARCH@/
+	(cd doc; make)
