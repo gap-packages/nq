@@ -7,9 +7,8 @@
 ##    The follwoing two line define the name of the GNU multiple precision
 ##    library (GNULIB) and the directory that contains the corresponding
 ##    include files (GNUINC).
-GNULIB =  /home/werner/Source/gmp-2.0.2/libmp.a \
-	  /home/werner/Source/gmp-2.0.2/libgmp.a 
-GNUINC = /home/werner/Source/gmp-2.0.2/
+GNULIB = /usr/local/lib/libmp.a /usr/local/libgmp.a 
+GNUINC = /usr/local/include
 
 CC=gcc
 OPTS = -g -O3 
