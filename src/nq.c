@@ -288,7 +288,8 @@ end:
 	PrintEpim();
 	printf( "\n\n#    The nilpotent quotient :\n");
 	PrintPcPres();
-	printf( "\n" );
+	printf( "\n\n#    The definitions:\n" );
+        PrintDefs();
 	printf( "#    total runtime : %d msec\n", RunTime() - begin );
 	printf( "#    total size    : %d byte\n", sbrk(0) - start );
 
