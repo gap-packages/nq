@@ -3,7 +3,7 @@
 #A  nq.gd                   Oktober 2002                         Werner Nickel
 ##
 ##  This file contains the declaration part of the interface to my NQ program.
-
+##
 
 DeclareGlobalFunction( "NqReadOutput" );
 DeclareGlobalFunction( "NqStringFpGroup" );
@@ -12,6 +12,7 @@ DeclareGlobalFunction( "NqInitFromTheLeftCollector" );
 DeclareGlobalFunction( "NqPcpGroupByCollector" );
 DeclareGlobalFunction( "NqPcpElementByWord" );
 DeclareGlobalFunction( "NqBuildManual" );
+DeclareGlobalFunction( "NqElementaryDivisors" );
 
 DeclareGlobalFunction( "NilpotentEngelQuotient" );
 

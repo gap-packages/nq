@@ -138,8 +138,17 @@ function( stream )
     NqRuntime := result.Runtime;
     MakeReadOnlyGlobal( "NqRuntime" );
 
-    return result;
+    if result.NrGenerators = fail then
+        Error( "nq program terminated abnormally.\n\n",
+               "To return the abelian invariants of the first ",
+               Length( result.LowerCentralFactors ), " factors of the\n",
+               "lower central series type `return;'",
+               " and `quit;' otherwise.\n\n" );
+        
+        return List( result.LowerCentralFactors, NqElementaryDivisors );
+    fi;
 
+    return result;
 end );
 
 
@@ -268,6 +277,29 @@ function( arg )
     return str;
 end );
 
+#############################################################################
+##
+#F  NqElementaryDivisors( <M> ) . . . . . . . . . . . . . elementary divisors
+##
+##  The function 'ElementaryDivisorsMat' only returns the non-zero elementary
+##  divisors  of a Matrix. Here the zeroes are  added  in  order  to  make it
+##  easier to recognize  the  isomorphism type of the abelian group presented
+##  by  the  integer  matrix. At  the  same time strip  1's from the  list of
+##  elementary divisors.
+##
+InstallGlobalFunction( NqElementaryDivisors,
+function( M )
+    local   ed,  i;
+
+    ed := ElementaryDivisorsMat( M );
+    ed := Concatenation( ed, List( [Length(ed)+1..Length(M[1])], x->0 ) );
+    i := 1;
+    while i <= Length(ed) and ed[i] = 1  do i := i+1;  od;
+    ed := ed{[i..Length(ed)]};
+
+    return ed;
+end );
+
 
 #############################################################################
 ##
@@ -308,6 +340,8 @@ function( G )
     NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -328,6 +362,8 @@ function( outfile, G )
     NqCallANU_NQ( input, output, options );
 
     nqrec := NqReadOutput( InputTextFile( outfile ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -349,6 +385,8 @@ function( infile )
     NqCallANU_NQ( input, output, options );
 
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -369,6 +407,8 @@ function( outfile, infile )
     NqCallANU_NQ( input, output, options );
 
     nqrec := NqReadOutput( InputTextFile( outfile ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -390,6 +430,8 @@ function( G )
     NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -411,6 +453,8 @@ function( G, idgens )
     NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -432,6 +476,8 @@ function( G, idgens )
     NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -453,6 +499,8 @@ function( G, cl )
     NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -473,6 +521,8 @@ function( outfile, G, cl )
     NqCallANU_NQ( input, output, options );
 
     nqrec := NqReadOutput( InputTextFile( outfile ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -494,6 +544,8 @@ function( infile, cl )
     NqCallANU_NQ( input, output, options );
 
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -514,6 +566,8 @@ function( outfile, infile, cl )
     NqCallANU_NQ( input, output, options );
 
     nqrec := NqReadOutput( InputTextFile( outfile ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -535,6 +589,8 @@ function( G, cl )
     NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -556,6 +612,8 @@ function( G, idgens, cl )
     NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -577,6 +635,8 @@ function( G, idgens, cl )
     NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
+
     coll  := NqInitFromTheLeftCollector( nqrec );
 
     return NqPcpGroupByCollector( coll, nqrec );
@@ -616,6 +676,7 @@ function( G, cl )
     CloseStream( input  );
     
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
 
     ##  First we construct the group from the collector
     coll := NqInitFromTheLeftCollector( nqrec );
@@ -649,14 +710,10 @@ function( G, cl )
     NqCallANU_NQ( input, output, options );
     
     nqrec := NqReadOutput( InputTextString( str ) );
+    if IsList( nqrec ) then return nqrec; fi;
 
-    eds := [];
-    for M in nqrec.LowerCentralFactors do
-        ed := ElementaryDivisorsMat( M );
-        ed := Concatenation( ed, List( [Length(ed)+1..Length(M[1])], x->0 ) );
-        ed := ed{[ PositionNot( ed, 1 ) .. Length(ed) ]};
-        Add( eds, ed );
-    od;
+    eds := List( nqrec.LowerCentralFactors, NqElementaryDivisors );
+
     return eds;
 end );
 

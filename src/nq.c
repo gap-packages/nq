@@ -252,6 +252,8 @@ char	*argv[];
 
 	if( Gap ) printf( "NqLowerCentralFactors := [\n" );
 
+        if( Gap ) fprintf( stderr, "#I  Class 1:" );
+
 	printf( "#    Calculating the abelian quotient ...\n" );
 	InitEpim();
 
@@ -271,22 +273,33 @@ char	*argv[];
 
 	InitPcPres();
 
+        if( Gap ) {
+          fprintf( stderr, 
+                   " has %d generators with relative orders ",
+                   Dimension[Class] ); 
+          for( g = NrPcGens-Dimension[Class]+1; g <= NrPcGens; g++ )
+            fprintf( stderr, " %d", (int)(Exponent[g]) );
+          fprintf( stderr, "\n" );
+        }
+
 	printf( "#    The abelian quotient" );
 	printf( " has %d generators\n", Dimension[Class] );
 	printf( "#        with the following exponents:" );
 	for( g = NrPcGens-Dimension[Class]+1; g <= NrPcGens; g++ )
             printf( " %d", (int)(Exponent[g]) );
-
 	printf( "\n" );
 	if(Verbose) {
-	    printf("#    runtime       : %d msec\n",RunTime()-time);
-	    printf("#    total runtime : %d msec\n",RunTime()-begin);
-	    printf("#    total size    : %d byte\n",sbrk(0)-start);
+	    printf( "#    runtime       : %d msec\n",RunTime()-time);
+	    printf( "#    total runtime : %d msec\n",RunTime()-begin);
+	    printf( "#    total size    : %d byte\n",sbrk(0)-start);
 	}
 	printf( "#\n" );
 
 	while( Class < Cl ) {
 	    time = RunTime();
+            if( Gap ) {
+              fprintf( stderr, "#I  Class %d:", Class+1 );
+            }
 	    printf( "#    Calculating the class %d quotient ...\n", Class+1 );
 
 	    AddGenerators();
@@ -305,12 +318,18 @@ char	*argv[];
 	    if( NrCenGens == 0 ) goto end;
 	    ExtPcPres();
 
+            if( Gap ) {
+              fprintf( stderr, " %d generators", Dimension[Class] );
+              fprintf( stderr, " with relative orders:" );
+              for( g = NrPcGens-Dimension[Class]+1; g <= NrPcGens; g++ )
+                fprintf( stderr, " %d", (int)(Exponent[g]) );
+              fprintf( stderr, "\n" );
+            }
 	    printf( "#    Layer %d of the lower central series", Class );
 	    printf( " has %d generators\n", Dimension[Class] );
 	    printf( "#          with the following exponents:" );
 	    for( g = NrPcGens-Dimension[Class]+1; g <= NrPcGens; g++ )
                 printf( " %d", (int)(Exponent[g]) );
-
 	    printf( "\n" );
 	    if(Verbose) {
 		printf("#    runtime       : %d msec\n",RunTime()-time);
@@ -323,6 +342,9 @@ char	*argv[];
 
 end:
 	TimeOutOff();
+        
+        if( Gap ) fprintf( stderr, " trivial\n" );
+
         if( printEpim ) {
           printf( "\n\n#    The epimorphism :\n");
           PrintEpim();

@@ -1,3 +1,10 @@
+##############################################################################
+##
+#A  exptree.gi                Oktober 2002                       Werner Nickel
+##
+##  This file contains an implementation of simple arithmetic expression that
+##  that avoid expanding an expression into a string of symbols.
+##
 
 ExpTreeNodeTypes := 
   rec( \*       := 1,
@@ -23,17 +30,38 @@ NewLeaf := function( name )
                          name := name ) );
 end;
 
+#############################################################################
+##
+#F  ExpressionTrees . . . . . . . . . . .  create leaves for expression trees
+##
+##  The function can be called in two different ways:
+## 
+##  The first argument is a positive integer:  This is the number of
+##  expression symbols to be created.  It can be followed by a strings as an
+##  optional second argument specifying the prefix for the names of the
+##  sysmbols. 
+##
+##  All arguments are strings: These are interpreted as the name of the
+##  expression symbols to be created.
+##
 ExpressionTrees := function( arg )
-    local   m,  prefix;
+    local   prefix,  m,  symbols;
     
-    m := arg[1];
-    if Length(arg) = 2 then
+    prefix := "x";
+    if Length(arg) = 1 and IsInt( arg[1] ) then
+        m := arg[1];
+        symbols := List( [1..m], i->Concatenation( prefix, String(i) ) );
+    elif Length(arg) = 2 and IsInt( arg[1] ) and IsString(arg[2]) then
+        m := arg[1];
         prefix := arg[2];
+        symbols := List( [1..m], i->Concatenation( prefix, String(i) ) );
+    elif ForAll( arg, IsString ) then
+        symbols := arg;
     else
-        prefix := "x";
+        Error( "Usage: ExpressionTrees( <n>[, <prefix>] | <symbols> )" );
     fi;
 
-    return List( [1..m], i->NewLeaf( Concatenation( prefix, String(i) ) ) );
+    return List( symbols, NewLeaf );
 end;
 
 NewIntegerLeaf := function( n )
