@@ -82,18 +82,29 @@ FILE    *RawMatFile = NULL;
 
 
 large   ltom( n )
-int     n;
+exp     n;
 
-{       char    x[20];
+{       char    x[64];
         large   l;
 
-        if( abs(n) >= 1<<15 ) {
-                sprintf( x, "%x", abs(n) );
-                l = xtom( x );
-                if( n < 0 ) NEGATE(l);
-                return l;
+        if( n < (exp)0 ) {
+#ifdef LONGLONG
+            sprintf( x, "%Lx", -n );
+#else
+            sprintf( x, "%x", -n );
+#endif
+            l = xtom( x );
+            NEGATE(l);
         }
-        else    return itom( n );
+        else {
+#ifdef LONGLONG
+            sprintf( x, "%Lx", n );
+#else
+            sprintf( x, "%x", n );
+#endif
+            l = xtom( x );
+        }
+        return l;
 }
 
 static
