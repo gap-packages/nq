@@ -1,0 +1,32 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(configure)
+
+AC_CONFIG_AUX_DIR(cnf)
+
+dnl C is the language 
+AC_LANG_C
+
+dnl determine the system name
+AC_CANONICAL_SYSTEM
+
+dnl Which C-compiler is used and export the result to the Makefile
+AC_PROG_CC
+
+dnl Checks for programs.
+
+dnl Checks for libraries.
+AC_CHECK_LIB(  mp, xtom, HAVE_GMP=yes )
+AC_CHECK_LIB( gmp, mpz_out_str, HAVE_MP=yes )
+AC_SUBST( HAVE_LIBGMP)
+AC_SUBST( HAVE_MP)
+
+dnl Checks for header files.
+AC_CHECK_HEADERS(sys/time.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+
+dnl Checks for library functions.
+AC_TYPE_SIGNAL
+AC_CHECK_FUNCS(gethostname)
+
+AC_OUTPUT(Makefile)
