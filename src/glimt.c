@@ -194,7 +194,11 @@ char    *suffix;
         for( i = 0; i < NrRows; i++ ) {
             if( M[i][Heads[i]] != (exp)1 ) {
                 for( j = 0; j < nrSurv; j++ )
+#ifdef LONGLONG
+                    fprintf( fp, " %Ld", M[i][surviving[j]] );
+#else
                     fprintf( fp, " %d", M[i][surviving[j]] );
+#endif
                 fprintf( fp, "\n" );
             }
         }
@@ -265,7 +269,11 @@ expvec  *M;
                 else         first = 0;
                 printf( "[" );
                 for( j = 0; j < nrSurv; j++ ) {
-                    printf( " %d", M[i][surviving[j]] );
+#ifdef LONGLONG
+                  printf( " %Ld", M[i][surviving[j]] );
+#else
+                  printf( " %d", M[i][surviving[j]] );
+#endif
                     if( j < nrSurv ) putchar( ',' );
                 }
                 printf( "]" );
