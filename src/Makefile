@@ -1,7 +1,7 @@
 ##############################################################################
 ##
 ##    Makefile                      NQ                         Werner Nickel
-##                                         Werner.Nickel@math.rwth-aachen.de
+##                                                   werner@dcs.st-and.ac.uk
 ##
 
 ##    The follwoing two line define the name of the GNU multiple precision
