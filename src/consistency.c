@@ -38,7 +38,14 @@ gen	c, b, a;
 	Collect( ev2, Generators[b], (exp)1 );
 	Collect( ev2, Generators[a], (exp)1 );
 
-	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) ev1[i] -= ev2[i];
+	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) {
+            ev1[i] -= ev2[i];
+            if( ((ev1[i] << 1) >> 1) != ev1[i] )
+                printf( "#    Possible overflow in do_cba( %d, %d, %d )\n",
+                        c, b, a );
+        }
+                        
+          
 	free( ev2 );
 
 	if( Debug ) {
@@ -122,7 +129,11 @@ gen	c, b;
 	ev2 = ExpVecWord( Generators[c] );
 	Collect( ev2, Generators[b], Exponent[b] );
 
-	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) ev1[i] -= ev2[i];
+	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) {
+            ev1[i] -= ev2[i];
+            if( ((ev1[i] << 1) >> 1) != ev1[i] )
+              printf( "#    Possible overflow in do_cbn( %d, %d )\n", c, b );
+        }
 
 	free( ev2 );
 	if( Debug ) {
@@ -152,7 +163,11 @@ gen	c, b;
 	Collect( ev2, Generators[b], (exp)1 );
 	Collect( ev2, Conjugate[c][b], (exp)1 );
 
-	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) ev1[i] -= ev2[i];
+	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) {
+            ev1[i] -= ev2[i];
+            if( ((ev1[i] << 1) >> 1) != ev1[i] )
+              printf( "#    Possible overflow in do_cnb( %d, %d )\n", c, b );
+        }
 
 	free( ev2 );
 	if( Debug ) {
@@ -179,7 +194,11 @@ gen	c;
 	ev2 = ExpVecWord( Generators[c] );
 	Collect( ev2, Power[c], (exp)1 );
 
-	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) ev1[i] -= ev2[i];
+	for( i = 1; i <= NrPcGens+NrCenGens; i++ ) {
+          ev1[i] -= ev2[i];
+          if( ((ev1[i] << 1) >> 1) != ev1[i] )
+            printf( "#    Possible overflow in do_cnc( %d )\n", c );
+        }
 
 	free( ev2 );
 	if( Debug ) {
