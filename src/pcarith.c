@@ -27,6 +27,9 @@
 **                                    the word w and free u and w.
 **    word WordComm( u, w ) ......... Return the commutator [u,w] of the
 **                                    words u and w. Free u and w.
+**    word WordEngel( u, w, n ) ..... Return the Engel-n commutator [u, n w]\
+**                                    of the words u and w.  Free u and w.
+**                                    the word w and free u and w.
 **    word WordRel( u, w )  ......... Return the quotient u^-1 * w of the
 **                                    words u and w. Free u and w.
 **    void WordInit( f )    ......... Initialize the evaluator with this
