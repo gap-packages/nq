@@ -10,11 +10,15 @@
 GNULIB = /home/werner/Source/gmp-2.0.2
 GNUINC = $(GNULIB)
 
+##    GNU cc has the integer data type long long.  It can be used for
+##    exponents of words by setting the variable LONGLONG to -DLONGLONG.
+LONGLONG = -DLONGLONG
+
 
 GNULIBS = $(GNULIB)/libmp.a $(GNULIB)/libgmp.a 
 
 CC=gcc
-OPTS = -g -O3 
+OPTS = -g -O3 $(LONGLONG)
 CFLAGS = $(OPTS) -I$(GNUINC) -DVERSION='"1.2, 11 March 1998"'
 
 OBJ = consistency.o pc.o relations.o word.o system.o \
