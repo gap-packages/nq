@@ -48,7 +48,7 @@ clean:
 
 spotless: clean
 	rm -f Makefile
-	rm -r bin
+	rm -rf bin
 	(cd src;      make spotless)
 	(cd doc;      make spotless)
 	(cd examples; make spotless)
