@@ -47,8 +47,12 @@ fi
 
 dnl ##
 dnl ## Checks for existence of GMP libraries and include files.
+dnl ## The first check is for GMP 4, the second for GMP 3 or earlier. 
 dnl ##
 AC_CHECK_LIB( gmp, __gmpz_init, HAVE_GMP=true, HAVE_GMP=false)
+if test $HAVE_GMP = false; then
+   AC_CHECK_LIB( gmp, mpz_out_str, HAVE_GMP=true, HAVE_GMP=false)
+fi;
 if test $HAVE_GMP = false; then
    echo ""; 
    echo "    Warning: cannot locate the GNU MP library libgmp.a.";

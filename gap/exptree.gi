@@ -130,36 +130,36 @@ ExpTreePrintingLeftNormed := false;
 
 ExpTreePrintFunctions[ ExpTreeNodeTypes.\* ] := function( stream, t )
     
-    PrintTo( stream, t!.left );
+    PrintTo( stream, String( t!.left ) );
     PrintTo( stream, "*" );
-    PrintTo( stream, t!.right );
+    PrintTo( stream, String( t!.right ) );
 end;
 
 ExpTreePrintFunctions[ ExpTreeNodeTypes.\/ ] := function( stream, t )
 
-    PrintTo( stream, t!.left );
+    PrintTo( stream, String( t!.left ) );
     PrintTo( stream, "/" );
     if t!.right!.type = ExpTreeNodeTypes.\* then 
-        PrintTo( stream, "(", t!.right, ")" );
+        PrintTo( stream, "(", String( t!.right ), ")" );
     else
-        PrintTo( stream, t!.right );
+        PrintTo( stream, String( t!.right ) );
     fi;
 end;
 
 ExpTreePrintFunctions[ ExpTreeNodeTypes.\^ ] := function( stream, t )
-    
+
     if t!.left!.type in [ExpTreeNodeTypes.\*, 
                ExpTreeNodeTypes.\/, ExpTreeNodeTypes.\^] then 
-        PrintTo( stream, "(", t!.left, ")" );
+        PrintTo( stream, "(", String( t!.left ), ")" );
     else
-        PrintTo( stream, t!.left );
+        PrintTo( stream, String( t!.left ) );
     fi;
     PrintTo( stream, "^" );
     if t!.right!.type in [ExpTreeNodeTypes.\*, 
                ExpTreeNodeTypes.\/, ExpTreeNodeTypes.\^] then 
-        PrintTo( stream, "(", t!.right, ")" );
+        PrintTo( stream, "(", String( t!.right ), ")" );
     else
-        PrintTo( stream, t!.right );
+        PrintTo( stream, String( t!.right ) );
     fi;
 end;
 
@@ -175,12 +175,12 @@ ExpTreePrintFunctions[ ExpTreeNodeTypes.Comm ] := function( stream, t )
     fi;
 
     saveFlag := ExpTreePrintingLeftNormed;
-    ExpTreePrintingLeftNormed := true;
-    PrintTo( stream, t!.left );
+#    ExpTreePrintingLeftNormed := true;
+    PrintTo( stream, String( t!.left ) );
     ExpTreePrintingLeftNormed := saveFlag;
 
     PrintTo( stream, ", " );
-    PrintTo( stream, t!.right );
+    PrintTo( stream, String( t!.right ) );
 
     if not ExpTreePrintingLeftNormed then
         if NqGapOutput then
@@ -195,35 +195,35 @@ ExpTreePrintFunctions[ ExpTreeNodeTypes.Conj ] := function( stream, t )
     
     if t!.left!.type in [ExpTreeNodeTypes.\*, 
                ExpTreeNodeTypes.\/, ExpTreeNodeTypes.\^ ] then 
-        PrintTo( stream, "(", t!.left, ")" );
+        PrintTo( stream, "(", String( t!.left ), ")" );
     else
-        PrintTo( stream, t!.left );
+        PrintTo( stream, String( t!.left ) );
     fi;
     PrintTo( stream, "^" );
     if t!.right!.type in [ExpTreeNodeTypes.\*, 
                ExpTreeNodeTypes.\/, ExpTreeNodeTypes.\^ ] then 
-        PrintTo( stream, "(", t!.right, ")" );
+        PrintTo( stream, "(", String( t!.right ), ")" );
     else
-        PrintTo( stream, t!.right );
+        PrintTo( stream, String( t!.right ) );
     fi;
 
 end;
 
 ExpTreePrintFunctions[ ExpTreeNodeTypes.\= ] := function( stream, t )
     
-    PrintTo( stream, t!.left );
+    PrintTo( stream, String( t!.left ) );
     PrintTo( stream, "=" );
-    PrintTo( stream, t!.right );
+    PrintTo( stream, String( t!.right ) );
 end;
 
 ExpTreePrintFunctions[ ExpTreeNodeTypes.Integer ] := function( stream, t )
     
-    PrintTo( stream, t!.value );
+    PrintTo( stream, String( t!.value ) );
 end;
 
 ExpTreePrintFunctions[ ExpTreeNodeTypes.Variable ] := function( stream, t )
     
-    PrintTo( stream, t!.name );
+    PrintTo( stream, String( t!.name ) );
 end;
 
 InstallMethod( PrintObj, [IsExprTree], function( t )
