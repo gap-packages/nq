@@ -56,3 +56,6 @@ if IsList( TestPackageAvailability( "GAPDoc", "" ) ) then
     UnhideGlobalVariables( "BANNER" );
 fi;
 
+ReadPkg("nq", "gap/nq.gd");
+ReadPkg("nq", "gap/exptree.gd");
+

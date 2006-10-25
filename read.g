@@ -5,10 +5,6 @@
 ##    @(#)$Id$
 ##
 
-ReadPkg("nq", "gap/nq.gd");
-
 ReadPkg("nq", "gap/nqpcp.gi");
 ReadPkg("nq", "gap/nq.gi");
-
-ReadPkg( "nq", "gap/exptree.gd" );
-ReadPkg( "nq", "gap/exptree.gi" );
+ReadPkg("nq", "gap/exptree.gi" );
