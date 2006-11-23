@@ -58,4 +58,3 @@ fi;
 
 ReadPkg("nq", "gap/nq.gd");
 ReadPkg("nq", "gap/exptree.gd");
-
