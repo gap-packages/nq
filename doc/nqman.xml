@@ -30,11 +30,11 @@
             Germany
         </Address>
         <Email>
-            nickel@mathematik.tu-darmstadt.de
+            nickel at mathematik.tu-darmstadt.de
         </Email>
         <Homepage>http://www.mathematik.tu-darmstadt.de/~nickel</Homepage>
     </Author>
-    <Date>December 2002</Date>                           <!-- OPTIONAL -->
+    <Date>February 2007</Date>                          <!-- OPTIONAL -->
     <Copyright>                                         <!-- OPTIONAL -->
         &copyright; 1992-2007 Werner Nickel.
     </Copyright>
