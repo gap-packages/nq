@@ -9,8 +9,8 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.0",
-Date    := "20/10/2003",
+Version := "2.2",
+Date    := "06/02/2007",
 
 Persons := [
   rec(

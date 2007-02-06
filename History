@@ -143,3 +143,6 @@ October 2002:
            + removed instances of `share package'
            + removed obsolete files doc/manual.in gap/nqrest.gi
 
+06 February 2007:
+           + filter out the identity word as relator
+           + Release this as version 2.2

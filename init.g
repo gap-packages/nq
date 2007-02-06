@@ -9,7 +9,7 @@
 ##    Announce the package version and test for the existence of the package 
 ##    polycyclic and the binary.
 ##
-DeclarePackage( "nq", "2.0",
+DeclarePackage( "nq", "2.2",
 
   function()
     local   path;

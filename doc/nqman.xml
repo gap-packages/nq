@@ -18,7 +18,7 @@
         &nbsp;<Br></Br>
         Based on the ANU Nilpotent Quotient Program
     </Subtitle>
-    <Version>Version 2.0</Version>                      <!-- OPTIONAL -->
+    <Version>Version 2.2</Version>                      <!-- OPTIONAL -->
     <Author>
         Werner Nickel<Br></Br>                          <!-- REQUIRED -->
         &nbsp;
@@ -36,7 +36,7 @@
     </Author>
     <Date>December 2002</Date>                           <!-- OPTIONAL -->
     <Copyright>                                         <!-- OPTIONAL -->
-        &copyright; 1992-2002 Werner Nickel.
+        &copyright; 1992-2007 Werner Nickel.
     </Copyright>
     <Acknowledgements> <!-- OPTIONAL --> 
     The development of this program was started while the
