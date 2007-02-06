@@ -73,7 +73,10 @@ WWW: release-$(CURRENT_VERSION)
 	if [ ! -d $(WEB_DIR) ]; then mkdir $(WEB_DIR); fi
 
 	@echo '--> Moving archive files'
-	cp nq-$(CURRENT_VER).tar nq-$(CURRENT_VER).tgz nq-$(CURRENT_VER).zoo $(WEB_DIR)
+	cp nq-$(CURRENT_VER).tar $(WEB_DIR)/nq.tar
+	cp nq-$(CURRENT_VER).tgz $(WEB_DIR)/nq.tar.gz
+	cp nq-$(CURRENT_VER).tgz $(WEB_DIR)/nq.tgz
+	cp nq-$(CURRENT_VER).zoo $(WEB_DIR)/nq.zoo
 
 	@echo 'Copying README file'
 	cp README $(WEB_DIR) 
