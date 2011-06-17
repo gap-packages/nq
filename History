@@ -156,3 +156,4 @@ October 2002:
 	+ Sync cnf/config.* files with the ones used by GAP
 	+ Include stdlib.h and string.h instead of malloc.h
 	+ Do not insist on static linking the nq binary
+	+ Drop compatibility with GAP versions prior to 4.4
