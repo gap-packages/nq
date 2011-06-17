@@ -19,7 +19,7 @@ OBJ = consistency.o pc.o relations.o word.o system.o time.o \
       presentation.o mem.o pcarith.o collect.o combicol.o trmetab.o gap.o
 
 nq : nq.o $(OBJ)
-	$(CC) $(CFLAGS) nq.o $(OBJ) -L$(GNU_MP_LIB) -o nq -lgmp -static
+	$(CC) $(CFLAGS) nq.o $(OBJ) -L$(GNU_MP_LIB) -o nq -lgmp
 
 glimt.o: glimt.c
 	$(CC) $(CFLAGS) -I$(GNU_MP_INC) -c glimt.c
