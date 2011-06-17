@@ -154,3 +154,4 @@ October 2002:
 17 June 2011:
 	+ Remove maintainer flag from Werner, add Max as new maintainer
 	+ Sync cnf/config.* files with the ones used by GAP
+	+ Include stdlib.h and string.h instead of malloc.h
