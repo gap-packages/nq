@@ -97,7 +97,7 @@ exp     n;
         ** There does not seem to be a function that converts from long long
         ** to a large integer.  So we have to do it a bit more complicated.
         */
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
         sprintf( x, "%Lx", n );
 #else
         sprintf( x,  "%x", n );
@@ -107,7 +107,7 @@ exp     n;
         mpz_set_str( l, x, 16 );
 
         if( 0 ) {
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
           printf( "%Ld ", n );
 #else
           printf(  "%d ", n );
@@ -223,7 +223,7 @@ char    *suffix;
         for( i = 0; i < NrRows; i++ ) {
             if( M[i][Heads[i]] != (exp)1 ) {
                 for( j = 0; j < nrSurv; j++ )
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
                     fprintf( fp, " %Ld", M[i][surviving[j]] );
 #else
                     fprintf( fp, " %d", M[i][surviving[j]] );
@@ -298,7 +298,7 @@ expvec  *M;
                 else         first = 0;
                 printf( "[" );
                 for( j = 0; j < nrSurv; j++ ) {
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
                   printf( " %Ld", M[i][surviving[j]] );
 #else
                   printf( " %d", M[i][surviving[j]] );

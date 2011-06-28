@@ -207,7 +207,7 @@ void	printExp() {
 
 	for( i = 1, k = 1; i <= Class; i++ ) {
 	    for( j = 1; j <= Dimension[i]; j++, k++ )
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 		printf( " %Ld", Exponent[k] );
 #else
 		printf( " %d", Exponent[k] );
@@ -231,7 +231,7 @@ long	*eRow;
 {	long	i;
 
 	for( i = 1; i <= NrCenGens; i++ )
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 	    printf( " %Ld", eRow[i] );
 #else
 	    printf( " %d", eRow[i] );

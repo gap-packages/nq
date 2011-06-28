@@ -41,6 +41,8 @@
 **
 */
 
+#include "config.h"
+
 #include "presentation.h"
 #include "pc.h"
 #include "collect.h"
@@ -288,7 +290,7 @@ word	gs;
 	    if( gs->g > 0 ) {
 		PrintGen( gs->g );
 		if( gs->e > (exp)1 ) 
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
                   printf( "^%Ld", gs->e );
 #else
                   printf( "^%d", gs->e );
@@ -296,7 +298,7 @@ word	gs;
 	    }
 	    else {
 		PrintGen( -gs->g );
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 		printf( "^-%Ld", gs->e );
 #else
 		printf( "^-%d", gs->e );
@@ -313,7 +315,7 @@ word	gs;
 	    if( gs->g > 0 ) {
 		PrintGen( gs->g );
 		if( gs->e > (exp)1 )
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
                   printf( "^%Ld", gs->e );
 #else
                   printf( "^%d", gs->e );
@@ -321,7 +323,7 @@ word	gs;
 	    }
 	    else {
 		PrintGen( -gs->g );
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 		printf( "^-%Ld", gs->e );
 #else
 		printf( "^-%d", gs->e );

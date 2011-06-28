@@ -4,6 +4,8 @@
 **                                         nickel@mathematik.tu-darmstadt.de
 */
 
+#include "config.h"
+
 #include "mem.h"
 #include "pc.h"
 #include "pcarith.h"

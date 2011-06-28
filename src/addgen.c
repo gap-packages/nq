@@ -4,6 +4,7 @@
 **                                         nickel@mathematik.tu-darmstadt.de
 */
 
+#include "config.h"
 #include "nq.h"
 
 /*
@@ -159,7 +160,7 @@ void	AddGenerators() {
                 if( Verbose ) {
                   printf( "#    generator %d = ", G );
                       printGen( j, 'A' );
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
                       printf( "^%Ld\n", Exponent[j] );
 #else
                       printf( "^%d\n", Exponent[j] );

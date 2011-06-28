@@ -20,7 +20,7 @@ word	w;
 	    if( w->g > 0 ) {
                 nrc += printf( "NqF.%d", w->g );
 		if( w->e != (exp)1 )
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 		    nrc += printf( "^%Ld", w->e );
 #else
 		    nrc += printf( "^%d", w->e );
@@ -28,7 +28,7 @@ word	w;
 	    }
 	    else {
                 nrc += printf( "NqF.%d", -w->g );
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 		nrc += printf( "^%Ld", -w->e );
 #else
 		nrc += printf( "^%d", -w->e );
@@ -64,7 +64,7 @@ void	PrintGapPcPres() {
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
             if( Exponent[i] != (exp)0 ) {
                 printf( "SetRelativeOrder( NqCollector, %d, ", i );
-#               ifdef LONGLONG
+#               ifdef HAVE_LONG_LONG_INT
                     printf( "%Ld", Exponent[i] );
 #               else
                     printf( "%d", Exponent[i] );
@@ -141,7 +141,7 @@ word	w;
 	while( w->g != EOW ) {
 	    if( w->g > 0 ) {
                 nrc += printf( " %d,", w->g );
-#               ifdef LONGLONG
+#               ifdef HAVE_LONG_LONG_INT
                 nrc += printf( " %Ld,", w->e );
 #               else
 		nrc += printf( " %d,", w->e );
@@ -149,7 +149,7 @@ word	w;
             }
             else {
                 nrc += printf( " %d,", -w->g );
-#               ifdef LONGLONG
+#               ifdef HAVE_LONG_LONG_INT
                 nrc += printf( " %Ld,", -w->e );
 #               else
                 nrc += printf( " %d,", -w->e );
@@ -175,7 +175,7 @@ void    PrintRawGapPcPres() {
         printf( "NqNrGenerators   :=  %d;\n", NrPcGens+NrCenGens );
         printf( "NqRelativeOrders := [ " );
         for( i = 1; i <= NrPcGens+NrCenGens; i++ ) {
-#           ifdef LONGLONG
+#           ifdef HAVE_LONG_LONG_INT
                 printf( "%Ld,", Exponent[i] );
 #           else
                 printf( "%d,", Exponent[i] );

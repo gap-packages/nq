@@ -29,7 +29,7 @@ char	c;
 	    if( w->g > 0 ) {
 		printGen( w->g, c );
 		if( w->e != (exp)1 )
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 		    printf( "^%Ld", w->e );
 #else
 		    printf( "^%d", w->e );
@@ -37,7 +37,7 @@ char	c;
 	    }
 	    else {
 		printGen( -w->g, c );
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 		printf( "^%Ld", -w->e );
 #else
 		printf( "^%d", -w->e );

@@ -13,7 +13,7 @@ expvec	ev;
 {	long	i;
 
 	for( i = 1; i <= NrPcGens+NrCenGens; i++ )
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 	    printf( " %Ld ", ev[i] );
 #else
 	    printf( "%2ld ", (long)(ev[i]) );

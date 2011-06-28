@@ -21,9 +21,9 @@ typedef	short	gen;
 
 /*
 **    GNU cc has the data type long long.  We can switch it on by
-**    defining the macro LONGLONG in the Makefile.
+**    defining the macro HAVE_LONG_LONG_INT in the Makefile.
 */
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 typedef	long long	exp;
 #else
 typedef long     	exp;

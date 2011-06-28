@@ -262,7 +262,7 @@ void	PrintPcPres() {
 		if( Gap ) putchar( '#' );
 		printf( "        " );
 		printGen( i, 'A' );
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
 		printf( "^%Ld", Exponent[i] );
 #else
 		printf( "^%d", Exponent[i] );
@@ -352,7 +352,7 @@ void PrintDefs() {
                     /* The definition is a power relation. */
                     printGen( Definition[g].h, 'A' );
                     printf( "^" );
-#ifdef LONGLONG
+#ifdef HAVE_LONG_LONG_INT
                     printf( "%Ld\n", Exponent[ Definition[g].h ] );
 #else
                     printf( "%d\n", Exponent[ Definition[g].h ] );

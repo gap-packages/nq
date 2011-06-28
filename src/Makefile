@@ -5,13 +5,9 @@
 ##    $Id$
 ##
 
-##    GNU cc has the integer data type long long.  It can be used for
-##    exponents of words by setting the variable LONGLONG to -DLONGLONG.
-LONGLONG = -DLONGLONG
-
 CC=gcc
-#OPTS = -g -pg $(LONGLONG) $(COPTS)
-OPTS = -O3 $(LONGLONG) $(COPTS)
+#OPTS = -g -pg $(COPTS)
+OPTS = -O3 $(COPTS)
 CFLAGS = $(OPTS) -DVERSION='"2.0 January 2003"'
 
 OBJ = consistency.o pc.o relations.o word.o system.o time.o \

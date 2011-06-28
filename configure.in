@@ -90,6 +90,7 @@ fi
 dnl ##
 dnl ## Checks for typedefs, structures, and compiler characteristics.
 dnl ##
+AC_TYPE_LONG_LONG_INT
 
 dnl ##
 dnl ## Checks for library functions.
