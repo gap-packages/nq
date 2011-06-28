@@ -6,7 +6,7 @@ all: G1.tst G2.tst G3.tst G4.tst G5.tst
 clean:
 	rm -f G?.tst  *~
 
-spotless: clean
+distclean: clean
 	rm -f G*.old
 
 G1.tst: G1

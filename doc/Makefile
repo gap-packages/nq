@@ -10,6 +10,6 @@ clean:
 	@rm -f *~
 	@rm -f test/nqman.tst test/diffs
 
-spotless: clean
+distclean: clean
 	@rm -f manual.dvi manual.html manual.pdf manual.ps manual.six
 	@rm -f chap*.html chap*.txt

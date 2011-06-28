@@ -22,5 +22,5 @@ glimt.o: glimt.c
 clean :
 	rm -f *.o nq *~
 
-spotless : clean
+distclean : clean
 	rm -f config.h

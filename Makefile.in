@@ -101,11 +101,11 @@ clean:
 	(cd doc;      make clean)
 	(cd examples; make clean)
 
-spotless: clean
+distclean: clean
 	rm -f Makefile
 	rm -rf bin
 	rm -rf .\#*
-	(cd src;      make spotless)
-	(cd doc;      make spotless)
-	(cd examples; make spotless)
+	(cd src;      make distclean)
+	(cd doc;      make distclean)
+	(cd examples; make distclean)
 
