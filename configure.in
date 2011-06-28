@@ -1,7 +1,8 @@
 dnl ##
 dnl ## Process this file with autoconf to produce a configure script.
 dnl ## 
-AC_INIT(configure)
+AC_PREREQ([2.68])
+AC_INIT([nq], [2.2cvs])
 
 AC_CONFIG_AUX_DIR(cnf)
 
@@ -18,23 +19,48 @@ dnl ##
 AC_CANONICAL_SYSTEM
 
 dnl ##
-dnl ## Is there a way to determine the GAP root directory?
-dnl ## Which C-compiler is used? Export the result to the Makefile. On
-dnl ## some systems, the C-compiler name is a path name, so we have to
-dnl ## strip off the directory component.
-dnl ##
-AC_PROG_CC
-BASECC=`basename ${CC}`
-AC_SUBST(BASECC)
-
-dnl ##
 dnl ## Checks for programs.
 dnl ##
+AC_PROG_AWK
+AC_PROG_CC
+AC_PROG_MAKE_SET
 
 dnl ##
-dnl ## Checks for header files.
+dnl ## Checks for system header files.
 dnl ##
-AC_CHECK_HEADERS(sys/time.h)
+AC_CHECK_HEADERS([stdlib.h string.h sys/time.h])
+
+dnl ##
+dnl ## Locate the GAP root dir
+dnl ##
+AC_ARG_WITH([gap-root],
+	[AS_HELP_STRING([--with-gap-root=DIR],
+		[directory where GAP is installed @<:@default=../..@:>@])],
+	[GAP_ROOT=$with_gap_root],
+	[GAP_ROOT=../..])
+AC_MSG_CHECKING(for path to GAP installation)
+if test -f $GAP_ROOT/sysinfo.gap ; then
+	AC_MSG_RESULT([$GAP_ROOT])
+else
+	AC_MSG_ERROR([$GAP_ROOT/sysinfo.gap not found])
+fi
+AC_SUBST(GAP_ROOT)
+
+dnl ##
+dnl ## Parse the GAParch from sysinfo.gap
+dnl ##
+AC_MSG_CHECKING(for active GAP architecture)
+GAP_ARCH=`fgrep "GAParch=" $GAP_ROOT/sysinfo.gap | sed -e 's/^GAParch=\(.*\)$/\1/'`
+if test x$GAP_ARCH = x ; then
+	AC_MSG_ERROR([GAParch not found in $GAP_ROOT/sysinfo.gap])
+else
+	AC_MSG_RESULT([$GAP_ARCH])
+fi
+AC_SUBST(GAP_ARCH)
+
+dnl ##
+dnl ## Check for GMP
+dnl ##
 
 AC_CHECK_HEADER( gmp.h, HAVE_GMP_INC=true, HAVE_GMP_INC=false)
 if test $HAVE_GMP_INC = false; then
@@ -68,9 +94,9 @@ dnl ##
 dnl ##
 dnl ## Checks for library functions.
 dnl ##
-AC_TYPE_SIGNAL
-AC_CHECK_FUNCS(gethostname)
-AC_CHECK_FUNCS(getrusage)
+AC_FUNC_MALLOC
+AC_FUNC_REALLOC
+AC_CHECK_FUNCS([gethostname getrusage])
 
-AC_OUTPUT(Makefile)
-
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT

@@ -8,8 +8,8 @@
 ##
 ##    Values imported from the configure script
 ##
-BINDIR=bin/@target@-@BASECC@
-GAP_ROOT=$(PWD)/../..
+GAP_ROOT=@GAP_ROOT@
+BINDIR=bin/@GAP_ARCH@
 GNU_MP_INC=.
 GNU_MP_LIB=$(GNU_MP_INC)
 CURRENT_VERSION=2.2
@@ -28,8 +28,7 @@ gap: compile gapmanual
 
 compile:
 	(cd src; make GNU_MP_LIB=$(GNU_MP_LIB) GNU_MP_INC=$(GNU_MP_INC))
-	@if test ! -d bin;  then mkdir bin; fi
-	@if test ! -d $(BINDIR);  then mkdir $(BINDIR); fi
+	mkdir -p $(BINDIR)
 	mv src/nq $(BINDIR)
 
 gapmanual:
