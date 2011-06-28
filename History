@@ -157,3 +157,8 @@ October 2002:
 	+ Include stdlib.h and string.h instead of malloc.h
 	+ Do not insist on static linking the nq binary
 	+ Drop compatibility with GAP versions prior to 4.4
+
+28 June 2011
+	+ Make test cases ignore the version string nq outputs
+	+ Rewrote configure script and the build system
+	+ Added '--with-gap-dir' option to configure
