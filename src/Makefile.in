@@ -5,11 +5,11 @@
 ##    $Id$
 ##
 
-top_srcdir = ..
-srcdir = .
+top_srcdir = @top_srcdir@
+srcdir = @srcdir@
+VPATH = @srcdir@
 
-
-CC=gcc
+CC=@CC@
 #OPTS = -g -pg $(COPTS)
 OPTS = -O3 $(COPTS)
 CFLAGS = $(OPTS) -DVERSION='"2.0 January 2003"'

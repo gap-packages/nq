@@ -8,6 +8,10 @@
 ##
 ##    Values imported from the configure script
 ##
+top_srcdir = @top_srcdir@
+srcdir = @srcdir@
+VPATH = @srcdir@
+
 GAP_ROOT=@GAP_ROOT@
 BINDIR=bin/@GAP_ARCH@
 GNU_MP_INC=.

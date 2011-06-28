@@ -1,3 +1,6 @@
+top_srcdir = ..
+srcdir = .
+
 
 NQ=../bin/x86_64-apple-darwin10.7.0-gcc-default/64-bit/nq -S 
 
