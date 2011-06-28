@@ -4,6 +4,8 @@
 **                                         nickel@mathematik.tu-darmstadt.de
 */
 
+#include <stdio.h>
+
 int CombiCollectionTime  = 0;
 int SimpleCollectionTime = 0;
 
