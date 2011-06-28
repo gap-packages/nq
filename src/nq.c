@@ -62,7 +62,7 @@ void	printHeader() {
 
 	printf( "#\n" );
 	printf( "#    The ANU Nilpotent Quotient Program (Version %s)\n",
-                VERSION );
+                PACKAGE_VERSION );
 	printf( "#    Calculating a nilpotent quotient\n" );
 	printf( "#    Input: %s", InputFile );
 	if( leftEngel ) {

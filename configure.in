@@ -2,7 +2,7 @@ dnl ##
 dnl ## Process this file with autoconf to produce a configure script.
 dnl ## 
 AC_PREREQ([2.68])
-AC_INIT([nq], [2.2cvs])
+AC_INIT([ANU Nilpotent Quotient Program], [2.2cvs], [support@gap-system.org], [nq])
 
 AC_CONFIG_AUX_DIR(cnf)
 
