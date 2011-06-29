@@ -37,9 +37,8 @@ dnl ## If no directory is specified, then this defaults to ../..
 AC_ARG_WITH([gap-root],
 	[AS_HELP_STRING([--with-gap-root=DIR],
 		[directory where GAP is installed @<:@default=../..@:>@])],
-	[GAP_ROOT=$with_gap_root ; GAP_ROOT_real=$with_gap_root; GAP_ROOT_display=$with_gap_roo],
-	[GAP_ROOT='${top_srcdir}/../..' ; GAP_ROOT_real=${srcdir}/../..; GAP_ROOT_display=../..])
-#	[GAP_ROOT=`cd ../.. && pwd`])
+	[GAP_ROOT="$with_gap_root" ; GAP_ROOT_real="$with_gap_root"; GAP_ROOT_display="$with_gap_root"],
+	[GAP_ROOT='${top_srcdir}/../..' ; GAP_ROOT_real="${srcdir}/../.."; GAP_ROOT_display=../..])
 AC_MSG_CHECKING(for path to GAP installation)
 SYSINFO_GAP=$GAP_ROOT_real/sysinfo.gap
 if test -f $SYSINFO_GAP ; then

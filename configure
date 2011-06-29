@@ -3523,12 +3523,11 @@ done
 
 # Check whether --with-gap-root was given.
 if test "${with_gap_root+set}" = set; then :
-  withval=$with_gap_root; GAP_ROOT=$with_gap_root ; GAP_ROOT_real=$with_gap_root; GAP_ROOT_display=$with_gap_roo
+  withval=$with_gap_root; GAP_ROOT="$with_gap_root" ; GAP_ROOT_real="$with_gap_root"; GAP_ROOT_display="$with_gap_root"
 else
-  GAP_ROOT='${top_srcdir}/../..' ; GAP_ROOT_real=${srcdir}/../..; GAP_ROOT_display=../..
+  GAP_ROOT='${top_srcdir}/../..' ; GAP_ROOT_real="${srcdir}/../.."; GAP_ROOT_display=../..
 fi
 
-#	[GAP_ROOT=`cd ../.. && pwd`])
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for path to GAP installation" >&5
 $as_echo_n "checking for path to GAP installation... " >&6; }
 SYSINFO_GAP=$GAP_ROOT_real/sysinfo.gap
