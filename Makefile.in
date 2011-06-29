@@ -14,8 +14,9 @@ VPATH = @srcdir@
 
 GAP_ROOT=@GAP_ROOT@
 BINDIR=bin/@GAP_ARCH@
-GNU_MP_INC=.
-GNU_MP_LIB=$(GNU_MP_INC)
+GMP_CFLAGS=@GMP_CFLAGS@
+GMP_LIBS=@GMP_LIBS@
+
 CURRENT_VERSION=2.2
 CURRENT_VER=2_2
 
@@ -31,7 +32,7 @@ all: compile
 gap: compile gapmanual
 
 compile:
-	(cd src; make GNU_MP_LIB=$(GNU_MP_LIB) GNU_MP_INC=$(GNU_MP_INC))
+	(cd src; make GMP_LIBS="$(GMP_LIBS)" GMP_CFLAGS="$(GMP_CFLAGS)")
 	mkdir -p $(BINDIR)
 	mv src/nq $(BINDIR)
 

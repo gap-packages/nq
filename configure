@@ -603,7 +603,10 @@ ac_includes_default="\
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+GMP_LIBS
+GMP_CFLAGS
 GAP_ARCH
+GAP_CONFIG
 GAP_ROOT
 EGREP
 GREP
@@ -671,6 +674,8 @@ ac_subst_files=''
 ac_user_opts='
 enable_option_checking
 with_gap_root
+with_gap_config
+with_gmp_prefix
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1296,7 +1301,11 @@ if test -n "$ac_init_help"; then
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-gap-root=DIR     directory where GAP is installed [default=../..]
+  --with-gap-root=PATH    directory where GAP is installed [default=../..]
+  --with-gap-config=CONFIGNAME
+                          which GAP configuration to use [default=currently
+                          active]
+  --with-gmp-prefix=PATH  directory where GMP library is installed
 
 Some influential environment variables:
   CC          C compiler command
@@ -3528,16 +3537,48 @@ else
   GAP_ROOT='${top_srcdir}/../..' ; GAP_ROOT_real="${srcdir}/../.."; GAP_ROOT_display=../..
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for path to GAP installation" >&5
-$as_echo_n "checking for path to GAP installation... " >&6; }
-SYSINFO_GAP=$GAP_ROOT_real/sysinfo.gap
-if test -f $SYSINFO_GAP ; then
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking path to GAP installation" >&5
+$as_echo_n "checking path to GAP installation... " >&6; }
+if test -d $GAP_ROOT_real ; then
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $GAP_ROOT_display" >&5
 $as_echo "$GAP_ROOT_display" >&6; }
 else
-	as_fn_error $? "$GAP_ROOT_display/sysinfo.gap not found" "$LINENO" 5
+	as_fn_error $? "$GAP_ROOT_display is not a directory" "$LINENO" 5
 fi
 
+
+
+# Check whether --with-gap-config was given.
+if test "${with_gap_config+set}" = set; then :
+  withval=$with_gap_config; GAP_CONFIG="$with_gap_config"
+else
+  GAP_CONFIG=""
+fi
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking which GAP configuration to use" >&5
+$as_echo_n "checking which GAP configuration to use... " >&6; }
+if test x$GAP_CONFIG = x ; then
+	SYSINFO_GAP="$GAP_ROOT_real/sysinfo.gap"
+	if test -f $SYSINFO_GAP ; then
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: currently active configuration" >&5
+$as_echo "currently active configuration" >&6; }
+	else
+		as_fn_error $? "sysinfo.gap not found" "$LINENO" 5
+	fi
+else
+	SYSINFO_GAP="$GAP_ROOT_real/sysinfo.gap-$GAP_CONFIG"
+	if test -f $SYSINFO_GAP ; then
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $GAP_CONFIG" >&5
+$as_echo "$GAP_CONFIG" >&6; }
+	else
+		as_fn_error $? "sysinfo.gap-$GAP_CONFIG not found" "$LINENO" 5
+	fi
+fi
+
+
+
+# TODO: Add support for --configname=MYNAME which would then look in sysinfo.gap-MYNAME ?
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for active GAP architecture" >&5
 $as_echo_n "checking for active GAP architecture... " >&6; }
@@ -3551,23 +3592,27 @@ fi
 
 
 
+GMP_LDFLAGS=
+GMP_CFLAGS=
+gmp_prefix=
+have_gmp=yes
+
+
+# Check whether --with-gmp-prefix was given.
+if test "${with_gmp_prefix+set}" = set; then :
+  withval=$with_gmp_prefix;  GMP_LDFLAGS="-L$with_gmp_prefix/lib $GMP_LDFLAGS" ; GMP_CFLAGS="-I$with_gmp_prefix/include $GMP_CFLAGS"
+fi
+
+
+nq_save_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS $GMP_CFLAGS"
+nq_save_LDFLAGS="$LDFLAGS"
+LDFLAGS="$LDFLAGS $GMP_LDFLAGS"
+
 ac_fn_c_check_header_mongrel "$LINENO" "gmp.h" "ac_cv_header_gmp_h" "$ac_includes_default"
 if test "x$ac_cv_header_gmp_h" = xyes; then :
-  HAVE_GMP_INC=true
-else
-  HAVE_GMP_INC=false
-fi
 
-
-if test $HAVE_GMP_INC = false; then
-   echo "";
-   echo "    Warning: cannot locate the GNU MP include file gmp.h.";
-   echo "    Find the directory containing  gmp.h  and when you";
-   echo "    run make add the argument GNU_MP_INC=<gnu-mp-dir>.";
-   echo ""
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for __gmpz_init in -lgmp" >&5
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for __gmpz_init in -lgmp" >&5
 $as_echo_n "checking for __gmpz_init in -lgmp... " >&6; }
 if ${ac_cv_lib_gmp___gmpz_init+:} false; then :
   $as_echo_n "(cached) " >&6
@@ -3604,62 +3649,31 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_gmp___gmpz_init" >&5
 $as_echo "$ac_cv_lib_gmp___gmpz_init" >&6; }
 if test "x$ac_cv_lib_gmp___gmpz_init" = xyes; then :
-  HAVE_GMP=true
+
+		# TODO: Display GMP version ?
+
 else
-  HAVE_GMP=false
+   as_fn_error $? "Could not locate the GMP library libgmp." "$LINENO" 5
+
 fi
 
-if test $HAVE_GMP = false; then
-   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for mpz_out_str in -lgmp" >&5
-$as_echo_n "checking for mpz_out_str in -lgmp... " >&6; }
-if ${ac_cv_lib_gmp_mpz_out_str+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lgmp  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
 
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char mpz_out_str ();
-int
-main ()
-{
-return mpz_out_str ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_gmp_mpz_out_str=yes
+
 else
-  ac_cv_lib_gmp_mpz_out_str=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_gmp_mpz_out_str" >&5
-$as_echo "$ac_cv_lib_gmp_mpz_out_str" >&6; }
-if test "x$ac_cv_lib_gmp_mpz_out_str" = xyes; then :
-  HAVE_GMP=true
-else
-  HAVE_GMP=false
+   as_fn_error $? "Could not locate the GMP include file gmp.h." "$LINENO" 5
+
 fi
 
-fi;
-if test $HAVE_GMP = false; then
-   echo "";
-   echo "    Warning: cannot locate the GNU MP library libgmp.a.";
-   echo "    Find the directory containing  libgmp.a  and when you run";
-   echo "    make add the argument GNU_MP_LIB=<gnu-mp-dir>.";
-   echo ""
-fi
+
+
+CFLAGS="$nq_save_CFLAGS"
+LDFLAGS="$nq_save_LDFLAGS"
+
+GMP_LIBS="$GMP_LDFLAGS -lgmp"
+
+
+
+
 
 
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for long long int" >&5

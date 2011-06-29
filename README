@@ -99,18 +99,18 @@ You start compiling NQ by running the configure script:
 
         ./configure
 
-Among other things  it will tell you  whether it succeeded in locating
-the GNU MP library and the  corresponding include files.  If configure
-reports no problems, you proceed by typing
+Among other things it will tell you whether it succeeded in locating
+the GNU MP library and the corresponding include files. If it tells
+you that it could not find the GNU MP include files or the GNU MP
+libraries, you have to run configure with additional parameters. For
+example, if you have installed GNU MP yourself in your home directory,
+you would type something like the following
+
+        ./configure --with-gmp-prefix=/home/me/gmp
+
+If configure reports no problems, you proceed by typing
 
         make
-
-If it tells you that it could not find the GNU MP include files or the
-GNU MP  libraries,  you have to run   make with additional parameters.
-For example,  if you  have  installed GNU  MP  yourself in   your home
-directory, you would type something like the following
-
-    make GNU_MP_INC=/home/me/gmp-2.0.2 GNU_MP_LIB=/home/me/gmp-2.0.2
 
 A compiled version of the program named  `nq'  is then placed into the
 directory `bin/<complicated name>'.   The <complicated name> component

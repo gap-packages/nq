@@ -235,7 +235,7 @@
 
   <P/>In a group given by a polycyclic presentation each element in
   the group can be written as a <E>normal word</E> <M>a_1^{e_1}\ldots
-  a_n^{e_n}</M> with <M>e_i \in \Z</M> and <M>0 \leq e_i &lt; m_i</M>
+  a_n^{e_n}</M> with <M>e_i \in \mathbb{Z}</M> and <M>0 \leq e_i &lt; m_i</M>
   for <M>i \in I</M>.  A procedure called <E>collection</E> can be
   used to convert an arbitrary word in the generators into an
   equivalent normal word.  In general, the resulting normal word need
@@ -1266,25 +1266,21 @@ need not be a left 5-Engel element.
   Installation of the package requires the GNU multiple precision
   library (GNU MP <Cite Key="GNUMP"/>).  If this library is not
   available on your system, it has to be installed first.  A copy of
-  GNU MP can be obtained via anonymous ftp from many file servers
-  around the world, for example: <URL>www.swox.com/gmp/</URL>.
+  GNU MP can be obtained from <URL>http://gmplib.org/</URL>.
 
   Installation of the ANU NQ is done in two steps.  First the
   configure script is run:
   <Listing Type="Installation"> ./configure  </Listing>
-  Among other things it will check whether it succeeds in locating
-  the GNU MP library and the corresponding include files.  If
-  configure reports no problems, the next step is to start the
+  Among other things it will tell you whether it succeeded in locating
+  the GNU MP library and the corresponding include files. If it tells
+  you that it could not find the GNU MP include files or the GNU MP
+  libraries, you have to run configure with additional parameters. For
+  example, if you have installed GNU MP yourself in your home directory,
+  you would type something like the following
+  <Listing Type="Installation"> ./configure --with-gmp-prefix=/home/me/gmp </Listing>
+  If configure reports no problems, the next step is to start the
   compilation:
   <Listing Type="Installation"> make </Listing>
-  If the configure script told you that it could not find the GNU MP
-  include files or the GNU MP libraries, you have to run make with
-  additional parameters.  For example, if you have installed GNU MP
-  yourself in your home directory, you would type something like the
-  following
-  <Listing Type="Installation"> 
-  make GNU_MP_INC=/home/me/gmp-4.1.1 GNU_MP_LIB=/home/me/gmp-4.1.1/.libs
-  </Listing>
 
   <P/> A compiled version of the program named `nq' is then placed
   into the directory `bin/&tlt;complicated name&tgt;'.  The
