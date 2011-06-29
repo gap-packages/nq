@@ -100,8 +100,6 @@ test:
 	(cd examples; make)
 
 clean:
-	rm -rf nq-2.? nq-2_?.tar nq-2_?.tgz nq-2_?.zoo
-	rm -f *~ */*~ config.cache config.log config.status
 	(cd src;      make clean)
 	(cd doc;      make clean)
 	(cd examples; make clean)
@@ -110,6 +108,9 @@ distclean: clean
 	rm -f Makefile
 	rm -rf bin
 	rm -rf .\#*
+	rm -f *~ */*~
+	rm -rf nq-2.? nq-2_?.tar nq-2_?.tgz nq-2_?.zoo
+	rm -f config.cache config.log config.status
 	(cd src;      make distclean)
 	(cd doc;      make distclean)
 	(cd examples; make distclean)
