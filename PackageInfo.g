@@ -76,7 +76,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP                    := ">= 4.4",
   NeededOtherPackages    := [ ["polycyclic", "1.0"] ],
-  SuggestedOtherPackages := [ ["GAPDoc", "0.99"] ],
+  SuggestedOtherPackages := [ ["GAPDoc", "1.3"] ],
   ExternalConditions     := [ "needs a UNIX system with C-compiler",
                               "needs GNU multiple precision library" ]
 ),
