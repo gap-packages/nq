@@ -33,7 +33,7 @@ char     **PcGenName;
 */
 void    InitPcPres(void) {
 
-	long    i, j, t;
+	int i, j, t;
 
 	if(Verbose) t = RunTime();
 
@@ -104,8 +104,8 @@ void    InitPcPres(void) {
 
 void    ExtPcPres(void) {
 
-	long    i, j, c, N, oldsize, newsize, t;
-	word    *tmp, **ttmp;
+	int i, j, c, N, oldsize, newsize, t;
+	word *tmp, **ttmp;
 
 	if(Verbose) t = RunTime();
 
@@ -241,8 +241,8 @@ void    ExtPcPres(void) {
 
 void    PrintPcPres(void) {
 
-	gen     g;
-	long    i, j, first = 1;
+	gen g;
+	int i, j, first = 1;
 
 	if(Gap) putchar('#');
 	printf("    <");
@@ -258,7 +258,7 @@ void    PrintPcPres(void) {
 		if(i < NrPcGens + NrCenGens) putchar(',');
 	}
 	printf(" |");
-	for(i = 1; i <= NrPcGens + NrCenGens; i++)
+	for(i = 1; i <= NrPcGens + NrCenGens; i++) {
 		if(Exponent[i] != (exp)0) {
 			if(first) { putchar('\n'); first = 0; }
 			else        printf(",\n");
@@ -266,7 +266,7 @@ void    PrintPcPres(void) {
 			printf("        ");
 			printGen(i, 'A');
 #ifdef HAVE_LONG_LONG_INT
-			printf("^%Ld", Exponent[i]);
+			printf("^%lld", Exponent[i]);
 #else
 			printf("^%d", Exponent[i]);
 #endif
@@ -275,6 +275,7 @@ void    PrintPcPres(void) {
 				printWord(Power[i], 'A');
 			}
 		}
+	}
 
 	for(j = 1; j <= NrPcGens; j++) {
 		i = 1;
@@ -356,7 +357,7 @@ void PrintDefs(void) {
 				printGen(Definition[g].h, 'A');
 				printf("^");
 #ifdef HAVE_LONG_LONG_INT
-				printf("%Ld\n", Exponent[ Definition[g].h ]);
+				printf("%lld\n", Exponent[ Definition[g].h ]);
 #else
 				printf("%d\n", Exponent[ Definition[g].h ]);
 #endif
@@ -382,8 +383,8 @@ void PrintDefs(void) {
 
 void    sizePcPres(void) {
 
-	long    size = 0, nrPt = 0;
-	gen     g, h;
+	int size = 0, nrPt = 0;
+	gen g, h;
 
 	nrPt += 1;
 	size += sizeof(gpower);                /* Identty */

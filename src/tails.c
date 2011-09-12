@@ -218,13 +218,13 @@ void Tails() {
 				l = tail_cnb(h, g, &ev);
 				/* printf( "t: %d, ", t );
 				   for( i = 1; i <= NrPcGens+NrCenGens; i++ )
-				     if( ev[i] != (exp)0 ) printf( " %d^%Ld", i, ev[i] );
+				     if( ev[i] != (exp)0 ) printf( " %d^%lld", i, ev[i] );
 				   printf( "\n" );*/
 				if(l == 1) {
 					if(ev[t] == (exp)0)
 						printf("Error, exponent zero\n");
 					if(Verbose)
-						printf("#    Setting exponent %Ld for %d\n", ev[t], t);
+						printf("#    Setting exponent %lld for %d\n", ev[t], t);
 					Exponent[t] = ev[t];
 					addRow(ev);
 				}
@@ -233,13 +233,13 @@ void Tails() {
 				l = tail_cbn(h, g, &ev);
 				/* printf( "t: %d, ", t );
 				for( i = 1; i <= NrPcGens+NrCenGens; i++ )
-				  if( ev[i] != (exp)0 ) printf( " %d^%Ld", i, ev[i] );
+				  if( ev[i] != (exp)0 ) printf( " %d^%lld", i, ev[i] );
 				  printf( "\n" );*/
 				if(l == 1) {
 					if(ev[t] == (exp)0)
 						printf("Error, exponent zero\n");
 					if(Verbose)
-						printf("#    Setting exponent %Ld for %d\n", ev[t], t);
+						printf("#    Setting exponent %lld for %d\n", ev[t], t);
 					Exponent[t] = ev[t];
 					addRow(ev);
 				}

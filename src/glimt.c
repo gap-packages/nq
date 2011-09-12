@@ -109,7 +109,7 @@ exp     n;
 
 	if(0) {
 #ifdef HAVE_LONG_LONG_INT
-		printf("%Ld ", n);
+		printf("%lld ", n);
 #else
 		printf("%d ", n);
 #endif
@@ -231,7 +231,7 @@ char    *suffix;
 		if(M[i][Heads[i]] != (exp)1) {
 			for(j = 0; j < nrSurv; j++)
 #ifdef HAVE_LONG_LONG_INT
-				fprintf(fp, " %Ld", M[i][surviving[j]]);
+				fprintf(fp, " %lld", M[i][surviving[j]]);
 #else
 				fprintf(fp, " %d", M[i][surviving[j]]);
 #endif
@@ -308,7 +308,7 @@ expvec  *M;
 			printf("[");
 			for(j = 0; j < nrSurv; j++) {
 #ifdef HAVE_LONG_LONG_INT
-				printf(" %Ld", M[i][surviving[j]]);
+				printf(" %lld", M[i][surviving[j]]);
 #else
 				printf(" %d", M[i][surviving[j]]);
 #endif

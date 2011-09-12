@@ -12,7 +12,7 @@ void    printEv(expvec ev) {
 
 	for(i = 1; i <= NrPcGens + NrCenGens; i++)
 #ifdef HAVE_LONG_LONG_INT
-		printf(" %Ld ", ev[i]);
+		printf(" %lld ", ev[i]);
 #else
 		printf("%2ld ", (long)(ev[i]));
 #endif
@@ -197,7 +197,7 @@ static void do_cnc(gen c) {
 
 void    Consistency(void) {
 
-	long    t;
+	int    t;
 	gen     a, b, c;
 
 	if(Verbose) t = RunTime();

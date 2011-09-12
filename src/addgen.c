@@ -163,7 +163,7 @@ void AddGenerators() {
 				printf("#    generator %d = ", G);
 				printGen(j, 'A');
 #ifdef HAVE_LONG_LONG_INT
-				printf("^%Ld\n", Exponent[j]);
+				printf("^%lld\n", Exponent[j]);
 #else
 				printf("^%d\n", Exponent[j]);
 #endif

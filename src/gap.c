@@ -19,14 +19,14 @@ static void printGapWord(word w) {
 			nrc += printf("NqF.%d", w->g);
 			if(w->e != (exp)1)
 #ifdef HAVE_LONG_LONG_INT
-				nrc += printf("^%Ld", w->e);
+				nrc += printf("^%lld", w->e);
 #else
 				nrc += printf("^%d", w->e);
 #endif
 		} else {
 			nrc += printf("NqF.%d", -w->g);
 #ifdef HAVE_LONG_LONG_INT
-			nrc += printf("^%Ld", -w->e);
+			nrc += printf("^%lld", -w->e);
 #else
 			nrc += printf("^%d", -w->e);
 #endif
@@ -49,8 +49,8 @@ static void printGapWord(word w) {
 
 void	PrintGapPcPres() {
 
-	gen	g;
-	long	i, j;
+	gen g;
+	int i, j;
 
 	/*
 	**  Commands that create the appropriate free group and the
@@ -62,7 +62,7 @@ void	PrintGapPcPres() {
 		if(Exponent[i] != (exp)0) {
 			printf("SetRelativeOrder( NqCollector, %d, ", i);
 #               ifdef HAVE_LONG_LONG_INT
-			printf("%Ld", Exponent[i]);
+			printf("%lld", Exponent[i]);
 #               else
 			printf("%d", Exponent[i]);
 #               endif
@@ -137,14 +137,14 @@ static void	printRawWord(word w) {
 		if(w->g > 0) {
 			nrc += printf(" %d,", w->g);
 #               ifdef HAVE_LONG_LONG_INT
-			nrc += printf(" %Ld,", w->e);
+			nrc += printf(" %lld,", w->e);
 #               else
 			nrc += printf(" %d,", w->e);
 #               endif
 		} else {
 			nrc += printf(" %d,", -w->g);
 #               ifdef HAVE_LONG_LONG_INT
-			nrc += printf(" %Ld,", -w->e);
+			nrc += printf(" %lld,", -w->e);
 #               else
 			nrc += printf(" %d,", -w->e);
 #               endif
@@ -157,9 +157,9 @@ static void	printRawWord(word w) {
 
 void    PrintRawGapPcPres() {
 
-	gen     g;
-	long    i, j;
-	long    cl = Class + (NrCenGens == 0 ? 0 : 1);
+	gen g;
+	int i, j;
+	int cl = Class + (NrCenGens == 0 ? 0 : 1);
 
 
 	/*
@@ -170,7 +170,7 @@ void    PrintRawGapPcPres() {
 	printf("NqRelativeOrders := [ ");
 	for(i = 1; i <= NrPcGens + NrCenGens; i++) {
 #           ifdef HAVE_LONG_LONG_INT
-		printf("%Ld,", Exponent[i]);
+		printf("%lld,", Exponent[i]);
 #           else
 		printf("%d,", Exponent[i]);
 #           endif

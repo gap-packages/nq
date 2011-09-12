@@ -24,14 +24,14 @@ void    printWord(word w, char c) {
 			printGen(w->g, c);
 			if(w->e != (exp)1)
 #ifdef HAVE_LONG_LONG_INT
-				printf("^%Ld", w->e);
+				printf("^%lld", w->e);
 #else
 				printf("^%d", w->e);
 #endif
 		} else {
 			printGen(-w->g, c);
 #ifdef HAVE_LONG_LONG_INT
-			printf("^%Ld", -w->e);
+			printf("^%lld", -w->e);
 #else
 			printf("^%d", -w->e);
 #endif

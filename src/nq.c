@@ -88,12 +88,13 @@ void    printHeader(void) {
 	if(Cl != 666) printf("#    Nilpotency class: %d\n", Cl);
 	printf("#    Program: %s", ProgramName);
 	printf("     Machine: %s\n", &(HostName[0]));
-	printf("#    Size of exponents: %d bytes\n#\n", sizeof(exp));
+	printf("#    Size of exponents: %d bytes\n#\n", (int)sizeof(exp));
 }
 
 int main(int argc, char *argv[]) {
 	FILE    *fp;
-	long    t, time, start, begin, printEpim = 1;
+	int     t, time;
+	long    start, begin, printEpim = 1;
 	gen     g;
 	extern  int     NrGens;
 
