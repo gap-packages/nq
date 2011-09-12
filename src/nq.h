@@ -35,7 +35,7 @@ extern  int     Verbose;
 **    The input file name. Used in some routines to build a file name for
 **    outpout.
 */
-extern  char    *InputFile;
+extern const char *InputFile;
 
 #include "mem.h"
 #include "genexp.h"
@@ -59,24 +59,8 @@ extern  long    *Heads;
 **    Functions manipulating words.
 **    Defined in word.c.
 */
-extern  word    getWord();
-extern  int     cmpWords();
 extern  void    printWord(word w, char c);
 extern  void    printGen(gen g, char c);
-
-/*
-**    Functions manipulating exponent vectors
-*/
-extern  expvec  expVector();
-
-/*
-**    Functions manipulating the pc-presentation,
-**    defined in pc.c.
-*/
-extern  void    initPcPres();
-extern  void    readPcPres();
-extern  void    calcCommute();
-extern  void    completePcPres();
 
 /*
 **    Early stoppping criterion.
@@ -84,19 +68,9 @@ extern  void    completePcPres();
 extern int      EarlyStop;
 
 /*
-**    Print functions.
-*/
-extern  void    printList();
-extern  void    printExpVec();
-
-/*
-**    The consistency check.
-*/
-extern  void    consistency();
-
-extern  void    NqRelations();
-
-/*
 **    Defined in glimt.c
 */
 extern  int     addRow(expvec ev);
+
+/* TODO: Misc decls */
+extern word    Epimorphism(gen g);

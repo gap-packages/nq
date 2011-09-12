@@ -16,7 +16,7 @@ extern int SemigroupFirst;
 extern int CheckFewInstances;
 extern int ReverseOrder;
 
-extern word EngelCommutator();
+extern word EngelCommutator(word v, word w, int engel);
 
-extern void EvalEngel();
+extern void EvalEngel(void);
 extern void InitEngel(int l, int r, int v, int e, int n);

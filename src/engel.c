@@ -179,7 +179,7 @@ void    buildPairs(word u, long i, gen g, word v, long wt, long which) {
 }
 
 static
-void    evalEngel() {
+void    evalEngel(void) {
 	word    u, v;
 	long    c;
 
@@ -345,7 +345,7 @@ void    buildWord(word u, long i, gen g, long wt) {
 }
 
 static
-void    evalLREngel() {
+void    evalLREngel(void) {
 
 	word    u;
 	int     n;
@@ -380,7 +380,7 @@ void    evalLREngel() {
 	free(A);
 }
 
-void    EvalEngel() {
+void    EvalEngel(void) {
 
 	long    t;
 
@@ -393,7 +393,7 @@ void    EvalEngel() {
 		printf("#    Evaluated Engel condition (%d msec).\n", RunTime() - t);
 }
 
-void    InitEngel(int l, int r, int v, int e, int n){
+void    InitEngel(int l, int r, int v, int e, int n) {
 	LeftEngel = l;
 	RightEngel = r;
 	RevEngel = v;

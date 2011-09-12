@@ -13,7 +13,7 @@
 #include "collect.h"
 #include "time.h"
 
-static  Error(char *str, gen g) {
+static  Error(const char *str, gen g) {
 	printf("Error in CombiCollect() while treating generator %d:\n",
 	       (int)g);
 	printf("      %s\n", str);

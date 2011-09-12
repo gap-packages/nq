@@ -46,6 +46,7 @@
 #include "presentation.h"
 #include "pc.h"
 #include "collect.h"
+#include "engel.h"
 
 static  word(*PcGenerator)();
 
@@ -215,13 +216,8 @@ word    WordComm(word u, word w) {
 	return  x;
 }
 
-word    WordEngel(u, w, e)
-word    u, w;
-int     *e;
-
-{
+word    WordEngel(word u, word w, int *e) {
 	word    x;
-	extern word EngelCommutator();
 
 	x = EngelCommutator(u, w, *e);
 

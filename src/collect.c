@@ -16,7 +16,7 @@
 int UseSimpleCollector = 0;
 int UseCombiCollector  = 0;
 
-static  Error(char *str, gen g) {
+static  Error(const char *str, gen g) {
 	printf("Error in Collect() while treating generator %d:\n", (int)g);
 	printf("      %s\n", str);
 

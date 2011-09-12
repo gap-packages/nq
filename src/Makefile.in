@@ -21,7 +21,7 @@ CFLAGS = $(OPTS) \
  -Wshadow\
  -Wwrite-strings\
  -W\
- -Wconversion\
+ -Wc++-compat\
  -ansi\
  -Wold-style-definition\
  -Wstrict-prototypes\

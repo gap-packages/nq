@@ -15,17 +15,17 @@ int     Verbose = 0;
 
 extern RawMatOutput;
 
-char    *InputFile;
+const char    *InputFile;
 
 static char     *ProgramName;
 static char     HostName[256] = "host name unknown";
 static int      Cl;
 
 static
-void    usage(char *error) {
+void    usage(const char *error) {
 	int     i;
 
-	if(error != (char *)0) fprintf(stderr, "%s\n", error);
+	if(error != 0) fprintf(stderr, "%s\n", error);
 	fprintf(stderr, "usage: %s", ProgramName);
 	fprintf(stderr, " [-a] [-M] [-d] [-g] [-v] [-s] [-f] [-c] [-m]\n");
 	for(i = strlen(ProgramName) + 7; i > 0; i--) fputc(' ', stderr);
@@ -43,7 +43,7 @@ static int   leftEngel = 0,
 
 static int trmetab = 0;
 
-static  char *Ordinal(int n) {
+static const char *Ordinal(int n) {
 
 	switch(n) {
 	case 1:
@@ -96,7 +96,6 @@ int main(int argc, char *argv[]) {
 	long    t, time, start, begin, printEpim = 1;
 	gen     g;
 	extern  int     NrGens;
-	extern  word    Epimorphism();
 
 	CatchSignals();
 	start = sbrk(0);
