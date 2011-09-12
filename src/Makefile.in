@@ -23,12 +23,14 @@ CFLAGS = $(OPTS) \
  -W\
  -Wconversion\
  -ansi\
+ -Wold-style-definition\
+ -Wstrict-prototypes\
  -pedantic\
- -Wno-unused-parameter\
- -Wno-conversion\
- -Wno-missing-field-initializers\
- -Wno-sign-compare \
  -Wno-long-long
+#  -Wno-unused-parameter\
+#  -Wno-conversion\
+#  -Wno-missing-field-initializers\
+#  -Wno-sign-compare \
 # -Werror
 
 OBJ = consistency.o pc.o relations.o word.o system.o time.o \
