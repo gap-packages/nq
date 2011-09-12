@@ -11,8 +11,22 @@ VPATH = @srcdir@
 
 CC=@CC@
 #OPTS = -g -pg $(COPTS)
-OPTS = -O3 $(COPTS)
-CFLAGS = $(OPTS)
+OPTS = -O3 -Wuninitialized $(COPTS)
+CFLAGS = $(OPTS) \
+ -Wall \
+ -Wpointer-arith\
+ -Wcast-qual\
+ -Wshadow\
+ -Wwrite-strings\
+ -W\
+ -Wconversion\
+ -pedantic\
+ -Wno-unused-parameter\
+ -Wno-conversion\
+ -Wno-missing-field-initializers\
+ -Wno-sign-compare \
+ -Wno-long-long
+# -Werror
 
 OBJ = consistency.o pc.o relations.o word.o system.o time.o \
       addgen.o tails.o eliminate.o engel.o glimt.o instances.o \
