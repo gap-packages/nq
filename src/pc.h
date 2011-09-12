@@ -4,6 +4,8 @@
 **                                         nickel@mathematik.tu-darmstadt.de
 */
 
+#ifndef PC_H
+#define PC_H
 
 #include <stdio.h>
 #include "genexp.h"
@@ -81,4 +83,6 @@ struct  def {
 typedef struct def  def;
 
 extern def      *Definition;
-extern void     PrintDefs();
+extern void     PrintDefs(void);
+
+#endif

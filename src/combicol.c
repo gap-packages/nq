@@ -12,8 +12,9 @@
 #include "macro.h"
 #include "collect.h"
 #include "time.h"
+#include "system.h"
 
-static  Error(const char *str, gen g) {
+static int Error(const char *str, gen g) {
 	printf("Error in CombiCollect() while treating generator %d:\n",
 	       (int)g);
 	printf("      %s\n", str);
@@ -43,7 +44,10 @@ int             Sp;
 #define CheckOverflow( n ) \
         if( (((n) << 1) >> 1) != n ) Error( "Possible integer overflow", n )
 
-ReduceExponent(expvec ev, gen g) {
+static void AddWord(expvec lhs, word w, exp we);
+
+
+static void ReduceExponent(expvec ev, gen g) {
 
 	if (ev[ g ] >= Exponent[ g ]) {
 
@@ -53,7 +57,7 @@ ReduceExponent(expvec ev, gen g) {
 	}
 }
 
-StackReduceExponent(expvec ev, gen g) {
+static void StackReduceExponent(expvec ev, gen g) {
 
 	gen    h;
 
@@ -64,7 +68,10 @@ StackReduceExponent(expvec ev, gen g) {
 			/* Need to put part of the exponent vector on the stack. */
 			for (h = Commute[ g ]; h > g; h--)
 				if (ev[ h ] != (exp)0) {
-					if (++Sp == STACKHEIGHT) return Error("Out of stack space", g);
+					if (++Sp == STACKHEIGHT) {
+						Error("Out of stack space", g);
+						return;
+					}
 
 					if (ev[ h ] > (exp)0) {
 						WordStack[ Sp ]    = Generators[  h ];
@@ -77,7 +84,7 @@ StackReduceExponent(expvec ev, gen g) {
 					}
 					ev[ h ] = (exp)0;
 					GenStack[ Sp ]    = WordStack[ Sp ];
-					GenStack[ Sp ]->e;
+					GenStack[ Sp ]->e; /* FIXME: statement with no effect */
 				}
 
 			AddWord(ev, Power[ g ], ev[ g ] / Exponent[ g ]);
@@ -87,7 +94,7 @@ StackReduceExponent(expvec ev, gen g) {
 	}
 }
 
-AddWord(expvec lhs, word w, exp we) {
+static void AddWord(expvec lhs, word w, exp we) {
 
 	gen    g;
 
@@ -111,7 +118,7 @@ int   CombiCollect(expvec lhs, word rhs, exp e) {
 	word  **C  = Conjugate;
 	word   *P  = Power;
 
-	word   conj, w;
+	word   w;
 	gen    ag,  g,  h,  hh;
 
 	CombiCollectionTime -= RunTime();

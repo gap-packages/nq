@@ -5,6 +5,7 @@
 */
 
 #include "config.h"
+#include "time.h"
 
 #include <stdio.h>
 
@@ -13,7 +14,7 @@ int SimpleCollectionTime = 0;
 
 int IntMatTime     = 0;
 
-void PrintCollectionTimes() {
+void PrintCollectionTimes(void) {
 
 	if (CombiCollectionTime > 0)
 		printf("##  Total time spent in combinatorial collection: %d\n",

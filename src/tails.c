@@ -6,6 +6,7 @@
 
 
 #include "nq.h"
+#include "glimt.h"
 
 const char *Warning3 = "Warning : This is not a tail in %s( %d, %d, %d )\n";
 const char *Warning2 = "Warning : This is not a tail in %s( %d, %d )\n";
@@ -191,7 +192,7 @@ static void Tail(gen n, gen m) {
 **    commutators of weight Class+1, which are currently trivial, will
 **    get tails.
 */
-void Tails() {
+void Tails(void) {
 
 	int     *Dim = Dimension;
 	long    b, c, i, j, time;

@@ -5,6 +5,7 @@
 */
 
 #include "nq.h"
+#include "presentation.h"
 
 static void printGapWord(word w) {
 	int nrc = 30;      /* something has already been printed */
@@ -47,9 +48,8 @@ static void printGapWord(word w) {
 }
 
 
-void	PrintGapPcPres() {
+void	PrintGapPcPres(void) {
 
-	gen g;
 	int i, j;
 
 	/*
@@ -155,9 +155,8 @@ static void	printRawWord(word w) {
 	}
 }
 
-void    PrintRawGapPcPres() {
+void    PrintRawGapPcPres(void) {
 
-	gen g;
 	int i, j;
 	int cl = Class + (NrCenGens == 0 ? 0 : 1);
 

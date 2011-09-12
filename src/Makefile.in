@@ -29,6 +29,7 @@ CFLAGS = $(OPTS) \
  -Wc++-compat\
  -ansi\
  -Wold-style-definition\
+ -Wmissing-prototypes\
  -Wstrict-prototypes\
  -pedantic\
  -Wno-unused-parameter\

@@ -45,10 +45,11 @@
 
 #include "presentation.h"
 #include "pc.h"
+#include "pcarith.h"
 #include "collect.h"
 #include "engel.h"
 
-static  word(*PcGenerator)();
+static WordGenerator PcGenerator;
 
 void    WordCopyExpVec(expvec ev, word w) {
 	long    l;
@@ -123,7 +124,7 @@ word    WordGen(gen g) {
 		w = (word)Allocate(sizeof(gpower));
 		w[0].g = EOW;
 	} else {
-		if ((*PcGenerator)(g) == (word)0)
+		if ((*PcGenerator)(g) == 0)
 			return (word)0;
 
 		l = WordLength((*PcGenerator)(g));
@@ -242,7 +243,7 @@ word    WordRel(word u, word w) {
 	return x;
 }
 
-void    WordInit(word(*generator)()) {
+void    WordInit(WordGenerator generator) {
 	PcGenerator = generator;
 
 	SetEvalFunc(TGEN, (EvalFunc)WordGen);

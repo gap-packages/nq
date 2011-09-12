@@ -6,6 +6,7 @@
 
 #include "config.h"
 #include "nq.h"
+#include "presentation.h"
 
 /*
 **    Set up a list of Commute[] arrays.  The array in CommuteList[c] is
@@ -35,7 +36,7 @@
         for( ; l <= NrPcGens+NrCenGens; l++ ) Commute[l] = l;
 */
 
-void    SetupCommuteList() {
+void    SetupCommuteList(void) {
 
 	int c;
 	gen g, h;
@@ -58,7 +59,7 @@ void    SetupCommuteList() {
 	}
 }
 
-void    SetupCommute2List() {
+void    SetupCommute2List(void) {
 
 	int    c;
 	gen    g, h;
@@ -81,7 +82,7 @@ void    SetupCommute2List() {
 	}
 }
 
-SetupNrPcGensList() {
+SetupNrPcGensList(void) {
 	int    c;
 	gen    g, h;
 
@@ -109,7 +110,7 @@ SetupNrPcGensList() {
 /*
 **    Add new/pseudo generators to the power conjugate presentation.
 */
-void AddGenerators() {
+void AddGenerators(void) {
 
 	long    t;
 	gen     i, j;

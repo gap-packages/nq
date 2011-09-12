@@ -4,6 +4,12 @@
 **                                         nickel@mathematik.tu-darmstadt.de
 */
 
+#ifndef PCARITH_H
+#define PCARITH_H
+
+#include "genexp.h"
+
+typedef word (*WordGenerator)(gen);
 
 extern  void    WordCopyExpVec(expvec ev, word w);
 extern  word    WordExpVec(expvec ev);
@@ -17,5 +23,7 @@ extern  word    WordPow(word w, int * pn);
 extern  word    WordConj(word u, word w);
 extern  word    WordComm(word u, word w);
 extern  word    WordRel(word u, word w);
-extern  void    WordInit(word(*generator)());
+extern  void    WordInit(WordGenerator generator);
 extern  void    WordPrint(word gs);
+
+#endif

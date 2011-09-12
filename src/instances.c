@@ -7,6 +7,8 @@
 
 #include "presentation.h"
 #include "nq.h"
+#include "instances.h"
+#include "relations.h"
 
 word     *Instances;
 
@@ -23,12 +25,7 @@ word     *Instances;
 **    <wt>         the weight that can spend on the next generators.
 */
 static
-void    EnumerateWords(r, l, instances, n, i, g, wt)
-node    *r;
-word    *instances;
-long    l,  n,  i,  wt;
-gen     g;
-{
+void    EnumerateWords(node *r, long l, word *instances, long n, long i, gen g, long wt) {
 	long    save_wt;
 	word    u = instances[ n ];
 
@@ -76,9 +73,7 @@ gen     g;
 	u[i].e = (exp)0;
 }
 
-void    EvalIdenticalRelation(r)
-node    *r;
-{
+void    EvalIdenticalRelation(node *r) {
 	gen    g;
 	long   c;
 

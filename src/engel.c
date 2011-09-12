@@ -7,6 +7,8 @@
 
 #include "nq.h"
 #include "engel.h"
+#include "presentation.h"
+#include "glimt.h"
 
 static  int     LeftEngel = 0, RightEngel = 0, Engel = 0;
 static  int     RevEngel = 0;

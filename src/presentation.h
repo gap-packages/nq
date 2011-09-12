@@ -4,12 +4,15 @@
 **                                         nickel@mathematik.tu-darmstadt.de
 */
 
+#ifndef PRESENTATION_H
+#define PRESENTATION_H
 
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
 #include "mem.h"
 #include "genexp.h"
+#include "pc.h"	/* for Class */
 
 /*
 **    The following data structure will represent a node in an expression
@@ -56,7 +59,6 @@ extern void     PrintGen(gen g);
 extern void     PrintPresentation(FILE *fp);
 extern void     Presentation(FILE *fp, char *filename);
 extern node     *ReadWord(void);
-extern node     *Word(void);
 
 extern char     *GenName(gen g);
 extern int      NumberOfAbstractGens(void);
@@ -79,3 +81,4 @@ extern int      NrIdenticalGensNode;
 extern gen      *IdenticalGenNumberNode;
 extern int      NumberOfIdenticalGensNode(node *n);
 
+#endif

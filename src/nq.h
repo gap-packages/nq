@@ -9,6 +9,9 @@
 **    build a polycyclic presentation.
 */
 
+#ifndef NQ_H
+#define NQ_H
+
 #include <stdio.h>
 #include <string.h>
 
@@ -67,10 +70,12 @@ extern  void    printGen(gen g, char c);
 */
 extern int      EarlyStop;
 
-/*
-**    Defined in glimt.c
-*/
-extern  int     addRow(expvec ev);
-
 /* TODO: Misc decls */
 extern word    Epimorphism(gen g);
+extern void InitTrMetAb(int t);
+extern void EvalTrMetAb(void);
+extern void PrintCollectionTimes(void);
+extern void InitEpim(void);
+extern expvec *MatrixToExpVecs(void);
+
+#endif

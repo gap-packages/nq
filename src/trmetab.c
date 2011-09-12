@@ -3,21 +3,22 @@
 **    trmetab.c                       NQ                       Werner Nickel
 **                                         nickel@mathematik.tu-darmstadt.de
 */
+
 #include "nq.h"
 #include "engel.h"
+#include "glimt.h"
 
 static int NrWords = 0;
 static int TrMetAb = 0;
 
-static
-void    Error(word v, word w) {
+static void Error(word v, word w) {
 	printf("Overflow in collector computing [ ");
 	printWord(v, 'a');
 	printWord(w, 'a');
 	printf(" ]\n");
 }
 
-static  eval8Power(word u) {
+static void eval8Power(word u) {
 	word  uu;
 	int   needed;
 
@@ -36,8 +37,7 @@ static  eval8Power(word u) {
 	free(uu);
 }
 
-static
-void    evalTrMetAbRel(word *ul) {
+static void evalTrMetAbRel(word *ul) {
 	word    u, uu, vv;
 	long    i, needed;
 
@@ -91,8 +91,7 @@ void    evalTrMetAbRel(word *ul) {
 	free(u);
 }
 
-static
-void    buildTuple(word *ul, long i, gen g, long wt, long which) {
+static void buildTuple(word *ul, long i, gen g, long wt, long which) {
 	long    save_wt;
 	word    u;
 
@@ -158,7 +157,7 @@ void    buildTuple(word *ul, long i, gen g, long wt, long which) {
 	u[i].e = (exp)0;
 }
 
-EvalTrMetAb() {
+void EvalTrMetAb(void) {
 
 	word u, ul[6];
 	int i, c;
@@ -193,6 +192,6 @@ EvalTrMetAb() {
 		free(ul[i]);
 }
 
-InitTrMetAb(int t) {
+void InitTrMetAb(int t) {
 	TrMetAb = t;
 }

@@ -4,8 +4,13 @@
 **                                         nickel@mathematik.tu-darmstadt.de
 */
 
+#include <unistd.h>
+#include <ctype.h>
+
 #include "nq.h"
 #include "engel.h"
+#include "glimt.h"
+#include "presentation.h"
 
 int     Debug = 0;
 int     Gap = 0;
@@ -13,7 +18,7 @@ int     AbelianInv = 0;
 int     NilpMult;
 int     Verbose = 0;
 
-extern RawMatOutput;
+extern int RawMatOutput;
 
 const char    *InputFile;
 
@@ -60,8 +65,6 @@ static const char *Ordinal(int n) {
 static
 void    printHeader(void) {
 
-	char    hostname[128];
-
 	printf("#\n");
 	printf("#    The ANU Nilpotent Quotient Program (Version %s)\n",
 	       PACKAGE_VERSION);
@@ -94,7 +97,8 @@ void    printHeader(void) {
 int main(int argc, char *argv[]) {
 	FILE    *fp;
 	int     t, time;
-	long    start, begin, printEpim = 1;
+	long    begin, printEpim = 1;
+	void    *start;
 	gen     g;
 	extern  int     NrGens;
 
@@ -317,7 +321,7 @@ int main(int argc, char *argv[]) {
 	if (Verbose) {
 		printf("#    runtime       : %d msec\n", RunTime() - time);
 		printf("#    total runtime : %d msec\n", RunTime() - begin);
-		printf("#    total size    : %d byte\n", sbrk(0) - start);
+		printf("#    total size    : %d byte\n", (char *)sbrk(0) - (char *)start);
 	}
 	printf("#\n");
 
@@ -360,7 +364,7 @@ int main(int argc, char *argv[]) {
 		if (Verbose) {
 			printf("#    runtime       : %d msec\n", RunTime() - time);
 			printf("#    total runtime : %d msec\n", RunTime() - begin);
-			printf("#    total size    : %d byte\n", sbrk(0) - start);
+			printf("#    total size    : %d byte\n", (char *)sbrk(0) - (char *)start);
 		}
 		printf("#\n");
 
@@ -378,7 +382,7 @@ end:
 		PrintDefs();
 	}
 	printf("#    total runtime : %d msec\n", RunTime() - begin);
-	printf("#    total size    : %d byte\n", sbrk(0) - start);
+	printf("#    total size    : %d byte\n", (char *)sbrk(0) - (char *)start);
 
 	if (Gap) printf("];\n");
 

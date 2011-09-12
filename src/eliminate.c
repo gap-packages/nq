@@ -114,13 +114,12 @@ expvec  ev, *M;
 	return (word)realloc(w, l * sizeof(gpower));
 }
 
-void    ElimGenerators() {
+void    ElimGenerators(void) {
 
 	long    i, j, k, l, n = 0, *eRow, t;
 	expvec  ev, *M = 0;
 	gen     *renumber;
 	word    v, w;
-	extern  expvec  *MatrixToExpVecs();
 
 	if (Verbose) t = RunTime();
 

@@ -7,6 +7,7 @@
 
 #include "nq.h"
 #include "time.h"
+#include "glimt.h"
 
 #undef min
 
@@ -84,10 +85,7 @@ int     RawMatOutput;
 FILE    *RawMatFile = NULL;
 
 
-large   ltom(n)
-exp     n;
-
-{
+static large ltom(exp n) {
 	char    x[64];
 	MP_INT  *l = (MP_INT*)Allocate(sizeof(MP_INT));
 	int     sign = 1;
@@ -123,21 +121,9 @@ exp     n;
 	return l;
 }
 
-static
-void    printEv(ev)
-expvec  ev;
+extern void printEv(expvec ev);
 
-{
-	long    i;
-
-	for (i = 1; i <= NrPcGens + NrCenGens; i++)
-		printf("%2d ", ev[i]);
-}
-
-void    freeExpVecs(M)
-expvec  *M;
-
-{
+void freeExpVecs(expvec *M) {
 	long    i;
 
 	for (i = 0; i < NrRows; i++) free(M[i]);
@@ -146,17 +132,14 @@ expvec  *M;
 	NrRows = NrCols = 0;
 }
 
-void    freeVector(v)
-lvec    v;
-
-{
+static void freeVector(lvec v) {
 	long    i;
 
 	for (i = 1; i <= NrCols; i++) { mpz_clear(v[i]); Free(v[i]); }
 	Free(v);
 }
 
-void    freeMatrix() {
+static void freeMatrix(void) {
 
 	long    i;
 
@@ -170,10 +153,8 @@ void    freeMatrix() {
 	Matrix = (lvec*)0;
 }
 
-void    printVector(v)
-lvec    v;
-
-{
+/*
+static void printVector(lvec v) {
 	long    i;
 
 	for (i = 1; i <= NrCols; i++) {
@@ -182,11 +163,9 @@ lvec    v;
 	}
 	printf("\n");
 }
+*/
 
-long survivingCols(M, surviving)
-expvec *M;
-long   *surviving;
-{
+static long survivingCols(expvec *M, long *surviving) {
 	long nrSurv = 0, h = 1, i;
 
 	for (i = 0; i < NrRows; i++) {
@@ -198,11 +177,7 @@ long   *surviving;
 	return nrSurv;
 }
 
-void    outputMatrix(M, suffix)
-expvec  *M;
-char    *suffix;
-
-{
+static void outputMatrix(expvec *M, const char *suffix) {
 	long    i, j, nrSurv, *surviving;
 	char    outputName[128];
 	FILE    *fp;
@@ -243,10 +218,7 @@ char    *suffix;
 	fclose(fp);
 }
 
-void    OutputMatrix(suffix)
-char    *suffix;
-
-{
+void OutputMatrix(char *suffix) {
 	long    i, j;
 	char    outputName[128];
 	FILE    *fp;
@@ -279,10 +251,7 @@ char    *suffix;
 	fclose(fp);
 }
 
-void    printGapMatrix(M)
-expvec  *M;
-
-{
+static void printGapMatrix(expvec *M) {
 	long    i, j, first, nrSurv, *surviving;
 
 	if (M == (expvec*)0) {
@@ -331,7 +300,7 @@ expvec  *M;
 /*
 **    Print the contents of Matrix[].
 */
-void    printMatrix() {
+static void printMatrix(void) {
 
 	long    i, j;
 
@@ -352,7 +321,7 @@ void    printMatrix() {
 **    routines. It also checks that the integers are not bigger than 2^15.
 **    If this is the case it prints a warning and aborts.
 */
-expvec  *MatrixToExpVecs() {
+expvec *MatrixToExpVecs(void) {
 
 	long    i, j, k;
 	large   m;
@@ -433,23 +402,23 @@ expvec  *MatrixToExpVecs() {
 **            w[a].
 **    vSubOnce()  subtracts the vector w from the vector v.
 */
-void    vNeg(v, a)
-lvec    v;
-long    a;
+static void vNeg(lvec v, long a) {
+	while (a <= NrCols) {
+		NEGATE(v[a]);
+		a++;
+	}
+}
 
-{       while (a <= NrCols) { NEGATE(v[a]); a++; }                   }
+/*
+static void vSubOnce(lvec v, lvec w, long a) {
+	while (a <= NrCols) {
+		mpz_sub(v[a], w[a], v[a]);
+		a++;
+	}
+}
+*/
 
-void    vSubOnce(v, w, a)
-lvec    v, w;
-long    a;
-
-{       while (a <= NrCols) { mpz_sub(v[a], w[a], v[a]); a++; }    }
-
-void    vSub(v, w, a)
-lvec    v, w;
-long    a;
-
-{
+static void vSub(lvec v, lvec w, long a) {
 	mpz_t    q, t;
 
 	if (NOTZERO(v[a])) {
@@ -477,7 +446,7 @@ long    a;
 	}
 }
 
-void    lastReduce() {
+static void lastReduce(void) {
 
 	long    i, j;
 
@@ -490,14 +459,9 @@ void    lastReduce() {
 /*
 **    vReduce() reduces the vector v against the vectors in Matrix[].
 */
-lvec    vReduce(v, h)
-lvec    v;
-long    h;
-
-{
-	long    i, j;
+static lvec vReduce(lvec v, long h) {
+	long    i;
 	lvec    w;
-	int     reduceCol;
 
 	for (i = 0; i < NrRows && Heads[i] <= h; i++) {
 		if (Heads[i] == h) {
@@ -523,7 +487,7 @@ long    h;
 	return v;
 }
 
-int     addRow(expvec ev) {
+int addRow(expvec ev) {
 	long    h, i, t;
 	lvec    v;
 
@@ -654,10 +618,9 @@ int     addRow(expvec ev) {
 	return changedMatrix;
 }
 
-void printLarge(l)
-large l;
-
-{
+/*
+void printLarge(large l) {
 	mpz_out_str(stdout, 10, l);
 	printf("\n");
 }
+*/

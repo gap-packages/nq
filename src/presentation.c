@@ -9,6 +9,9 @@
 
 #include "presentation.h"
 
+static node *Word(void);
+
+
 /*
 **    ------------------------ GENERAL PURPOSE -------------------------
 **    The first part of this file just contain some auxiliary functions.
@@ -206,7 +209,7 @@ static void SyntaxError(const char *str) {
 **    a line is continued in the next line, therefore ReadCh() discards
 **    '\' and the following '\n'.
 */
-static void ReadCh() {
+static void ReadCh(void) {
 
 	Ch = getc(InFp);
 	Char++;
@@ -222,7 +225,7 @@ static void ReadCh() {
 **    comments. A comment starts with '#' and finishes at the end of
 **    the line.
 */
-static void     SkipBlanks() {
+static void     SkipBlanks(void) {
 
 	/* If Ch is empty, the next character is fetched. */
 	if (Ch == '\0') ReadCh();
@@ -240,7 +243,7 @@ static void     SkipBlanks() {
 /*
 **    Number reads a number from the input.
 */
-static void Number() {
+static void Number(void) {
 
 	unsigned int    m, n = 0, overflow = 0;
 
@@ -271,7 +274,7 @@ static void Number() {
 **    are significant as generator name and are copied into the global
 **    array Gen[]. All other characters are discarded.
 */
-static void     Generator() {
+static void     Generator(void) {
 
 	int     i;
 
@@ -288,7 +291,7 @@ static void     Generator() {
 **    NextToken reads the next token from the input stream. It first
 **    skips all the blank characters and comments.
 */
-/*static*/ void NextToken() {
+static void NextToken(void) {
 	SkipBlanks();
 	TChar = Char;
 	TLine = Line;
@@ -394,7 +397,7 @@ static void     Generator() {
 /*
 **    InitParser() does exactly what the name suggests.
 */
-/*static*/ void InitParser(FILE *fp, char *filename) {
+static void InitParser(FILE *fp, char *filename) {
 	InFp = fp;
 	InFileName = filename;
 
@@ -410,7 +413,7 @@ static void     Generator() {
 **
 **    snumber:         '+' 'number' | '-' 'number' | 'number'
 */
-static node     *Snumber() {
+static node     *Snumber(void) {
 
 	node    *n;
 
@@ -444,10 +447,9 @@ static node     *Snumber() {
 **
 **    A word starts either with 'generator', with '(' or with '['.
 */
-static node     *Commutator() {
+static node     *Commutator(void) {
 
 	node            *n, *o;
-	extern node     *Word();
 
 	if (Token != LBRACK)
 		SyntaxError("Left square bracket expected");
@@ -497,10 +499,9 @@ static node     *Commutator() {
 **
 **    atom:            'generator' | '(' word ')' | commutator
 */
-static node     *Atom() {
+static node     *Atom(void) {
 
 	node            *n;
-	extern node     *Word();
 
 	if (Token == GEN) {
 		n = GetNode(TGEN);
@@ -527,7 +528,7 @@ static node     *Atom() {
 **    power:           atom | atom '^' atom | atom '^' snumber |
 **
 */
-static node     *Power() {
+static node     *Power_(void) {
 
 	node    *n, *o;
 
@@ -556,11 +557,11 @@ static node     *Power() {
 **
 **    A word starts either with 'generator', with '(' or with '['.
 */
-node    *Word(void) {
+static node *Word(void) {
 
 	node    *n, *o;
 
-	o = Power();
+	o = Power_();
 	if (Token == MULT) {
 		NextToken();
 		n = o;
@@ -579,7 +580,7 @@ node    *Word(void) {
 **
 **    A relation starts either with 'generator', with '(' or with '['.
 */
-static node     *Relation() {
+static node     *Relation(void) {
 
 	node    *n, *o;
 
@@ -618,7 +619,7 @@ static node     *Relation() {
 **
 **    A relation starts either with 'generator', with '(' or with '['.
 */
-static node     **RelList() {
+static node     **RelList(void) {
 
 	node     **rellist;
 	unsigned n = 0;
@@ -650,7 +651,7 @@ static node     **RelList() {
 **    genlist:         'empty' | genseq | genseq ; genseq
 **    genseq:          'generator' | 'generator' ',' genseq
 */
-static int      GenList() {
+static int      GenList(void) {
 
 	int     nrgens = 0;
 
@@ -802,7 +803,6 @@ void    SetEvalFunc(int type, EvalFunc function) {
 
 void    *EvalNode(node *n) {
 	void          *e, *l, *r;
-	extern int    Class;
 
 	if (n->type == TNUM)
 		return (void *) & (n->cont.n);

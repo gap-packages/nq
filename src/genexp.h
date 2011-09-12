@@ -14,8 +14,8 @@
 **
 **    A word is a generator exponent string terminated by 0.
 */
-#ifndef GENEXP_INCLUDED
-#define GENEXP_INCLUDED
+#ifndef GENEXP_H
+#define GENEXP_H
 
 typedef short   gen;
 
@@ -40,4 +40,5 @@ struct  gpower {
 typedef struct gpower   gpower;
 
 typedef gpower  *word;
+
 #endif

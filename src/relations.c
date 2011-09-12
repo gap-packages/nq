@@ -5,9 +5,9 @@
 */
 
 
-#include "presentation.h"
+#include "relations.h"
 #include "nq.h"
-
+#include "glimt.h"
 #include "instances.h"
 
 static word     *Image;
@@ -30,7 +30,7 @@ int     EvalSingleRelation(node *r) {
 	return needed;
 }
 
-void    EvalAllRelations() {
+void    EvalAllRelations(void) {
 
 	long    t;
 	node    *r;
@@ -63,7 +63,7 @@ void    EvalAllRelations() {
 **    group onto the generators of a free abelian group. It also sets up
 **    the necessary data structures for collection.
 */
-void    InitEpim() {
+void InitEpim(void) {
 
 	long    i, t, nrGens;
 
@@ -114,7 +114,7 @@ void    InitEpim() {
 		printf("#    Initialized epimorphism (%d msec).\n", RunTime() - t);
 }
 
-int     ExtendEpim() {
+int     ExtendEpim(void) {
 
 	int     j, l, G, nrGens;
 	word    w;
@@ -188,13 +188,12 @@ int     ElimAllEpim(int n, expvec *M, gen *renumber) {
 	return i;
 }
 
-void    ElimEpim() {
+void    ElimEpim(void) {
 
 	long    i, j, h, l, n = 0, t;
 	gen     *renumber;
 	expvec  *M;
 	word    w;
-	extern  expvec  *MatrixToExpVecs();
 
 	if (Verbose) t = RunTime();
 
@@ -297,7 +296,7 @@ void    ElimEpim() {
 		printf("#    Eliminated generators (%d msec).\n", RunTime() - t);
 }
 
-void    PrintEpim() {
+void    PrintEpim(void) {
 
 	long    i, nrGens;
 
