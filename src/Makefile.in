@@ -18,6 +18,27 @@ OBJ = consistency.o pc.o relations.o word.o system.o time.o \
       addgen.o tails.o eliminate.o engel.o glimt.o instances.o \
       presentation.o mem.o pcarith.o collect.o combicol.o trmetab.o gap.o
 
+addgen.o: config.h nq.h
+collect.o: config.h mem.h pc.h pcarith.h macro.h collect.h time.h
+combicol.o: config.h mem.h pc.h pcarith.h macro.h collect.h time.h
+consistency.o: nq.h
+eliminate.o: nq.h
+engel.o: nq.h engel.h
+gap.o: nq.h
+glimt.o: nq.h time.h
+instances.o: presentation.h nq.h
+mem.o: mem.h
+nq.o: nq.h engel.h
+pc.o: nq.h
+pcarith.o: config.h presentation.h pc.h collect.h
+presentation.o: config.h presentation.h
+relations.o: presentation.h nq.h instances.h
+system.o: config.h nq.h
+tails.o: nq.h
+time.o: config.h
+trmetab.o: nq.h engel.h
+word.o: nq.h
+
 nq : nq.o $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) nq.o $(OBJ) $(LDFLAGS) $(GMP_LIBS) -o nq
 
