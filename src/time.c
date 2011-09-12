@@ -15,11 +15,11 @@ int IntMatTime     = 0;
 
 void PrintCollectionTimes() {
 
-	if(CombiCollectionTime > 0)
+	if (CombiCollectionTime > 0)
 		printf("##  Total time spent in combinatorial collection: %d\n",
 		       CombiCollectionTime);
 
-	if(SimpleCollectionTime > 0)
+	if (SimpleCollectionTime > 0)
 		printf("##  Total time spent in simple collection: %d\n",
 		       SimpleCollectionTime);
 

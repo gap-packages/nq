@@ -24,19 +24,19 @@ static int tail_cba(gen c, gen b, gen a, expvec *ev) {
 	Collect(ev2, Generators[a], (exp)1);
 	Collect(ev2, Conjugate[b][a], (exp)1);
 
-	for(i = 1; i <= NrPcGens; i++) {
-		if(ev1[i] != ev2[i]) printf(Warning3, "tail_cba", c, b, a);
+	for (i = 1; i <= NrPcGens; i++) {
+		if (ev1[i] != ev2[i]) printf(Warning3, "tail_cba", c, b, a);
 		ev1[i] = (exp)0;
 	}
 
-	for(i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
+	for (i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
 		ev1[i] -= ev2[i];
-		if(ev1[i] != (exp)0 && Exponent[i] != (exp)0) {
+		if (ev1[i] != (exp)0 && Exponent[i] != (exp)0) {
 			ev1[i] %= Exponent[i];
-			if(ev1[i] < (exp)0) ev1[i] += Exponent[i];
+			if (ev1[i] < (exp)0) ev1[i] += Exponent[i];
 		}
 
-		if(ev1[i] != (exp)0) l++;
+		if (ev1[i] != (exp)0) l++;
 	}
 
 	Free(ev2);
@@ -54,21 +54,21 @@ static int tail_cbn(gen c, gen b, expvec *ev) {
 
 	/* c b^n */
 	ev2 = ExpVecWord(Generators[c]);
-	if(Power[b] != (word)0) Collect(ev2, Power[b], (exp)1);
+	if (Power[b] != (word)0) Collect(ev2, Power[b], (exp)1);
 
-	for(i = 1; i <= NrPcGens; i++) {
-		if(ev1[i] != ev2[i]) printf(Warning2, "tail_cbn", c, b);
+	for (i = 1; i <= NrPcGens; i++) {
+		if (ev1[i] != ev2[i]) printf(Warning2, "tail_cbn", c, b);
 		ev1[i] = (exp)0;
 	}
 
-	for(i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
+	for (i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
 		ev1[i] -= ev2[i];
-		if(Exponent[i] != (exp)0) {
+		if (Exponent[i] != (exp)0) {
 			ev1[i] %= Exponent[i];
-			if(ev1[i] < (exp)0) ev1[i] += Exponent[i];
+			if (ev1[i] < (exp)0) ev1[i] += Exponent[i];
 		}
 
-		if(ev1[i] != 0) l++;
+		if (ev1[i] != 0) l++;
 	}
 
 	Free(ev2);
@@ -89,19 +89,19 @@ static int tail_cnb(gen c, gen b, expvec *ev) {
 	ev2 = ExpVecWord(Power[c]);
 	Collect(ev2, Generators[b], (exp)1);
 
-	for(i = 1; i <= NrPcGens; i++) {
-		if(ev1[i] != ev2[i]) printf(Warning2, "tail_cnb", c, b);
+	for (i = 1; i <= NrPcGens; i++) {
+		if (ev1[i] != ev2[i]) printf(Warning2, "tail_cnb", c, b);
 		ev1[i] = (exp)0;
 	}
 
-	for(i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
+	for (i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
 		ev1[i] -= ev2[i];
-		if(ev1[i] != (exp)0 && Exponent[i] != (exp)0) {
+		if (ev1[i] != (exp)0 && Exponent[i] != (exp)0) {
 			ev1[i] %= Exponent[i];
-			if(ev1[i] < (exp)0) ev1[i] += Exponent[i];
+			if (ev1[i] < (exp)0) ev1[i] += Exponent[i];
 		}
 
-		if(ev1[i] != 0) l++;
+		if (ev1[i] != 0) l++;
 	}
 
 	Free(ev2);
@@ -120,18 +120,18 @@ static int tail_cbb(gen c, gen b, expvec *ev) {
 	Collect(ev1, Generators[-b], (exp)1);
 	ev1[ c ] -= 1;
 
-	for(i = 1; i <= NrPcGens; i++) {
-		if(ev1[i] != (exp)0) printf(Warning2, "tail_cnb", c, b);
+	for (i = 1; i <= NrPcGens; i++) {
+		if (ev1[i] != (exp)0) printf(Warning2, "tail_cnb", c, b);
 	}
 
-	for(i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
+	for (i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
 		ev1[i] = -ev1[i];
-		if(ev1[i] != (exp)0 && Exponent[i] != (exp)0) {
+		if (ev1[i] != (exp)0 && Exponent[i] != (exp)0) {
 			ev1[i] %= Exponent[i];
-			if(ev1[i] < (exp)0) ev1[i] += Exponent[i];
+			if (ev1[i] < (exp)0) ev1[i] += Exponent[i];
 		}
 
-		if(ev1[i] != 0) l++;
+		if (ev1[i] != 0) l++;
 	}
 
 	*ev = ev1;
@@ -148,18 +148,18 @@ static int tail_ccb(gen c, gen b, expvec *ev) {
 	Collect(ev1, Conjugate[-c][b], (exp)1);
 	ev1[abs(b)] -= sgn(b);
 
-	for(i = 1; i <= NrPcGens; i++) {
-		if(ev1[i] != (exp)0) printf(Warning2, "tail_cnb", c, b);
+	for (i = 1; i <= NrPcGens; i++) {
+		if (ev1[i] != (exp)0) printf(Warning2, "tail_cnb", c, b);
 	}
 
-	for(i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
+	for (i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
 		ev1[i] = -ev1[i];
-		if(Exponent[i] != (exp)0) {
+		if (Exponent[i] != (exp)0) {
 			ev1[i] %= Exponent[i];
-			if(ev1[i] < (exp)0) ev1[i] += Exponent[i];
+			if (ev1[i] < (exp)0) ev1[i] += Exponent[i];
 		}
 
-		if(ev1[i] != 0) l++;
+		if (ev1[i] != 0) l++;
 	}
 
 	*ev = ev1;
@@ -171,8 +171,8 @@ static void Tail(gen n, gen m) {
 	expvec  t;
 	word    w;
 
-	if(n > 0)
-		if(m > 0) lt = tail_cba(n, Definition[m].h, Definition[m].g, &t);
+	if (n > 0)
+		if (m > 0) lt = tail_cba(n, Definition[m].h, Definition[m].g, &t);
 		else        lt = tail_cbb(n, m, &t);
 	else lt = tail_ccb(n,  m, &t);
 
@@ -182,7 +182,7 @@ static void Tail(gen n, gen m) {
 	WordCopy(Conjugate[n][m], w);
 	WordCopyExpVec(t, w + lw);
 	free(t);
-	if(Conjugate[n][m] != Generators[n]) free(Conjugate[n][m]);
+	if (Conjugate[n][m] != Generators[n]) free(Conjugate[n][m]);
 	Conjugate[n][m] = w;
 }
 
@@ -197,7 +197,7 @@ void Tails() {
 	long    b, c, i, j, time;
 	long    m, M, n, N;
 
-	if(Verbose) time = RunTime();
+	if (Verbose) time = RunTime();
 
 	/*
 	** Precompute exponents of the new generators which are defined
@@ -205,40 +205,40 @@ void Tails() {
 	** evidence that is woth the effort.  One probably also has to use
 	** those power relations that have a non-trivial right hand side.
 	*/
-	if(0) {
+	if (0) {
 		int     l;
 		gen     i, g, h, t;
 		expvec  ev;
 
-		for(t = NrPcGens + 1; t <= NrPcGens + NrCenGens; t++) {
+		for (t = NrPcGens + 1; t <= NrPcGens + NrCenGens; t++) {
 			h = Definition[t].h;
 			g = Definition[t].g;
-			if(h < 0 || Wt(h) < Class) continue;
-			if(g != (gen)0 && Exponent[h] != (exp)0) {
+			if (h < 0 || Wt(h) < Class) continue;
+			if (g != (gen)0 && Exponent[h] != (exp)0) {
 				l = tail_cnb(h, g, &ev);
 				/* printf( "t: %d, ", t );
 				   for( i = 1; i <= NrPcGens+NrCenGens; i++ )
 				     if( ev[i] != (exp)0 ) printf( " %d^%lld", i, ev[i] );
 				   printf( "\n" );*/
-				if(l == 1) {
-					if(ev[t] == (exp)0)
+				if (l == 1) {
+					if (ev[t] == (exp)0)
 						printf("Error, exponent zero\n");
-					if(Verbose)
+					if (Verbose)
 						printf("#    Setting exponent %lld for %d\n", ev[t], t);
 					Exponent[t] = ev[t];
 					addRow(ev);
 				}
 			}
-			if(g != (gen)0 && Exponent[g] != (exp)0) {
+			if (g != (gen)0 && Exponent[g] != (exp)0) {
 				l = tail_cbn(h, g, &ev);
 				/* printf( "t: %d, ", t );
 				for( i = 1; i <= NrPcGens+NrCenGens; i++ )
 				  if( ev[i] != (exp)0 ) printf( " %d^%lld", i, ev[i] );
 				  printf( "\n" );*/
-				if(l == 1) {
-					if(ev[t] == (exp)0)
+				if (l == 1) {
+					if (ev[t] == (exp)0)
 						printf("Error, exponent zero\n");
-					if(Verbose)
+					if (Verbose)
 						printf("#    Setting exponent %lld for %d\n", ev[t], t);
 					Exponent[t] = ev[t];
 					addRow(ev);
@@ -248,21 +248,21 @@ void Tails() {
 	}
 
 	N  = NrPcGens;
-	for(c = Class; c >= 1; c--) {
+	for (c = Class; c >= 1; c--) {
 		n  = N;
 		M  = 1;
-		for(b = 1; b <= c - b + 1; b++) {
+		for (b = 1; b <= c - b + 1; b++) {
 			/* tails for comutators [ <c-b+1>, <b> ] */
-			for(j = Dim[c - b + 1]; j >= 1; j--) {
+			for (j = Dim[c - b + 1]; j >= 1; j--) {
 				m = M;
-				for(i = 1; n > m && i <= Dim[b]; i++) {
-					if(b != 1)
+				for (i = 1; n > m && i <= Dim[b]; i++) {
+					if (b != 1)
 						Tail(n,  m);
-					if(Exponent[m] == (exp)0)
+					if (Exponent[m] == (exp)0)
 						Tail(n, -m);
-					if(Exponent[n] == (exp)0)
+					if (Exponent[n] == (exp)0)
 						Tail(-n,  m);
-					if(Exponent[m] + Exponent[n] == (exp)0)
+					if (Exponent[m] + Exponent[n] == (exp)0)
 						Tail(-n, -m);
 					m++;
 				}
@@ -274,6 +274,6 @@ void Tails() {
 	}
 
 
-	if(Verbose)
+	if (Verbose)
 		printf("#    Computed tails (%d msec).\n", RunTime() - time);
 }

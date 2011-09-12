@@ -45,9 +45,9 @@ int             Sp;
 
 ReduceExponent(expvec ev, gen g) {
 
-	if(ev[ g ] >= Exponent[ g ]) {
+	if (ev[ g ] >= Exponent[ g ]) {
 
-		if(Power[g] != (word)0) AddWord(ev, Power[g], ev[ g ] / Exponent[ g ]);
+		if (Power[g] != (word)0) AddWord(ev, Power[g], ev[ g ] / Exponent[ g ]);
 
 		ev[ g ] %= Exponent[ g ];
 	}
@@ -57,16 +57,16 @@ StackReduceExponent(expvec ev, gen g) {
 
 	gen    h;
 
-	if(ev[ g ] >= Exponent[ g ]) {
+	if (ev[ g ] >= Exponent[ g ]) {
 
-		if(Power[ g ] != (word)0) {
+		if (Power[ g ] != (word)0) {
 
 			/* Need to put part of the exponent vector on the stack. */
-			for(h = Commute[ g ]; h > g; h--)
-				if(ev[ h ] != (exp)0) {
-					if(++Sp == STACKHEIGHT) return Error("Out of stack space", g);
+			for (h = Commute[ g ]; h > g; h--)
+				if (ev[ h ] != (exp)0) {
+					if (++Sp == STACKHEIGHT) return Error("Out of stack space", g);
 
-					if(ev[ h ] > (exp)0) {
+					if (ev[ h ] > (exp)0) {
 						WordStack[ Sp ]    = Generators[  h ];
 						WordExpStack[ Sp ] = 1;
 						GenExpStack[ Sp ] = ev[ h ];
@@ -91,13 +91,13 @@ AddWord(expvec lhs, word w, exp we) {
 
 	gen    g;
 
-	for(; w->g != EOW && w->g <= NrPcGensList[Class + 1]; w++) {
+	for (; w->g != EOW && w->g <= NrPcGensList[Class + 1]; w++) {
 
-		if(w->g > (gen)0) { g =  w->g; lhs[ g ] += we * w->e; }
+		if (w->g > (gen)0) { g =  w->g; lhs[ g ] += we * w->e; }
 		else                { g = -w->g; lhs[ g ] -= we * w->e; }
 
 		CheckOverflow(lhs[ g ]);
-		if(Exponent[ g ] != (exp)0) ReduceExponent(lhs, g);
+		if (Exponent[ g ] != (exp)0) ReduceExponent(lhs, g);
 
 	}
 }
@@ -123,46 +123,46 @@ int   CombiCollect(expvec lhs, word rhs, exp e) {
 	wes[ Sp ] = e;
 	ges[ Sp ] = rhs->e;
 
-	while(Sp >= 0)
-		if((g = gs[ Sp ]->g) != EOW && g <= NrPcGensList[Class + 1]) {
+	while (Sp >= 0)
+		if ((g = gs[ Sp ]->g) != EOW && g <= NrPcGensList[Class + 1]) {
 
 			ag = abs(g);
-			if(g < 0 && Exponent[-g] != (exp)0)
+			if (g < 0 && Exponent[-g] != (exp)0)
 				return Error("Inverse of a generator with power relation", ag);
 
-			if(Commute[ag] == ag) {
+			if (Commute[ag] == ag) {
 				/* Take the exponent of the first generator from the stack not from
 				   the word.  Both are identical if the word is a conjugate.  They
 				   differ if a generator-exponent pair was pushed onto the stack.
 				   In that case w->e is 1 and ges[ Sp ] is the exponent. */
 				w = gs[ Sp ];
-				if(w->g > (gen)0) { g =  w->g; lhs[ g ] += ges[ Sp ]; }
+				if (w->g > (gen)0) { g =  w->g; lhs[ g ] += ges[ Sp ]; }
 				else                { g = -w->g; lhs[ g ] -= ges[ Sp ]; }
 
 				CheckOverflow(lhs[ g ]);
-				if(Exponent[ g ] != (exp)0) ReduceExponent(lhs, g);
+				if (Exponent[ g ] != (exp)0) ReduceExponent(lhs, g);
 
-				for(w++; w->g != EOW && w->g <= NrPcGensList[Class + 1]; w++) {
+				for (w++; w->g != EOW && w->g <= NrPcGensList[Class + 1]; w++) {
 
-					if(w->g > (gen)0) { g =  w->g; lhs[ g ] += w->e; }
+					if (w->g > (gen)0) { g =  w->g; lhs[ g ] += w->e; }
 					else                { g = -w->g; lhs[ g ] -= w->e; }
 
 					CheckOverflow(lhs[ g ]);
-					if(Exponent[ g ] != (exp)0) ReduceExponent(lhs, g);
+					if (Exponent[ g ] != (exp)0) ReduceExponent(lhs, g);
 				}
 				gs[ Sp ] = w;
 
 				continue;
 			}
 
-			else if(3 * Wt(ag) > Class + 1) {
+			else if (3 * Wt(ag) > Class + 1) {
 				/* Move the generator g to its correct position in the exponent
 				   vector without stacking conjugates.  Because of the class
 				   condition we can add the necessary *commutators* into the
 				   exponent vector. */
-				for(h = Commute[ ag ]; h > ag; h--)
-					if(lhs[ h ] != (exp)0) {
-						if(lhs[ h ] > (exp)0)
+				for (h = Commute[ ag ]; h > ag; h--)
+					if (lhs[ h ] != (exp)0) {
+						if (lhs[ h ] > (exp)0)
 							AddWord(lhs, C[  h ][ g ] + 1,  lhs[ h ] * ges[ Sp ]);
 						else
 							AddWord(lhs, C[ -h ][ g ] + 1, -lhs[ h ] * ges[ Sp ]);
@@ -174,7 +174,7 @@ int   CombiCollect(expvec lhs, word rhs, exp e) {
 				gs[ Sp ]++;
 				ges[ Sp ] = gs[ Sp ]->e;
 
-				if(Exponent[ ag ] != (exp)0) StackReduceExponent(lhs, ag);
+				if (Exponent[ ag ] != (exp)0) StackReduceExponent(lhs, ag);
 
 				continue;
 			}
@@ -183,7 +183,7 @@ int   CombiCollect(expvec lhs, word rhs, exp e) {
 
 				lhs[ ag ] += sgn(g);
 
-				if(--ges[ Sp ] == (exp)0) {
+				if (--ges[ Sp ] == (exp)0) {
 					/* The power of the generator g will have been moved
 					   completely to its correct position after this
 					   collection step. Therefore advance the generator
@@ -193,9 +193,9 @@ int   CombiCollect(expvec lhs, word rhs, exp e) {
 				}
 
 				/* Add in commutators until Wt([h,g,h]) <= Class+1 */
-				for(h = Commute[ ag ]; h > Commute2[ ag ]; h--)
-					if(lhs[ h ] != (exp)0) {
-						if(lhs[ h ] > (exp)0)
+				for (h = Commute[ ag ]; h > Commute2[ ag ]; h--)
+					if (lhs[ h ] != (exp)0) {
+						if (lhs[ h ] > (exp)0)
 							AddWord(lhs, C[  h ][ g ] + 1,  lhs[ h ]);
 						else
 							AddWord(lhs, C[ -h ][ g ] + 1, -lhs[ h ]);
@@ -205,23 +205,23 @@ int   CombiCollect(expvec lhs, word rhs, exp e) {
 				   generators onto the stack.  Find the point from where collection
 				   has to happen.
 				*/
-				while(h > ag) {
-					if(lhs[ h ] != (exp)0 &&
+				while (h > ag) {
+					if (lhs[ h ] != (exp)0 &&
 					        C[h][ag] != (word)0 &&
 					        (C[h][ag] + 1)->g != EOW) break;
 					h--;
 				}
 
 				/* Now put generator exponent pairs on the stack. */
-				if(h > ag || (Exponent[ ag ] > (exp)0 &&
-				              lhs[ ag ] >= Exponent[ ag ] &&
-				              Power[ ag ] != (word)0)) {
+				if (h > ag || (Exponent[ ag ] > (exp)0 &&
+				               lhs[ ag ] >= Exponent[ ag ] &&
+				               Power[ ag ] != (word)0)) {
 
-					for(hh = Commute[ag]; hh > h; hh--)
-						if(lhs[ hh ] != (exp)0) {
-							if(++Sp == STACKHEIGHT)
+					for (hh = Commute[ag]; hh > h; hh--)
+						if (lhs[ hh ] != (exp)0) {
+							if (++Sp == STACKHEIGHT)
 								return Error("Out of stack space", ag);
-							if(lhs[ hh ] > (exp)0) {
+							if (lhs[ hh ] > (exp)0) {
 								gs[ Sp ]  = ws[ Sp ] = Generators[ hh ];
 								wes[ Sp ] = 1;
 								ges[ Sp ] = lhs[ hh ];
@@ -236,11 +236,11 @@ int   CombiCollect(expvec lhs, word rhs, exp e) {
 
 				/* Now move the generator g to its correct position
 				   in the exponent vector lhs. */
-				for(; h > ag; h--)
-					if(lhs[h] != (exp)0) {
-						if(++Sp == STACKHEIGHT)
+				for (; h > ag; h--)
+					if (lhs[h] != (exp)0) {
+						if (++Sp == STACKHEIGHT)
 							return Error("Out of stack space", ag);
-						if(lhs[ h ] > (exp)0) {
+						if (lhs[ h ] > (exp)0) {
 							gs[ Sp ]  = ws[ Sp ] = C[ h ][ g ];
 							wes[ Sp ] = lhs[h];
 							lhs[ h ] = (exp)0;
@@ -257,10 +257,10 @@ int   CombiCollect(expvec lhs, word rhs, exp e) {
 
 			CheckOverflow(lhs[ag]);
 
-			if(Exponent[ag] != (exp)0)
-				while(lhs[ag] >= Exponent[ag]) {
-					if((rhs = P[ ag ]) != (word)0) {
-						if(++Sp == STACKHEIGHT)
+			if (Exponent[ag] != (exp)0)
+				while (lhs[ag] >= Exponent[ag]) {
+					if ((rhs = P[ ag ]) != (word)0) {
+						if (++Sp == STACKHEIGHT)
 							return Error("Out of stack space", ag);
 						gs[ Sp ] = ws[ Sp ] = rhs;
 						wes[ Sp ] = (exp)1;
@@ -271,7 +271,7 @@ int   CombiCollect(expvec lhs, word rhs, exp e) {
 		} else {
 			/* the top word on the stack has been examined completely,
 			   now check if its exponent is zero. */
-			if(--wes[ Sp ] == (exp)0) {
+			if (--wes[ Sp ] == (exp)0) {
 				/* All powers of this word have been treated, so
 				   we have to move down the stack. */
 				Sp--;

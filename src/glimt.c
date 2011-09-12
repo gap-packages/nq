@@ -92,7 +92,7 @@ exp     n;
 	MP_INT  *l = (MP_INT*)Allocate(sizeof(MP_INT));
 	int     sign = 1;
 
-	if(n < (exp)0) { sign = -1; n = -n; }
+	if (n < (exp)0) { sign = -1; n = -n; }
 
 	/*
 	** There does not seem to be a function that converts from long long
@@ -107,7 +107,7 @@ exp     n;
 	mpz_init(l);
 	mpz_set_str(l, x, 16);
 
-	if(0) {
+	if (0) {
 #ifdef HAVE_LONG_LONG_INT
 		printf("%lld ", n);
 #else
@@ -118,7 +118,7 @@ exp     n;
 	}
 
 
-	if(sign == -1) NEGATE(l);
+	if (sign == -1) NEGATE(l);
 
 	return l;
 }
@@ -130,7 +130,7 @@ expvec  ev;
 {
 	long    i;
 
-	for(i = 1; i <= NrPcGens + NrCenGens; i++)
+	for (i = 1; i <= NrPcGens + NrCenGens; i++)
 		printf("%2d ", ev[i]);
 }
 
@@ -140,7 +140,7 @@ expvec  *M;
 {
 	long    i;
 
-	for(i = 0; i < NrRows; i++) free(M[i]);
+	for (i = 0; i < NrRows; i++) free(M[i]);
 	free(M);
 
 	NrRows = NrCols = 0;
@@ -152,7 +152,7 @@ lvec    v;
 {
 	long    i;
 
-	for(i = 1; i <= NrCols; i++) { mpz_clear(v[i]); Free(v[i]); }
+	for (i = 1; i <= NrCols; i++) { mpz_clear(v[i]); Free(v[i]); }
 	Free(v);
 }
 
@@ -160,12 +160,12 @@ void    freeMatrix() {
 
 	long    i;
 
-	if(Matrix == (lvec *)0) return;
+	if (Matrix == (lvec *)0) return;
 
 	mpz_clear(MaximalEntry);
 	Free(MaximalEntry);
 
-	for(i = 0; i < NrRows; i++) freeVector(Matrix[i]);
+	for (i = 0; i < NrRows; i++) freeVector(Matrix[i]);
 	Free(Matrix);
 	Matrix = (lvec*)0;
 }
@@ -176,7 +176,7 @@ lvec    v;
 {
 	long    i;
 
-	for(i = 1; i <= NrCols; i++) {
+	for (i = 1; i <= NrCols; i++) {
 		printf(" ");
 		mpz_out_str(stdout, 10, v[i]);
 	}
@@ -189,12 +189,12 @@ long   *surviving;
 {
 	long nrSurv = 0, h = 1, i;
 
-	for(i = 0; i < NrRows; i++) {
-		for(; h < Heads[i]; h++) surviving[nrSurv++] = h;
-		if(M[i][h] != (exp)1)    surviving[nrSurv++] = h;
+	for (i = 0; i < NrRows; i++) {
+		for (; h < Heads[i]; h++) surviving[nrSurv++] = h;
+		if (M[i][h] != (exp)1)    surviving[nrSurv++] = h;
 		h++;
 	}
-	for(; h <= NrCols; h++) surviving[nrSurv++] = h;
+	for (; h <= NrCols; h++) surviving[nrSurv++] = h;
 	return nrSurv;
 }
 
@@ -207,17 +207,17 @@ char    *suffix;
 	char    outputName[128];
 	FILE    *fp;
 
-	if(strlen(InputFile) > 100)
+	if (strlen(InputFile) > 100)
 		sprintf(outputName, "NqOut.%s.%d", suffix, Class + 1);
 	else
 		sprintf(outputName, "%s.%s.%d", InputFile, suffix, Class + 1);
-	if((fp = fopen(outputName, "w")) == NULL) {
+	if ((fp = fopen(outputName, "w")) == NULL) {
 		perror(outputName);
 		fprintf(stderr,
 		        "relation matrix for class %d not written\n", Class + 1);
 	}
 
-	if(M == (expvec*)0) {
+	if (M == (expvec*)0) {
 		fprintf(fp, "0\n");
 		fclose(fp);
 		return;
@@ -227,9 +227,9 @@ char    *suffix;
 	nrSurv = survivingCols(M, surviving);
 
 	fprintf(fp, "%d    # Number of colums\n", nrSurv);
-	for(i = 0; i < NrRows; i++) {
-		if(M[i][Heads[i]] != (exp)1) {
-			for(j = 0; j < nrSurv; j++)
+	for (i = 0; i < NrRows; i++) {
+		if (M[i][Heads[i]] != (exp)1) {
+			for (j = 0; j < nrSurv; j++)
 #ifdef HAVE_LONG_LONG_INT
 				fprintf(fp, " %lld", M[i][surviving[j]]);
 #else
@@ -251,25 +251,25 @@ char    *suffix;
 	char    outputName[128];
 	FILE    *fp;
 
-	if(strlen(InputFile) > 100)
+	if (strlen(InputFile) > 100)
 		sprintf(outputName, "NqOut.%s.%d", suffix, Class + 1);
 	else
 		sprintf(outputName, "%s.%s.%d", InputFile, suffix, Class + 1);
-	if((fp = fopen(outputName, "w")) == NULL) {
+	if ((fp = fopen(outputName, "w")) == NULL) {
 		perror(outputName);
 		fprintf(stderr,
 		        "relation matrix for class %d not written\n", Class + 1);
 	}
 
-	if(Matrix == (lvec*)0) {
+	if (Matrix == (lvec*)0) {
 		fprintf(fp, "0\n");
 		fclose(fp);
 		return;
 	}
 
 	fprintf(fp, "%d\n", NrCols);
-	for(i = 0; i < NrRows; i++) {
-		for(j = 1; j <= NrCols; j++) {
+	for (i = 0; i < NrRows; i++) {
+		for (j = 1; j <= NrCols; j++) {
 			fputc(' ', fp);
 			mpz_out_str(fp, 10, Matrix[i][j]);
 		}
@@ -285,11 +285,11 @@ expvec  *M;
 {
 	long    i, j, first, nrSurv, *surviving;
 
-	if(M == (expvec*)0) {
+	if (M == (expvec*)0) {
 		printf("[\n[");
-		for(j = 1; j <= NrCenGens; j++) {
+		for (j = 1; j <= NrCenGens; j++) {
 			printf(" 0");
-			if(j < NrCenGens) putchar(',');
+			if (j < NrCenGens) putchar(',');
 		}
 		printf(" ]\n],\n");
 		return;
@@ -298,28 +298,28 @@ expvec  *M;
 	surviving = (long *)Allocate(NrCols * sizeof(long));
 	nrSurv = survivingCols(M, surviving);
 
-	if(nrSurv == 0) { Free(surviving); return; }
+	if (nrSurv == 0) { Free(surviving); return; }
 
 	printf("[\n");
-	for(i = 0, first = 1; i < NrRows; i++) {
-		if(M[i][Heads[i]] != (exp)1) {
-			if(!first) printf(",\n");
+	for (i = 0, first = 1; i < NrRows; i++) {
+		if (M[i][Heads[i]] != (exp)1) {
+			if (!first) printf(",\n");
 			else         first = 0;
 			printf("[");
-			for(j = 0; j < nrSurv; j++) {
+			for (j = 0; j < nrSurv; j++) {
 #ifdef HAVE_LONG_LONG_INT
 				printf(" %lld", M[i][surviving[j]]);
 #else
 				printf(" %d", M[i][surviving[j]]);
 #endif
-				if(j < nrSurv) putchar(',');
+				if (j < nrSurv) putchar(',');
 			}
 			printf("]");
 		}
 	}
-	if(first) {
+	if (first) {
 		printf("[");
-		for(j = 0; j < nrSurv - 1; j++) printf(" 0,");
+		for (j = 0; j < nrSurv - 1; j++) printf(" 0,");
 		printf(" 0]\n");
 	}
 	printf("],");
@@ -336,9 +336,9 @@ void    printMatrix() {
 	long    i, j;
 
 	printf(" heads   vectors\n");
-	for(i = 0; i < NrRows; i++) {
+	for (i = 0; i < NrRows; i++) {
 		printf("    %d   ", Heads[i]);
-		for(j = 1; j <= NrCols; j++) {
+		for (j = 1; j <= NrCols; j++) {
 			putchar(' ');
 			mpz_out_str(stdout, 10, Matrix[i][j]);
 		}
@@ -360,29 +360,29 @@ expvec  *MatrixToExpVecs() {
 	exp     c;
 	expvec  *M;
 
-	if(NrRows == 0) {
+	if (NrRows == 0) {
 		freeMatrix();
 		TimeOutOff();
-		if(Gap) printGapMatrix((expvec*)0);
-		if(AbelianInv) outputMatrix((expvec*)0, "abinv");
-		if(RawMatOutput && RawMatFile != NULL) fclose(RawMatFile);
+		if (Gap) printGapMatrix((expvec*)0);
+		if (AbelianInv) outputMatrix((expvec*)0, "abinv");
+		if (RawMatOutput && RawMatFile != NULL) fclose(RawMatFile);
 		TimeOutOn();
 		return (expvec*)0;
 	}
 
 	M = (expvec*)malloc(NrRows * sizeof(expvec));
-	if(M == (expvec*)0) { perror("MatrixToExpVecs(), M"); exit(2); }
+	if (M == (expvec*)0) { perror("MatrixToExpVecs(), M"); exit(2); }
 
 	/* Convert. */
-	for(i = 0; i < NrRows; i++) {
+	for (i = 0; i < NrRows; i++) {
 		M[i] = (expvec)calloc(NrCols + 1, sizeof(exp));
-		if(M[i] == (expvec)0) {
+		if (M[i] == (expvec)0) {
 			perror("MatrixToExpVecs(), M[]");
 			exit(2);
 		}
-		for(j = Heads[i]; j <= NrCols; j++) {
+		for (j = Heads[i]; j <= NrCols; j++) {
 			m = Matrix[i][j];
-			if(mpz_sizeinbase(m, 2) > 8 * sizeof(signed int) - 2) {
+			if (mpz_sizeinbase(m, 2) > 8 * sizeof(signed int) - 2) {
 				printf("Warning, Exponent too large.\n");
 				printMatrix();
 				exit(4);
@@ -390,17 +390,17 @@ expvec  *MatrixToExpVecs() {
 			M[i][j] = mpz_get_si(m);
 		}
 	}
-	for(i = 0; i < NrRows; i++) freeVector(Matrix[i]);
+	for (i = 0; i < NrRows; i++) freeVector(Matrix[i]);
 
 	/* Make all entries except the head entries negative. */
-	for(i = 0; i < NrRows; i++)
-		for(j = i - 1; j >= 0; j--)
-			if(abs(M[j][ Heads[i] ]) >= M[i][ Heads[i] ] ||
+	for (i = 0; i < NrRows; i++)
+		for (j = i - 1; j >= 0; j--)
+			if (abs(M[j][ Heads[i] ]) >= M[i][ Heads[i] ] ||
 			        M[j][ Heads[i] ] > (exp)0) {
 				c = M[j][ Heads[i] ] / M[i][ Heads[i] ];
-				if(M[j][ Heads[i] ] > (exp)0 &&
+				if (M[j][ Heads[i] ] > (exp)0 &&
 				        M[j][ Heads[i] ] % M[i][ Heads[i] ] != (exp)0) c++;
-				for(k = Heads[i]; k <= NrCols; k++)
+				for (k = Heads[i]; k <= NrCols; k++)
 					M[j][k] -= c * M[i][k];
 			}
 
@@ -414,11 +414,11 @@ expvec  *MatrixToExpVecs() {
 
 
 	TimeOutOff();
-	if(Gap) printGapMatrix(M);
-	if(AbelianInv) outputMatrix(M, "abinv");
+	if (Gap) printGapMatrix(M);
+	if (AbelianInv) outputMatrix(M, "abinv");
 	TimeOutOn();
 
-	if(RawMatOutput) fclose(RawMatFile);
+	if (RawMatOutput) fclose(RawMatFile);
 
 	return M;
 }
@@ -437,13 +437,13 @@ void    vNeg(v, a)
 lvec    v;
 long    a;
 
-{       while(a <= NrCols) { NEGATE(v[a]); a++; }                   }
+{       while (a <= NrCols) { NEGATE(v[a]); a++; }                   }
 
 void    vSubOnce(v, w, a)
 lvec    v, w;
 long    a;
 
-{       while(a <= NrCols) { mpz_sub(v[a], w[a], v[a]); a++; }    }
+{       while (a <= NrCols) { mpz_sub(v[a], w[a], v[a]); a++; }    }
 
 void    vSub(v, w, a)
 lvec    v, w;
@@ -452,19 +452,19 @@ long    a;
 {
 	mpz_t    q, t;
 
-	if(NOTZERO(v[a])) {
+	if (NOTZERO(v[a])) {
 		mpz_init(q);
 
 		mpz_tdiv_q(q, v[a], w[a]);
-		if(NOTZERO(q)) {
+		if (NOTZERO(q)) {
 			mpz_init(t);
 
-			while(a <= NrCols) {
+			while (a <= NrCols) {
 				mpz_mul(t,    q,    w[a]);
 				mpz_sub(v[a], v[a], t);
 
 				mpz_abs(t, v[a]);
-				if(mpz_cmp(t, MaximalEntry) > 0)
+				if (mpz_cmp(t, MaximalEntry) > 0)
 					mpz_set(MaximalEntry, v[a]);
 
 				a++;
@@ -482,8 +482,8 @@ void    lastReduce() {
 	long    i, j;
 
 	/* Reduce all the head columns. */
-	for(i = 0; i < NrRows; i++)
-		for(j = i - 1; j >= 0; j--)
+	for (i = 0; i < NrRows; i++)
+		for (j = i - 1; j >= 0; j--)
 			vSub(Matrix[j], Matrix[i], Heads[i]);
 }
 
@@ -499,24 +499,24 @@ long    h;
 	lvec    w;
 	int     reduceCol;
 
-	for(i = 0; i < NrRows && Heads[i] <= h; i++) {
-		if(Heads[i] == h) {
-			while(NOTZERO(v[h]) && NOTZERO(Matrix[i][h])) {
+	for (i = 0; i < NrRows && Heads[i] <= h; i++) {
+		if (Heads[i] == h) {
+			while (NOTZERO(v[h]) && NOTZERO(Matrix[i][h])) {
 				vSub(v, Matrix[i], h);
-				if(NOTZERO(v[h])) {
+				if (NOTZERO(v[h])) {
 					changedMatrix = 1;
 					vSub(Matrix[i], v, h);
 				}
 			}
-			if(NOTZERO(v[h])) {   /* v replaces th i-th row. */
-				if(ISNEG(v[h])) vNeg(v, h);
+			if (NOTZERO(v[h])) {  /* v replaces th i-th row. */
+				if (ISNEG(v[h])) vNeg(v, h);
 				w = Matrix[i];
 				Matrix[i] = v;
 				v = w;
 			}
 
-			while(h <= NrCols && ISZERO(v[h])) h++;
-			if(h > NrCols) { freeVector(v); v = (lvec)0; }
+			while (h <= NrCols && ISZERO(v[h])) h++;
+			if (h > NrCols) { freeVector(v); v = (lvec)0; }
 		}
 	}
 
@@ -530,21 +530,21 @@ int     addRow(expvec ev) {
 	IntMatTime -= RunTime();
 
 	/* Initialize Matrix[] and Heads[] on the first call. */
-	if(Matrix == (lvec *)0) {
+	if (Matrix == (lvec *)0) {
 		EarlyStop = 0;
 		Time = 0;
-		if((Matrix = (lvec*)malloc(200 * sizeof(lvec))) == (lvec *)0) {
+		if ((Matrix = (lvec*)malloc(200 * sizeof(lvec))) == (lvec *)0) {
 			perror("addRow, Matrix ");
 			exit(2);
 		}
-		if((Heads = (long*)malloc(200 * sizeof(long))) == (long*)0) {
+		if ((Heads = (long*)malloc(200 * sizeof(long))) == (long*)0) {
 			perror("addRow, Heads ");
 			exit(2);
 		}
 		NrCols = NrCenGens;
 		MaximalEntry = ltom((exp)0);
 
-		if(RawMatOutput) {
+		if (RawMatOutput) {
 			char *file;
 			int  c;
 
@@ -556,7 +556,7 @@ int     addRow(expvec ev) {
 			file[8] = c % 10 + '0';
 			c /= 10;
 			file[7] = c % 10 + '0';
-			if((RawMatFile = fopen(file, "w")) == NULL) {
+			if ((RawMatFile = fopen(file, "w")) == NULL) {
 				perror(file);
 				exit(1);
 			}
@@ -570,8 +570,8 @@ int     addRow(expvec ev) {
 
 	/* Check if the first NrPcGens entries in the exponent vector
 	** are zero. */
-	for(i = 1; i <= NrPcGens; i++)
-		if(ev[i] != 0) {
+	for (i = 1; i <= NrPcGens; i++)
+		if (ev[i] != 0) {
 			printf("Warning, exponent vector is not a tail");
 			printf(" at position %d.\n", i);
 			printEv(ev);
@@ -580,11 +580,11 @@ int     addRow(expvec ev) {
 		}
 
 	/* Find the head, i.e. the first non-zero entry, of ev. */
-	for(h = 0, i = 1; i <= NrCols; i++)
-		if(ev[NrPcGens + i] != 0) { h = i; break; }
+	for (h = 0, i = 1; i <= NrCols; i++)
+		if (ev[NrPcGens + i] != 0) { h = i; break; }
 
 	/* If ev is the null vector, free it and return. */
-	if(h == 0) {
+	if (h == 0) {
 		Free(ev);
 		IntMatTime += RunTime();
 		return 0;
@@ -594,12 +594,12 @@ int     addRow(expvec ev) {
 
 	/* Copy the last NrCenGens entries of ev and free it. */
 	v = (lvec)malloc((NrCols + 1) * sizeof(large));
-	if(v == (lvec)0) { perror("addRow(), v"); exit(2); }
-	for(i = 1; i <= NrCols; i++)
+	if (v == (lvec)0) { perror("addRow(), v"); exit(2); }
+	for (i = 1; i <= NrCols; i++)
 		v[i] = ltom(ev[NrPcGens + i]);
 
-	if(RawMatOutput) {
-		for(i = 1; i <= NrCols; i++)
+	if (RawMatOutput) {
+		for (i = 1; i <= NrCols; i++)
 			fprintf(RawMatFile, " %ld", ev[NrPcGens + i]);
 		fprintf(RawMatFile, "\n");
 		fflush(RawMatFile);
@@ -607,25 +607,25 @@ int     addRow(expvec ev) {
 
 	Free(ev);
 
-	if((v = vReduce(v, h)) != (lvec)0) {
+	if ((v = vReduce(v, h)) != (lvec)0) {
 		changedMatrix = 1;
-		if(NrRows % 200 == 0) {
+		if (NrRows % 200 == 0) {
 			Matrix = (lvec*)realloc(Matrix, (NrRows + 200) * sizeof(lvec));
-			if(Matrix == (lvec*)0) {
+			if (Matrix == (lvec*)0) {
 				perror("addRow(), Matrix");
 				exit(2);
 			}
 			Heads = (long*)realloc(Heads, (NrRows + 200) * sizeof(long));
-			if(Heads == (long*)0) {
+			if (Heads == (long*)0) {
 				perror("addRow(), Heads");
 				exit(2);
 			}
 		}
 		/* Insert ev such that Heads[] is in increasing order. */
-		while(h <= NrCols && ISZERO(v[h])) h++;
-		if(ISNEG(v[h])) vNeg(v, h);
-		for(i = NrRows; i > 0; i--)
-			if(Heads[i - 1] > h) {
+		while (h <= NrCols && ISZERO(v[h])) h++;
+		if (ISNEG(v[h])) vNeg(v, h);
+		for (i = NrRows; i > 0; i--)
+			if (Heads[i - 1] > h) {
 				Matrix[i] = Matrix[i - 1];
 				Heads[i] = Heads[i - 1];
 			} else        break;
@@ -635,19 +635,19 @@ int     addRow(expvec ev) {
 		NrRows++;
 	}
 
-	if(changedMatrix) lastReduce();
+	if (changedMatrix) lastReduce();
 
 
 	/* Check if Matrix[] is the identity matrix. */
-	if(NrRows == NrCenGens) {
-		for(i = 0; i < NrRows; i++)
+	if (NrRows == NrCenGens) {
+		for (i = 0; i < NrRows; i++)
 			/* Check if each leading entry is 1 */
-			if(mpz_sizeinbase(Matrix[i][Heads[i]], 2) != 1) break;
-		if(i == NrRows) EarlyStop = 1;
+			if (mpz_sizeinbase(Matrix[i][Heads[i]], 2) != 1) break;
+		if (i == NrRows) EarlyStop = 1;
 	}
 
 	Time += RunTime() - t;
-	if(EarlyStop)
+	if (EarlyStop)
 		printf("#    Integer matrix is the identity.\n");
 
 	IntMatTime += RunTime();

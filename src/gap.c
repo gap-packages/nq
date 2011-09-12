@@ -9,15 +9,15 @@
 static void printGapWord(word w) {
 	int nrc = 30;      /* something has already been printed */
 
-	if(w == (word)0 || w->g == EOW) {
+	if (w == (word)0 || w->g == EOW) {
 		printf("One(F)");
 		return;
 	}
 
-	while(w->g != EOW) {
-		if(w->g > 0) {
+	while (w->g != EOW) {
+		if (w->g > 0) {
 			nrc += printf("NqF.%d", w->g);
-			if(w->e != (exp)1)
+			if (w->e != (exp)1)
 #ifdef HAVE_LONG_LONG_INT
 				nrc += printf("^%lld", w->e);
 #else
@@ -32,7 +32,7 @@ static void printGapWord(word w) {
 #endif
 		}
 		w++;
-		if(w->g != EOW) {
+		if (w->g != EOW) {
 			putchar('*');
 			nrc++;
 
@@ -40,7 +40,7 @@ static void printGapWord(word w) {
 			**  Insert a line break, because GAP can't take lines that
 			**  are too long.
 			*/
-			if(nrc > 70) { printf("\\\n  "); nrc = 0; }
+			if (nrc > 70) { printf("\\\n  "); nrc = 0; }
 		}
 
 	}
@@ -58,8 +58,8 @@ void	PrintGapPcPres() {
 	*/
 	printf("NqF := FreeGroup( %d );\n", NrPcGens + NrCenGens);
 	printf("NqCollector := FromTheLeftCollector( NqF );\n");
-	for(i = 1; i <= NrPcGens + NrCenGens; i++)
-		if(Exponent[i] != (exp)0) {
+	for (i = 1; i <= NrPcGens + NrCenGens; i++)
+		if (Exponent[i] != (exp)0) {
 			printf("SetRelativeOrder( NqCollector, %d, ", i);
 #               ifdef HAVE_LONG_LONG_INT
 			printf("%lld", Exponent[i]);
@@ -72,8 +72,8 @@ void	PrintGapPcPres() {
 	/*
 	**  Print the power relations.
 	*/
-	for(i = 1; i <= NrPcGens + NrCenGens; i++)
-		if(Exponent[i] != (exp)0 &&
+	for (i = 1; i <= NrPcGens + NrCenGens; i++)
+		if (Exponent[i] != (exp)0 &&
 		        Power[i] != (word)0 && Power[i]->g != EOW) {
 			printf("SetPower( NqCollector, %d, ", i);
 			printGapWord(Power[i]);
@@ -83,9 +83,9 @@ void	PrintGapPcPres() {
 	/*
 	**  Print the conjugate relations.
 	*/
-	for(j = 1; j <= NrPcGens; j++) {
+	for (j = 1; j <= NrPcGens; j++) {
 		i = 1;
-		while(i < j && Wt(i) + Wt(j) <= Class + (NrCenGens == 0 ? 0 : 1)) {
+		while (i < j && Wt(i) + Wt(j) <= Class + (NrCenGens == 0 ? 0 : 1)) {
 			/*
 			  printf( "Print( %d, \" \", %d, \"\\n\" );\n", j, i );
 			*/
@@ -93,17 +93,17 @@ void	PrintGapPcPres() {
 			printf("SetConjugate( NqCollector, %d, %d, ", j, i);
 			printGapWord(Conjugate[j][i]);
 			printf(" );\n");
-			if(1 && Exponent[i] == (exp)0) {
+			if (1 && Exponent[i] == (exp)0) {
 				printf("SetConjugate( NqCollector, %d, %d, ", j, -i);
 				printGapWord(Conjugate[j][-i]);
 				printf(" );\n");
 			}
-			if(1 && Exponent[j] == (exp)0) {
+			if (1 && Exponent[j] == (exp)0) {
 				printf("SetConjugate( NqCollector, %d, %d, ", -j, i);
 				printGapWord(Conjugate[-j][i]);
 				printf(" );\n");
 			}
-			if(1 && Exponent[i] + Exponent[j] == (exp)0) {
+			if (1 && Exponent[i] + Exponent[j] == (exp)0) {
 				printf("SetConjugate( NqCollector, %d, %d, ", -j, -i);
 				printGapWord(Conjugate[-j][-i] /*, 'A'*/);
 				printf(" );\n");
@@ -116,7 +116,7 @@ void	PrintGapPcPres() {
 	**  Print the epimorphism.  It is sufficient to list the images.
 	*/
 	printf("NqImages := [\n");
-	for(i = 1; i <= NumberOfAbstractGens(); i++) {
+	for (i = 1; i <= NumberOfAbstractGens(); i++) {
 		printGapWord(Epimorphism(i));
 		printf(",\n");
 	}
@@ -124,17 +124,17 @@ void	PrintGapPcPres() {
 
 	printf("NqClass := %d;\n", Class);
 	printf("NqRanks := [ ");
-	for(i = 1; i <= Class; i++) printf(" %d,", Dimension[i]);
+	for (i = 1; i <= Class; i++) printf(" %d,", Dimension[i]);
 	printf("];\n");
 }
 
 static void	printRawWord(word w) {
 	int nrc = 15;      /* something has already been printed */
 
-	if(w == (word)0 || w->g == EOW) { return; }
+	if (w == (word)0 || w->g == EOW) { return; }
 
-	while(w->g != EOW) {
-		if(w->g > 0) {
+	while (w->g != EOW) {
+		if (w->g > 0) {
 			nrc += printf(" %d,", w->g);
 #               ifdef HAVE_LONG_LONG_INT
 			nrc += printf(" %lld,", w->e);
@@ -151,7 +151,7 @@ static void	printRawWord(word w) {
 		}
 		w++;
 		/* Avoid long lines, because GAP can't read them. */
-		if(w->g != EOW && nrc > 70) { printf("\\\n    "); nrc = 0; }
+		if (w->g != EOW && nrc > 70) { printf("\\\n    "); nrc = 0; }
 	}
 }
 
@@ -168,13 +168,13 @@ void    PrintRawGapPcPres() {
 	*/
 	printf("NqNrGenerators   :=  %d;\n", NrPcGens + NrCenGens);
 	printf("NqRelativeOrders := [ ");
-	for(i = 1; i <= NrPcGens + NrCenGens; i++) {
+	for (i = 1; i <= NrPcGens + NrCenGens; i++) {
 #           ifdef HAVE_LONG_LONG_INT
 		printf("%lld,", Exponent[i]);
 #           else
 		printf("%d,", Exponent[i]);
 #           endif
-		if(i % 30 == 0) printf("\n                       ");
+		if (i % 30 == 0) printf("\n                       ");
 	}
 	printf(" ];\n");
 
@@ -183,14 +183,14 @@ void    PrintRawGapPcPres() {
 	*/
 	printf("NqClass          := %d;\n", Class);
 	printf("NqRanks          := [");
-	for(i = 1; i <= cl; i++) printf(" %d,", Dimension[i]);
+	for (i = 1; i <= cl; i++) printf(" %d,", Dimension[i]);
 	printf("];\n");
 
 	/*
 	**  Print the epimorphism.  It is sufficient to list the images.
 	*/
 	printf("NqImages         := [\n");
-	for(i = 1; i <= NumberOfAbstractGens(); i++) {
+	for (i = 1; i <= NumberOfAbstractGens(); i++) {
 		printf("  [ ");
 		printRawWord(Epimorphism(i));
 		printf("],  # image of generator %d\n", i);
@@ -201,8 +201,8 @@ void    PrintRawGapPcPres() {
 	**  Print the power relations.
 	*/
 	printf("NqPowers         := [\n");
-	for(i = 1; i <= NrPcGens + NrCenGens; i++)
-		if(Exponent[i] != (exp)0 &&
+	for (i = 1; i <= NrPcGens + NrCenGens; i++)
+		if (Exponent[i] != (exp)0 &&
 		        Power[i] != (word)0 && Power[i]->g != EOW) {
 			printf("  [ %d,   ", i);
 			printRawWord(Power[i]);
@@ -214,8 +214,8 @@ void    PrintRawGapPcPres() {
 	**  Print the conjugate relations.
 	*/
 	printf("NqConjugates     := [\n");
-	for(j = 1; j <= NrPcGens; j++) {
-		for(i = 1; i < j && Wt(i) + Wt(j) <= cl; i++) {
+	for (j = 1; j <= NrPcGens; j++) {
+		for (i = 1; i < j && Wt(i) + Wt(j) <= cl; i++) {
 
 			printf("  [ %d, %d,   ", j, i);
 			printRawWord(Conjugate[j][i]);
@@ -223,9 +223,9 @@ void    PrintRawGapPcPres() {
 		}
 	}
 
-	for(j = 1; j <= NrPcGens; j++) {
-		for(i = 1; i < j && Wt(i) + Wt(j) <= cl; i++) {
-			if(Exponent[i] == (exp)0) {
+	for (j = 1; j <= NrPcGens; j++) {
+		for (i = 1; i < j && Wt(i) + Wt(j) <= cl; i++) {
+			if (Exponent[i] == (exp)0) {
 
 				printf("  [ %d, %d,   ", j, -i);
 				printRawWord(Conjugate[j][-i]);
@@ -234,9 +234,9 @@ void    PrintRawGapPcPres() {
 		}
 	}
 
-	for(j = 1; j <= NrPcGens; j++) {
-		for(i = 1; i < j && Wt(i) + Wt(j) <= cl; i++) {
-			if(Exponent[j] == (exp)0) {
+	for (j = 1; j <= NrPcGens; j++) {
+		for (i = 1; i < j && Wt(i) + Wt(j) <= cl; i++) {
+			if (Exponent[j] == (exp)0) {
 
 				printf("  [ %d, %d,   ", -j, i);
 				printRawWord(Conjugate[-j][i]);
@@ -245,9 +245,9 @@ void    PrintRawGapPcPres() {
 		}
 	}
 
-	for(j = 1; j <= NrPcGens; j++) {
-		for(i = 1; i < j && Wt(i) + Wt(j) <= cl; i++) {
-			if(Exponent[i] + Exponent[j] == (exp)0) {
+	for (j = 1; j <= NrPcGens; j++) {
+		for (i = 1; i < j && Wt(i) + Wt(j) <= cl; i++) {
+			if (Exponent[i] + Exponent[j] == (exp)0) {
 
 				printf("  [ %d, %d,   ", -j, -i);
 				printRawWord(Conjugate[-j][-i]);

@@ -52,7 +52,7 @@ typedef struct _node node;
 **    FreeNode() recursively frees a given node.
 */
 void    FreeNode(node *n) {
-	if(n->type != TGEN && n->type != TNUM) {
+	if (n->type != TGEN && n->type != TNUM) {
 		FreeNode(n->cont.op.l);
 		FreeNode(n->cont.op.r);
 	}
@@ -96,19 +96,19 @@ static unsigned NrGens = 0;
 static gen GenNumber(char *gname, int status) {
 	unsigned        i;
 
-	if(status == CREATE && NrGens == 0)   /* Initialize GenNames[]. */
+	if (status == CREATE && NrGens == 0)  /* Initialize GenNames[]. */
 		GenNames = (char **)Allocate(128 * sizeof(char*));
 
-	for(i = 1; i <= NrGens; i++)   /* Find the generator name. */
-		if(strcmp(gname, GenNames[i]) == 0) {
-			if(status == CREATE) return (gen)0;
+	for (i = 1; i <= NrGens; i++)  /* Find the generator name. */
+		if (strcmp(gname, GenNames[i]) == 0) {
+			if (status == CREATE) return (gen)0;
 			return (gen)i;
 		}
 
 	/* It's a new generator. */
-	if(status == NOCREATE) return (gen)0;
+	if (status == NOCREATE) return (gen)0;
 	NrGens++;
-	if(NrGens % 128 == 0)
+	if (NrGens % 128 == 0)
 		GenNames = (char **)ReAllocate((void *)GenNames,
 		                               (NrGens + 128) * sizeof(char *));
 
@@ -190,7 +190,7 @@ static const char     *TokenName[] = {
 **    No recovery from syntax errors :-)
 */
 static void SyntaxError(const char *str) {
-	if(str == 0)
+	if (str == 0)
 		fprintf(stderr, "%s, line %d, char %d.\n",
 		        InFileName, TLine, TChar);
 	else
@@ -210,9 +210,9 @@ static void ReadCh() {
 
 	Ch = getc(InFp);
 	Char++;
-	if(Ch == '\\') {
+	if (Ch == '\\') {
 		Ch = getc(InFp);
-		if(Ch == '\n') { Line++; Char = 0; ReadCh(); }
+		if (Ch == '\n') { Line++; Char = 0; ReadCh(); }
 		else             { ungetc(Ch, InFp); Ch = '\\'; }
 	}
 }
@@ -225,14 +225,14 @@ static void ReadCh() {
 static void     SkipBlanks() {
 
 	/* If Ch is empty, the next character is fetched. */
-	if(Ch == '\0') ReadCh();
+	if (Ch == '\0') ReadCh();
 
 	/* First blank characters and comments are skipped. */
-	while(Ch == ' ' || Ch == '\t' || Ch == '\n' || Ch == '#') {
-		if(Ch == '#') {   /* Skip to the end of line. */
-			while(Ch != '\n') ReadCh();
+	while (Ch == ' ' || Ch == '\t' || Ch == '\n' || Ch == '#') {
+		if (Ch == '#') {  /* Skip to the end of line. */
+			while (Ch != '\n') ReadCh();
 		}
-		if(Ch == '\n') { Line++; Char = 0; }
+		if (Ch == '\n') { Line++; Char = 0; }
 		ReadCh();
 	}
 }
@@ -244,20 +244,20 @@ static void Number() {
 
 	unsigned int    m, n = 0, overflow = 0;
 
-	while(isdigit(Ch)) {
+	while (isdigit(Ch)) {
 		m = n;
 		n = 10 * n + (Ch - '0');
-		if((n - (Ch - '0')) / 10 != m) { overflow = 1; break; }
+		if ((n - (Ch - '0')) / 10 != m) { overflow = 1; break; }
 		ReadCh();
 	}
 
-	if(overflow) {
+	if (overflow) {
 		fprintf(stderr, "Integer overflow reading %u%c", m, Ch);
 		ReadCh();
-		while(isdigit(Ch)) { fprintf(stderr, "%c", Ch); ReadCh(); }
+		while (isdigit(Ch)) { fprintf(stderr, "%c", Ch); ReadCh(); }
 		fprintf(stderr, " in\n");
 		SyntaxError((char *)0);
-	} else if(n >= (1 << (8 * sizeof(unsigned int) - 1))) {
+	} else if (n >= (1 << (8 * sizeof(unsigned int) - 1))) {
 		fprintf(stderr, "Integer overflow reading %u in\n", n);
 		SyntaxError((char *)0);
 	}
@@ -275,13 +275,13 @@ static void     Generator() {
 
 	int     i;
 
-	for(i = 0; i < 127 && (isalnum(Ch) || Ch == '_' || Ch == '.'); i++) {
+	for (i = 0; i < 127 && (isalnum(Ch) || Ch == '_' || Ch == '.'); i++) {
 		Gen[i] = Ch;
 		ReadCh();
 	}
 	Gen[i] = '\0';
 	/* Discard the rest. */
-	while(isalnum(Ch) || Ch == '_' || Ch == '.') ReadCh();
+	while (isalnum(Ch) || Ch == '_' || Ch == '.') ReadCh();
 }
 
 /*
@@ -292,7 +292,7 @@ static void     Generator() {
 	SkipBlanks();
 	TChar = Char;
 	TLine = Line;
-	switch(Ch) {
+	switch (Ch) {
 	case '(':
 	{ Token = LPAREN; ReadCh(); break; }
 	case ')':
@@ -312,14 +312,14 @@ static void     Generator() {
 	{ Token = POWER;  ReadCh(); break; }
 	case ':': {
 		ReadCh();
-		if(Ch != '=') SyntaxError("illegal character");
+		if (Ch != '=') SyntaxError("illegal character");
 		Token = DEQUALL;
 		ReadCh();
 		break;
 	}
 	case '=': {
 		ReadCh();
-		if(Ch != ':') Token = EQUAL;
+		if (Ch != ':') Token = EQUAL;
 		else { Token = DEQUALR; ReadCh(); }
 		break;
 	}
@@ -353,7 +353,7 @@ static void     Generator() {
 	case '9' :
 	{ Token = NUMBER; Number(); break; }
 	default :
-		if(isalnum(Ch) || Ch == '_' || Ch == '.')
+		if (isalnum(Ch) || Ch == '_' || Ch == '.')
 		{ Token = GEN; Generator(); break; }
 		else SyntaxError("illegal character");
 	}
@@ -414,19 +414,19 @@ static node     *Snumber() {
 
 	node    *n;
 
-	if(Token == NUMBER) {
+	if (Token == NUMBER) {
 		n = GetNode(TNUM);
 		n->cont.n = N;
 		NextToken();
-	} else if(Token == PLUS) {
+	} else if (Token == PLUS) {
 		NextToken();
-		if(Token != NUMBER) SyntaxError("Number expected");
+		if (Token != NUMBER) SyntaxError("Number expected");
 		n = GetNode(TNUM);
 		n->cont.n = N;
 		NextToken();
-	} else if(Token == MINUS) {
+	} else if (Token == MINUS) {
 		NextToken();
-		if(Token != NUMBER) SyntaxError("Number expected");
+		if (Token != NUMBER) SyntaxError("Number expected");
 		n = GetNode(TNUM);
 		n->cont.n = -N;
 		NextToken();
@@ -449,27 +449,27 @@ static node     *Commutator() {
 	node            *n, *o;
 	extern node     *Word();
 
-	if(Token != LBRACK)
+	if (Token != LBRACK)
 		SyntaxError("Left square bracket expected");
 
 	NextToken();
-	if(Token != GEN && Token != LPAREN && Token != LBRACK)
+	if (Token != GEN && Token != LPAREN && Token != LBRACK)
 		SyntaxError("Word expected");
 
 	o = Word();
-	if(Token != COMMA) SyntaxError("Comma expected");
-	while(Token == COMMA) {
+	if (Token != COMMA) SyntaxError("Comma expected");
+	while (Token == COMMA) {
 		NextToken();
-		if(Token != GEN && Token != NUMBER &&
+		if (Token != GEN && Token != NUMBER &&
 		        Token != LPAREN && Token != LBRACK)
 			SyntaxError("Word expected");
 
-		if(Token == NUMBER) {
+		if (Token == NUMBER) {
 			/* An Engel relation is on the input stream. */
 			n = GetNode(TENGEL);
 			n->cont.op.l = o;
 
-			if(N <= 0) SyntaxError("Engel-n must be positive");
+			if (N <= 0) SyntaxError("Engel-n must be positive");
 
 			n->cont.op.e = GetNode(TNUM);
 			n->cont.op.e->cont.n = N;
@@ -484,7 +484,7 @@ static node     *Commutator() {
 			o = n;
 		}
 	}
-	if(Token != RBRACK) SyntaxError("Right square bracket missing");
+	if (Token != RBRACK) SyntaxError("Right square bracket missing");
 	NextToken();
 	return n;
 }
@@ -502,18 +502,18 @@ static node     *Atom() {
 	node            *n;
 	extern node     *Word();
 
-	if(Token == GEN) {
+	if (Token == GEN) {
 		n = GetNode(TGEN);
 		n->cont.g = GenNumber(Gen, NOCREATE);
-		if(n->cont.g == (gen)0) SyntaxError("Unkown generator");
+		if (n->cont.g == (gen)0) SyntaxError("Unkown generator");
 		NextToken();
-	} else if(Token == LPAREN) {
+	} else if (Token == LPAREN) {
 		NextToken();
 		n = Word();
-		if(Token != RPAREN)
+		if (Token != RPAREN)
 			SyntaxError("Closing parenthesis expected");
 		NextToken();
-	} else if(Token == LBRACK) {
+	} else if (Token == LBRACK) {
 		n = Commutator();
 	} else {
 		SyntaxError("Generator, left parenthesis or commutator expected");
@@ -532,9 +532,9 @@ static node     *Power() {
 	node    *n, *o;
 
 	o = Atom();
-	if(Token == POWER) {
+	if (Token == POWER) {
 		NextToken();
-		if(Token == PLUS || Token == MINUS || Token == NUMBER) {
+		if (Token == PLUS || Token == MINUS || Token == NUMBER) {
 			n = o;
 			o = GetNode(TPOW);
 			o->cont.op.l = n;
@@ -561,7 +561,7 @@ node    *Word(void) {
 	node    *n, *o;
 
 	o = Power();
-	if(Token == MULT) {
+	if (Token == MULT) {
 		NextToken();
 		n = o;
 		o = GetNode(TMULT);
@@ -583,23 +583,23 @@ static node     *Relation() {
 
 	node    *n, *o;
 
-	if(Token != GEN && Token != LPAREN && Token != LBRACK)
+	if (Token != GEN && Token != LPAREN && Token != LBRACK)
 		SyntaxError("relation expected");
 
 	o = Word();
-	if(Token == EQUAL) {
+	if (Token == EQUAL) {
 		NextToken();
 		n = o;
 		o = GetNode(TREL);
 		o->cont.op.l = n;
 		o->cont.op.r = Word();
-	} else if(Token == DEQUALL) {
+	} else if (Token == DEQUALL) {
 		NextToken();
 		n = o;
 		o = GetNode(TDRELL);
 		o->cont.op.l = n;
 		o->cont.op.r = Word();
-	} else if(Token == DEQUALR) {
+	} else if (Token == DEQUALR) {
 		NextToken();
 		n = o;
 		o = GetNode(TDRELR);
@@ -625,12 +625,12 @@ static node     **RelList() {
 
 	rellist = (node **)Allocate(sizeof(node *));
 	rellist[0] = (node *)0;
-	if(Token != GEN && Token != LPAREN && Token != LBRACK)
+	if (Token != GEN && Token != LPAREN && Token != LBRACK)
 		return rellist;
 
 	rellist = (node**)ReAllocate((void *)rellist, 2 * sizeof(node *));
 	rellist[n++] = Relation();
-	while(Token == COMMA) {
+	while (Token == COMMA) {
 		NextToken();
 		rellist = (node**)ReAllocate((void *)rellist, (n + 2) * sizeof(node *));
 		rellist[n++] = Relation();
@@ -654,17 +654,17 @@ static int      GenList() {
 
 	int     nrgens = 0;
 
-	if(Token != GEN) return nrgens;
+	if (Token != GEN) return nrgens;
 
 	nrgens++;
-	if(GenNumber(Gen, CREATE) == (gen)0)
+	if (GenNumber(Gen, CREATE) == (gen)0)
 		SyntaxError("Duplicate generator");
 	NextToken();
-	while(Token == COMMA) {
+	while (Token == COMMA) {
 		NextToken();
-		if(Token != GEN) SyntaxError("Generator expected");
+		if (Token != GEN) SyntaxError("Generator expected");
 		nrgens++;
-		if(GenNumber(Gen, CREATE) == (gen)0)
+		if (GenNumber(Gen, CREATE) == (gen)0)
 			SyntaxError("Duplicate generator");
 		NextToken();
 	}
@@ -716,7 +716,7 @@ int     NumberOfRels(void) { return Pres.nrrels; }
 static  int     NextRel;
 node    *NextRelation(void) {
 
-	if(NextRel >= NumberOfRels()) return (node *)0;
+	if (NextRel >= NumberOfRels()) return (node *)0;
 
 	return Pres.rels[NextRel++];
 }
@@ -728,7 +728,7 @@ node    *FirstRelation(void) {
 }
 
 node    *NthRelation(int n) {
-	if(n < 0 || n >= NumberOfRels()) return (node *)0;
+	if (n < 0 || n >= NumberOfRels()) return (node *)0;
 
 	return Pres.rels[n];
 }
@@ -744,28 +744,28 @@ node    *CurrentRelation(void) { return Pres.rels[NextRel - 1]; }
 void    Presentation(FILE *fp, char *filename) {
 	InitParser(fp, filename);
 
-	if(Token != LANGLE) SyntaxError("presentation expected");
+	if (Token != LANGLE) SyntaxError("presentation expected");
 	NextToken();
 
-	if(Token != GEN && Token != PIPE)
+	if (Token != GEN && Token != PIPE)
 		SyntaxError("generator or vertical bar expected");
 
 	Pres.nragens = GenList();
 
-	if(Token == SEMICOLON) {
+	if (Token == SEMICOLON) {
 		NextToken();
 		Pres.nrigens = GenList();
 	} else
 		Pres.nrigens = 0;
 
-	if(Token != PIPE) SyntaxError("vertical bar expected");
+	if (Token != PIPE) SyntaxError("vertical bar expected");
 	NextToken();
 
 	Pres.rels = RelList();
 	Pres.nrrels = 0;
-	while(Pres.rels[Pres.nrrels]) Pres.nrrels++;
+	while (Pres.rels[Pres.nrrels]) Pres.nrrels++;
 
-	if(Token != RANGLE)
+	if (Token != RANGLE)
 		SyntaxError("presentation has to be closed by '>'");
 }
 
@@ -773,13 +773,13 @@ node    *ReadWord(void) {
 
 	node    *n;
 
-	if(Token != SEMICOLON) n = Word();
+	if (Token != SEMICOLON) n = Word();
 	else {
 		NextToken();
 		return ReadWord();
 	}
 
-	if(Token != SEMICOLON)
+	if (Token != SEMICOLON)
 		SyntaxError("word has to be finished by ';'");
 
 	return  n;
@@ -792,7 +792,7 @@ node    *ReadWord(void) {
 static EvalFunc EvalFunctions[TLAST];
 
 void    SetEvalFunc(int type, EvalFunc function) {
-	if(type <= TNUM || type >= TLAST) {
+	if (type <= TNUM || type >= TLAST) {
 		printf("Evaluation error: illegal type in SetEvalFunc()\n");
 		exit(1);
 	}
@@ -804,47 +804,47 @@ void    *EvalNode(node *n) {
 	void          *e, *l, *r;
 	extern int    Class;
 
-	if(n->type == TNUM)
+	if (n->type == TNUM)
 		return (void *) & (n->cont.n);
 
-	if(EvalFunctions[n->type] == 0) {
+	if (EvalFunctions[n->type] == 0) {
 		fprintf(stderr, "No evaluation function for type %d.\n", n->type);
 		exit(5);
 	}
 
-	switch(n->type) {
+	switch (n->type) {
 	case TGEN:                  /* TGEN is a unary node. */
 		return (*EvalFunctions[TGEN])(n->cont.g);
 
 	case TCOMM:                 /* Adjust the class.     */
 		Class--;
 		l = EvalNode(n->cont.op.l);
-		if(l != (void *)0) r = EvalNode(n->cont.op.r);
+		if (l != (void *)0) r = EvalNode(n->cont.op.r);
 		Class++;
 
-		if(l == (void *)0) return l;
-		if(r == (void *)0) { Free(l); return r; }
+		if (l == (void *)0) return l;
+		if (r == (void *)0) { Free(l); return r; }
 
 		return (*EvalFunctions[n->type])(l, r);
 
 	case TENGEL:                /* TENGEL is a ternary node. */
 
-		if((e = EvalNode(n->cont.op.e)) == (void *)0) return e;
+		if ((e = EvalNode(n->cont.op.e)) == (void *)0) return e;
 
 		Class -= *(int *)e;
 		l = EvalNode(n->cont.op.l);
-		if(l != (void *)0) r = EvalNode(n->cont.op.r);
+		if (l != (void *)0) r = EvalNode(n->cont.op.r);
 		Class += *(int *)e;
 
-		if(l == (void *)0) { Free(e); return l; }
-		if(r == (void *)0) { Free(e); Free(l); return r; }
+		if (l == (void *)0) { Free(e); return l; }
+		if (r == (void *)0) { Free(e); Free(l); return r; }
 
 		return (*EvalFunctions[n->type])(l, r, e);
 
 	default:
 
-		if((l = EvalNode(n->cont.op.l)) == (void *)0) return l;
-		if((r = EvalNode(n->cont.op.r)) == (void *)0) {
+		if ((l = EvalNode(n->cont.op.l)) == (void *)0) return l;
+		if ((r = EvalNode(n->cont.op.r)) == (void *)0) {
 			Free(l);
 			return r;
 		}
@@ -855,10 +855,10 @@ void    *EvalNode(node *n) {
 
 static
 void    TraverseNode(node *n, gen *igens) {
-	if(n->type == TNUM) return;
+	if (n->type == TNUM) return;
 
-	if(n->type == TGEN) {
-		if((*EvalFunctions[TGEN])(n->cont.g) == (void *)0)
+	if (n->type == TGEN) {
+		if ((*EvalFunctions[TGEN])(n->cont.g) == (void *)0)
 
 			igens[ n->cont.g - NumberOfAbstractGens() ] = 1;
 
@@ -875,7 +875,7 @@ gen  *IdenticalGenNumberNode = 0;
 int  NumberOfIdenticalGensNode(node *n) {
 	gen  g,  nr;
 
-	if(IdenticalGenNumberNode != (gen *)0)
+	if (IdenticalGenNumberNode != (gen *)0)
 		Free(IdenticalGenNumberNode);
 
 	IdenticalGenNumberNode =
@@ -883,8 +883,8 @@ int  NumberOfIdenticalGensNode(node *n) {
 
 	TraverseNode(n, IdenticalGenNumberNode);
 
-	for(nr = 0, g = 1; g <= NumberOfIdenticalGens(); g++)
-		if(IdenticalGenNumberNode[ g ] == 1)
+	for (nr = 0, g = 1; g <= NumberOfIdenticalGens(); g++)
+		if (IdenticalGenNumberNode[ g ] == 1)
 			IdenticalGenNumberNode[ g ] = ++nr;
 
 	NrIdenticalGensNode = nr;
@@ -897,7 +897,7 @@ void    **EvalRelations(void) {
 	unsigned r;
 
 	results = (void **)Allocate((Pres.nrrels + 1) * sizeof(void *));
-	for(r = 0; r < Pres.nrrels; r++)
+	for (r = 0; r < Pres.nrrels; r++)
 		results[r] = EvalNode(Pres.rels[r]);
 
 	results[r] = (void *)0;
@@ -929,10 +929,10 @@ void    PrintGen(gen g) {
 **                              [[a,b],c] = [a,b,c]
 */
 static void     PrintComm(node *l, node *r, int bracket) {
-	if(bracket) fprintf(OutFp, "[");
+	if (bracket) fprintf(OutFp, "[");
 
 	/* If the left operand is a commutator, don't print its brackets. */
-	if(l->type == TCOMM)
+	if (l->type == TCOMM)
 		PrintComm(l->cont.op.l, l->cont.op.r, 0);
 	else
 		PrintNode(l);
@@ -940,7 +940,7 @@ static void     PrintComm(node *l, node *r, int bracket) {
 	fprintf(OutFp, ",");
 	PrintNode(r);
 
-	if(bracket) fprintf(OutFp, "]");
+	if (bracket) fprintf(OutFp, "]");
 }
 
 /*
@@ -965,7 +965,9 @@ static void     PrintEngel(node *l, node *r, node *e) {
 **    an expression tree.
 */
 static void     PrintMult(node *l, node *r) {
-	PrintNode(l); fprintf(OutFp, "*"); PrintNode(r);
+	PrintNode(l);
+	fprintf(OutFp, "*");
+	PrintNode(r);
 }
 
 /*
@@ -976,7 +978,7 @@ static void     PrintMult(node *l, node *r) {
 **    operator.
 */
 static void     PrintPow(node *l, node *r) {
-	if(l->type == TPOW || l->type == TCONJ || l->type == TMULT) {
+	if (l->type == TPOW || l->type == TCONJ || l->type == TMULT) {
 		putc('(', OutFp);
 		PrintNode(l);
 		putc(')', OutFp);
@@ -984,7 +986,7 @@ static void     PrintPow(node *l, node *r) {
 		PrintNode(l);
 
 	putc('^', OutFp);
-	if(r->type != TNUM) {
+	if (r->type != TNUM) {
 		fprintf(OutFp, "Fatal error in tree.\n");
 		exit(5);
 	}
@@ -998,7 +1000,7 @@ static void     PrintPow(node *l, node *r) {
 **    has to enclose the basis in parentheses.
 */
 static void     PrintConj(node *l, node *r) {
-	if(l->type == TPOW || l->type == TCONJ || l->type == TMULT) {
+	if (l->type == TPOW || l->type == TCONJ || l->type == TMULT) {
 		putc('(', OutFp);
 		PrintNode(l);
 		putc(')', OutFp);
@@ -1007,7 +1009,7 @@ static void     PrintConj(node *l, node *r) {
 
 	putc('^', OutFp);
 
-	if(r->type == TPOW || r->type == TCONJ || r->type == TMULT) {
+	if (r->type == TPOW || r->type == TCONJ || r->type == TMULT) {
 		putc('(', OutFp);
 		PrintNode(r);
 		putc(')', OutFp);
@@ -1020,7 +1022,9 @@ static void     PrintConj(node *l, node *r) {
 **    '=' has the lowest precedence of all binary operators.
 */
 static void     PrintRel(node *l, node *r) {
-	PrintNode(l); fprintf(OutFp, " = "); PrintNode(r);
+	PrintNode(l);
+	fprintf(OutFp, " = ");
+	PrintNode(r);
 }
 
 /*
@@ -1028,7 +1032,9 @@ static void     PrintRel(node *l, node *r) {
 **    since '=:' has the lowest precedence of all binary operators.
 */
 static void     PrintDRelL(node *l, node *r) {
-	PrintNode(l); fprintf(OutFp, " := "); PrintNode(r);
+	PrintNode(l);
+	fprintf(OutFp, " := ");
+	PrintNode(r);
 }
 
 /*
@@ -1036,7 +1042,9 @@ static void     PrintDRelL(node *l, node *r) {
 **    since '=:' has the lowest precedence of all binary operators.
 */
 static void     PrintDRelR(node *l, node *r) {
-	PrintNode(l); fprintf(OutFp, " =: "); PrintNode(r);
+	PrintNode(l);
+	fprintf(OutFp, " =: ");
+	PrintNode(r);
 }
 
 /*
@@ -1044,7 +1052,7 @@ static void     PrintDRelR(node *l, node *r) {
 **    appropriate print function.
 */
 void    PrintNode(node *n) {
-	switch(n->type) {
+	switch (n->type) {
 	case TNUM:
 	{ PrintNum(n->cont.n); break; }
 	case TGEN:
@@ -1083,22 +1091,22 @@ void    PrintPresentation(FILE *fp) {
 
 	InitPrint(fp);
 
-	if(Pres.nragens == 0) return;
+	if (Pres.nragens == 0) return;
 
 	/* Open the presentation. */
 	fprintf(OutFp, "< ");
 
 	/* Print the generators first. */
 	PrintGen(1);
-	for(g = 2; g <= Pres.nragens; g++) {
+	for (g = 2; g <= Pres.nragens; g++) {
 		fprintf(OutFp, ", ");
 		PrintGen(g);
 	}
 
-	if(Pres.nrigens > 0) {
+	if (Pres.nrigens > 0) {
 		fprintf(OutFp, "; ");
 		PrintGen(Pres.nragens + 1);
-		for(g = Pres.nragens + 2; g <= Pres.nragens + Pres.nrigens; g++) {
+		for (g = Pres.nragens + 2; g <= Pres.nragens + Pres.nrigens; g++) {
 			fprintf(OutFp, ", ");
 			PrintGen(g);
 		}
@@ -1108,11 +1116,11 @@ void    PrintPresentation(FILE *fp) {
 	fprintf(OutFp, " |\n");
 
 	/* Now the relations. */
-	if(Pres.rels[0] != (node *)0) {
+	if (Pres.rels[0] != (node *)0) {
 		fprintf(OutFp, "    ");
 		PrintNode(Pres.rels[0]);
 	}
-	for(r = 1; Pres.rels[r] != (node *)0; r++) {
+	for (r = 1; Pres.rels[r] != (node *)0; r++) {
 		fprintf(OutFp, ",\n    ");
 		PrintNode(Pres.rels[r]);
 	}

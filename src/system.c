@@ -14,33 +14,33 @@
 
 static
 const char	*SignalName[] = { "",
-                          "Hangup (1)",
-                          "Interrupt (2)",
-                          "Quit (3)",
-                          "Illegal instruction (4)",
-                          "(5)",
-                          "Abort (6)",
-                          "(7)",
-                          "Arithmetic exception (8)",
-                          "(9)",
-                          "Bus error (10)",
-                          "Segmentation violation (11)",
-                          "(12)",
-                          "(13)",
-                          "Alarm clock (14)",
-                          "User termination (15)",
-                          "",
-                          "",
-                          "",
-                          "",
-                          "",
-                          "",
-                          "",
-                          "",
-                          "",
-                          "",
-                          "Virtual alarm (26)"
-                     };
+                              "Hangup (1)",
+                              "Interrupt (2)",
+                              "Quit (3)",
+                              "Illegal instruction (4)",
+                              "(5)",
+                              "Abort (6)",
+                              "(7)",
+                              "Arithmetic exception (8)",
+                              "(9)",
+                              "Bus error (10)",
+                              "Segmentation violation (11)",
+                              "(12)",
+                              "(13)",
+                              "Alarm clock (14)",
+                              "User termination (15)",
+                              "",
+                              "",
+                              "",
+                              "",
+                              "",
+                              "",
+                              "",
+                              "",
+                              "",
+                              "",
+                              "Virtual alarm (26)"
+                           };
 
 static
 void	handler(sig, code, scp, addr)
@@ -52,7 +52,7 @@ char	*addr;
 	fprintf(stderr, "\n\n# Process terminating with signal");
 	fprintf(stderr, " %s.\n\n", SignalName[sig]);
 
-	if(Gap) printf("];\n");
+	if (Gap) printf("];\n");
 	fflush(stdout);
 
 	signal(sig, SIG_DFL);
@@ -76,7 +76,7 @@ int	nsec;
 {
 	struct itimerval  si;
 
-	if(nsec > 0) {
+	if (nsec > 0) {
 		printf("#\n#    Time out after %d seconds.\n", nsec);
 		/* Set time after which timer expires. */
 		si.it_value.tv_sec  = nsec;    /*  sec */
@@ -85,7 +85,7 @@ int	nsec;
 		si.it_interval.tv_sec  = 0;
 		si.it_interval.tv_usec = 0;
 
-		if(setitimer(ITIMER_VIRTUAL, &si, (struct itimerval*)0) == -1) {
+		if (setitimer(ITIMER_VIRTUAL, &si, (struct itimerval*)0) == -1) {
 			perror("");
 		}
 		TimeOutReached = 0;
@@ -100,10 +100,10 @@ int	nsec;
 **    out in the mean time and if so terminate.
 */
 void	TimeOutOn() {
-	if(TimeOutReached) {
+	if (TimeOutReached) {
 		printf("#\n#    Process has timed out.\n#\n");
 
-		if(Gap) printf("];\n");
+		if (Gap) printf("];\n");
 		exit(0);
 	} else
 		DoTimeOut = 1;
@@ -123,7 +123,7 @@ char	*addr;
 {
 	TimeOutReached = 1;
 
-	if(DoTimeOut) TimeOutOn();
+	if (DoTimeOut) TimeOutOn();
 }
 
 void	CatchSignals() {
@@ -163,7 +163,7 @@ int	RunTime() {
 
 	struct	rusage	buf;
 
-	if(getrusage(RUSAGE_SELF, &buf)) {
+	if (getrusage(RUSAGE_SELF, &buf)) {
 		perror("couldn't obtain timing");
 		exit(1);
 	}

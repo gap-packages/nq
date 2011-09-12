@@ -35,20 +35,20 @@ void    InitPcPres(void) {
 
 	int i, j, t;
 
-	if(Verbose) t = RunTime();
+	if (Verbose) t = RunTime();
 
 	Class = 1;
 
 	Generators = (word*)malloc((2 * NrCenGens + 1) * sizeof(word));
-	if(Generators == (word*)0) {
+	if (Generators == (word*)0) {
 		perror("InitPcPres(), Generators");
 		exit(2);
 	}
 	Generators += NrCenGens;
-	for(i = -NrCenGens; i <= NrCenGens; i++) {
-		if(i == 0) continue;
+	for (i = -NrCenGens; i <= NrCenGens; i++) {
+		if (i == 0) continue;
 		Generators[i] = (word)malloc(2 * sizeof(gpower));
-		if(Generators[i] == (word)0) {
+		if (Generators[i] == (word)0) {
 			perror("InitPcPres(), Generators[]");
 			exit(2);
 		}
@@ -60,36 +60,36 @@ void    InitPcPres(void) {
 	PcGenName = (char **)Allocate((NrCenGens + 1) * sizeof(char *));
 
 	Dimension = (int*)malloc((Class + 1) * sizeof(int));
-	if(Dimension == (int*)0) {
+	if (Dimension == (int*)0) {
 		perror("InitPcPres(), Dimension");
 		exit(2);
 	}
 	Dimension[Class] = NrCenGens;
 
 	Conjugate = (word**)malloc((2 * NrCenGens + 1) * sizeof(word*));
-	if(Conjugate == (word**)0) {
+	if (Conjugate == (word**)0) {
 		perror("InitPcPres(), Conjugate");
 		exit(2);
 	}
 	Conjugate += NrCenGens;
-	for(j = 1; j <= NrCenGens; j++) {
+	for (j = 1; j <= NrCenGens; j++) {
 		/* the length of Conjugate[j] is 2*(j-1)+1 */
 		Conjugate[j] = (word*)malloc((2 * j - 1) * sizeof(word));
-		if(Conjugate[j] == (word*)0) {
+		if (Conjugate[j] == (word*)0) {
 			perror("InitPcPres(), Conjugate[]");
 			exit(2);
 		}
 		Conjugate[j] += j - 1;
-		for(i = -(j - 1); i <= j - 1; i++)
+		for (i = -(j - 1); i <= j - 1; i++)
 			Conjugate[j][i] = Generators[j];
-		if(Exponent[j] == (exp)0) {
+		if (Exponent[j] == (exp)0) {
 			Conjugate[-j] = (word*)malloc((2 * j - 1) * sizeof(word));
-			if(Conjugate[-j] == (word*)0) {
+			if (Conjugate[-j] == (word*)0) {
 				perror("InitPcPres(), Conjugate[]");
 				exit(2);
 			}
 			Conjugate[-j] += j - 1;
-			for(i = -(j - 1); i <= j - 1; i++)
+			for (i = -(j - 1); i <= j - 1; i++)
 				Conjugate[-j][i] = Generators[-j];
 		}
 	}
@@ -98,7 +98,7 @@ void    InitPcPres(void) {
 	NrPcGens += NrCenGens;
 	NrCenGens = 0;
 
-	if(Verbose)
+	if (Verbose)
 		printf("#    Initialized pc-presentation (%d msec).\n", RunTime() - t);
 }
 
@@ -107,29 +107,29 @@ void    ExtPcPres(void) {
 	int i, j, c, N, oldsize, newsize, t;
 	word *tmp, **ttmp;
 
-	if(Verbose) t = RunTime();
+	if (Verbose) t = RunTime();
 
 	Class++;
 
 	Weight = (int *)realloc(Weight, (NrPcGens + NrCenGens + 1) * sizeof(int));
-	if(Weight == (int *)0) {
+	if (Weight == (int *)0) {
 		perror("InitPcPres, Weight");
 		exit(2);
 	}
 
 	tmp = (word*)malloc((2 * (NrPcGens + NrCenGens) + 1) * sizeof(word));
-	if(tmp == (word *)0) {
+	if (tmp == (word *)0) {
 		perror("InitPcPres(), tmp");
 		exit(2);
 	}
 	tmp += NrPcGens + NrCenGens;
 
-	for(i = -(NrPcGens + NrCenGens); i <= (NrPcGens + NrCenGens); i++) {
-		if(i == 0) continue;
-		if(i > NrPcGens) Weight[i] = Class;
-		if(i < -NrPcGens || i > NrPcGens) {
+	for (i = -(NrPcGens + NrCenGens); i <= (NrPcGens + NrCenGens); i++) {
+		if (i == 0) continue;
+		if (i > NrPcGens) Weight[i] = Class;
+		if (i < -NrPcGens || i > NrPcGens) {
 			tmp[i] = (word)malloc(2 * sizeof(gpower));
-			if(tmp[i] == (word)0) {
+			if (tmp[i] == (word)0) {
 				perror("InitPcPres(), tmp[]");
 				exit(2);
 			}
@@ -144,7 +144,7 @@ void    ExtPcPres(void) {
 	Generators = tmp;
 
 	Dimension = (int*)realloc(Dimension, (Class + 1) * sizeof(int));
-	if(Dimension == (int*)0) {
+	if (Dimension == (int*)0) {
 		perror("InitPcPres(), Dimension");
 		exit(2);
 	}
@@ -153,13 +153,13 @@ void    ExtPcPres(void) {
 
 	/* Now Conjugate[] has to be enlarged. */
 	ttmp = (word**)malloc((2 * (NrPcGens + NrCenGens) + 1) * sizeof(word*));
-	if(ttmp == (word**)0) {
+	if (ttmp == (word**)0) {
 		perror("extPcPres(), tmp");
 		exit(2);
 	}
 	ttmp += NrPcGens + NrCenGens;
 	/* The contents of Conjugate[] must be copied to the new array. */
-	for(i = -NrPcGens; i <= NrPcGens; i++)
+	for (i = -NrPcGens; i <= NrPcGens; i++)
 		ttmp[i] = Conjugate[i];
 
 	free(Conjugate - NrPcGens);
@@ -183,48 +183,48 @@ void    ExtPcPres(void) {
 	*/
 	N = NrPcGens + NrCenGens;
 	newsize = 0;
-	for(c = Class; c > Class - c; c--) {
+	for (c = Class; c > Class - c; c--) {
 		oldsize = newsize;
 		/* Compute the new size of the array for generators of class c.
 		** Those generators get a new conjugate relation for each generator
 		** of weight Class-c+1. */
 		newsize += Dimension[ Class - c + 1 ];
-		for(i = 1; i <= Dimension[c]; i++) {
+		for (i = 1; i <= Dimension[c]; i++) {
 			tmp = (word*)malloc((2 * min(N - 1, newsize) + 1) * sizeof(word));
-			if(tmp == (word*)0) {
+			if (tmp == (word*)0) {
 				perror("extPcPres(), tmp");
 				exit(2);
 			}
 			tmp += min(N - 1, newsize);
-			if(c < Class) {
+			if (c < Class) {
 				/* Copy the contents to the new array. */
-				for(j = -oldsize; j <= oldsize; j++)
+				for (j = -oldsize; j <= oldsize; j++)
 					tmp[j] = Conjugate[N][j];
 				free(Conjugate[N] - oldsize);
 			}
 			Conjugate[N] = tmp;
 			/* Initialise the new space. */
-			for(j = oldsize + 1; j <= min(N - 1, newsize); j++)
+			for (j = oldsize + 1; j <= min(N - 1, newsize); j++)
 				Conjugate[N][j] = Conjugate[N][-j] = Generators[N];
 
-			if(Exponent[ N ] != (exp)0) { N--; continue; }
+			if (Exponent[ N ] != (exp)0) { N--; continue; }
 			/* If the generator N is of infinite order, it also has
 			** conjugate relations `on the other side'. All that has to
 			** be done is exactly the same as before just for negative N.
 			*/
 			tmp = (word*)malloc((2 * min(N - 1, newsize) + 1) * sizeof(word));
-			if(tmp == (word*)0) {
+			if (tmp == (word*)0) {
 				perror("extPcPres(), tmp");
 				exit(2);
 			}
 			tmp += min(N - 1, newsize);
-			if(c < Class) {
-				for(j = -oldsize; j <= oldsize; j++)
+			if (c < Class) {
+				for (j = -oldsize; j <= oldsize; j++)
 					tmp[j] = Conjugate[-N][j];
 				free(Conjugate[-N] - oldsize);
 			}
 			Conjugate[-N] = tmp;
-			for(j = oldsize + 1; j <= min(N - 1, newsize); j++)
+			for (j = oldsize + 1; j <= min(N - 1, newsize); j++)
 				Conjugate[-N][j] = Conjugate[-N][-j] = Generators[-N];
 			N--;
 		}
@@ -235,7 +235,7 @@ void    ExtPcPres(void) {
 	NrPcGens += NrCenGens;
 	NrCenGens = 0;
 
-	if(Verbose)
+	if (Verbose)
 		printf("#    Extended pc-presentation (%d msec).\n", RunTime() - t);
 }
 
@@ -244,25 +244,25 @@ void    PrintPcPres(void) {
 	gen g;
 	int i, j, first = 1;
 
-	if(Gap) putchar('#');
+	if (Gap) putchar('#');
 	printf("    <");
-	for(i = 1; i <= NrPcGens; i++) {
+	for (i = 1; i <= NrPcGens; i++) {
 		printGen(i, 'A');
-		if(i < NrPcGens + NrCenGens) putchar(',');
+		if (i < NrPcGens + NrCenGens) putchar(',');
 	}
 	printf("\n");
-	if(Gap) putchar('#');
+	if (Gap) putchar('#');
 	printf("     ");
-	for(; i <= NrPcGens + NrCenGens; i++) {
+	for (; i <= NrPcGens + NrCenGens; i++) {
 		printGen(i, 'A');
-		if(i < NrPcGens + NrCenGens) putchar(',');
+		if (i < NrPcGens + NrCenGens) putchar(',');
 	}
 	printf(" |");
-	for(i = 1; i <= NrPcGens + NrCenGens; i++) {
-		if(Exponent[i] != (exp)0) {
-			if(first) { putchar('\n'); first = 0; }
+	for (i = 1; i <= NrPcGens + NrCenGens; i++) {
+		if (Exponent[i] != (exp)0) {
+			if (first) { putchar('\n'); first = 0; }
 			else        printf(",\n");
-			if(Gap) putchar('#');
+			if (Gap) putchar('#');
 			printf("        ");
 			printGen(i, 'A');
 #ifdef HAVE_LONG_LONG_INT
@@ -270,33 +270,33 @@ void    PrintPcPres(void) {
 #else
 			printf("^%d", Exponent[i]);
 #endif
-			if(Power[i] != (word)0 && Power[i]->g != EOW) {
+			if (Power[i] != (word)0 && Power[i]->g != EOW) {
 				printf(" = ");
 				printWord(Power[i], 'A');
 			}
 		}
 	}
 
-	for(j = 1; j <= NrPcGens; j++) {
+	for (j = 1; j <= NrPcGens; j++) {
 		i = 1;
-		while(i < j && Wt(i) + Wt(j) <= Class + (NrCenGens == 0 ? 0 : 1)) {
+		while (i < j && Wt(i) + Wt(j) <= Class + (NrCenGens == 0 ? 0 : 1)) {
 			/* print Conjugate[j][i] */
-			if(first) { putchar('\n'); first = 0; }
+			if (first) { putchar('\n'); first = 0; }
 			else        printf(",\n");
-			if(Gap) putchar('#');
+			if (Gap) putchar('#');
 			printf("        ");
 			printGen(j, 'A');
 			putchar('^');
 			printGen(i, 'A');
-			if((g = Conjugate[j][i][1].g) != EOW
+			if ((g = Conjugate[j][i][1].g) != EOW
 			        && Definition[g].h == j && Definition[g].g == i)
 				printf("           =: ");
 			else    printf("           =  ");
 			printWord(Conjugate[j][i], 'A');
-			if(Exponent[i] == (exp)0) {
-				if(first) { putchar('\n'); first = 0; }
+			if (Exponent[i] == (exp)0) {
+				if (first) { putchar('\n'); first = 0; }
 				else          printf(",\n");
-				if(Gap) putchar('#');
+				if (Gap) putchar('#');
 				printf("        ");
 				printGen(j, 'A');
 				putchar('^');
@@ -305,10 +305,10 @@ void    PrintPcPres(void) {
 				printf("^-1)      =  ");
 				printWord(Conjugate[j][-i], 'A');
 			}
-			if(0 && Exponent[j] == (exp)0) {
-				if(first) { putchar('\n'); first = 0; }
+			if (0 && Exponent[j] == (exp)0) {
+				if (first) { putchar('\n'); first = 0; }
 				else          printf(",\n");
-				if(Gap) putchar('#');
+				if (Gap) putchar('#');
 				printf("        ");
 				putchar('(');
 				printGen(j, 'A');
@@ -317,10 +317,10 @@ void    PrintPcPres(void) {
 				printf("      =  ");
 				printWord(Conjugate[-j][i], 'A');
 			}
-			if(0 && Exponent[i] + Exponent[j] == (exp)0) {
-				if(first) { putchar('\n'); first = 0; }
+			if (0 && Exponent[i] + Exponent[j] == (exp)0) {
+				if (first) { putchar('\n'); first = 0; }
 				else          printf(",\n");
-				if(Gap) putchar('#');
+				if (Gap) putchar('#');
 				printf("        ");
 				putchar('(');
 				printGen(j, 'A');
@@ -337,7 +337,7 @@ void    PrintPcPres(void) {
 
 	printf("\n#    Class : %d\n", Class);
 	printf("#    Nr of generators of each class :");
-	for(i = 1; i <= Class; i++) printf(" %d", Dimension[i]);
+	for (i = 1; i <= Class; i++) printf(" %d", Dimension[i]);
 	printf("\n");
 }
 
@@ -347,12 +347,12 @@ void PrintDefs(void) {
 	int i;
 	gen g, h, comm[1000];
 
-	for(g = 1; g <= NrPcGens; g++)
-		if(Definition[g].h > 0) {
+	for (g = 1; g <= NrPcGens; g++)
+		if (Definition[g].h > 0) {
 			printf("#    ");
 			printGen(g, 'A');
 			printf(" := ");
-			if(Definition[g].g == 0) {
+			if (Definition[g].g == 0) {
 				/* The definition is a power relation. */
 				printGen(Definition[g].h, 'A');
 				printf("^");
@@ -365,13 +365,13 @@ void PrintDefs(void) {
 				/* The definition is a commutator relation. */
 				i = 0;
 				h = g;
-				while(Definition[h].h > 0) {
+				while (Definition[h].h > 0) {
 					comm[i++] = Definition[h].g;
 					h = Definition[h].h;
 				}
 				comm[i++] = h;
 				printf("[ ");
-				while(--i > 0) {
+				while (--i > 0) {
 					printGen(comm[i], 'A');
 					printf(", ");
 				}
@@ -405,37 +405,37 @@ void    sizePcPres(void) {
 	size += NrPcGens * sizeof(Definition); /* Definition[]. */
 	nrPt += 1;
 	size += NrPcGens * sizeof(word);       /* Power[]. */
-	for(g = 1; g <= NrPcGens; g++)
-		if(Exponent[g] != (exp)0) {
+	for (g = 1; g <= NrPcGens; g++)
+		if (Exponent[g] != (exp)0) {
 			nrPt += 1;
 			size += sizeof(gpower) * (WordLength(Power[g]) + 1);
 		}
 
 	nrPt += 1;
 	size += (2 * NrPcGens + 1) * sizeof(word*); /* Conjugate[]. */
-	for(h = 1; h <= NrPcGens; h++) {
+	for (h = 1; h <= NrPcGens; h++) {
 		nrPt += 1;
 		size += sizeof(word);
-		if(Exponent[h] == (exp)0) {
+		if (Exponent[h] == (exp)0) {
 			nrPt += 1;
 			size += sizeof(word);
 		}
-		for(g = 1; g < h; g++)
-			if(Wt(h) + Wt(g) <= Class + (NrCenGens == 0 ? 0 : 1)) {
+		for (g = 1; g < h; g++)
+			if (Wt(h) + Wt(g) <= Class + (NrCenGens == 0 ? 0 : 1)) {
 				nrPt += 1;
 				size += sizeof(word);
 				size += sizeof(gpower) * (WordLength(Conjugate[h][g]) + 1);
-				if(Exponent[h] == (exp)0) {
+				if (Exponent[h] == (exp)0) {
 					nrPt += 1;
 					size += sizeof(word);
 					size += sizeof(gpower) * (WordLength(Conjugate[-h][ g]) + 1);
 				}
-				if(Exponent[g] == (exp)0) {
+				if (Exponent[g] == (exp)0) {
 					nrPt += 1;
 					size += sizeof(word);
 					size += sizeof(gpower) * (WordLength(Conjugate[ h][-g]) + 1);
 				}
-				if(Exponent[h] + Exponent[g] == (exp)0) {
+				if (Exponent[h] + Exponent[g] == (exp)0) {
 					nrPt += 1;
 					size += sizeof(word);
 					size += sizeof(gpower) * (WordLength(Conjugate[-h][-g]) + 1);

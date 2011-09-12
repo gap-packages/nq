@@ -50,13 +50,13 @@
 
 static  word(*PcGenerator)();
 
-void    WordCopyExpVec(expvec ev, word w ) {
+void    WordCopyExpVec(expvec ev, word w) {
 	long    l;
 	gen     g;
 
-	for(l = 0, g = 1; g <= NrPcGensList[Class > 0 ? Class + 1 : 1]; g++)
-		if(ev[g] != (exp)0) {
-			if(ev[g] > (exp)0) { w[l].g =  g; w[l].e =  ev[g]; }
+	for (l = 0, g = 1; g <= NrPcGensList[Class > 0 ? Class + 1 : 1]; g++)
+		if (ev[g] != (exp)0) {
+			if (ev[g] > (exp)0) { w[l].g =  g; w[l].e =  ev[g]; }
 			else                 { w[l].g = -g; w[l].e = -ev[g]; }
 			l++;
 		}
@@ -70,8 +70,8 @@ word    WordExpVec(expvec ev) {
 	gen     g;
 	word    w;
 
-	for(l = 0, g = 1; g <= NrPcGensList[Class > 0 ? Class + 1 : 1]; g++)
-		if(ev[g] != (exp)0) l++;
+	for (l = 0, g = 1; g <= NrPcGensList[Class > 0 ? Class + 1 : 1]; g++)
+		if (ev[g] != (exp)0) l++;
 
 	w = (word)Allocate((l + 1) * sizeof(gpower));
 
@@ -84,9 +84,9 @@ expvec  ExpVecWord(word w) {
 
 	ev = (expvec)Allocate((NrPcGens + NrCenGens + 1) * sizeof(exp));
 
-	if(w != (word)0)
-		while(w->g != EOW) {
-			if(w->g > 0) ev[ w->g ] = w->e;
+	if (w != (word)0)
+		while (w->g != EOW) {
+			if (w->g > 0) ev[ w->g ] = w->e;
 			else           ev[ -w->g ] = -w->e;
 			w++;
 		}
@@ -94,9 +94,9 @@ expvec  ExpVecWord(word w) {
 }
 
 int     WordCmp(word u, word w) {
-	if(u == w) return 0;
-	while(u->g == w->g && u->e == w->e) {
-		if(u->g == EOW) return 0;
+	if (u == w) return 0;
+	while (u->g == w->g && u->e == w->e) {
+		if (u->g == EOW) return 0;
 		u++;
 		w++;
 	}
@@ -104,14 +104,14 @@ int     WordCmp(word u, word w) {
 }
 
 void    WordCopy(word u, word w) {
-	while(u->g != EOW) *w++ = *u++;
+	while (u->g != EOW) *w++ = *u++;
 	*w = *u;
 }
 
 int     WordLength(word w) {
 	int     l = 0;
 
-	while(w->g != EOW) { w++; l++; }
+	while (w->g != EOW) { w++; l++; }
 	return l;
 }
 
@@ -119,11 +119,11 @@ word    WordGen(gen g) {
 	word    w;
 	int     l;
 
-	if(g == 0) {
+	if (g == 0) {
 		w = (word)Allocate(sizeof(gpower));
 		w[0].g = EOW;
 	} else {
-		if((*PcGenerator)(g) == (word)0)
+		if ((*PcGenerator)(g) == (word)0)
 			return (word)0;
 
 		l = WordLength((*PcGenerator)(g));
@@ -139,7 +139,7 @@ word    WordMult(word u, word w) {
 
 	ev = ExpVecWord(u);
 	Free((void *)u);
-	if(Collect(ev, w, (exp)1)) {
+	if (Collect(ev, w, (exp)1)) {
 		Free((void *)w);
 		Free((void *)ev);
 		return (word)0;
@@ -157,21 +157,21 @@ word    WordPow(word w, int * pn) {
 	int     n;
 
 	n = *pn;
-	if(n == 0) {
+	if (n == 0) {
 		Free((void *)w);
 		return WordGen(0);
 	}
-	if(n < 0) {
+	if (n < 0) {
 		ww = Invert(w);
 		Free((void *)w);
 		w = ww;
 		n = -n;
 	}
 
-	if(n == 1) return w;
+	if (n == 1) return w;
 
 	ev = ExpVecWord(w);
-	if(Collect(ev, w, (exp)(n - 1))) {
+	if (Collect(ev, w, (exp)(n - 1))) {
 		Free((void *)w);
 		Free((void *)ev);
 		return (word) 0;
@@ -191,7 +191,7 @@ word    WordConj(word u, word w) {
 	ev = ExpVecWord(u);
 	Free((void *)u);
 
-	if(Collect(ev, w, (exp)1)) {
+	if (Collect(ev, w, (exp)1)) {
 		Free((void *)ev);
 		Free((void *)w);
 		return (word)0;
@@ -242,7 +242,7 @@ word    WordRel(word u, word w) {
 	return x;
 }
 
-void    WordInit( word (*generator)() ) {
+void    WordInit(word(*generator)()) {
 	PcGenerator = generator;
 
 	SetEvalFunc(TGEN, (EvalFunc)WordGen);
@@ -257,10 +257,10 @@ void    WordInit( word (*generator)() ) {
 }
 
 void    WordPrint(word gs) {
-	if(gs->g != EOW)
-		if(gs->g > 0) {
+	if (gs->g != EOW)
+		if (gs->g > 0) {
 			PrintGen(gs->g);
-			if(gs->e > (exp)1)
+			if (gs->e > (exp)1)
 #ifdef HAVE_LONG_LONG_INT
 				printf("^%lld", gs->e);
 #else
@@ -280,11 +280,11 @@ void    WordPrint(word gs) {
 	}
 	gs++;
 
-	while(gs->g != EOW) {
+	while (gs->g != EOW) {
 		putchar('*');
-		if(gs->g > 0) {
+		if (gs->g > 0) {
 			PrintGen(gs->g);
-			if(gs->e > (exp)1)
+			if (gs->e > (exp)1)
 #ifdef HAVE_LONG_LONG_INT
 				printf("^%lld", gs->e);
 #else

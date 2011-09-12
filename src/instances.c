@@ -32,7 +32,7 @@ gen     g;
 	long    save_wt;
 	word    u = instances[ n ];
 
-	if(wt == 0) {
+	if (wt == 0) {
 		gen h;
 		/*
 		printf( "#  %d  %d  ", l, n );
@@ -41,9 +41,9 @@ gen     g;
 		}
 		printf( "\n" );
 		*/
-		if(EvalSingleRelation(r)) {
+		if (EvalSingleRelation(r)) {
 			printf("#  essential: ");
-			for(h = 1; h <= NrIdenticalGensNode; h++) {
+			for (h = 1; h <= NrIdenticalGensNode; h++) {
 				printWord(Instances[ h ], 'a');
 				printf(", ");
 			}
@@ -52,20 +52,20 @@ gen     g;
 		return;
 	}
 
-	if(g > NrPcGens + NrCenGens) return;
+	if (g > NrPcGens + NrCenGens) return;
 
 	save_wt = wt;
-	while(!EarlyStop && g <= NrPcGens + NrCenGens && Wt(g) <= wt - (l - n)) {
+	while (!EarlyStop && g <= NrPcGens + NrCenGens && Wt(g) <= wt - (l - n)) {
 		u[i].g   = g;
 		u[i].e   = (exp)0;
 		u[i + 1].g = EOW;
-		while(!EarlyStop && Wt(g) <= wt - (l - n)) {
+		while (!EarlyStop && Wt(g) <= wt - (l - n)) {
 			u[i].e++;
 			wt -= Wt(g);
 
-			if(Exponent[g] > (exp)0 && Exponent[g] == u[i].e) break;
+			if (Exponent[g] > (exp)0 && Exponent[g] == u[i].e) break;
 			EnumerateWords(r, l, instances, n, i + 1, g + 1, wt);
-			if(n < NrIdenticalGensNode)
+			if (n < NrIdenticalGensNode)
 				EnumerateWords(r, l, instances, n + 1, 0, 1, wt);
 
 		}
@@ -82,20 +82,20 @@ node    *r;
 	gen    g;
 	long   c;
 
-	if(Instances == (word *)0)
+	if (Instances == (word *)0)
 		Instances = (word *)Allocate((NumberOfIdenticalGens() + 1)
 		                             * sizeof(word));
 
-	for(g = 1; g <= NumberOfIdenticalGens(); g++) {
+	for (g = 1; g <= NumberOfIdenticalGens(); g++) {
 
-		if(Instances[ g ] != (word)0)
+		if (Instances[ g ] != (word)0)
 			Free(Instances[ g ]);
 
 		Instances[ g ] = (word)Allocate((NrPcGens + NrCenGens + 1)
 		                                * sizeof(gpower));
 	}
 
-	for(c = NrIdenticalGensNode; !EarlyStop && c <= Class + 1; c++) {
+	for (c = NrIdenticalGensNode; !EarlyStop && c <= Class + 1; c++) {
 		EnumerateWords(r, NrIdenticalGensNode, Instances, 1, 0, 1, c);
 	}
 
