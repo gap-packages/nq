@@ -16,11 +16,7 @@
 int UseSimpleCollector = 0;
 int UseCombiCollector  = 0;
 
-static  Error(str, g)
-char    *str;
-gen     g;
-
-{
+static  Error(char *str, gen g) {
 	printf("Error in Collect() while treating generator %d:\n", (int)g);
 	printf("      %s\n", str);
 
@@ -54,11 +50,7 @@ exp     WordExpStack[STACKHEIGHT];
 word    GenStack[STACKHEIGHT];
 exp     GenExpStack[STACKHEIGHT];
 
-int     SimpleCollect(lhs, rhs, e)
-expvec  lhs;
-word    rhs;
-exp     e;
-{
+int SimpleCollect(expvec lhs, word rhs, exp e) {
 	word  *ws  = WordStack;
 	exp   *wes = WordExpStack;
 	word  *gs  = GenStack;
@@ -183,10 +175,7 @@ int Collect(expvec lhs, word rhs, exp e) {
 /*
 **    Solve the equation   u x = v   for x.
 */
-word    Solve(u, v)
-word    u, v;
-
-{
+word Solve(word u, word v) {
 	word    x;
 	gpower  y[2];
 	gen     g;
@@ -252,10 +241,7 @@ word    u, v;
 	return x;
 }
 
-word    Invert(u)
-word    u;
-
-{
+word    Invert(word u) {
 	gpower  id;
 
 	id.g = EOW;
@@ -263,10 +249,7 @@ word    u;
 	return Solve(u, &id);
 }
 
-word    Multiply(u, v)
-word    u, v;
-
-{
+word    Multiply(word u, word v) {
 	expvec  ev;
 	word    w;
 
@@ -283,11 +266,7 @@ word    u, v;
 	return w;
 }
 
-word    Exponentiate(u, n)
-word    u;
-int     n;
-
-{
+word    Exponentiate(word u, int n) {
 	word    v;
 	expvec  ev;
 	int     copied_u = 0;
@@ -343,10 +322,7 @@ int     n;
 **    to the left on both sides of the equation such that it can be
 **    cancelled on both sides of the equation.
 */
-word    Commutator(u, v)
-word    u, v;
-
-{
+word Commutator(word u, word v) {
 	expvec u1, u2, v1, v2, x;
 	gpower y[2];
 	word w = (word)0;
@@ -395,10 +371,7 @@ exit:
 	return w;
 }
 
-word    Commutator2(v, w)
-word    v, w;
-
-{
+word    Commutator2(word v, word w) {
 	expvec  ev;
 	word    vw, wv, vwvw;
 

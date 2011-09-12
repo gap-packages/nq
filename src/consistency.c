@@ -7,10 +7,7 @@
 
 #include "nq.h"
 
-void    printEv(ev)
-expvec  ev;
-
-{
+void    printEv(expvec ev) {
 	long    i;
 
 	for(i = 1; i <= NrPcGens + NrCenGens; i++)
@@ -21,10 +18,7 @@ expvec  ev;
 #endif
 }
 
-do_cba(c, b, a)
-gen     c, b, a;
-
-{
+static void do_cba(gen c, gen b, gen a) {
 	int     i;
 	expvec  ev1, ev2;
 
@@ -58,10 +52,7 @@ gen     c, b, a;
 	addRow(ev1);
 }
 
-do_cbb(c, b)
-gen     c, b;
-
-{
+static void do_cbb(gen c, gen b) {
 	expvec  ev;
 
 	if(Wt(c) + Wt(b) > Class + 1) return;
@@ -95,10 +86,7 @@ gen     c, b;
 	addRow(ev);
 }
 
-do_ccb(c, b)
-gen     c, b;
-
-{
+static void do_ccb(gen c, gen b) {
 	expvec  ev;
 
 	if(Wt(c) + Wt(abs(b)) > Class + 1) return;
@@ -117,10 +105,7 @@ gen     c, b;
 	addRow(ev);
 }
 
-do_cbn(c, b)
-gen     c, b;
-
-{
+static void do_cbn(gen c, gen b) {
 	int     i;
 	expvec  ev1, ev2;
 
@@ -149,10 +134,7 @@ gen     c, b;
 	addRow(ev1);
 }
 
-do_cnb(c, b)
-gen     c, b;
-
-{
+static void do_cnb(gen c, gen b) {
 	int     i;
 	expvec  ev1, ev2;
 
@@ -184,10 +166,7 @@ gen     c, b;
 	addRow(ev1);
 }
 
-do_cnc(c)
-gen     c;
-
-{
+static void do_cnc(gen c) {
 	int     i;
 	expvec  ev1, ev2;
 

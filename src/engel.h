@@ -19,4 +19,4 @@ extern int ReverseOrder;
 extern word EngelCommutator();
 
 extern void EvalEngel();
-extern void InitEngel();
+extern void InitEngel(int l, int r, int v, int e, int n);

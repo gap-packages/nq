@@ -6,10 +6,7 @@
 
 #include "nq.h"
 
-void	printGapWord(w)
-word	w;
-
-{
+static void printGapWord(word w) {
 	int nrc = 30;      /* something has already been printed */
 
 	if(w == (word)0 || w->g == EOW) {
@@ -108,7 +105,7 @@ void	PrintGapPcPres() {
 			}
 			if(1 && Exponent[i] + Exponent[j] == (exp)0) {
 				printf("SetConjugate( NqCollector, %d, %d, ", -j, -i);
-				printGapWord(Conjugate[-j][-i], 'A');
+				printGapWord(Conjugate[-j][-i] /*, 'A'*/);
 				printf(" );\n");
 			}
 			i++;
@@ -131,10 +128,7 @@ void	PrintGapPcPres() {
 	printf("];\n");
 }
 
-void	printRawWord(w)
-word	w;
-
-{
+static void	printRawWord(word w) {
 	int nrc = 15;      /* something has already been printed */
 
 	if(w == (word)0 || w->g == EOW) { return; }

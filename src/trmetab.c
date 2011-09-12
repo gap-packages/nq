@@ -10,20 +10,14 @@ static int NrWords = 0;
 static int TrMetAb = 0;
 
 static
-void    Error(v, w)
-word    v, w;
-
-{
+void    Error(word v, word w) {
 	printf("Overflow in collector computing [ ");
 	printWord(v, 'a');
 	printWord(w, 'a');
 	printf(" ]\n");
 }
 
-static  eval8Power(u)
-word u;
-
-{
+static  eval8Power(word u) {
 	word  uu;
 	int   needed;
 
@@ -43,10 +37,7 @@ word u;
 }
 
 static
-void    evalTrMetAbRel(ul)
-word    *ul;
-
-{
+void    evalTrMetAbRel(word *ul) {
 	word    u, uu, vv;
 	long    i, needed;
 
@@ -101,13 +92,7 @@ word    *ul;
 }
 
 static
-void    buildTuple(ul, i, g, wt, which)
-word    *ul;
-long    i;
-gen     g;
-long    wt, which;
-
-{
+void    buildTuple(word *ul, long i, gen g, long wt, long which) {
 	long    save_wt;
 	word    u;
 
@@ -208,9 +193,6 @@ EvalTrMetAb() {
 		free(ul[i]);
 }
 
-InitTrMetAb(t)
-int t;
-
-{
+InitTrMetAb(int t) {
 	TrMetAb = t;
 }

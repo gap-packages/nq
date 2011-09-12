@@ -7,21 +7,13 @@
 
 #include "nq.h"
 
-void    printGen(g, c)
-gen     g;
-char    c;
-
-{
+void    printGen(gen g, char c) {
 	putchar(c + (g - 1) % 26);
 	if((g - 1) / 26 != 0)
 		printf("%d", (g - 1) / 26);
 }
 
-void    printWord(w, c)
-word    w;
-char    c;
-
-{
+void    printWord(word w, char c) {
 	if(w == (word)0 || w->g == EOW) {
 		printf("Id");
 		return;

@@ -49,11 +49,7 @@
 
 static  word(*PcGenerator)();
 
-void    WordCopyExpVec(ev, w)
-expvec  ev;
-word    w;
-
-{
+void    WordCopyExpVec(expvec ev, word w ) {
 	long    l;
 	gen     g;
 
@@ -68,10 +64,7 @@ word    w;
 	w[l].e = (exp)0;
 }
 
-word    WordExpVec(ev)
-expvec  ev;
-
-{
+word    WordExpVec(expvec ev) {
 	long    l;
 	gen     g;
 	word    w;
@@ -85,10 +78,7 @@ expvec  ev;
 	return w;
 }
 
-expvec  ExpVecWord(w)
-word    w;
-
-{
+expvec  ExpVecWord(word w) {
 	expvec  ev;
 
 	ev = (expvec)Allocate((NrPcGens + NrCenGens + 1) * sizeof(exp));
@@ -102,10 +92,7 @@ word    w;
 	return ev;
 }
 
-int     WordCmp(u, w)
-word    u, w;
-
-{
+int     WordCmp(word u, word w) {
 	if(u == w) return 0;
 	while(u->g == w->g && u->e == w->e) {
 		if(u->g == EOW) return 0;
@@ -115,28 +102,19 @@ word    u, w;
 	return 1;
 }
 
-void    WordCopy(u, w)
-word    u, w;
-
-{
+void    WordCopy(word u, word w) {
 	while(u->g != EOW) *w++ = *u++;
 	*w = *u;
 }
 
-int     WordLength(w)
-word    w;
-
-{
+int     WordLength(word w) {
 	int     l = 0;
 
 	while(w->g != EOW) { w++; l++; }
 	return l;
 }
 
-word    WordGen(g)
-gen     g;
-
-{
+word    WordGen(gen g) {
 	word    w;
 	int     l;
 
@@ -155,10 +133,7 @@ gen     g;
 	return w;
 }
 
-word    WordMult(u, w)
-word    u, w;
-
-{
+word    WordMult(word u, word w) {
 	expvec  ev;
 
 	ev = ExpVecWord(u);
@@ -175,11 +150,7 @@ word    u, w;
 	return w;
 }
 
-word    WordPow(w, pn)
-word    w;
-int     *pn;
-
-{
+word    WordPow(word w, int * pn) {
 	expvec  ev;
 	word    ww;
 	int     n;
@@ -211,10 +182,7 @@ int     *pn;
 	return w;
 }
 
-word    WordConj(u, w)
-word    u, w;
-
-{
+word    WordConj(word u, word w) {
 	word    uw, x;
 	expvec  ev;
 
@@ -237,10 +205,7 @@ word    u, w;
 	return x;
 }
 
-word    WordComm(u, w)
-word    u, w;
-
-{
+word    WordComm(word u, word w) {
 	word    x;
 
 	x = Commutator(u, w);
@@ -267,10 +232,7 @@ int     *e;
 
 
 
-word    WordRel(u, w)
-word    u, w;
-
-{
+word    WordRel(word u, word w) {
 	word    x;
 
 	/* The relation u = w is interpreted as
@@ -284,27 +246,21 @@ word    u, w;
 	return x;
 }
 
-void    WordInit(generator)
-word(*generator)();
-
-{
+void    WordInit( word (*generator)() ) {
 	PcGenerator = generator;
 
-	SetEvalFunc(TGEN, (void * (*)())WordGen);
-	SetEvalFunc(TMULT, (void * (*)())WordMult);
-	SetEvalFunc(TPOW, (void * (*)())WordPow);
-	SetEvalFunc(TCONJ, (void * (*)())WordConj);
-	SetEvalFunc(TCOMM, (void * (*)())WordComm);
-	SetEvalFunc(TREL, (void * (*)())WordRel);
-	SetEvalFunc(TDRELL, (void * (*)())WordRel);
-	SetEvalFunc(TDRELR, (void * (*)())WordRel);
-	SetEvalFunc(TENGEL, (void * (*)())WordEngel);
+	SetEvalFunc(TGEN, (EvalFunc)WordGen);
+	SetEvalFunc(TMULT, (EvalFunc)WordMult);
+	SetEvalFunc(TPOW, (EvalFunc)WordPow);
+	SetEvalFunc(TCONJ, (EvalFunc)WordConj);
+	SetEvalFunc(TCOMM, (EvalFunc)WordComm);
+	SetEvalFunc(TREL, (EvalFunc)WordRel);
+	SetEvalFunc(TDRELL, (EvalFunc)WordRel);
+	SetEvalFunc(TDRELR, (EvalFunc)WordRel);
+	SetEvalFunc(TENGEL, (EvalFunc)WordEngel);
 }
 
-void    WordPrint(gs)
-word    gs;
-
-{
+void    WordPrint(word gs) {
 	if(gs->g != EOW)
 		if(gs->g > 0) {
 			PrintGen(gs->g);

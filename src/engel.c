@@ -20,11 +20,7 @@ int     CheckFewInstances = 0;
 int     ReverseOrder = 0;
 
 static
-void    Error(v, w, type)
-word    v, w;
-char    type;
-
-{
+void    Error(word v, word w, char type) {
 	printf("Overflow in collector computing [ ");
 	printWord(v, 'a');
 	if(type == 'e') printf(" , %d ", Engel);
@@ -35,11 +31,7 @@ char    type;
 }
 
 
-word    EngelCommutator(v, w, engel)
-word    v, w;
-int     engel;
-
-{
+word    EngelCommutator(word v, word w, int engel) {
 	long    n;
 	word    v1;
 
@@ -84,10 +76,7 @@ int     engel;
 }
 
 static
-void    evalEngelRel(v, w)
-word    v, w;
-
-{
+void    evalEngelRel(word v, word w) {
 	word    comm;
 	long    n, needed;
 
@@ -118,13 +107,7 @@ word    v, w;
 }
 
 static
-void    buildPairs(u, i, g, v, wt, which)
-word    u, v;
-long    i;
-gen     g;
-long    wt, which;
-
-{
+void    buildPairs(word u, long i, gen g, word v, long wt, long which) {
 	long    save_wt;
 
 
@@ -196,9 +179,7 @@ long    wt, which;
 }
 
 static
-void    evalEngel()
-
-{
+void    evalEngel() {
 	word    u, v;
 	long    c;
 
@@ -246,10 +227,7 @@ void    evalEngel()
 }
 
 static
-void    evalRightEngelRel(w)
-word    w;
-
-{
+void    evalRightEngelRel(word w) {
 	word    comm;
 	long    n,  needed;
 
@@ -281,10 +259,7 @@ word    w;
 }
 
 static
-void    evalLeftEngelRel(w)
-word    w;
-
-{
+void    evalLeftEngelRel(word w) {
 	word    comm;
 	long    n,  needed;
 
@@ -317,12 +292,7 @@ word    w;
 }
 
 static
-void    buildWord(u, i, g, wt)
-word    u;
-long    i, wt;
-gen     g;
-
-{
+void    buildWord(word u, long i, gen g, long wt) {
 	long    save_wt;
 
 	if(wt == 0 && i > 0) {
@@ -423,10 +393,7 @@ void    EvalEngel() {
 		printf("#    Evaluated Engel condition (%d msec).\n", RunTime() - t);
 }
 
-void    InitEngel(l, r, v, e, n)
-int     l, r, v, e, n;
-
-{
+void    InitEngel(int l, int r, int v, int e, int n){
 	LeftEngel = l;
 	RightEngel = r;
 	RevEngel = v;

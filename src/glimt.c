@@ -523,10 +523,7 @@ long    h;
 	return v;
 }
 
-int     addRow(ev)
-expvec  ev;
-
-{
+int     addRow(expvec ev) {
 	long    h, i, t;
 	lvec    v;
 

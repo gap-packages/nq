@@ -49,13 +49,16 @@ typedef struct _node node;
 #define TENGEL 10
 #define TLAST  11
 
-extern void     PrintGen();
-extern void     PrintPresentation();
-extern void     Presentation();
+typedef void *(*EvalFunc)();
+
+
+extern void     PrintGen(gen g);
+extern void     PrintPresentation(FILE *fp);
+extern void     Presentation(FILE *fp, char *filename);
 extern node     *ReadWord();
 extern node     *Word();
 
-extern char     *GenName();
+extern char     *GenName(gen g);
 extern int      NumberOfAbstractGens();
 extern int      NumberOfIdenticalGens();
 extern int      NumberOfGens();
@@ -63,14 +66,14 @@ extern int      NumberOfRels();
 extern node     *FirstRelation();
 extern node     *NextRelation();
 extern node     *CurrentRelation();
-extern node     *NthRelation();
+extern node     *NthRelation(int n);
 
-extern void     SetEvalFunc();
+extern void     SetEvalFunc(int type, EvalFunc function);
 extern void     **EvalRelations();
-extern void     *EvalNode();
-extern void     FreeNode();
-extern void     PrintNode();
-extern void     InitPrint();
+extern void     *EvalNode(node *n);
+extern void     FreeNode(node *n);
+extern void     PrintNode(node *n);
+extern void     InitPrint(FILE *);
 
 extern int      NrIdenticalGensNode;
 extern gen      *IdenticalGenNumberNode;

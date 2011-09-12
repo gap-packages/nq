@@ -61,7 +61,8 @@ extern  long    *Heads;
 */
 extern  word    getWord();
 extern  int     cmpWords();
-extern  void    printWord();
+extern  void    printWord(word w, char c);
+extern  void    printGen(gen g, char c);
 
 /*
 **    Functions manipulating exponent vectors
@@ -94,3 +95,8 @@ extern  void    printExpVec();
 extern  void    consistency();
 
 extern  void    NqRelations();
+
+/*
+**    Defined in glimt.c
+*/
+extern  int     addRow(expvec ev);

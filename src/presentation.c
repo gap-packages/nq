@@ -51,10 +51,7 @@ typedef struct _node node;
 /*
 **    FreeNode() recursively frees a given node.
 */
-void    FreeNode(n)
-node    *n;
-
-{
+void    FreeNode(node *n) {
 	if(n->type != TGEN && n->type != TNUM) {
 		FreeNode(n->cont.op.l);
 		FreeNode(n->cont.op.r);
@@ -65,10 +62,7 @@ node    *n;
 /*
 **    GetNode() allocates space for a node of given type.
 */
-static node    *GetNode(type)
-int     type;
-
-{
+static node    *GetNode(int type) {
 	node    *n;
 
 	n = (node *)Allocate(sizeof(node));
@@ -99,11 +93,7 @@ static unsigned NrGens = 0;
 #define NOCREATE 0
 #define CREATE   1
 
-static  gen     GenNumber(gname, status)
-char    *gname;
-int     status;
-
-{
+static gen GenNumber(char *gname, int status) {
 	unsigned        i;
 
 	if(status == CREATE && NrGens == 0)   /* Initialize GenNames[]. */
@@ -133,10 +123,11 @@ int     status;
 **    GenName() is the inverse function for GenNumber(). It returns the
 **    name of a generator given by its number.
 */
-char    *GenName(g)
-gen     g;
-
-{       if(g > NrGens) return (char *) 0; else return GenNames[g]; }
+char    *GenName(gen g) {
+	if (g > NrGens)
+		return 0;
+	return GenNames[g];
+}
 
 /*
 **    ------------------------- SCANNER ---------------------------
@@ -150,18 +141,21 @@ static int      Line;           /* Current line number. */
 static int      TLine;          /* Line number where token starts. */
 static int      Char;           /* Current character number. */
 static int      TChar;          /* Character number where token starts. */
-static char     *InFileName;    /* Current input file name. */
-static char     *OutFileName;   /* Current output file name. */
+static const char     *InFileName;    /* Current input file name. */
+static const char     *OutFileName;   /* Current output file name. */
 static FILE     *InFp;          /* Current input file pointer. */
 static FILE     *OutFp;         /* Current output file pointer. */
 static int      N;              /* Contains the integer just read. */
 static char     Gen[128];       /* Contains the generator name. */
-static char     *TokenName[] = {
+/*
+static const char     *TokenName[] = {
 	"", "LParen", "RParen", "LBrack", "RBrack", "LBrace",
 	"RBrace", "Mult",   "Power",  "Equal",  "DEqualL",
 	"DEqualR", "Plus",   "Minus",  "LAngle", "RAngle",
 	"Pipe",   "Comma",  "Number", "Gen"
 };
+*/
+
 /*
 **    The following macros define tokens.
 */
@@ -195,11 +189,8 @@ static char     *TokenName[] = {
 **    where is occurred and then exits.
 **    No recovery from syntax errors :-)
 */
-static void     SyntaxError(str)
-char    *str;
-
-{
-	if(str == (char *)0)
+static void SyntaxError(const char *str) {
+	if(str == 0)
 		fprintf(stderr, "%s, line %d, char %d.\n",
 		        InFileName, TLine, TChar);
 	else
@@ -215,7 +206,7 @@ char    *str;
 **    a line is continued in the next line, therefore ReadCh() discards
 **    '\' and the following '\n'.
 */
-static void     ReadCh() {
+static void ReadCh() {
 
 	Ch = getc(InFp);
 	Char++;
@@ -249,7 +240,7 @@ static void     SkipBlanks() {
 /*
 **    Number reads a number from the input.
 */
-static int      Number() {
+static void Number() {
 
 	unsigned int    m, n = 0, overflow = 0;
 
@@ -403,11 +394,7 @@ static void     Generator() {
 /*
 **    InitParser() does exactly what the name suggests.
 */
-/*static*/ void InitParser(fp, filename)
-FILE    *fp;
-char    *filename;
-
-{
+/*static*/ void InitParser(FILE *fp, char *filename) {
 	InFp = fp;
 	InFileName = filename;
 
@@ -740,10 +727,7 @@ node    *FirstRelation() {
 	return NextRelation();
 }
 
-node    *NthRelation(n)
-int     n;
-
-{
+node    *NthRelation(int n) {
 	if(n < 0 || n >= NumberOfRels()) return (node *)0;
 
 	return Pres.rels[n];
@@ -757,11 +741,7 @@ node    *CurrentRelation() { return Pres.rels[NextRel - 1]; }
 **        presentation: '<' genlist '|' rellist '>' |
 **                      '<' genlist ; genlist '|' rellist '>'
 */
-void    Presentation(fp, filename)
-FILE    *fp;
-char    *filename;
-
-{
+void    Presentation(FILE *fp, char *filename) {
 	InitParser(fp, filename);
 
 	if(Token != LANGLE) SyntaxError("presentation expected");
@@ -809,13 +789,9 @@ node    *ReadWord() {
 **    ----------------------- EVALUATOR ------------------------
 **    The fourth part of this file contains the evaluator.
 */
-static void     *(*EvalFunctions[TLAST])();
+static EvalFunc EvalFunctions[TLAST];
 
-void    SetEvalFunc(type, function)
-int     type;
-void    *(*function)();
-
-{
+void    SetEvalFunc(int type, EvalFunc function) {
 	if(type <= TNUM || type >= TLAST) {
 		printf("Evaluation error: illegal type in SetEvalFunc()\n");
 		exit(1);
@@ -824,17 +800,14 @@ void    *(*function)();
 	EvalFunctions[type] = function;
 }
 
-void    *EvalNode(n)
-node    *n;
-
-{
+void    *EvalNode(node *n) {
 	void          *e, *l, *r;
 	extern int    Class;
 
 	if(n->type == TNUM)
 		return (void *) & (n->cont.n);
 
-	if(EvalFunctions[n->type] == (void * (*)())0) {
+	if(EvalFunctions[n->type] == 0) {
 		fprintf(stderr, "No evaluation function for type %d.\n", n->type);
 		exit(5);
 	}
@@ -881,11 +854,7 @@ node    *n;
 }
 
 static
-void    TraverseNode(n, igens)
-node    *n;
-gen     *igens;
-
-{
+void    TraverseNode(node *n, gen *igens) {
 	if(n->type == TNUM) return;
 
 	if(n->type == TGEN) {
@@ -901,11 +870,9 @@ gen     *igens;
 }
 
 int  NrIdenticalGensNode = 0;
-gen  *IdenticalGenNumberNode = (gen *)0;
+gen  *IdenticalGenNumberNode = 0;
 
-int  NumberOfIdenticalGensNode(n)
-node *n;
-{
+int  NumberOfIdenticalGensNode(node *n) {
 	gen  g,  nr;
 
 	if(IdenticalGenNumberNode != (gen *)0)
@@ -945,25 +912,23 @@ void    **EvalRelations() {
 /*
 **    PrintNum() prints an integer.
 */
-static void     PrintNum(n) int n;
-{ fprintf(OutFp, "%d", n); }
+static void     PrintNum(int n) {
+	fprintf(OutFp, "%d", n);
+}
 
 /*
 **    PrintGen() prints a generator.
 */
-void    PrintGen(g) gen g;
-{ fprintf(OutFp, "%s", GenName(g)); }
+void    PrintGen(gen g) {
+	fprintf(OutFp, "%s", GenName(g));
+}
 
 /*
 **    PrintComm() prints a commutator using the following rule for
 **    left normed commutators :
 **                              [[a,b],c] = [a,b,c]
 */
-static void     PrintComm(l, r, bracket)
-node    *l, *r;
-int     bracket;
-
-{
+static void     PrintComm(node *l, node *r, int bracket) {
 	if(bracket) fprintf(OutFp, "[");
 
 	/* If the left operand is a commutator, don't print its brackets. */
@@ -983,10 +948,7 @@ int     bracket;
 **    Engel relations:
 **                              [u, n v]
 */
-static void     PrintEngel(l, r, e)
-node    *l, *r, *e;
-
-{
+static void     PrintEngel(node *l, node *r, node *e) {
 	fprintf(OutFp, "[");
 	PrintNode(l);
 	fprintf(OutFp, ", ");
@@ -1002,10 +964,9 @@ node    *l, *r, *e;
 **    of all operators except '='. But '=' can only occur at the top of
 **    an expression tree.
 */
-static void     PrintMult(l, r)
-node    *l, *r;
-
-{       PrintNode(l); fprintf(OutFp, "*"); PrintNode(r); }
+static void     PrintMult(node *l, node *r) {
+	PrintNode(l); fprintf(OutFp, "*"); PrintNode(r);
+}
 
 /*
 **    PrintPow() prints an expression raised to an integer. If the expression
@@ -1014,10 +975,7 @@ node    *l, *r;
 **    it has to be enclosed in parenthesis because '^' is not an associative
 **    operator.
 */
-static void     PrintPow(l, r)
-node    *l, *r;
-
-{
+static void     PrintPow(node *l, node *r) {
 	if(l->type == TPOW || l->type == TCONJ || l->type == TMULT) {
 		putc('(', OutFp);
 		PrintNode(l);
@@ -1039,10 +997,7 @@ node    *l, *r;
 **    it has to be enclosed in parentheses for the same reasons PrintPow()
 **    has to enclose the basis in parentheses.
 */
-static void     PrintConj(l, r)
-node    *l, *r;
-
-{
+static void     PrintConj(node *l, node *r) {
 	if(l->type == TPOW || l->type == TCONJ || l->type == TMULT) {
 		putc('(', OutFp);
 		PrintNode(l);
@@ -1064,37 +1019,31 @@ node    *l, *r;
 **    PrintRel() prints a relation. No parenthesis are necessary since
 **    '=' has the lowest precedence of all binary operators.
 */
-static void     PrintRel(l, r)
-node    *l, *r;
-
-{       PrintNode(l); fprintf(OutFp, " = "); PrintNode(r); }
+static void     PrintRel(node *l, node *r) {
+	PrintNode(l); fprintf(OutFp, " = "); PrintNode(r);
+}
 
 /*
 **    PrintDRelL() prints a defining relation. No parenthesis are necessary
 **    since '=:' has the lowest precedence of all binary operators.
 */
-static void     PrintDRelL(l, r)
-node    *l, *r;
-
-{       PrintNode(l); fprintf(OutFp, " := "); PrintNode(r); }
+static void     PrintDRelL(node *l, node *r) {
+	PrintNode(l); fprintf(OutFp, " := "); PrintNode(r);
+}
 
 /*
 **    PrintDRelR() prints a defining relation. No parenthesis are necessary
 **    since '=:' has the lowest precedence of all binary operators.
 */
-static void     PrintDRelR(l, r)
-node    *l, *r;
-
-{       PrintNode(l); fprintf(OutFp, " =: "); PrintNode(r); }
+static void     PrintDRelR(node *l, node *r) {
+	PrintNode(l); fprintf(OutFp, " =: "); PrintNode(r);
+}
 
 /*
 **    PrintNode() just looks at the type of a node and then calls the
 **    appropriate print function.
 */
-void    PrintNode(n)
-node    *n;
-
-{
+void    PrintNode(node *n) {
 	switch(n->type) {
 	case TNUM:
 	{ PrintNum(n->cont.n); break; }
@@ -1128,10 +1077,7 @@ node    *n;
 **    PrintPresentation() prints the presentation stored in the global
 **    variable Pres.
 */
-void    PrintPresentation(fp)
-FILE    *fp;
-
-{
+void    PrintPresentation(FILE *fp) {
 	gen     g;
 	int     r;
 
@@ -1175,10 +1121,7 @@ FILE    *fp;
 	fprintf(OutFp, " >\n");
 }
 
-void    InitPrint(fp)
-FILE    *fp;
-
-{
+void    InitPrint(FILE *fp) {
 	OutFp = fp;
 	OutFileName = "";
 }

@@ -12,9 +12,7 @@
 
 static word     *Image;
 
-int     EvalSingleRelation(r)
-node    *r;
-{
+int     EvalSingleRelation(node *r) {
 	word    w;
 	expvec  ev;
 	int     needed;
@@ -154,12 +152,7 @@ int     ExtendEpim() {
 	return G - NrPcGens;
 }
 
-int     ElimAllEpim(n, M, renumber)
-int     n;
-expvec  *M;
-gen     *renumber;
-
-{
+int     ElimAllEpim(int n, expvec *M, gen *renumber) {
 	int     i, j, l, nrGens;
 	word    w;
 
@@ -322,10 +315,7 @@ void    PrintEpim() {
 	}
 }
 
-word    Epimorphism(g)
-gen     g;
-
-{
+word    Epimorphism(gen g) {
 	/*  Do we have an abstract generator or an identical generator ? */
 	if(g <= NumberOfAbstractGens())
 		return Image[g];

@@ -5,17 +5,17 @@
 */
 
 
-extern  void    WordCopyExpVec();
-extern  word    WordExpVec();
-extern  expvec  ExpVecWord();
-extern  int     WordCmp();
-extern  void    WordCopy();
-extern  int     WordLength();
-extern  word    WordGen();
-extern  word    WordMult();
-extern  word    WordPow();
-extern  word    WordConj();
-extern  word    WordComm();
-extern  word    WordRel();
-extern  void    WordInit();
-extern  void    WordPrint();
+extern  void    WordCopyExpVec(expvec ev, word w );
+extern  word    WordExpVec(expvec ev);
+extern  expvec  ExpVecWord(word w);
+extern  int     WordCmp(word u, word w);
+extern  void    WordCopy(word u, word w);
+extern  int     WordLength(word w);
+extern  word    WordGen(gen g);
+extern  word    WordMult(word u, word w);
+extern  word    WordPow(word w, int * pn);
+extern  word    WordConj(word u, word w);
+extern  word    WordComm(word u, word w);
+extern  word    WordRel(word u, word w);
+extern  void    WordInit( word (*generator)() );
+extern  void    WordPrint(word gs);

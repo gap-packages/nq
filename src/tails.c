@@ -7,14 +7,10 @@
 
 #include "nq.h"
 
-char *Warning3 = "Warning : This is not a tail in %s( %d, %d, %d )\n";
-char *Warning2 = "Warning : This is not a tail in %s( %d, %d )\n";
+const char *Warning3 = "Warning : This is not a tail in %s( %d, %d, %d )\n";
+const char *Warning2 = "Warning : This is not a tail in %s( %d, %d )\n";
 
-int     tail_cba(c, b, a, ev)
-gen     c, b, a;
-expvec  *ev;
-
-{
+static int tail_cba(gen c, gen b, gen a, expvec *ev) {
 	int     i, l = 0;
 	expvec  ev1, ev2;
 
@@ -48,11 +44,7 @@ expvec  *ev;
 	return l;
 }
 
-int     tail_cbn(c, b, ev)
-gen     c, b;
-expvec  *ev;
-
-{
+static int tail_cbn(gen c, gen b, expvec *ev) {
 	int     i, l = 0;
 	expvec  ev1, ev2;
 
@@ -85,11 +77,7 @@ expvec  *ev;
 	return l;
 }
 
-int     tail_cnb(c, b, ev)
-gen     c, b;
-expvec  *ev;
-
-{
+static int tail_cnb(gen c, gen b, expvec *ev) {
 	int     i, l = 0;
 	expvec  ev1, ev2;
 
@@ -122,11 +110,7 @@ expvec  *ev;
 	return l;
 }
 
-int     tail_cbb(c, b, ev)
-gen     c, b;
-expvec  *ev;
-
-{
+static int tail_cbb(gen c, gen b, expvec *ev) {
 	int     i, l = 0;
 	expvec  ev1;
 
@@ -154,11 +138,7 @@ expvec  *ev;
 	return l;
 }
 
-int     tail_ccb(c, b, ev)
-gen     c, b;
-expvec  *ev;
-
-{
+static int tail_ccb(gen c, gen b, expvec *ev) {
 	int     i, l = 0;
 	expvec  ev1;
 
@@ -186,10 +166,7 @@ expvec  *ev;
 	return l;
 }
 
-Tail(n, m)
-gen     n, m;
-
-{
+static void Tail(gen n, gen m) {
 	long    lw, lt;
 	expvec  t;
 	word    w;
@@ -214,7 +191,7 @@ gen     n, m;
 **    commutators of weight Class+1, which are currently trivial, will
 **    get tails.
 */
-Tails() {
+void Tails() {
 
 	int     *Dim = Dimension;
 	long    b, c, i, j, time;
