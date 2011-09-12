@@ -12,40 +12,59 @@
         <Package>NQ</Package>
     </Title>
     <Subtitle>                                          <!-- OPTIONAL -->
-        A &GAP; 4 Package<Br></Br>
+        A &GAP; 4 Package<Br/>
         computing nilpotent factor groups of finitely
-        presented groups<Br></Br>
-        &nbsp;<Br></Br>
+        presented groups<Br/>
+        &nbsp;<Br/>
         Based on the ANU Nilpotent Quotient Program
     </Subtitle>
-    <Version>Version 2.2</Version>                      <!-- OPTIONAL -->
+    <Version>Version 2.3</Version>                      <!-- OPTIONAL -->
     <Author>
-        Werner Nickel<Br></Br>                          <!-- REQUIRED -->
-        &nbsp;
+        Max Horn                          <!-- REQUIRED -->
         <Address>
-            Fachbereich Mathematik, AG 2<Br></Br>
-            TU Darmstadt<Br></Br>
-            Schlossgartenstr. 7<Br></Br>
-            64289 Darmstadt<Br></Br>
+            AG Algebra und Diskrete Mathematik<Br/>
+            Institut Computational Mathematics<Br/>
+            TU Braunschweig<Br/>
+            Pockelsstr. 14<Br/>
+            D-38106 Braunschweig<Br/>
             Germany
         </Address>
+        <Email>
+            mhorn at tu-bs.de
+        </Email>
+        <Homepage>http://www.icm.tu-bs.de/~mhorn</Homepage>
+    </Author>
+    <Author>
+        Werner Nickel                          <!-- REQUIRED -->
+<!--        In November 2007 Werner took up a position at the Hesse Ministry
+        of Science and Art. Any inquiries regarding nq should be
+        directed at Max Horn (see below) for the time being.<Br/>
+-->
         <Email>
             nickel at mathematik.tu-darmstadt.de
         </Email>
         <Homepage>http://www.mathematik.tu-darmstadt.de/~nickel</Homepage>
     </Author>
-    <Date>February 2007</Date>                          <!-- OPTIONAL -->
+    <Date>September 2011</Date>                          <!-- OPTIONAL -->
     <Copyright>                                         <!-- OPTIONAL -->
         &copyright; 1992-2007 Werner Nickel.
     </Copyright>
     <Acknowledgements> <!-- OPTIONAL --> 
-    The development of this program was started while the
+    The author of ANU NQ is Werner Nickel.
+
+    <P/>The development of this program was started while the
     author was supported by an Australian National University PhD
     scholarship and an Overseas Postgraduate Research Scholarship.
 
     <P/>Further development of this program was done with support from the
     DFG-Schwerpunkt-Projekt "`Algorithmische Zahlentheorie und
     Algebra"'.
+
+    <P/>Since then, maintenance of ANU NQ has been taken over by Max Horn. All
+    credit for creating ANU NQ still goes to Werner Nickel as sole author.
+    However, bug reports and other  inquiries should be sent to Max  Horn.
+
+    <P/>The following are the original acknowledgements by Werner Nickel.
 
     <P/>Over the years a number of people have made useful suggestions
     that found their way into the code:  Mike Newman, Michael
@@ -1342,6 +1361,6 @@ gap>
 
   </Body>
 
-  <Bibliography Databases="nq" />
+  <Bibliography Databases="nqbib.xml" />
   <TheIndex/>                                               
 </Book>
