@@ -5,6 +5,8 @@
 ##    $Id$
 ##
 
+all: nq
+
 top_srcdir = @top_srcdir@
 srcdir = @srcdir@
 VPATH = @srcdir@
