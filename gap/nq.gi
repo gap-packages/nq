@@ -16,14 +16,14 @@
 ##  Max Neunh\"offer.
 ##
 InstallGlobalFunction( NqBuildManual,
-function ( ) local  NqDir;
+function ( ) local  NqDocDir;
 
   ##  We take the first package directory.  In most cases this is the one 
   ##  loaded by RequirePackage().
-  NqDir := DirectoriesPackageLibrary( "nq", "gap" )[1];
+  NqDocDir := DirectoriesPackageLibrary( "nq", "doc" )[1];
 
-  MakeGAPDocDoc( Filename( NqDir, "../doc/" ), "nqman",
-                 [ "nq.bib" ], "nq", "../../../" );
+  MakeGAPDocDoc( NqDocDir, "nqman", [ "nqbib.xml" ], "nq", "../../../", "MathJax" );
+  CopyHTMLStyleFiles( NqDocDir );
 end );
 
 #############################################################################
