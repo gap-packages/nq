@@ -22,6 +22,7 @@ CFLAGS = $(OPTS) \
  -Wwrite-strings\
  -W\
  -Wconversion\
+ -ansi\
  -pedantic\
  -Wno-unused-parameter\
  -Wno-conversion\
