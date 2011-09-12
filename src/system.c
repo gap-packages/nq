@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <sys/time.h>
+#include <unistd.h>
 
 #include "config.h"
 
@@ -42,13 +43,7 @@ const char	*SignalName[] = { "",
                               "Virtual alarm (26)"
                            };
 
-static
-void	handler(sig, code, scp, addr)
-int	sig, code;
-struct  sigcontext *scp;
-char	*addr;
-
-{
+static void handler(int sig) {
 	fprintf(stderr, "\n\n# Process terminating with signal");
 	fprintf(stderr, " %s.\n\n", SignalName[sig]);
 
@@ -57,11 +52,6 @@ char	*addr;
 
 	signal(sig, SIG_DFL);
 	kill(getpid(), sig);
-
-	/* Please lint.*/
-	scp  = (void *)0;
-	addr = (void *)0;
-	code = 0;
 }
 
 static int TimeOutReached = 0;
@@ -70,10 +60,7 @@ static int DoTimeOut = 1;
 /*
 **    Set the alarm.
 */
-void	SetTimeOut(nsec)
-int	nsec;
-
-{
+void SetTimeOut(int nsec) {
 	struct itimerval  si;
 
 	if (nsec > 0) {
@@ -99,7 +86,7 @@ int	nsec;
 **    Switch on the time out mechanism. Check if the program has timed
 **    out in the mean time and if so terminate.
 */
-void	TimeOutOn() {
+void TimeOutOn(void) {
 	if (TimeOutReached) {
 		printf("#\n#    Process has timed out.\n#\n");
 
@@ -112,21 +99,18 @@ void	TimeOutOn() {
 /*
 **    Switch off the time out mechanism.
 */
-void	TimeOutOff() {     DoTimeOut = 0;    }
-
-static
-void	alarmClock(sig, code, scp, addr)
-int	sig, code;
-struct  sigcontext *scp;
-char	*addr;
-
-{
-	TimeOutReached = 1;
-
-	if (DoTimeOut) TimeOutOn();
+void TimeOutOff(void) {
+	DoTimeOut = 0;
 }
 
-void	CatchSignals() {
+static void alarmClock(int sig) {
+	TimeOutReached = 1;
+
+	if (DoTimeOut)
+		TimeOutOn();
+}
+
+void CatchSignals(void) {
 
 	/*
 	**    Catch the following signal in order to exit gracefully
@@ -159,7 +143,7 @@ void	CatchSignals() {
 #include <sys/time.h>
 #include <sys/resource.h>
 
-int	RunTime() {
+int	RunTime(void) {
 
 	struct	rusage	buf;
 
@@ -175,7 +159,7 @@ int	RunTime() {
 #include <sys/types.h>
 #include <sys/times.h>
 
-int RunTime() {
+int RunTime(void) {
 	struct tms buf;
 
 	times(&buf);
