@@ -11,6 +11,11 @@ top_srcdir = @top_srcdir@
 srcdir = @srcdir@
 VPATH = @srcdir@
 
+GAP_ROOT=@GAP_ROOT@
+BINDIR=bin/@GAP_ARCH@
+GMP_CFLAGS=@GMP_CFLAGS@
+GMP_LIBS=@GMP_LIBS@
+
 CC=@CC@
 #OPTS = -g -pg $(COPTS)
 OPTS = -O3 -Wuninitialized $(COPTS)

@@ -32,7 +32,7 @@ all: compile
 gap: compile gapmanual
 
 compile:
-	(cd src; make GMP_LIBS="$(GMP_LIBS)" GMP_CFLAGS="$(GMP_CFLAGS)")
+	(cd src; make")
 	mkdir -p $(BINDIR)
 	mv src/nq $(BINDIR)
 
