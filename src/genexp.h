@@ -17,27 +17,27 @@
 #ifndef GENEXP_INCLUDED
 #define GENEXP_INCLUDED
 
-typedef	short	gen;
+typedef short   gen;
 
 /*
 **    GNU cc has the data type long long.  We can switch it on by
 **    defining the macro HAVE_LONG_LONG_INT in the Makefile.
 */
 #ifdef HAVE_LONG_LONG_INT
-typedef	long long	exp;
+typedef long long       exp;
 #else
-typedef long     	exp;
+typedef long            exp;
 #endif
 
-typedef exp	        *expvec;
+typedef exp             *expvec;
 
-#define EOW	((gen)0)
+#define EOW     ((gen)0)
 
 struct  gpower {
-	gen	g;	/* the generator */
-	exp	e;	/* its exponent  */
+	gen     g;      /* the generator */
+	exp     e;      /* its exponent  */
 };
-typedef struct gpower	gpower;
+typedef struct gpower   gpower;
 
-typedef	gpower	*word;
+typedef gpower  *word;
 #endif

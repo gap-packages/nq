@@ -3,4 +3,4 @@
 **    system.h                        NQ                       Werner Nickel
 */
 
-extern int RunTime (); 
+extern int RunTime();

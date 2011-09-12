@@ -16,16 +16,18 @@
 **    tree. The component type can indicate 3 basic objects : numbers,
 **    generators and binary operators. There are currently 5 binary
 **    operations.  There is now place to also hold a ternary operation: Engel
-**    commutators.  
+**    commutators.
 */
 struct _node {
-        int     type;
-        union {
-                int     n;                          /* stores numbers      */
-                gen     g;                          /* stores generators   */
-                struct { struct _node *l, *r;       /* stores bin ops      */
-                         struct _node *e; } op;     /* and Engel relations */
-        } cont;
+	int     type;
+	union {
+		int     n;                          /* stores numbers      */
+		gen     g;                          /* stores generators   */
+		struct {
+			struct _node *l, *r;       /* stores bin ops      */
+			struct _node *e;
+		} op;     /* and Engel relations */
+	} cont;
 };
 
 typedef struct _node node;
@@ -47,28 +49,28 @@ typedef struct _node node;
 #define TENGEL 10
 #define TLAST  11
 
-extern void	PrintGen();
-extern void	PrintPresentation();
-extern void	Presentation();
-extern node	*ReadWord();
-extern node	*Word();
+extern void     PrintGen();
+extern void     PrintPresentation();
+extern void     Presentation();
+extern node     *ReadWord();
+extern node     *Word();
 
 extern char     *GenName();
 extern int      NumberOfAbstractGens();
 extern int      NumberOfIdenticalGens();
 extern int      NumberOfGens();
 extern int      NumberOfRels();
-extern node	*FirstRelation();
-extern node	*NextRelation();
+extern node     *FirstRelation();
+extern node     *NextRelation();
 extern node     *CurrentRelation();
-extern node	*NthRelation();
+extern node     *NthRelation();
 
-extern void	SetEvalFunc();
-extern void	**EvalRelations();
-extern void	*EvalNode();
-extern void	FreeNode();
-extern void	PrintNode();
-extern void	InitPrint();
+extern void     SetEvalFunc();
+extern void     **EvalRelations();
+extern void     *EvalNode();
+extern void     FreeNode();
+extern void     PrintNode();
+extern void     InitPrint();
 
 extern int      NrIdenticalGensNode;
 extern gen      *IdenticalGenNumberNode;
