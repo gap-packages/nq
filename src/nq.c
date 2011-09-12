@@ -22,10 +22,7 @@ static char     HostName[256] = "host name unknown";
 static int      Cl;
 
 static
-void    usage(error)
-char    *error;
-
-{
+void    usage(char *error) {
 	int     i;
 
 	if(error != (char *)0) fprintf(stderr, "%s\n", error);
@@ -61,7 +58,7 @@ static  char *Ordinal(int n) {
 }
 
 static
-void    printHeader() {
+void    printHeader(void) {
 
 	char    hostname[128];
 
@@ -94,11 +91,7 @@ void    printHeader() {
 	printf("#    Size of exponents: %d bytes\n#\n", sizeof(exp));
 }
 
-main(argc, argv)
-int     argc;
-char    *argv[];
-
-{
+int main(int argc, char *argv[]) {
 	FILE    *fp;
 	long    t, time, start, begin, printEpim = 1;
 	gen     g;

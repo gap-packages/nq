@@ -7,10 +7,7 @@
 #include <stdio.h>
 #include "mem.h"
 
-void    AllocError(str)
-char    *str;
-
-{
+static void AllocError(const char *str) {
 	fflush(stdout);
 
 	fprintf(stderr, "%s failed: ", str);
@@ -18,25 +15,18 @@ char    *str;
 	exit(4);
 }
 
-void    *Allocate(nchars)
-unsigned nchars;
-
-{
+void    *Allocate(unsigned nchars) {
 	void    *ptr;
 
 	ptr = (void *)calloc(nchars, sizeof(char));
-	if(ptr == (void *) 0) AllocError("Allocate");
+	if(ptr == 0) AllocError("Allocate");
 
 	if((unsigned long)ptr & 0x3)
 		printf("Warning, pointer not aligned.\n");
 	return ptr;
 }
 
-void    *ReAllocate(optr, nchars)
-void     *optr;
-unsigned nchars;
-
-{
+void    *ReAllocate(void *optr, unsigned nchars) {
 	optr = (void *)realloc((char *)optr, nchars);
 	if(optr == (void *)0) AllocError("ReAllocate");
 
@@ -45,7 +35,6 @@ unsigned nchars;
 	return optr;
 }
 
-void    Free(ptr)
-void    *ptr;
-
-{       free((char *)ptr);    }
+void    Free(void *ptr) {
+	free(ptr);
+}

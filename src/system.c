@@ -13,7 +13,7 @@
 #include "nq.h"
 
 static
-char	*SignalName[] = { "",
+const char	*SignalName[] = { "",
                           "Hangup (1)",
                           "Interrupt (2)",
                           "Quit (3)",
@@ -227,10 +227,7 @@ gen	*renumber;
 		printf(" %d", renumber[i]);
 }
 
-void	printERow(eRow)
-long	*eRow;
-
-{
+void	printERow(long *eRow) {
 	long	i;
 
 	for(i = 1; i <= NrCenGens; i++)

@@ -55,21 +55,21 @@ typedef void *(*EvalFunc)();
 extern void     PrintGen(gen g);
 extern void     PrintPresentation(FILE *fp);
 extern void     Presentation(FILE *fp, char *filename);
-extern node     *ReadWord();
-extern node     *Word();
+extern node     *ReadWord(void);
+extern node     *Word(void);
 
 extern char     *GenName(gen g);
-extern int      NumberOfAbstractGens();
-extern int      NumberOfIdenticalGens();
-extern int      NumberOfGens();
-extern int      NumberOfRels();
-extern node     *FirstRelation();
-extern node     *NextRelation();
-extern node     *CurrentRelation();
+extern int      NumberOfAbstractGens(void);
+extern int      NumberOfIdenticalGens(void);
+extern int      NumberOfGens(void);
+extern int      NumberOfRels(void);
+extern node     *FirstRelation(void);
+extern node     *NextRelation(void);
+extern node     *CurrentRelation(void);
 extern node     *NthRelation(int n);
 
 extern void     SetEvalFunc(int type, EvalFunc function);
-extern void     **EvalRelations();
+extern void     **EvalRelations(void);
 extern void     *EvalNode(node *n);
 extern void     FreeNode(node *n);
 extern void     PrintNode(node *n);
@@ -77,5 +77,5 @@ extern void     InitPrint(FILE *);
 
 extern int      NrIdenticalGensNode;
 extern gen      *IdenticalGenNumberNode;
-extern int      NumberOfIdenticalGensNode();
+extern int      NumberOfIdenticalGensNode(node *n);
 

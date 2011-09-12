@@ -31,7 +31,7 @@ char     **PcGenName;
 **    InitPcPres() initializes those parts of pc-presentation which are
 **    not initialized in elimMap().
 */
-void    InitPcPres() {
+void    InitPcPres(void) {
 
 	long    i, j, t;
 
@@ -102,7 +102,7 @@ void    InitPcPres() {
 		printf("#    Initialized pc-presentation (%d msec).\n", RunTime() - t);
 }
 
-void    ExtPcPres() {
+void    ExtPcPres(void) {
 
 	long    i, j, c, N, oldsize, newsize, t;
 	word    *tmp, **ttmp;
@@ -239,7 +239,7 @@ void    ExtPcPres() {
 		printf("#    Extended pc-presentation (%d msec).\n", RunTime() - t);
 }
 
-void    PrintPcPres() {
+void    PrintPcPres(void) {
 
 	gen     g;
 	long    i, j, first = 1;
@@ -340,7 +340,7 @@ void    PrintPcPres() {
 	printf("\n");
 }
 
-void PrintDefs() {
+void PrintDefs(void) {
 
 
 	int i;
@@ -380,7 +380,7 @@ void PrintDefs() {
 		}
 }
 
-void    sizePcPres() {
+void    sizePcPres(void) {
 
 	long    size = 0, nrPt = 0;
 	gen     g, h;

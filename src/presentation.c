@@ -556,7 +556,7 @@ static node     *Power() {
 **
 **    A word starts either with 'generator', with '(' or with '['.
 */
-node    *Word() {
+node    *Word(void) {
 
 	node    *n, *o;
 
@@ -687,22 +687,22 @@ static  struct pres Pres;
 /*
 **    NumberOfAbstractGens() returns the number of abstract generators.
 */
-int     NumberOfAbstractGens() { return Pres.nragens; }
+int     NumberOfAbstractGens(void) { return Pres.nragens; }
 
 /*
 **    NumberOfIdenticalGens() returns the number of identical generators.
 */
-int     NumberOfIdenticalGens() { return Pres.nrigens; }
+int     NumberOfIdenticalGens(void) { return Pres.nrigens; }
 
 /*
 **    NumberOfGens() returns the number of abstract and identical generators.
 */
-int     NumberOfGens() { return Pres.nragens + Pres.nrigens; }
+int     NumberOfGens(void) { return Pres.nragens + Pres.nrigens; }
 
 /*
 **    NumberOfRels() returns the number of relations.
 */
-int     NumberOfRels() { return Pres.nrrels; }
+int     NumberOfRels(void) { return Pres.nrrels; }
 
 /*
 **    NextRelation() returns the next relation, if it exists,
@@ -714,14 +714,14 @@ int     NumberOfRels() { return Pres.nrrels; }
 **    CurrentRelation() returns the relation just being processed.
 */
 static  int     NextRel;
-node    *NextRelation() {
+node    *NextRelation(void) {
 
 	if(NextRel >= NumberOfRels()) return (node *)0;
 
 	return Pres.rels[NextRel++];
 }
 
-node    *FirstRelation() {
+node    *FirstRelation(void) {
 
 	NextRel = 0;
 	return NextRelation();
@@ -733,7 +733,7 @@ node    *NthRelation(int n) {
 	return Pres.rels[n];
 }
 
-node    *CurrentRelation() { return Pres.rels[NextRel - 1]; }
+node    *CurrentRelation(void) { return Pres.rels[NextRel - 1]; }
 
 /*
 **    Presentation reads a finite presentation. The syntax of a presentation
@@ -769,7 +769,7 @@ void    Presentation(FILE *fp, char *filename) {
 		SyntaxError("presentation has to be closed by '>'");
 }
 
-node    *ReadWord() {
+node    *ReadWord(void) {
 
 	node    *n;
 
@@ -891,7 +891,7 @@ int  NumberOfIdenticalGensNode(node *n) {
 	return nr;
 }
 
-void    **EvalRelations() {
+void    **EvalRelations(void) {
 
 	void     **results;
 	unsigned r;

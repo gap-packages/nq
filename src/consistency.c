@@ -195,7 +195,7 @@ static void do_cnc(gen c) {
 	addRow(ev1);
 }
 
-void    Consistency() {
+void    Consistency(void) {
 
 	long    t;
 	gen     a, b, c;
