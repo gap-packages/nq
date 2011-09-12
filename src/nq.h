@@ -78,11 +78,6 @@ extern	void	calcCommute();
 extern	void	completePcPres();
 
 /*
-**    Some useful functions defined in system.c.
-*/
-extern	long	RunTime();
-
-/*
 **    Early stoppping criterion.
 */
 extern int      EarlyStop;

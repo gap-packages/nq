@@ -157,7 +157,7 @@ void	CatchSignals() {
 #include <sys/time.h>
 #include <sys/resource.h>
 
-long	RunTime() {
+int	RunTime() {
 
 	struct	rusage	buf;
 
@@ -173,7 +173,7 @@ long	RunTime() {
 #include <sys/types.h>
 #include <sys/times.h>
 
-long RunTime () 
+int RunTime () 
 {
    struct tms buf;
   
