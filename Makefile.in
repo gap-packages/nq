@@ -21,18 +21,16 @@ CURRENT_VERSION=2.2
 CURRENT_VER=2_2
 
 WEB_DIR  = /www/homepages/nickel/software/NQ/
-HTML_DOC = nq-$(CURRENT_VERSION)/doc/chap0.html   nq-$(CURRENT_VERSION)/doc/chap1.html \
-	   nq-$(CURRENT_VERSION)/doc/chap2.html   nq-$(CURRENT_VERSION)/doc/chap3.html \
-	   nq-$(CURRENT_VERSION)/doc/chap4.html   nq-$(CURRENT_VERSION)/doc/chap5.html \
-	   nq-$(CURRENT_VERSION)/doc/chapBib.html nq-$(CURRENT_VERSION)/doc/chapInd.html \
-	   nq-$(CURRENT_VERSION)/doc/manual.css   nq-$(CURRENT_VERSION)/doc/manual.pdf
+HTML_DOC = nq-$(CURRENT_VERSION)/doc/chap*.html \
+	       nq-$(CURRENT_VERSION)/doc/manual.css  \
+	       nq-$(CURRENT_VERSION)/doc/manual.pdf
 
 all: compile
 
 gap: compile gapmanual
 
 compile:
-	(cd src; make")
+	(cd src; make)
 	mkdir -p $(BINDIR)
 	mv src/nq $(BINDIR)
 
@@ -115,3 +113,4 @@ distclean: clean
 	(cd doc;      make distclean)
 	(cd examples; make distclean)
 
+.PHONY: all gap compile gapmanual WWW test clean distclean
