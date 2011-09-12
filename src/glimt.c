@@ -97,7 +97,7 @@ static large ltom(exp n) {
 	** to a large integer.  So we have to do it a bit more complicated.
 	*/
 #ifdef HAVE_LONG_LONG_INT
-	sprintf(x, "%Lx", n);
+	sprintf(x, "%llx", n);
 #else
 	sprintf(x,  "%x", n);
 #endif
@@ -201,7 +201,7 @@ static void outputMatrix(expvec *M, const char *suffix) {
 	surviving = (long *)Allocate(NrCols * sizeof(long));
 	nrSurv = survivingCols(M, surviving);
 
-	fprintf(fp, "%d    # Number of colums\n", nrSurv);
+	fprintf(fp, "%ld    # Number of colums\n", nrSurv);
 	for (i = 0; i < NrRows; i++) {
 		if (M[i][Heads[i]] != (exp)1) {
 			for (j = 0; j < nrSurv; j++)
@@ -239,7 +239,7 @@ void OutputMatrix(char *suffix) {
 		return;
 	}
 
-	fprintf(fp, "%d\n", NrCols);
+	fprintf(fp, "%ld\n", NrCols);
 	for (i = 0; i < NrRows; i++) {
 		for (j = 1; j <= NrCols; j++) {
 			fputc(' ', fp);
@@ -306,7 +306,7 @@ static void printMatrix(void) {
 
 	printf(" heads   vectors\n");
 	for (i = 0; i < NrRows; i++) {
-		printf("    %d   ", Heads[i]);
+		printf("    %ld   ", Heads[i]);
 		for (j = 1; j <= NrCols; j++) {
 			putchar(' ');
 			mpz_out_str(stdout, 10, Matrix[i][j]);
@@ -376,7 +376,7 @@ expvec *MatrixToExpVecs(void) {
 	free(Matrix);
 	Matrix = (lvec *)0;
 
-	printf("#    Time spent on the integer matrix: %d msec.\n", Time);
+	printf("#    Time spent on the integer matrix: %ld msec.\n", Time);
 	printf("#    Maximal entry: ");
 	mpz_out_str(stdout, 10, MaximalEntry);
 	printf("\n");
@@ -524,7 +524,7 @@ int addRow(expvec ev) {
 				perror(file);
 				exit(1);
 			}
-			fprintf(RawMatFile, "%d\n", NrCols);
+			fprintf(RawMatFile, "%ld\n", NrCols);
 			fflush(RawMatFile);
 			free(file);
 		}
@@ -537,7 +537,7 @@ int addRow(expvec ev) {
 	for (i = 1; i <= NrPcGens; i++)
 		if (ev[i] != 0) {
 			printf("Warning, exponent vector is not a tail");
-			printf(" at position %d.\n", i);
+			printf(" at position %ld.\n", i);
 			printEv(ev);
 			printf("\n");
 			break;
@@ -563,8 +563,14 @@ int addRow(expvec ev) {
 		v[i] = ltom(ev[NrPcGens + i]);
 
 	if (RawMatOutput) {
-		for (i = 1; i <= NrCols; i++)
+		for (i = 1; i <= NrCols; i++) {
+#ifdef HAVE_LONG_LONG_INT
+			fprintf(RawMatFile, " %lld", ev[NrPcGens + i]);
+#else
 			fprintf(RawMatFile, " %ld", ev[NrPcGens + i]);
+#endif
+		}
+
 		fprintf(RawMatFile, "\n");
 		fflush(RawMatFile);
 	}
