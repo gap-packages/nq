@@ -162,3 +162,6 @@ October 2002:
 	+ Make test cases ignore the version string nq outputs
 	+ Rewrote configure script and the build system
 	+ Added '--with-gap-dir' option to configure
+
+12 September 2011
+	+ Fix crash on Mac OS X
