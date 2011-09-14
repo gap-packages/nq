@@ -1,4 +1,5 @@
 top_srcdir = @top_srcdir@
+top_builddir = @top_builddir@
 srcdir = @srcdir@
 VPATH = @srcdir@
 
@@ -14,67 +15,68 @@ distclean: clean
 
 G1.tst: G1
 	@ echo -n Testing example: $<
-	@ $(NQ) $< 18 | grep -v "Time\|time\|size\|Machine\|Input" > $@
-	@ if diff $<.out $@ > /dev/null; then                         \
+	@ $(NQ) $< 18 | grep -v "Time\|time\|size\|Machine\|Input\|Version" > $@
+	@ if diff $<.out $@; then                                     \
 	     echo " ok.";                                             \
 	     rm $@;                                                   \
 	else                                                          \
 	     echo " results in an error.";                            \
 	     echo Please mail the file $@;                            \
-	     echo "    " to mhorn@tu-bs.de;        \
+	     echo "    " to mhorn@tu-bs.de;                           \
 	fi
 
 G2.tst: G2
 	@ echo -n Testing example: $<
-	@ $(NQ) $< 11 | grep -v "Time\|time\|size\|Machine\|Input" > $@
-	@ if diff $<.out $@ > /dev/null; then                         \
+	@ $(NQ) $< 11 | grep -v "Time\|time\|size\|Machine\|Input\|Version" > $@
+	@ if diff $<.out $@; then                                     \
 	     echo " ok.";                                             \
 	     rm $@;                                                   \
 	else                                                          \
 	     echo " results in an error.";                            \
 	     echo Please mail the file $@;                            \
-	     echo "    " to mhorn@tu-bs.de;        \
+	     echo "    " to mhorn@tu-bs.de;                           \
 	fi
 
 G3.tst: G3
 	@ echo -n Testing example: $<
-	@ $(NQ) $< 20 | grep -v "Time\|time\|size\|Machine\|Input" > $@
-	@ if diff $<.out $@ > /dev/null; then                         \
+	@ $(NQ) $< 20 | grep -v "Time\|time\|size\|Machine\|Input\|Version" > $@
+	@ if diff $<.out $@; then                                     \
 	     echo " ok.";                                             \
 	     rm $@;                                                   \
 	else                                                          \
 	     echo " results in an error.";                            \
 	     echo Please mail the file $@;                            \
-	     echo "    " to mhorn@tu-bs.de;        \
+	     echo "    " to mhorn@tu-bs.de;                           \
 	fi
 
 G4.tst: G4
 	@ echo -n Testing example: $<
-	@ $(NQ) $< 12 | grep -v "Time\|time\|size\|Machine\|Input" > $@
-	@ if diff $<.out $@ > /dev/null; then                         \
+	@ $(NQ) $< 12 | grep -v "Time\|time\|size\|Machine\|Input\|Version" > $@
+	@ if diff $<.out $@; then                                     \
 	     echo " ok.";                                             \
 	     rm $@;                                                   \
 	else                                                          \
 	     echo " results in an error.";                            \
 	     echo Please mail the file $@;                            \
-	     echo "    " to mhorn@tu-bs.de;        \
+	     echo "    " to mhorn@tu-bs.de;                           \
 	fi
 
 G5.tst: G5
 	@ echo -n Testing example: $<
-	@ $(NQ) $< 12 | grep -v "Time\|time\|size\|Machine\|Input" > $@
-	@ if diff $<.out $@ > /dev/null; then                         \
+	@ $(NQ) $< 12 | grep -v "Time\|time\|size\|Machine\|Input\|Version" > $@
+	@ if diff $<.out $@; then                                     \
 	     echo " ok.";                                             \
 	     rm $@;                                                   \
 	else                                                          \
 	     echo " results in an error.";                            \
 	     echo Please mail the file $@;                            \
-	     echo "    " to mhorn@tu-bs.de;        \
+	     echo "    " to mhorn@tu-bs.de;                           \
 	fi
 
-test:
+# Recreate the comparison output
+recalibrate:
 	@ for example in G?.[0-9]*; do                                   \
-	    echo makeing test example `basename $$example`;              \
+	    echo making test example `basename $$example`;               \
 									 \
 	    class=`echo $$example | awk -F. '{print $$2}'`;              \
 	    output=`echo $$example | awk -F. '{print $$1}'`;             \
@@ -82,5 +84,7 @@ test:
 	    mv -f $$output.out $$output.old;                             \
 	    echo "    $(NQ) $$example $$class > $$output.out";           \
 	    $(NQ) $$example $$class                                      \
-		| grep -v "Time\|time\|size\|Machine\|Input" > $$output.out;\
+		| grep -v "Time\|time\|size\|Machine\|Input\|Version" > $$output.out;\
 	done
+
+.PHONY: all clean distclean test G1.tst G2.tst G3.tst G4.tst G5.tst recalibrate
