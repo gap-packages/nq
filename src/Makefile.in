@@ -5,11 +5,11 @@
 ##    $Id$
 ##
 
-all: nq
-
 top_srcdir = @top_srcdir@
+top_builddir = @top_builddir@
 srcdir = @srcdir@
 VPATH = @srcdir@
+subdir = src
 
 GAP_ROOT=@GAP_ROOT@
 BINDIR=bin/@GAP_ARCH@
@@ -43,14 +43,16 @@ OBJ = consistency.o pc.o relations.o word.o system.o time.o \
       addgen.o tails.o eliminate.o engel.o glimt.o instances.o \
       presentation.o mem.o pcarith.o collect.o combicol.o trmetab.o gap.o
 
+all: nq
+
 nq : nq.o $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) nq.o $(OBJ) $(LDFLAGS) $(GMP_LIBS) -o nq
 
 glimt.o: glimt.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(GMP_CFLAGS) -c glimt.c
+
 clean :
 	rm -f *.o nq *~
-
 distclean : clean
 	rm -f config.h
 
@@ -94,3 +96,9 @@ trmetab.o: trmetab.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h \
   collect.h macro.h engel.h
 word.o: word.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h \
   collect.h macro.h
+
+.PRECIOUS: Makefile
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+.PHONY: all clean distclean

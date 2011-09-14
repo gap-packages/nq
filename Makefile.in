@@ -9,8 +9,10 @@
 ##    Values imported from the configure script
 ##
 top_srcdir = @top_srcdir@
+top_builddir = @top_builddir@
 srcdir = @srcdir@
 VPATH = @srcdir@
+subdir = .
 
 GAP_ROOT=@GAP_ROOT@
 BINDIR=bin/@GAP_ARCH@
@@ -112,5 +114,10 @@ distclean: clean
 	(cd src;      make distclean)
 	(cd doc;      make distclean)
 	(cd examples; make distclean)
+
+
+.PRECIOUS: Makefile
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 .PHONY: all gap compile gapmanual WWW test clean distclean
