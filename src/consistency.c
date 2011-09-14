@@ -11,11 +11,7 @@ void    printEv(expvec ev) {
 	long    i;
 
 	for (i = 1; i <= NrPcGens + NrCenGens; i++)
-#ifdef HAVE_LONG_LONG_INT
-		printf(" %lld ", ev[i]);
-#else
-		printf("%2ld ", (long)(ev[i]));
-#endif
+		printf(" "EXP_FORMAT" ", ev[i]);
 }
 
 static void do_cba(gen c, gen b, gen a) {

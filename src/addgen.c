@@ -163,11 +163,7 @@ void AddGenerators(void) {
 			if (Verbose) {
 				printf("#    generator %d = ", G);
 				printGen(j, 'A');
-#ifdef HAVE_LONG_LONG_INT
-				printf("^%lld\n", Exponent[j]);
-#else
-				printf("^%d\n", Exponent[j]);
-#endif
+				printf("^"EXP_FORMAT"\n", Exponent[j]);
 			}
 		}
 

@@ -23,18 +23,10 @@ void    printWord(word w, char c) {
 		if (w->g > 0) {
 			printGen(w->g, c);
 			if (w->e != (exp)1)
-#ifdef HAVE_LONG_LONG_INT
-				printf("^%lld", w->e);
-#else
-				printf("^%d", w->e);
-#endif
+				printf("^"EXP_FORMAT, w->e);
 		} else {
 			printGen(-w->g, c);
-#ifdef HAVE_LONG_LONG_INT
-			printf("^%lld", -w->e);
-#else
-			printf("^%d", -w->e);
-#endif
+			printf("^"EXP_FORMAT, -w->e);
 		}
 		w++;
 		if (w->g != EOW) putchar('*');

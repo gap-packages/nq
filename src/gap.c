@@ -19,18 +19,10 @@ static void printGapWord(word w) {
 		if (w->g > 0) {
 			nrc += printf("NqF.%d", w->g);
 			if (w->e != (exp)1)
-#ifdef HAVE_LONG_LONG_INT
-				nrc += printf("^%lld", w->e);
-#else
-				nrc += printf("^%d", w->e);
-#endif
+				nrc += printf("^"EXP_FORMAT, w->e);
 		} else {
 			nrc += printf("NqF.%d", -w->g);
-#ifdef HAVE_LONG_LONG_INT
-			nrc += printf("^%lld", -w->e);
-#else
-			nrc += printf("^%d", -w->e);
-#endif
+			nrc += printf("^"EXP_FORMAT, -w->e);
 		}
 		w++;
 		if (w->g != EOW) {
@@ -61,11 +53,7 @@ void	PrintGapPcPres(void) {
 	for (i = 1; i <= NrPcGens + NrCenGens; i++)
 		if (Exponent[i] != (exp)0) {
 			printf("SetRelativeOrder( NqCollector, %d, ", i);
-#               ifdef HAVE_LONG_LONG_INT
-			printf("%lld", Exponent[i]);
-#               else
-			printf("%d", Exponent[i]);
-#               endif
+			printf(EXP_FORMAT, Exponent[i]);
 			printf(" );\n");
 		}
 
@@ -136,18 +124,10 @@ static void	printRawWord(word w) {
 	while (w->g != EOW) {
 		if (w->g > 0) {
 			nrc += printf(" %d,", w->g);
-#               ifdef HAVE_LONG_LONG_INT
-			nrc += printf(" %lld,", w->e);
-#               else
-			nrc += printf(" %d,", w->e);
-#               endif
+			nrc += printf(" "EXP_FORMAT",", w->e);
 		} else {
 			nrc += printf(" %d,", -w->g);
-#               ifdef HAVE_LONG_LONG_INT
-			nrc += printf(" %lld,", -w->e);
-#               else
-			nrc += printf(" %d,", -w->e);
-#               endif
+			nrc += printf(" "EXP_FORMAT",", -w->e);
 		}
 		w++;
 		/* Avoid long lines, because GAP can't read them. */
@@ -168,11 +148,7 @@ void    PrintRawGapPcPres(void) {
 	printf("NqNrGenerators   :=  %d;\n", NrPcGens + NrCenGens);
 	printf("NqRelativeOrders := [ ");
 	for (i = 1; i <= NrPcGens + NrCenGens; i++) {
-#           ifdef HAVE_LONG_LONG_INT
-		printf("%lld,", Exponent[i]);
-#           else
-		printf("%d,", Exponent[i]);
-#           endif
+		printf(EXP_FORMAT",", Exponent[i]);
 		if (i % 30 == 0) printf("\n                       ");
 	}
 	printf(" ];\n");

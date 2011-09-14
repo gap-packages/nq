@@ -99,18 +99,14 @@ static large ltom(exp n) {
 #ifdef HAVE_LONG_LONG_INT
 	sprintf(x, "%llx", n);
 #else
-	sprintf(x,  "%x", n);
+	sprintf(x, "%lx", n);
 #endif
 
 	mpz_init(l);
 	mpz_set_str(l, x, 16);
 
 	if (0) {
-#ifdef HAVE_LONG_LONG_INT
-		printf("%lld ", n);
-#else
-		printf("%d ", n);
-#endif
+		printf(EXP_FORMAT" ", n);
 		mpz_out_str(stdout, 10, l);
 		printf("\n");
 	}
@@ -205,11 +201,7 @@ static void outputMatrix(expvec *M, const char *suffix) {
 	for (i = 0; i < NrRows; i++) {
 		if (M[i][Heads[i]] != (exp)1) {
 			for (j = 0; j < nrSurv; j++)
-#ifdef HAVE_LONG_LONG_INT
-				fprintf(fp, " %lld", M[i][surviving[j]]);
-#else
-				fprintf(fp, " %d", M[i][surviving[j]]);
-#endif
+				fprintf(fp, " "EXP_FORMAT, M[i][surviving[j]]);
 			fprintf(fp, "\n");
 		}
 	}
@@ -276,11 +268,7 @@ static void printGapMatrix(expvec *M) {
 			else         first = 0;
 			printf("[");
 			for (j = 0; j < nrSurv; j++) {
-#ifdef HAVE_LONG_LONG_INT
-				printf(" %lld", M[i][surviving[j]]);
-#else
-				printf(" %d", M[i][surviving[j]]);
-#endif
+				printf(" "EXP_FORMAT, M[i][surviving[j]]);
 				if (j < nrSurv) putchar(',');
 			}
 			printf("]");
@@ -564,11 +552,7 @@ int addRow(expvec ev) {
 
 	if (RawMatOutput) {
 		for (i = 1; i <= NrCols; i++) {
-#ifdef HAVE_LONG_LONG_INT
-			fprintf(RawMatFile, " %lld", ev[NrPcGens + i]);
-#else
-			fprintf(RawMatFile, " %ld", ev[NrPcGens + i]);
-#endif
+			fprintf(RawMatFile, " "EXP_FORMAT, ev[NrPcGens + i]);
 		}
 
 		fprintf(RawMatFile, "\n");

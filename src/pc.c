@@ -265,11 +265,7 @@ void    PrintPcPres(void) {
 			if (Gap) putchar('#');
 			printf("        ");
 			printGen(i, 'A');
-#ifdef HAVE_LONG_LONG_INT
-			printf("^%lld", Exponent[i]);
-#else
-			printf("^%d", Exponent[i]);
-#endif
+			printf("^"EXP_FORMAT, Exponent[i]);
 			if (Power[i] != (word)0 && Power[i]->g != EOW) {
 				printf(" = ");
 				printWord(Power[i], 'A');
@@ -356,11 +352,7 @@ void PrintDefs(void) {
 				/* The definition is a power relation. */
 				printGen(Definition[g].h, 'A');
 				printf("^");
-#ifdef HAVE_LONG_LONG_INT
-				printf("%lld\n", Exponent[ Definition[g].h ]);
-#else
-				printf("%d\n", Exponent[ Definition[g].h ]);
-#endif
+				printf(EXP_FORMAT"\n", Exponent[ Definition[g].h ]);
 			} else {
 				/* The definition is a commutator relation. */
 				i = 0;

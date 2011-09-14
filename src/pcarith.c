@@ -262,18 +262,10 @@ void    WordPrint(word gs) {
 		if (gs->g > 0) {
 			PrintGen(gs->g);
 			if (gs->e > (exp)1)
-#ifdef HAVE_LONG_LONG_INT
-				printf("^%lld", gs->e);
-#else
-				printf("^%d", gs->e);
-#endif
+				printf("^"EXP_FORMAT, gs->e);
 		} else {
 			PrintGen(-gs->g);
-#ifdef HAVE_LONG_LONG_INT
-			printf("^-%lld", gs->e);
-#else
-			printf("^-%d", gs->e);
-#endif
+			printf("^-"EXP_FORMAT, gs->e);
 		}
 	else {
 		printf("1");
@@ -286,18 +278,10 @@ void    WordPrint(word gs) {
 		if (gs->g > 0) {
 			PrintGen(gs->g);
 			if (gs->e > (exp)1)
-#ifdef HAVE_LONG_LONG_INT
-				printf("^%lld", gs->e);
-#else
-				printf("^%d", gs->e);
-#endif
+				printf("^"EXP_FORMAT, gs->e);
 		} else {
 			PrintGen(-gs->g);
-#ifdef HAVE_LONG_LONG_INT
-			printf("^-%lld", gs->e);
-#else
-			printf("^-%d", gs->e);
-#endif
+			printf("^-"EXP_FORMAT, gs->e);
 		}
 		gs++;
 	}
