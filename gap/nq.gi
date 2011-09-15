@@ -22,8 +22,13 @@ function ( ) local  NqDocDir;
   ##  loaded by RequirePackage().
   NqDocDir := DirectoriesPackageLibrary( "nq", "doc" )[1];
 
-  MakeGAPDocDoc( NqDocDir, "nqman", [ "nqbib.xml" ], "nq", "../../../", "MathJax" );
-  CopyHTMLStyleFiles( NqDocDir );
+  MakeGAPDocDoc( NqDocDir, "nqman", [ "nqbib.xml" ],
+                 "nq", "../../../", "MathJax" );
+
+  ##  Copy CSS files into the doc directory.
+  ##  TODO: This function is new in GAPDoc 1.4, which is not yet released,
+  ##  hence this call is disabled for now.
+  #CopyHTMLStyleFiles( NqDocDir );
 end );
 
 #############################################################################
