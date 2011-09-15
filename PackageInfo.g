@@ -46,7 +46,7 @@ PackageWWWHome :=
         "http://www.icm.tu-bs.de/ag_algebra/software/NQ/",
 
 ArchiveFormats := ".tar.gz .tar.bz2",
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "nq" ),
+ArchiveURL     := Concatenation( ~.PackageWWWHome, "nq-", ~.Version ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
