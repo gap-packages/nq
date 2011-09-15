@@ -17,23 +17,6 @@ static node *Word(void);
 **    The first part of this file just contain some auxiliary functions.
 */
 
-/*
-**    The following data structure will represent a node in an expression
-**    tree. The component type can indicate 3 basic objects : numbers,
-**    generators and binary operators. There are currently 5 binary
-**    operations.
-struct _node {
-        int     type;
-        union {
-                int     n;                          // stores numbers
-                gen     g;                          // stores generators
-                struct { struct _node *l, *r;       // stores bin ops
-                         struct _node *e; } op;     // and Engel relations
-        } cont;
-};
-
-typedef struct _node node;
-*/
 
 /*
 **    FreeNode() recursively frees a given node.
@@ -122,8 +105,38 @@ const char *GenName(gen g) {
 **    starts after the function Generator().
 */
 
+/*
+**    The following macros define tokens.
+*/
+typedef enum {
+	LPAREN,
+	RPAREN,
+	LBRACK,
+	RBRACK,
+	LBRACE,
+	RBRACE,
+
+	MULT,
+	POWER,
+	EQUAL,
+	DEQUALL,
+	DEQUALR,
+
+	PLUS,
+	MINUS,
+
+	LANGLE,
+	RANGLE,
+
+	PIPE,
+	COMMA,
+	SEMICOLON,
+	NUMBER,
+	GEN
+} TokenType;
+
 static int      Ch;             /* Contains the next char on the input. */
-static int      Token;          /* Contains the current token. */
+static TokenType Token;          /* Contains the current token. */
 static int      Line;           /* Current line number. */
 static int      TLine;          /* Line number where token starts. */
 static int      Char;           /* Current character number. */
@@ -142,34 +155,6 @@ static const char     *TokenName[] = {
 	"Pipe",   "Comma",  "Number", "Gen"
 };
 */
-
-/*
-**    The following macros define tokens.
-*/
-#define LPAREN  1
-#define RPAREN  2
-#define LBRACK  3
-#define RBRACK  4
-#define LBRACE  5
-#define RBRACE  6
-
-#define MULT    7
-#define POWER   8
-#define EQUAL   9
-#define DEQUALL 10
-#define DEQUALR 11
-
-#define PLUS    12
-#define MINUS   13
-
-#define LANGLE  14
-#define RANGLE  15
-
-#define PIPE        16
-#define COMMA       17
-#define SEMICOLON   18
-#define NUMBER      19
-#define GEN         20
 
 /*
 **    SyntaxError() just prints a syntax error and the line and place
@@ -776,7 +761,7 @@ node    *ReadWord(void) {
 */
 static EvalFunc EvalFunctions[TLAST];
 
-void    SetEvalFunc(int type, EvalFunc function) {
+void    SetEvalFunc(EvalType type, EvalFunc function) {
 	if (type <= TNUM || type >= TLAST) {
 		printf("Evaluation error: illegal type in SetEvalFunc()\n");
 		exit(1);

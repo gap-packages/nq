@@ -15,6 +15,27 @@
 #include "pc.h"	/* for Class */
 
 /*
+**    The following are used as first argument to the function
+**    SetEvalFunction().
+*/
+typedef enum {
+	TNUM,
+	TGEN,
+
+	TMULT,
+	TPOW,
+	TCONJ,
+	TCOMM,
+	TREL,
+	TDRELL,
+	TDRELR,
+	TENGEL,
+	TLAST
+} EvalType;
+
+typedef void *(*EvalFunc)();
+
+/*
 **    The following data structure will represent a node in an expression
 **    tree. The component type can indicate 3 basic objects : numbers,
 **    generators and binary operators. There are currently 5 binary
@@ -22,37 +43,18 @@
 **    commutators.
 */
 struct _node {
-	int     type;
+	EvalType type;
 	union {
-		int     n;                          /* stores numbers      */
-		gen     g;                          /* stores generators   */
+		int     n;                 /* stores numbers      */
+		gen     g;                 /* stores generators   */
 		struct {
-			struct _node *l, *r;       /* stores bin ops      */
-			struct _node *e;
-		} op;     /* and Engel relations */
+			struct _node *l, *r;   /* stores bin ops      */
+			struct _node *e;       /* and Engel relations */
+		} op;
 	} cont;
 };
 
 typedef struct _node node;
-
-/*
-**    The following macros are used as first argument to the function
-**    SetEvalFunction().
-*/
-#define TNUM   1
-#define TGEN   2
-
-#define TMULT  3
-#define TPOW   4
-#define TCONJ  5
-#define TCOMM  6
-#define TREL   7
-#define TDRELL 8
-#define TDRELR 9
-#define TENGEL 10
-#define TLAST  11
-
-typedef void *(*EvalFunc)();
 
 
 extern void     PrintGen(gen g);
@@ -70,7 +72,7 @@ extern node     *NextRelation(void);
 extern node     *CurrentRelation(void);
 extern node     *NthRelation(int n);
 
-extern void     SetEvalFunc(int type, EvalFunc function);
+extern void     SetEvalFunc(EvalType type, EvalFunc function);
 extern void     **EvalRelations(void);
 extern void     *EvalNode(node *n);
 extern void     FreeNode(node *n);
