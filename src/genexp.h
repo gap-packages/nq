@@ -19,8 +19,6 @@
 
 typedef short   gen;
 
-#define exp foobar
-
 /*
 **    GNU cc has the data type long long.  We can switch it on by
 **    defining the macro HAVE_LONG_LONG_INT in the Makefile.
