@@ -6,14 +6,10 @@
 
 
 #include "nq.h"
+#include "glimt.h"
+#include "relations.h" /* for ElimAllEpim */
 
-long    appendExpVector(k, ev, w, renumber)
-gen     k;
-expvec  ev;
-word    w;
-gen     *renumber;
-
-{
+long appendExpVector(gen k, expvec ev, word w, gen *renumber) {
 	long    l = 0;
 
 	/* Copy the negative of the exponent vector ev[] into w. */
@@ -44,13 +40,7 @@ gen     *renumber;
 	return l;
 }
 
-word    elimRHS(v, eRow, renumber, ev, M)
-word    v;
-long    *eRow;
-gen     *renumber;
-expvec  ev, *M;
-
-{
+static word elimRHS(word v, long *eRow, gen *renumber, expvec ev, expvec *M) {
 	word    w;
 	gen     cg;
 	long    j, k, l;
@@ -114,9 +104,9 @@ expvec  ev, *M;
 	return (word)realloc(w, l * sizeof(gpower));
 }
 
-void    ElimGenerators(void) {
+void ElimGenerators(void) {
 
-	long    i, j, k, l, n = 0, *eRow, t;
+	long    i, j, k, l, n = 0, *eRow, t = 0;
 	expvec  ev, *M = 0;
 	gen     *renumber;
 	word    v, w;
@@ -267,5 +257,5 @@ void    ElimGenerators(void) {
 	NrCenGens -= n;
 
 	if (Verbose)
-		printf("#    Eliminated generators (%d msec).\n", RunTime() - t);
+		printf("#    Eliminated generators (%ld msec).\n", RunTime() - t);
 }

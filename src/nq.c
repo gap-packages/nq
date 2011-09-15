@@ -11,6 +11,8 @@
 #include "engel.h"
 #include "glimt.h"
 #include "presentation.h"
+#include "relations.h"
+#include "time.h"
 
 int     Debug = 0;
 int     Gap = 0;
@@ -96,11 +98,10 @@ void    printHeader(void) {
 
 int main(int argc, char *argv[]) {
 	FILE    *fp;
-	int     t, time;
+	long     t, time;
 	long    begin, printEpim = 1;
 	void    *start;
 	gen     g;
-	extern  int     NrGens;
 
 	CatchSignals();
 	start = sbrk(0);
@@ -319,9 +320,9 @@ int main(int argc, char *argv[]) {
 		printf(" %d", (int)(Exponent[g]));
 	printf("\n");
 	if (Verbose) {
-		printf("#    runtime       : %d msec\n", RunTime() - time);
-		printf("#    total runtime : %d msec\n", RunTime() - begin);
-		printf("#    total size    : %d byte\n", (char *)sbrk(0) - (char *)start);
+		printf("#    runtime       : %ld msec\n", RunTime() - time);
+		printf("#    total runtime : %ld msec\n", RunTime() - begin);
+		printf("#    total size    : %ld byte\n", (long)((char *)sbrk(0) - (char *)start));
 	}
 	printf("#\n");
 
@@ -362,9 +363,9 @@ int main(int argc, char *argv[]) {
 			printf(" %d", (int)(Exponent[g]));
 		printf("\n");
 		if (Verbose) {
-			printf("#    runtime       : %d msec\n", RunTime() - time);
-			printf("#    total runtime : %d msec\n", RunTime() - begin);
-			printf("#    total size    : %d byte\n", (char *)sbrk(0) - (char *)start);
+			printf("#    runtime       : %ld msec\n", RunTime() - time);
+			printf("#    total runtime : %ld msec\n", RunTime() - begin);
+			printf("#    total size    : %ld byte\n", (long)((char *)sbrk(0) - (char *)start));
 		}
 		printf("#\n");
 
@@ -381,8 +382,8 @@ end:
 		printf("\n\n#    The definitions:\n");
 		PrintDefs();
 	}
-	printf("#    total runtime : %d msec\n", RunTime() - begin);
-	printf("#    total size    : %d byte\n", (char *)sbrk(0) - (char *)start);
+	printf("#    total runtime : %ld msec\n", RunTime() - begin);
+	printf("#    total size    : %ld byte\n", (long)((char *)sbrk(0) - (char *)start));
 
 	if (Gap) printf("];\n");
 

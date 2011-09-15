@@ -11,6 +11,6 @@ extern int CombiCollectionTime;
 extern int SimpleCollectionTime;
 extern int IntMatTime;
 
-extern void PrintRunTimes(void);
+extern void PrintCollectionTimes(void);
 
 #endif

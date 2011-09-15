@@ -117,8 +117,6 @@ static large ltom(exp n) {
 	return l;
 }
 
-extern void printEv(expvec ev);
-
 void freeExpVecs(expvec *M) {
 	long    i;
 
@@ -210,7 +208,7 @@ static void outputMatrix(expvec *M, const char *suffix) {
 	fclose(fp);
 }
 
-void OutputMatrix(char *suffix) {
+void OutputMatrix(const char *suffix) {
 	long    i, j;
 	char    outputName[128];
 	FILE    *fp;

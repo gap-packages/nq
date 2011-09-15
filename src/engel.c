@@ -80,7 +80,7 @@ word    EngelCommutator(word v, word w, int engel) {
 static
 void    evalEngelRel(word v, word w) {
 	word    comm;
-	long    n, needed;
+	long    needed;
 
 	/*      printf( "evalEngelRel() called with : " );
 	        printWord( v, 'A' ); printf( "    " );
@@ -203,7 +203,7 @@ void    evalEngel(void) {
 			v[0].e = (exp)0;
 			NrWords = 0;
 			if (Verbose)
-				printf("#    Checking pairs of words of weight %d\n", c);
+				printf("#    Checking pairs of words of weight %ld\n", c);
 			buildPairs(u, 0, 1, v, c, 2);
 			if (Verbose) printf("#    Checked %d words.\n", NrWords);
 		}
@@ -217,12 +217,12 @@ void    evalEngel(void) {
 			v[0].e = (exp)0;
 			NrWords = 0;
 			if (Verbose)
-				printf("#    Checking pairs of words of weight %d\n", c);
+				printf("#    Checking pairs of words of weight %ld\n", c);
 			buildPairs(u, 0, 1, v, c, 2);
 			if (Verbose) printf("#    Checked %d words.\n", NrWords);
 		}
 		for (; !EarlyStop && c <= Class + 1; c++)
-			printf("#    NOT checking pairs of words of weight %d\n", c);
+			printf("#    NOT checking pairs of words of weight %ld\n", c);
 	}
 	free(u);
 	free(v);
@@ -370,12 +370,12 @@ void    evalLREngel(void) {
 			u[0].g = EOW;
 			u[0].e = (exp)0;
 			NrWords = 0;
-			if (Verbose) printf("#    Checking words of weight %d\n", cl - 1);
+			if (Verbose) printf("#    Checking words of weight %ld\n", cl - 1);
 			buildWord(u, 0, 1, cl - 1);
 			if (Verbose) printf("#    Checked %d words.\n", NrWords);
 		}
 		for (; !EarlyStop && cl <= Class + 1; cl++)
-			printf("#    NOT checking words of weight %d\n", cl);
+			printf("#    NOT checking words of weight %ld\n", cl);
 
 	}
 	free(u);
@@ -384,7 +384,7 @@ void    evalLREngel(void) {
 
 void    EvalEngel(void) {
 
-	long    t;
+	long    t = 0;
 
 	if (Verbose) t = RunTime();
 
@@ -392,7 +392,7 @@ void    EvalEngel(void) {
 	if (Engel) evalEngel();
 
 	if (Verbose)
-		printf("#    Evaluated Engel condition (%d msec).\n", RunTime() - t);
+		printf("#    Evaluated Engel condition (%ld msec).\n", RunTime() - t);
 }
 
 void    InitEngel(int l, int r, int v, int e, int n) {

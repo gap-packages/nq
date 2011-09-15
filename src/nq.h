@@ -71,11 +71,22 @@ extern  void    printGen(gen g, char c);
 extern int      EarlyStop;
 
 /* TODO: Misc decls */
-extern word    Epimorphism(gen g);
-extern void InitTrMetAb(int t);
-extern void EvalTrMetAb(void);
-extern void PrintCollectionTimes(void);
-extern void InitEpim(void);
-extern expvec *MatrixToExpVecs(void);
+extern void SetupCommuteList(void); /* from addgen.c */
+extern void SetupCommute2List(void); /* from addgen.c */
+extern void SetupNrPcGensList(void); /* from addgen.c */
+extern void AddGenerators(void); /* from addgen.c */
+
+extern void printEv(expvec ev); /* from consistency.c */
+extern void Consistency(void); /* from consistency.c */
+
+extern void ElimGenerators(void); /* from eliminate.c */
+extern long appendExpVector(gen k, expvec ev, word w, gen *renumber); /* from eliminate.c */
+
+extern void PrintRawGapPcPres(void); /* from gap.c */
+
+extern void Tails(void); /* from tails.c */
+
+extern void InitTrMetAb(int t); /* from trmetab.c */
+extern void EvalTrMetAb(void); /* from trmetab.c */
 
 #endif

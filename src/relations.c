@@ -32,7 +32,7 @@ int     EvalSingleRelation(node *r) {
 
 void    EvalAllRelations(void) {
 
-	long    t;
+	long    t = 0;
 	node    *r;
 
 	if (Verbose) t = RunTime();
@@ -55,7 +55,7 @@ void    EvalAllRelations(void) {
 	}
 
 	if (Verbose)
-		printf("#    Evaluated Relations (%d msec).\n", RunTime() - t);
+		printf("#    Evaluated Relations (%ld msec).\n", RunTime() - t);
 }
 
 /*
@@ -65,7 +65,7 @@ void    EvalAllRelations(void) {
 */
 void InitEpim(void) {
 
-	long    i, t, nrGens;
+	long    i, t = 0, nrGens;
 
 	if (Verbose) t = RunTime();
 
@@ -111,7 +111,7 @@ void InitEpim(void) {
 	Commute2 = Commute2List[ Class + 1 ];
 
 	if (Verbose)
-		printf("#    Initialized epimorphism (%d msec).\n", RunTime() - t);
+		printf("#    Initialized epimorphism (%ld msec).\n", RunTime() - t);
 }
 
 int     ExtendEpim(void) {
@@ -190,7 +190,7 @@ int     ElimAllEpim(int n, expvec *M, gen *renumber) {
 
 void    ElimEpim(void) {
 
-	long    i, j, h, l, n = 0, t;
+	long    i, j, h, l, n = 0, t = 0;
 	gen     *renumber;
 	expvec  *M;
 	word    w;
@@ -293,7 +293,7 @@ void    ElimEpim(void) {
 	NrCenGens -= n;
 
 	if (Verbose)
-		printf("#    Eliminated generators (%d msec).\n", RunTime() - t);
+		printf("#    Eliminated generators (%ld msec).\n", RunTime() - t);
 }
 
 void    PrintEpim(void) {

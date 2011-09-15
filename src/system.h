@@ -10,6 +10,6 @@ extern void SetTimeOut(int nsec);
 extern void TimeOutOn(void);
 extern void TimeOutOff(void);
 extern void CatchSignals(void);
-extern int RunTime(void);
+extern long RunTime(void);
 
 #endif

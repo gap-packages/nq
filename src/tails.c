@@ -45,6 +45,7 @@ static int tail_cba(gen c, gen b, gen a, expvec *ev) {
 	return l;
 }
 
+#if 0
 static int tail_cbn(gen c, gen b, expvec *ev) {
 	int     i, l = 0;
 	expvec  ev1, ev2;
@@ -110,6 +111,7 @@ static int tail_cnb(gen c, gen b, expvec *ev) {
 	*ev = ev1;
 	return l;
 }
+#endif
 
 static int tail_cbb(gen c, gen b, expvec *ev) {
 	int     i, l = 0;
@@ -195,7 +197,7 @@ static void Tail(gen n, gen m) {
 void Tails(void) {
 
 	int     *Dim = Dimension;
-	long    b, c, i, j, time;
+	long    b, c, i, j, time = 0;
 	long    m, M, n, N;
 
 	if (Verbose) time = RunTime();
@@ -206,6 +208,7 @@ void Tails(void) {
 	** evidence that is woth the effort.  One probably also has to use
 	** those power relations that have a non-trivial right hand side.
 	*/
+#if 0
 	if (0) {
 		int     l;
 		gen     i, g, h, t;
@@ -247,6 +250,7 @@ void Tails(void) {
 			}
 		}
 	}
+#endif
 
 	N  = NrPcGens;
 	for (c = Class; c >= 1; c--) {

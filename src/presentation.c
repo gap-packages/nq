@@ -25,30 +25,14 @@ static node *Word(void);
 struct _node {
         int     type;
         union {
-                int     n;                          /* stores numbers      * /
-                gen     g;                          /* stores generators   * /
-                struct { struct _node *l, *r;       /* stores bin ops      * /
-                         struct _node *e; } op;     /* and Engel relations * /
+                int     n;                          // stores numbers
+                gen     g;                          // stores generators
+                struct { struct _node *l, *r;       // stores bin ops
+                         struct _node *e; } op;     // and Engel relations
         } cont;
 };
 
 typedef struct _node node;
-*/
-
-/*
-**    The following macros are defined in pres.h.
-#define TNUM   1
-#define TGEN   2
-
-#define TMULT  3
-#define TPOW   4
-#define TCONJ  5
-#define TCOMM  6
-#define TREL   7
-#define TDRELL 8
-#define TDRELR 9
-#define TENGEL 10
-#define TLAST  11
 */
 
 /*
@@ -126,7 +110,7 @@ static gen GenNumber(char *gname, int status) {
 **    GenName() is the inverse function for GenNumber(). It returns the
 **    name of a generator given by its number.
 */
-char    *GenName(gen g) {
+const char *GenName(gen g) {
 	if (g > NrGens)
 		return 0;
 	return GenNames[g];
@@ -397,7 +381,7 @@ static void NextToken(void) {
 /*
 **    InitParser() does exactly what the name suggests.
 */
-static void InitParser(FILE *fp, char *filename) {
+static void InitParser(FILE *fp, const char *filename) {
 	InFp = fp;
 	InFileName = filename;
 
@@ -742,7 +726,7 @@ node    *CurrentRelation(void) { return Pres.rels[NextRel - 1]; }
 **        presentation: '<' genlist '|' rellist '>' |
 **                      '<' genlist ; genlist '|' rellist '>'
 */
-void    Presentation(FILE *fp, char *filename) {
+void    Presentation(FILE *fp, const char *filename) {
 	InitParser(fp, filename);
 
 	if (Token != LANGLE) SyntaxError("presentation expected");

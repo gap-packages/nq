@@ -83,6 +83,12 @@ struct  def {
 typedef struct def  def;
 
 extern def      *Definition;
-extern void     PrintDefs(void);
+
+
+extern void InitPcPres(void);
+extern void ExtPcPres(void);
+extern void PrintPcPres(void);
+extern void PrintDefs(void);
+
 
 #endif

@@ -33,7 +33,7 @@ char     **PcGenName;
 */
 void    InitPcPres(void) {
 
-	int i, j, t;
+	long i, j, t = 0;
 
 	if (Verbose) t = RunTime();
 
@@ -99,12 +99,12 @@ void    InitPcPres(void) {
 	NrCenGens = 0;
 
 	if (Verbose)
-		printf("#    Initialized pc-presentation (%d msec).\n", RunTime() - t);
+		printf("#    Initialized pc-presentation (%ld msec).\n", RunTime() - t);
 }
 
 void    ExtPcPres(void) {
 
-	int i, j, c, N, oldsize, newsize, t;
+	long i, j, c, N, oldsize, newsize, t = 0;
 	word *tmp, **ttmp;
 
 	if (Verbose) t = RunTime();
@@ -236,13 +236,13 @@ void    ExtPcPres(void) {
 	NrCenGens = 0;
 
 	if (Verbose)
-		printf("#    Extended pc-presentation (%d msec).\n", RunTime() - t);
+		printf("#    Extended pc-presentation (%ld msec).\n", RunTime() - t);
 }
 
 void    PrintPcPres(void) {
 
 	gen g;
-	int i, j, first = 1;
+	long i, j, first = 1;
 
 	if (Gap) putchar('#');
 	printf("    <");
@@ -373,6 +373,7 @@ void PrintDefs(void) {
 		}
 }
 
+#if 0
 void    sizePcPres(void) {
 
 	int size = 0, nrPt = 0;
@@ -438,3 +439,4 @@ void    sizePcPres(void) {
 	printf("size of the presentation : %d bytes\n", size);
 	printf("pointers in the presentation : %d\n", nrPt);
 }
+#endif

@@ -6,7 +6,9 @@
 
 #include "nq.h"
 #include "presentation.h"
+#include "relations.h"
 
+#if 0
 static void printGapWord(word w) {
 	int nrc = 30;      /* something has already been printed */
 
@@ -39,8 +41,7 @@ static void printGapWord(word w) {
 	}
 }
 
-
-void	PrintGapPcPres(void) {
+void PrintGapPcPres(void) {
 
 	int i, j;
 
@@ -115,6 +116,7 @@ void	PrintGapPcPres(void) {
 	for (i = 1; i <= Class; i++) printf(" %d,", Dimension[i]);
 	printf("];\n");
 }
+#endif
 
 static void	printRawWord(word w) {
 	int nrc = 15;      /* something has already been printed */
@@ -135,7 +137,7 @@ static void	printRawWord(word w) {
 	}
 }
 
-void    PrintRawGapPcPres(void) {
+void PrintRawGapPcPres(void) {
 
 	int i, j;
 	int cl = Class + (NrCenGens == 0 ? 0 : 1);
@@ -232,5 +234,5 @@ void    PrintRawGapPcPres(void) {
 	}
 	printf("];\n");
 
-	printf("NqRuntime := %d;\n", RunTime());
+	printf("NqRuntime := %ld;\n", RunTime());
 }

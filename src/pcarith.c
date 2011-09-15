@@ -116,7 +116,7 @@ int     WordLength(word w) {
 	return l;
 }
 
-word    WordGen(gen g) {
+static word WordGen(gen g) {
 	word    w;
 	int     l;
 
@@ -135,7 +135,7 @@ word    WordGen(gen g) {
 	return w;
 }
 
-word    WordMult(word u, word w) {
+static word WordMult(word u, word w) {
 	expvec  ev;
 
 	ev = ExpVecWord(u);
@@ -152,7 +152,7 @@ word    WordMult(word u, word w) {
 	return w;
 }
 
-word    WordPow(word w, int * pn) {
+static word WordPow(word w, int * pn) {
 	expvec  ev;
 	word    ww;
 	int     n;
@@ -184,7 +184,7 @@ word    WordPow(word w, int * pn) {
 	return w;
 }
 
-word    WordConj(word u, word w) {
+static word WordConj(word u, word w) {
 	word    uw, x;
 	expvec  ev;
 
@@ -207,7 +207,7 @@ word    WordConj(word u, word w) {
 	return x;
 }
 
-word    WordComm(word u, word w) {
+static word WordComm(word u, word w) {
 	word    x;
 
 	x = Commutator(u, w);
@@ -217,7 +217,7 @@ word    WordComm(word u, word w) {
 	return  x;
 }
 
-word    WordEngel(word u, word w, int *e) {
+static word WordEngel(word u, word w, int *e) {
 	word    x;
 
 	x = EngelCommutator(u, w, *e);
@@ -229,7 +229,7 @@ word    WordEngel(word u, word w, int *e) {
 
 
 
-word    WordRel(word u, word w) {
+static word WordRel(word u, word w) {
 	word    x;
 
 	/* The relation u = w is interpreted as

@@ -6,6 +6,7 @@
 
 
 #include "nq.h"
+#include "glimt.h" /* for addRow */
 
 void    printEv(expvec ev) {
 	long    i;
@@ -193,7 +194,7 @@ static void do_cnc(gen c) {
 
 void    Consistency(void) {
 
-	int    t;
+	long    t = 0;
 	gen     a, b, c;
 
 	if (Verbose) t = RunTime();
@@ -258,5 +259,5 @@ void    Consistency(void) {
 			do_cnc(c);
 
 	if (Verbose)
-		printf("#    Checked consistency (%d msec).\n", RunTime() - t);
+		printf("#    Checked consistency (%ld msec).\n", RunTime() - t);
 }

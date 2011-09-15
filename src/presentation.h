@@ -57,10 +57,10 @@ typedef void *(*EvalFunc)();
 
 extern void     PrintGen(gen g);
 extern void     PrintPresentation(FILE *fp);
-extern void     Presentation(FILE *fp, char *filename);
+extern void     Presentation(FILE *fp, const char *filename);
 extern node     *ReadWord(void);
 
-extern char     *GenName(gen g);
+extern const char *GenName(gen g);
 extern int      NumberOfAbstractGens(void);
 extern int      NumberOfIdenticalGens(void);
 extern int      NumberOfGens(void);

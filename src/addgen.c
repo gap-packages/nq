@@ -7,20 +7,23 @@
 #include "config.h"
 #include "nq.h"
 #include "presentation.h"
+#include "relations.h" /* for ExtendEpim */
 
 /*
 **    Set up a list of Commute[] arrays.  The array in CommuteList[c] is
 **    Commute[] as if the current group had class c.  CommuteList[Class+1][]
 **    is the same as Commute[].
 */
+#if 0
 /*
 **    Old code to set the commute array.
+*/ 
 
         /* We change the entries in Commute[]. A generator of weight c
         ** did commute with all generators of weight Class-c. From here
         ** on it will only commute with generators of weight Class-c+1
         ** since new generators of weight Class+1 have been introduced.
-        * /
+        */
         Commute = (gen*)realloc( Commute, (G+1)*sizeof(gen) );
         if( Commute == (gen*)0 ) {
             perror( "addGenerators(), Commute" );
@@ -34,7 +37,7 @@
             G -= Dimension[ Class-c+1 ];
         }
         for( ; l <= NrPcGens+NrCenGens; l++ ) Commute[l] = l;
-*/
+#endif
 
 void    SetupCommuteList(void) {
 
@@ -82,9 +85,8 @@ void    SetupCommute2List(void) {
 	}
 }
 
-SetupNrPcGensList(void) {
+void SetupNrPcGensList(void) {
 	int    c;
-	gen    g, h;
 
 	if (NrPcGensList != (int *)0) Free(NrPcGensList);
 
@@ -112,9 +114,9 @@ SetupNrPcGensList(void) {
 */
 void AddGenerators(void) {
 
-	long    t;
+	long    t = 0;
 	gen     i, j;
-	int     c, l, G;
+	int     l, G;
 	word    w;
 
 	if (Verbose) t = RunTime();
@@ -246,5 +248,5 @@ void AddGenerators(void) {
 	Commute2 = Commute2List[ Class + 1 ];
 
 	if (Verbose)
-		printf("#    Added new/pseudo generators (%d msec).\n", RunTime() - t);
+		printf("#    Added new/pseudo generators (%ld msec).\n", RunTime() - t);
 }

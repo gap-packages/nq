@@ -12,11 +12,12 @@
 #include "macro.h"
 #include "collect.h"
 #include "time.h"
+#include "system.h"
 
 int UseSimpleCollector = 0;
 int UseCombiCollector  = 0;
 
-static  Error(const char *str, gen g) {
+static int Error(const char *str, gen g) {
 	printf("Error in Collect() while treating generator %d:\n", (int)g);
 	printf("      %s\n", str);
 
@@ -155,7 +156,7 @@ int Collect(expvec lhs, word rhs, exp e) {
 		if (memcmp(lhs, lhs2, (NrPcGens + NrCenGens + 1) * sizeof(exp)) != 0) {
 			for (i = 1; i <= NrPcGens + NrCenGens; i++)
 				if (lhs[i] != lhs2[i])
-					printf("lhs[%d] = %d    lhs2[%d] = %d\n", i, lhs[i], i, lhs2[i]);
+					printf("lhs[%d] = "EXP_FORMAT"    lhs2[%d] = "EXP_FORMAT"\n", i, lhs[i], i, lhs2[i]);
 
 			printf("Collector mismatch\n");
 		}
@@ -371,7 +372,8 @@ exit:
 	return w;
 }
 
-word    Commutator2(word v, word w) {
+#if 0
+word Commutator2(word v, word w) {
 	expvec  ev;
 	word    vw, wv, vwvw;
 
@@ -398,3 +400,4 @@ word    Commutator2(word v, word w) {
 
 	return vwvw;
 }
+#endif
