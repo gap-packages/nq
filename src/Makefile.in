@@ -60,40 +60,41 @@ distclean : clean
 # Some header dependencies, possibly incomplete / outdated.
 # Generated using the GNU C -MMD command line option.
 addgen.o: addgen.c config.h nq.h system.h mem.h genexp.h pc.h pcarith.h \
-  collect.h macro.h
+  collect.h macro.h presentation.h relations.h
 collect.o: collect.c config.h mem.h pc.h genexp.h pcarith.h macro.h \
-  collect.h time.h
+  collect.h time.h system.h
 combicol.o: combicol.c config.h mem.h pc.h genexp.h pcarith.h macro.h \
-  collect.h time.h
+  collect.h time.h system.h
 consistency.o: consistency.c nq.h config.h system.h mem.h genexp.h pc.h \
-  pcarith.h collect.h macro.h
+  pcarith.h collect.h macro.h glimt.h
 eliminate.o: eliminate.c nq.h config.h system.h mem.h genexp.h pc.h \
-  pcarith.h collect.h macro.h
+  pcarith.h collect.h macro.h glimt.h relations.h presentation.h
 engel.o: engel.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h \
-  collect.h macro.h engel.h
+  collect.h macro.h engel.h presentation.h glimt.h
 gap.o: gap.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h \
-  collect.h macro.h
+  collect.h macro.h presentation.h relations.h
 glimt.o: glimt.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h \
-  collect.h macro.h time.h
-instances.o: instances.c presentation.h mem.h genexp.h nq.h config.h \
-  system.h pc.h pcarith.h collect.h macro.h
+  collect.h macro.h time.h glimt.h
+instances.o: instances.c presentation.h mem.h genexp.h pc.h nq.h config.h \
+  system.h pcarith.h collect.h macro.h instances.h relations.h
 mem.o: mem.c mem.h
 nq.o: nq.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h collect.h \
-  macro.h engel.h
+  macro.h engel.h glimt.h presentation.h relations.h time.h
 pc.o: pc.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h collect.h \
   macro.h
 pcarith.o: pcarith.c config.h presentation.h mem.h genexp.h pc.h \
-  collect.h engel.h
-presentation.o: presentation.c config.h presentation.h mem.h genexp.h
-relations.o: relations.c presentation.h mem.h genexp.h nq.h config.h \
-  system.h pc.h pcarith.h collect.h macro.h instances.h
+  pcarith.h collect.h engel.h
+presentation.o: presentation.c config.h presentation.h mem.h genexp.h \
+  pc.h
+relations.o: relations.c relations.h genexp.h presentation.h mem.h pc.h \
+  nq.h config.h system.h pcarith.h collect.h macro.h glimt.h instances.h
 system.o: system.c config.h nq.h system.h mem.h genexp.h pc.h pcarith.h \
   collect.h macro.h
 tails.o: tails.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h \
-  collect.h macro.h
-time.o: time.c config.h
+  collect.h macro.h glimt.h
+time.o: time.c config.h time.h
 trmetab.o: trmetab.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h \
-  collect.h macro.h engel.h
+  collect.h macro.h engel.h glimt.h
 word.o: word.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h \
   collect.h macro.h
 
