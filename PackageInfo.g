@@ -9,25 +9,10 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.2.1",
-Date    := "01/07/2011",
+Version := "2.3",
+Date    := "15/09/2011",
 
 Persons := [
-  rec( LastName      := "Nickel",
-       FirstNames    := "Werner",
-       IsAuthor      := true,
-       IsMaintainer  := false,
-       Email         := "nickel@mathematik.tu-darmstadt.de",
-       WWWHome       := "http://www.mathematik.tu-darmstadt.de/~nickel",
-       PostalAddress := Concatenation( 
-               "Fachbereich Mathematik\n",
-               "TU Darmstadt\n",
-               "Schlossgartenstr. 7\n",
-               "64289 Darmstadt\n",
-               "Germany" ),
-       Place         := "Darmstadt, Germany",
-       Institution   := "Fachbereich Mathematik, TU Darmstadt"),
-
   rec( LastName      := "Horn",
        FirstNames    := "Max",
        IsAuthor      := false,
@@ -42,7 +27,15 @@ Persons := [
                "D-38106 Braunschweig\n",
                "Germany" ),
        Place         := "Braunschweig",
-       Institution   := "TU Braunschweig")
+       Institution   := "TU Braunschweig"
+     ),
+
+  rec( LastName      := "Nickel",
+       FirstNames    := "Werner",
+       IsAuthor      := true,
+       IsMaintainer  := false,
+     )
+
 ],
 
 Status         := "accepted",
@@ -50,9 +43,9 @@ CommunicatedBy := "Joachim Neubüser (RWTH Aachen)",
 AcceptDate     := "01/2003",
 
 PackageWWWHome := 
-        "http://www.mathematik.tu-darmstadt.de/~nickel/software/NQ/",
+        "http://www.icm.tu-bs.de/ag_algebra/software/NQ/",
 
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz .tar.bz2",
 ArchiveURL     := Concatenation( ~.PackageWWWHome, "nq" ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
@@ -96,6 +89,11 @@ AvailabilityTest := function()
 end,
 
 Autoload := false,
+BannerString     := Concatenation(
+                     "Loading nq ", ~.Version, " (Nilpotent Quotient Algorithm)\n",
+                     "  by Werner Nickel\n",
+                     "  maintained by Max Horn (mhorn@tu-bs.de)\n"
+                     ),
 
 Keywords := [ "nilpotent quotient algorithm",
               "nilpotent presentations",

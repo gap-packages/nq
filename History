@@ -163,5 +163,9 @@ October 2002:
 	+ Rewrote configure script and the build system
 	+ Added '--with-gap-dir' option to configure
 
-12 September 2011
+12-15 September 2011
 	+ Fix crash on Mac OS X
+	+ Improved build system
+	+ Update documentation
+	+ Enable extra warnings for the C code, and fix many of resulting warnings
+	+ Release this as version 2.3
