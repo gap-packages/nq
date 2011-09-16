@@ -1,3 +1,27 @@
+* Choose a license! Say, GPL
+  - add license file
+  - mention license in source files
+  - mention it in docs
+  - mention on website
+
+* C source code:
+  - rename datatype "exp" to avoid clash with builtin "exp()" method
+  - fixup EvalFunc type to avoid warnings
+
+* Improve buildsystem:
+  - consider using a single Makefile, or alternatively automake
+  - add dependency tracking
+
+
+
+
+
+=======================================================================
+THE FOLLOWING TODOS ARE TAKEN FROM WERNER'S OLD TODO FILE. SOME OF
+THESE MAY NO LONGER BE RELEVANT. READ WITH CAUTION.
+=======================================================================
+
+
 
 This is a list of tasks which need to be done before nq is released as
 a GAP 4 package.
