@@ -34,6 +34,11 @@ Persons := [
        FirstNames    := "Werner",
        IsAuthor      := true,
        IsMaintainer  := false,
+       # MH: Werner rarely (if at all) replies to emails sent to this
+       # old email address. To discourage users from sending bug reports
+       # there, I have disabled it here.
+       #Email         := "nickel@mathematik.tu-darmstadt.de",
+       WWWHome       := "http://www.mathematik.tu-darmstadt.de/~nickel/",
      )
 
 ],

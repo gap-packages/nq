@@ -30,7 +30,7 @@
             Germany
         </Address>
         <Email>
-            mhorn at tu-bs.de
+            mhorn@tu-bs.de
         </Email>
         <Homepage>http://www.icm.tu-bs.de/~mhorn</Homepage>
     </Author>
@@ -40,9 +40,7 @@
         of Science and Art. Any inquiries regarding nq should be
         directed at Max Horn (see below) for the time being.<Br/>
 -->
-        <Email>
-            nickel at mathematik.tu-darmstadt.de
-        </Email>
+<!--        <Email>nickel at mathematik.tu-darmstadt.de</Email> -->
         <Homepage>http://www.mathematik.tu-darmstadt.de/~nickel</Homepage>
     </Author>
     <Date>September 2011</Date>                          <!-- OPTIONAL -->
