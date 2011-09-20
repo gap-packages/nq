@@ -2,7 +2,7 @@ dnl ##
 dnl ## Process this file with autoconf to produce a configure script.
 dnl ## 
 AC_PREREQ([2.68])
-AC_INIT([ANU Nilpotent Quotient Program], [2.2cvs], [support@gap-system.org], [nq])
+AC_INIT([ANU Nilpotent Quotient Program], [2.3], [support@gap-system.org], [nq])
 
 AC_CONFIG_AUX_DIR(cnf)
 
@@ -34,6 +34,8 @@ dnl ##
 dnl ## Locate the GAP root dir & determine which GAP configuration to use
 dnl ##
 dnl ## If no directory is specified, then this defaults to ../..
+# TODO: Automatically expand relative paths to absolute ones... this would simplify the code below
+# considerably. Also, it's a first step towards building out-of-tree
 AC_ARG_WITH([gap-root],
 	[AS_HELP_STRING([--with-gap-root=PATH],
 		[directory where GAP is installed @<:@default=../..@:>@])],
@@ -78,8 +80,6 @@ dnl ##
 dnl ## Parse the GAParch from sysinfo.gap
 dnl ##
 
-# TODO: Add support for --configname=MYNAME which would then look in sysinfo.gap-MYNAME ?
-
 AC_MSG_CHECKING([for active GAP architecture])
 GAP_ARCH=`fgrep "GAParch=" $SYSINFO_GAP | sed -e 's/^GAParch=\(.*\)$/\1/'`
 if test x$GAP_ARCH = x ; then
@@ -121,6 +121,8 @@ AC_CHECK_HEADER( [gmp.h],
 	],
 	[ AC_MSG_ERROR([Could not locate the GMP include file gmp.h.]) ]
 	)
+
+# TODO: If we can't find GMP so far, then try again in GAPDIR/bin/GAPARCH/extern/gmp/
 
 CFLAGS="$nq_save_CFLAGS"
 LDFLAGS="$nq_save_LDFLAGS"

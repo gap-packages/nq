@@ -1,3 +1,9 @@
+* Release process:
+  - add script which automates update the version in all places:
+     PackageInfo.g, configure.in, ...
+  - make packaging a release tarball automatic via a script
+  - 
+
 * Choose a license! Say, GPL
   - add license file
   - mention license in source files
@@ -10,8 +16,20 @@
 
 * Improve buildsystem:
   - consider using a single Makefile, or alternatively automake
+    (automake now has a single-Makefile mode!)
   - add dependency tracking
+  - if GMP can't be found, try using the one built into GAP
 
+
+* Resolve potential discrepancy between actual config.guess result, and the
+  gap config (sysconfig.*) the user chose.
+
+  Maybe we need to fake GAParch ? And what is GAParch_system meant to be in contrast?
+  Note that ABI is irrelevant for nq, since we only have an external binary anyway
+
+  GAParch=@target@-@CC@-@CONFIGNAME@
+  GAParch_system=@target@-@CC@-@CONFIGNAME@
+  GAParch_abi=@ABI@-bit
 
 
 
