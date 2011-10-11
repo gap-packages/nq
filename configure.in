@@ -143,7 +143,7 @@ dnl ## Checks for library functions.
 dnl ##
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
-AC_CHECK_FUNCS([gethostname getrusage])
+AC_CHECK_FUNCS([sbrk getrusage])
 
 AC_CONFIG_FILES([Makefile doc/Makefile examples/Makefile src/Makefile])
 AC_OUTPUT
