@@ -94,18 +94,18 @@ dnl ## Check for GMP
 dnl ##
 
 GMP_LDFLAGS=
-GMP_CFLAGS=
+GMP_CPPFLAGS=
 gmp_prefix=
 have_gmp=yes
 
 AC_ARG_WITH([gmp-prefix], 
 	[AS_HELP_STRING([--with-gmp-prefix=PATH],
 		[directory where GMP library is installed])],
-	[ GMP_LDFLAGS="-L$with_gmp_prefix/lib $GMP_LDFLAGS" ; GMP_CFLAGS="-I$with_gmp_prefix/include $GMP_CFLAGS" ],
+	[ GMP_LDFLAGS="-L$with_gmp_prefix/lib $GMP_LDFLAGS" ; GMP_CPPFLAGS="-I$with_gmp_prefix/include $GMP_CPPFLAGS" ],
 	[])
 
-nq_save_CFLAGS="$CFLAGS"
-CFLAGS="$CFLAGS $GMP_CFLAGS"
+nq_save_CPPFLAGS="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $GMP_CPPFLAGS"
 nq_save_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS $GMP_LDFLAGS"
 
@@ -124,12 +124,12 @@ AC_CHECK_HEADER( [gmp.h],
 
 # TODO: If we can't find GMP so far, then try again in GAPDIR/bin/GAPARCH/extern/gmp/
 
-CFLAGS="$nq_save_CFLAGS"
+CPPFLAGS="$nq_save_CPPFLAGS"
 LDFLAGS="$nq_save_LDFLAGS"
 
 GMP_LIBS="$GMP_LDFLAGS -lgmp"
 
-AC_SUBST(GMP_CFLAGS)
+AC_SUBST(GMP_CPPFLAGS)
 AC_SUBST(GMP_LIBS)
 
 

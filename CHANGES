@@ -2,7 +2,11 @@
  This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
-2.3 (2011-09-??)
+X.X (2011-XX-XX)
+	+ Fixed spurious warnings when running "configure" that
+	  could occur when using --with-gmp-prefix
+
+2.3 (2011-09-15)
 	+ Remove maintainer flag from Werner, add Max as new maintainer
 	+ Sync cnf/config.* files with the ones used by GAP
 	+ Rewrote and improved configure script and the build system
