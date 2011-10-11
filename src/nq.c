@@ -25,7 +25,6 @@ extern int RawMatOutput;
 const char    *InputFile;
 
 static char     *ProgramName;
-static char     HostName[256] = "host name unknown";
 static int      Cl;
 
 static
@@ -92,7 +91,6 @@ void    printHeader(void) {
 	printf("\n");
 	if (Cl != 666) printf("#    Nilpotency class: %d\n", Cl);
 	printf("#    Program: %s", ProgramName);
-	printf("     Machine: %s\n", &(HostName[0]));
 	printf("#    Size of exponents: %d bytes\n#\n", (int)sizeof(exp));
 }
 
@@ -104,16 +102,12 @@ int main(int argc, char *argv[]) {
 	gen     g;
 
 	CatchSignals();
-	start = sbrk(0);
+	start = sbrk(0);	// TODO: Add HAVE_SBRK macro
 	begin = RunTime();
 
 	ProgramName = argv[0];
 	argc--;
 	argv++;
-
-#ifdef HAVE_GETHOSTNAME
-	gethostname(&(HostName[0]), 256);
-#endif
 
 	setbuf(stdout, NULL);
 
@@ -246,12 +240,12 @@ int main(int argc, char *argv[]) {
 			InputFile = argv[0];
 		else
 			/* The only argument left is the class.   */
-			Cl = atoi(argv[0]);
+			Cl = atoi(argv[0]);	// TODO: Use strtol instead of atoi
 		break;
 	case 2:
 		/* Two arguments left. */
 		InputFile = argv[0];
-		Cl = atoi(argv[1]);
+		Cl = atoi(argv[1]);	// TODO: Use strtol instead of atoi
 		break;
 	default:
 		usage((char *)0);
