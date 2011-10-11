@@ -11,6 +11,10 @@ PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
 Version := "2.3",
 Date    := "15/09/2011",
+##  <#GAPDoc Label="PKGVERSIONDATA">
+##  <!ENTITY VERSION "2.3">
+##  <!ENTITY RELEASEDATE "15 September 2011">
+##  <#/GAPDoc>
 
 Persons := [
   rec( LastName      := "Horn",
