@@ -1318,9 +1318,9 @@ need not be a left 5-Engel element.
 
   <Listing Type="Installation"> make test </Listing>
   
-  The file runs some computations and compares their output with the
-  output files in the directory `examples'.  If testNq reports any
-  errors, please follow the instruction that testNq prints out.
+  This runs some computations and compares their output with the output
+  files in the directory `examples'. If any errors are reported, please
+  follow the instruction that are printed out.
 
   <P/>The installation is completed by compiling the manual of the
   package.  This is done from within &GAP;.
