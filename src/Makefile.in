@@ -39,14 +39,14 @@ CFLAGS = $(OPTS) \
 #  -Wno-sign-compare \
 # -Werror
 
-OBJ = consistency.o pc.o relations.o word.o system.o time.o \
+OBJ = nq.o consistency.o pc.o relations.o word.o system.o time.o \
       addgen.o tails.o eliminate.o engel.o glimt.o instances.o \
       presentation.o mem.o pcarith.o collect.o combicol.o trmetab.o gap.o
 
 all: nq
 
-nq : nq.o $(OBJ)
-	$(CC) $(CFLAGS) $(CPPFLAGS) nq.o $(OBJ) $(LDFLAGS) $(GMP_LIBS) -o nq
+nq : $(OBJ)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJ) $(LDFLAGS) $(GMP_LIBS) -o nq
 
 glimt.o: glimt.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(GMP_CFLAGS) -c glimt.c
