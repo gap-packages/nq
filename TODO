@@ -14,12 +14,12 @@
   - rename datatype "exp" to avoid clash with builtin "exp()" method
   - fixup EvalFunc type to avoid warnings
 
-* Improve buildsystem:
+* Buildsystem:
   - consider using a single Makefile, or alternatively automake
     (automake now has a single-Makefile mode!)
   - add dependency tracking
   - if GMP can't be found, try using the one built into GAP
-
+  - Rename configure.in to configure.ac
 
 * Resolve potential discrepancy between actual config.guess result, and the
   gap config (sysconfig.*) the user chose.
@@ -31,7 +31,11 @@
   GAParch_system=@target@-@CC@-@CONFIGNAME@
   GAParch_abi=@ABI@-bit
 
-
+* Test suite:
+  - Add a "proper" test suite in tst
+  - Take a look at gap/nq.tst, possibly move this into tst/
+  - Maybe example should become part of tst/ respective part
+    of the test suite
 
 
 =======================================================================
