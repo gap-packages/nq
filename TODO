@@ -1,8 +1,10 @@
 * Release process:
-  - add script which automates update the version in all places:
-     PackageInfo.g, configure.in, ...
-  - make packaging a release tarball automatic via a script
-  - 
+  - add script which automates updating the version in all places:
+     PackageInfo.g, configure.in, configure, ...
+    this is currently quite easy to forget. Also, the release date
+    should be updated in files as necessary, including
+      PackageInfo.g, CHANGES, ...
+  - automate packaging release tarball automatic via a script
 
 * Choose a license! Say, GPL
   - add license file

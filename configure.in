@@ -3,20 +3,19 @@ dnl ## Process this file with autoconf to produce a configure script.
 dnl ## 
 AC_PREREQ([2.68])
 AC_INIT([ANU Nilpotent Quotient Program], [2.3], [support@gap-system.org], [nq])
-
 AC_CONFIG_AUX_DIR(cnf)
-
+AC_CONFIG_SRCDIR([src/nq.c])
 AC_CONFIG_HEADER(src/config.h:src/config.hin)
-
-dnl ##
-dnl ## C is the language 
-dnl ##
-AC_LANG_C
 
 dnl ##
 dnl ## determine the system name
 dnl ##
-AC_CANONICAL_SYSTEM
+AC_CANONICAL_HOST
+
+dnl ##
+dnl ## C is the language 
+dnl ##
+AC_LANG([C])
 
 dnl ##
 dnl ## Checks for programs.
