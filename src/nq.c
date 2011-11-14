@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
 	gen     g;
 
 	CatchSignals();
-	start = sbrk(0);	// TODO: Add HAVE_SBRK macro
+	start = sbrk(0);	/* TODO: Add HAVE_SBRK macro */
 	begin = RunTime();
 
 	ProgramName = argv[0];
@@ -240,12 +240,12 @@ int main(int argc, char *argv[]) {
 			InputFile = argv[0];
 		else
 			/* The only argument left is the class.   */
-			Cl = atoi(argv[0]);	// TODO: Use strtol instead of atoi
+			Cl = atoi(argv[0]);	/* TODO: Use strtol instead of atoi */
 		break;
 	case 2:
 		/* Two arguments left. */
 		InputFile = argv[0];
-		Cl = atoi(argv[1]);	// TODO: Use strtol instead of atoi
+		Cl = atoi(argv[1]);	/* TODO: Use strtol instead of atoi */
 		break;
 	default:
 		usage((char *)0);
