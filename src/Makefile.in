@@ -13,13 +13,18 @@ subdir = src
 
 GAP_ROOT=@GAP_ROOT@
 BINDIR=bin/@GAP_ARCH@
-GMP_CFLAGS=@GMP_CFLAGS@
+GMP_CPPFLAGS=@GMP_CPPFLAGS@
 GMP_LIBS=@GMP_LIBS@
+ABI_CFLAGS=@ABI_CFLAGS@
 
 CC=@CC@
-#OPTS = -g -pg $(COPTS)
-OPTS = -O3 -Wuninitialized $(COPTS)
-CFLAGS = $(OPTS) \
+#CFLAGS += -g -pg $(COPTS)
+CFLAGS += -O3 -Wuninitialized
+
+CFLAGS += $(ABI_CFLAGS) 
+
+# Enable lots of warnings
+CFLAGS += \
  -Wall \
  -Wpointer-arith\
  -Wcast-qual\
@@ -49,7 +54,7 @@ nq : $(OBJ)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJ) $(LDFLAGS) $(GMP_LIBS) -o nq
 
 glimt.o: glimt.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(GMP_CFLAGS) -c glimt.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(GMP_CPPFLAGS) -c glimt.c
 
 clean :
 	rm -f *.o nq *~

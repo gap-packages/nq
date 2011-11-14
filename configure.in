@@ -29,8 +29,9 @@ dnl ## Checks for system header files.
 dnl ##
 AC_CHECK_HEADERS([stdlib.h string.h sys/time.h])
 
+
 dnl ##
-dnl ## Locate the GAP root dir & determine which GAP configuration to use
+dnl ## Locate the GAP root dir
 dnl ##
 dnl ## If no directory is specified, then this defaults to ../..
 # TODO: Automatically expand relative paths to absolute ones... this would simplify the code below
@@ -41,6 +42,10 @@ AC_ARG_WITH([gap-root],
 	[GAP_ROOT="$with_gap_root" ; GAP_ROOT_real="$with_gap_root"; GAP_ROOT_display="$with_gap_root"],
 	[GAP_ROOT='${top_srcdir}/../..' ; GAP_ROOT_real="${srcdir}/../.."; GAP_ROOT_display=../..])
 AC_MSG_CHECKING([path to GAP installation])
+
+# Try and turn GAP_ROOT_real into an absolute path 
+GAP_ROOT_real=`cd $GAP_ROOT_real && pwd`
+
 if test -d $GAP_ROOT_real ; then
 	AC_MSG_RESULT([$GAP_ROOT_display])
 else
@@ -48,32 +53,68 @@ else
 fi
 AC_SUBST(GAP_ROOT)
 
-dnl ##
-dnl ## Determine which GAP configuration to use
-dnl ##
-AC_ARG_WITH([gap-config],
-	[AS_HELP_STRING([--with-gap-config=CONFIGNAME],
-		[which GAP configuration to use @<:@default=currently active@:>@])],
-	[GAP_CONFIG="$with_gap_config"],
-	[GAP_CONFIG=""])
 
-AC_MSG_CHECKING([which GAP configuration to use])
-if test x$GAP_CONFIG = x ; then
-	SYSINFO_GAP="$GAP_ROOT_real/sysinfo.gap"
-	if test -f $SYSINFO_GAP ; then
-		AC_MSG_RESULT([currently active configuration])
-	else
-		AC_MSG_ERROR([sysinfo.gap not found])
-	fi
+dnl ##
+dnl ## Check whether to use 32bit or 64bit ABI
+dnl ##
+AC_CHECK_SIZEOF(void *, 4)
+
+AC_ARG_VAR(ABI, [Set this equal to 32 or 64 to build nq
+		 in 32- or 64-bit mode. The default value
+		 for this option is determined by testing the behaviour of your
+		 compiler, so should be 32 on a 32-bit system and 64 on one
+		 which is 64-bit.])
+
+AC_MSG_CHECKING([ABI bit size])
+if test "x$ABI" = "x" ;  then
+  if test $ac_cv_sizeof_void_p = 8; then
+    ABI="64"
+  else
+    ABI="32"
+  fi
+  ABI_CFLAGS=""
+elif test "$ABI" = "64"; then
+  if test $ac_cv_sizeof_void_p = 4; then
+    AC_MSG_ERROR([ ABI=64 cannot be used on a 32-bit system.
+                   Please replace this value with 32 and retry configure.
+                   If you think this error is wrong, email
+                   support@gap-system.org with full details.])
+  else
+    ABI_CFLAGS="-m64"
+  fi
+elif test "$ABI" = "32"; then
+  ABI_CFLAGS="-m32"
 else
-	SYSINFO_GAP="$GAP_ROOT_real/sysinfo.gap-$GAP_CONFIG"
-	if test -f $SYSINFO_GAP ; then
-		AC_MSG_RESULT([$GAP_CONFIG])
-	else
-		AC_MSG_ERROR([sysinfo.gap-$GAP_CONFIG not found])
-	fi
+  AC_MSG_ERROR([ $ABI is not a supported value for ABI. Please use ABI=64
+                 or 32, or leave it unset.])
 fi
-AC_SUBST(GAP_CONFIG)
+
+AC_MSG_RESULT([$ABI])
+
+AC_SUBST(ABI)
+AC_SUBST(ABI_CFLAGS)
+
+
+dnl ##
+dnl ## Check which GAP configuration to use
+dnl ##
+AC_ARG_VAR(CONFIGNAME,[Supply a (meaningful) name for the configuration you are building.
+    This name will be appended to the architecture-dependent named 
+    sub-directory of bin/. Allows for multiple configurations side by
+    side. Default value is "defaultXX" where "XX" is 32 or 64.])
+
+AC_MSG_CHECKING([GAP config name])
+if test "x$CONFIGNAME" = "x"; then
+  CONFIGNAME="default${ABI}"
+fi
+SYSINFO_GAP="$GAP_ROOT_real/sysinfo.gap-$CONFIGNAME"
+if test -f $SYSINFO_GAP ; then
+	AC_MSG_RESULT([$CONFIGNAME])
+	#AC_SUBST(CONFIGNAME)
+else
+	AC_MSG_ERROR([sysinfo.gap-$GAP_CONFIG not found])
+fi
+
 
 dnl ##
 dnl ## Parse the GAParch from sysinfo.gap
@@ -90,18 +131,34 @@ AC_SUBST(GAP_ARCH)
 
 dnl ##
 dnl ## Check for GMP
+dnl ## If the user specified a specific GMP, try to use that.
+dnl ## Otherwise, first try to use the GMP provided by GAP, or
+dnl ## any GMP version installed globally by the user.
 dnl ##
 
-GMP_LDFLAGS=
-GMP_CPPFLAGS=
+GMP_libdir=
+GMP_includedir=
 gmp_prefix=
 have_gmp=yes
 
 AC_ARG_WITH([gmp-prefix], 
 	[AS_HELP_STRING([--with-gmp-prefix=PATH],
 		[directory where GMP library is installed])],
-	[ GMP_LDFLAGS="-L$with_gmp_prefix/lib $GMP_LDFLAGS" ; GMP_CPPFLAGS="-I$with_gmp_prefix/include $GMP_CPPFLAGS" ],
-	[])
+	[ # Try to use the GMP version the user indicated
+	  GMP_libdir="$with_gmp_prefix/lib" ;
+	  GMP_includedir="$with_gmp_prefix/include"
+	],
+	[ # Try to use GAP's version of GMP
+	  GMP_libdir="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp/lib" ;
+	  GMP_includedir="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp/include"
+	]
+	)
+
+# If the specified libdir and include dir exist, try to use them.
+if test -d $GMP_libdir -a -d $GMP_includedir ; then
+  GMP_LDFLAGS="-L$GMP_libdir"
+  GMP_CPPFLAGS="-I$GMP_includedir"
+fi;
 
 nq_save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $GMP_CPPFLAGS"
@@ -120,8 +177,6 @@ AC_CHECK_HEADER( [gmp.h],
 	],
 	[ AC_MSG_ERROR([Could not locate the GMP include file gmp.h.]) ]
 	)
-
-# TODO: If we can't find GMP so far, then try again in GAPDIR/bin/GAPARCH/extern/gmp/
 
 CPPFLAGS="$nq_save_CPPFLAGS"
 LDFLAGS="$nq_save_LDFLAGS"

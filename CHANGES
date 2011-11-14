@@ -5,10 +5,19 @@
 X.X (2011-XX-XX)
 	+ Fixed spurious warnings when running "configure" that
 	  could occur when using --with-gmp-prefix
+	+ Improved build system:
+	  - Improved GMP detection in configure script; it now checks if GAP
+	    built a GMP library, and if so, uses that.
+	  - Unified how the user can choose which GAP config to use in the
+	    configure script: Instead of a --with-gap-config argument to
+	    configure, now a CONFIGNAME environment variable is used. This
+	    matches how GAP's own configure script works, and also various
+	    other packages.
+	  - Added support for ABI override via ABI environment variable
 
 2.3 (2011-09-15)
-	+ Remove maintainer flag from Werner, add Max as new maintainer
-	+ Sync cnf/config.* files with the ones used by GAP
+	+ Removed maintainer flag from Werner, added Max as new maintainer
+	+ Synced cnf/config.* files with the ones used by GAP
 	+ Rewrote and improved configure script and the build system
 	+ Added '--with-gap-dir' option to configure
 	+ Fixed compilation on modern day systems (e.g. Mac OS X),

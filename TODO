@@ -5,6 +5,8 @@
     should be updated in files as necessary, including
       PackageInfo.g, CHANGES, ...
   - automate packaging release tarball automatic via a script
+  - do *not* prebuild docs anymore, instead, ensure that docs are automatically
+    built when the user builds nq.
 
 * Choose a license! Say, GPL
   - add license file
