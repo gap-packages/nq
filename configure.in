@@ -176,13 +176,16 @@ LDFLAGS="$LDFLAGS $GMP_LIBS"
 
 AC_CHECK_HEADER( [gmp.h],
 	[
-    AC_MSG_CHECKING([whether linking against GMP works])
-	AC_TRY_LINK(
-       [#include <gmp.h>],
-       [__gmpz_init(0);] , 
-       [AC_MSG_RESULT([yes])],
-       [AC_MSG_ERROR([no])]
-       )
+	# TODO: Disable linker check for now: It causes problems on Linux, because
+	# libgmp.a is in the linker command line before the test C file. On the long
+	# run, this should be re-enabled, though perhaps in a different form.
+#     AC_MSG_CHECKING([whether linking against GMP works])
+# 	AC_TRY_LINK(
+#        [#include <gmp.h>],
+#        [__gmpz_init(0);] , 
+#        [AC_MSG_RESULT([yes])],
+#        [AC_MSG_ERROR([no])]
+#        )
 	],
 	[ AC_MSG_ERROR([Could not locate the GMP include file gmp.h.]) ]
 	)
