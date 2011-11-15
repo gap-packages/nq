@@ -14,6 +14,8 @@ X.X (2011-XX-XX)
 	    matches how GAP's own configure script works, and also various
 	    other packages.
 	  - Added support for ABI override via ABI environment variable
+	  - Changed --with-gmp-prefix to --with-gmp, with exact same semantics
+	    as the --with-gmp option of GAP's configure.
 
 2.3 (2011-09-15)
 	+ Removed maintainer flag from Werner, added Max as new maintainer

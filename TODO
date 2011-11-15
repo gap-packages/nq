@@ -24,6 +24,7 @@
   - add dependency tracking
   - if GMP can't be found, try using the one built into GAP
   - Rename configure.in to configure.ac
+  - add description in the manual of how to use CONFIGNAME, ABI, --with-gap, --with-gmp, etc
 
 * Resolve potential discrepancy between actual config.guess result, and the
   gap config (sysconfig.*) the user chose.

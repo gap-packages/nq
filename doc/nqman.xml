@@ -1294,7 +1294,7 @@ need not be a left 5-Engel element.
   libraries, you have to run configure with additional parameters. For
   example, if you have installed GNU MP yourself in your home directory,
   you would type something like the following
-  <Listing Type="Installation"> ./configure --with-gmp-prefix=/home/me/gmp </Listing>
+  <Listing Type="Installation"> ./configure --with-gmp=/home/me/gmp </Listing>
   If configure reports no problems, the next step is to start the
   compilation:
   <Listing Type="Installation"> make </Listing>

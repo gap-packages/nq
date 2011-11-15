@@ -122,7 +122,7 @@ dnl ##
 
 AC_MSG_CHECKING([for active GAP architecture])
 GAP_ARCH=`fgrep "GAParch=" $SYSINFO_GAP | sed -e 's/^GAParch=\(.*\)$/\1/'`
-if test x$GAP_ARCH = x ; then
+if test "x$GAP_ARCH" = "x" ; then
 	AC_MSG_ERROR([GAParch not found in $GAP_ROOT_display/sysinfo.gap])
 else
 	AC_MSG_RESULT([$GAP_ARCH])
@@ -136,52 +136,59 @@ dnl ## Otherwise, first try to use the GMP provided by GAP, or
 dnl ## any GMP version installed globally by the user.
 dnl ##
 
-GMP_libdir=
-GMP_includedir=
-gmp_prefix=
-have_gmp=yes
+GMP_HOME=
+GMP_CPPFLAGS=
+GMP_LIBS=
 
-AC_ARG_WITH([gmp-prefix], 
-	[AS_HELP_STRING([--with-gmp-prefix=PATH],
-		[directory where GMP library is installed])],
-	[ # Try to use the GMP version the user indicated
-	  GMP_libdir="$with_gmp_prefix/lib" ;
-	  GMP_includedir="$with_gmp_prefix/include"
-	],
-	[ # Try to use GAP's version of GMP
-	  GMP_libdir="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp/lib" ;
-	  GMP_includedir="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp/include"
-	]
-	)
+AC_ARG_WITH([gmp], 
+	[AS_HELP_STRING([--with-gmp=PATH],
+	  [ Use GMP library.
+        If the argument you supply is "yes" or <empty>, then the version of GMP bundled with GAP will be used (default).
+        If the argument is "system" that means the library is reachable with the standard
+        search path "/usr" or "/usr/local".
+        Otherwise you give the <path> to the directory which contains the library. 
+        [[default=yes]]
+    ])],
 
-# If the specified libdir and include dir exist, try to use them.
-if test -d $GMP_libdir -a -d $GMP_includedir ; then
-  GMP_LDFLAGS="-L$GMP_libdir"
-  GMP_CPPFLAGS="-I$GMP_includedir"
-fi;
+  [ if test "$with_gmp" = "yes" ; then
+      GMP_HOME="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp"
+      GMP_CPPFLAGS="-I${GMP_HOME}/include"
+      GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
+    elif test "$with_gmp" = "system" ; then
+      GMP_CPPFLAGS=""
+      GMP_LIBS="-lgmp"
+    else
+      GMP_HOME="$with_gmp"
+      GMP_CPPFLAGS="-I${GMP_HOME}/include"
+      GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
+    fi
+ ],
+ [ GMP_HOME="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp"
+   GMP_CPPFLAGS="-I${GMP_HOME}/include"
+   GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
+ ]
+)
 
 nq_save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $GMP_CPPFLAGS"
 nq_save_LDFLAGS="$LDFLAGS"
-LDFLAGS="$LDFLAGS $GMP_LDFLAGS"
+LDFLAGS="$LDFLAGS $GMP_LIBS"
 
 AC_CHECK_HEADER( [gmp.h],
 	[
-	AC_CHECK_LIB( [gmp], [__gmpz_init],
-		[
-		# TODO: Display GMP version ?
-		],
-		[ AC_MSG_ERROR([Could not locate the GMP library libgmp.]) ]
-		)
-
+    AC_MSG_CHECKING([whether linking against GMP works])
+	AC_TRY_LINK(
+       [#include <gmp.h>],
+       [__gmpz_init(0);] , 
+       [AC_MSG_RESULT([yes])],
+       [AC_MSG_ERROR([no])]
+       )
 	],
 	[ AC_MSG_ERROR([Could not locate the GMP include file gmp.h.]) ]
 	)
 
 CPPFLAGS="$nq_save_CPPFLAGS"
 LDFLAGS="$nq_save_LDFLAGS"
-
-GMP_LIBS="$GMP_LDFLAGS -lgmp"
 
 AC_SUBST(GMP_CPPFLAGS)
 AC_SUBST(GMP_LIBS)
