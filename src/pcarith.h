@@ -20,4 +20,9 @@ extern  int     WordLength(word w);
 extern  void    WordInit(WordGenerator generator);
 extern  void    WordPrint(word gs);
 
+
+extern word WordGen(gen g);
+extern word WordEngel(word u, word w, int *e);
+extern word WordComm(word u, word w);
+
 #endif

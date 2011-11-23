@@ -8,6 +8,7 @@
 #include "config.h"
 
 #include "presentation.h"
+#include "pcarith.h"
 
 static node *Word(void);
 
@@ -776,14 +777,9 @@ void    *EvalNode(node *n) {
 	if (n->type == TNUM)
 		return (void *) & (n->cont.n);
 
-	if (EvalFunctions[n->type] == 0) {
-		fprintf(stderr, "No evaluation function for type %d.\n", n->type);
-		exit(5);
-	}
-
 	switch (n->type) {
 	case TGEN:                  /* TGEN is a unary node. */
-		return (*EvalFunctions[TGEN])(n->cont.g);
+		return WordGen(n->cont.g);
 
 	case TCOMM:                 /* Adjust the class.     */
 		Class--;
@@ -794,7 +790,7 @@ void    *EvalNode(node *n) {
 		if (l == (void *)0) return l;
 		if (r == (void *)0) { Free(l); return r; }
 
-		return (*EvalFunctions[n->type])(l, r);
+		return WordComm((word)l, (word)r);
 
 	case TENGEL:                /* TENGEL is a ternary node. */
 
@@ -808,9 +804,14 @@ void    *EvalNode(node *n) {
 		if (l == (void *)0) { Free(e); return l; }
 		if (r == (void *)0) { Free(e); Free(l); return r; }
 
-		return (*EvalFunctions[n->type])(l, r, e);
+		return WordEngel((word)l, (word)r, (int *)e);
 
 	default:
+
+		if (EvalFunctions[n->type] == 0) {
+			fprintf(stderr, "No evaluation function for type %d.\n", n->type);
+			exit(5);
+		}
 
 		if ((l = EvalNode(n->cont.op.l)) == (void *)0) return l;
 		if ((r = EvalNode(n->cont.op.r)) == (void *)0) {
@@ -818,7 +819,7 @@ void    *EvalNode(node *n) {
 			return r;
 		}
 
-		return (*EvalFunctions[n->type])(l, r);
+		return (*EvalFunctions[n->type])((word)l, r);
 	}
 }
 
@@ -827,7 +828,7 @@ void    TraverseNode(node *n, gen *igens) {
 	if (n->type == TNUM) return;
 
 	if (n->type == TGEN) {
-		if ((*EvalFunctions[TGEN])(n->cont.g) == (void *)0)
+		if (WordGen(n->cont.g) == (void *)0)
 
 			igens[ n->cont.g - NumberOfAbstractGens() ] = 1;
 

@@ -33,7 +33,7 @@ typedef enum {
 	TLAST
 } EvalType;
 
-typedef void *(*EvalFunc)();
+typedef word (*EvalFunc)(word a, void *b);
 
 /*
 **    The following data structure will represent a node in an expression

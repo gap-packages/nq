@@ -116,7 +116,7 @@ int     WordLength(word w) {
 	return l;
 }
 
-static word WordGen(gen g) {
+word WordGen(gen g) {
 	word    w;
 	int     l;
 
@@ -207,7 +207,7 @@ static word WordConj(word u, word w) {
 	return x;
 }
 
-static word WordComm(word u, word w) {
+word WordComm(word u, word w) {
 	word    x;
 
 	x = Commutator(u, w);
@@ -217,7 +217,7 @@ static word WordComm(word u, word w) {
 	return  x;
 }
 
-static word WordEngel(word u, word w, int *e) {
+word WordEngel(word u, word w, int *e) {
 	word    x;
 
 	x = EngelCommutator(u, w, *e);
@@ -246,7 +246,7 @@ static word WordRel(word u, word w) {
 void    WordInit(WordGenerator generator) {
 	PcGenerator = generator;
 
-	SetEvalFunc(TGEN, (EvalFunc)WordGen);
+/*	SetEvalFunc(TGEN, (EvalFunc)WordGen);*/
 	SetEvalFunc(TMULT, (EvalFunc)WordMult);
 	SetEvalFunc(TPOW, (EvalFunc)WordPow);
 	SetEvalFunc(TCONJ, (EvalFunc)WordConj);
@@ -254,7 +254,7 @@ void    WordInit(WordGenerator generator) {
 	SetEvalFunc(TREL, (EvalFunc)WordRel);
 	SetEvalFunc(TDRELL, (EvalFunc)WordRel);
 	SetEvalFunc(TDRELR, (EvalFunc)WordRel);
-	SetEvalFunc(TENGEL, (EvalFunc)WordEngel);
+/*	SetEvalFunc(TENGEL, (EvalFunc)WordEngel);*/
 }
 
 void    WordPrint(word gs) {
