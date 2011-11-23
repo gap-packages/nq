@@ -22,7 +22,7 @@ void    printWord(word w, char c) {
 	while (w->g != EOW) {
 		if (w->g > 0) {
 			printGen(w->g, c);
-			if (w->e != (exp)1)
+			if (w->e != (expo)1)
 				printf("^"EXP_FORMAT, w->e);
 		} else {
 			printGen(-w->g, c);

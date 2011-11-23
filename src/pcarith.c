@@ -56,14 +56,14 @@ void    WordCopyExpVec(expvec ev, word w) {
 	gen     g;
 
 	for (l = 0, g = 1; g <= NrPcGensList[Class > 0 ? Class + 1 : 1]; g++)
-		if (ev[g] != (exp)0) {
-			if (ev[g] > (exp)0) { w[l].g =  g; w[l].e =  ev[g]; }
+		if (ev[g] != (expo)0) {
+			if (ev[g] > (expo)0) { w[l].g =  g; w[l].e =  ev[g]; }
 			else                 { w[l].g = -g; w[l].e = -ev[g]; }
 			l++;
 		}
 
 	w[l].g = EOW;
-	w[l].e = (exp)0;
+	w[l].e = (expo)0;
 }
 
 word    WordExpVec(expvec ev) {
@@ -72,7 +72,7 @@ word    WordExpVec(expvec ev) {
 	word    w;
 
 	for (l = 0, g = 1; g <= NrPcGensList[Class > 0 ? Class + 1 : 1]; g++)
-		if (ev[g] != (exp)0) l++;
+		if (ev[g] != (expo)0) l++;
 
 	w = (word)Allocate((l + 1) * sizeof(gpower));
 
@@ -83,7 +83,7 @@ word    WordExpVec(expvec ev) {
 expvec  ExpVecWord(word w) {
 	expvec  ev;
 
-	ev = (expvec)Allocate((NrPcGens + NrCenGens + 1) * sizeof(exp));
+	ev = (expvec)Allocate((NrPcGens + NrCenGens + 1) * sizeof(expo));
 
 	if (w != (word)0)
 		while (w->g != EOW) {
@@ -140,7 +140,7 @@ static word WordMult(word u, word w) {
 
 	ev = ExpVecWord(u);
 	Free((void *)u);
-	if (Collect(ev, w, (exp)1)) {
+	if (Collect(ev, w, (expo)1)) {
 		Free((void *)w);
 		Free((void *)ev);
 		return (word)0;
@@ -172,7 +172,7 @@ static word WordPow(word w, int * pn) {
 	if (n == 1) return w;
 
 	ev = ExpVecWord(w);
-	if (Collect(ev, w, (exp)(n - 1))) {
+	if (Collect(ev, w, (expo)(n - 1))) {
 		Free((void *)w);
 		Free((void *)ev);
 		return (word) 0;
@@ -192,7 +192,7 @@ static word WordConj(word u, word w) {
 	ev = ExpVecWord(u);
 	Free((void *)u);
 
-	if (Collect(ev, w, (exp)1)) {
+	if (Collect(ev, w, (expo)1)) {
 		Free((void *)ev);
 		Free((void *)w);
 		return (word)0;
@@ -261,7 +261,7 @@ void    WordPrint(word gs) {
 	if (gs->g != EOW)
 		if (gs->g > 0) {
 			PrintGen(gs->g);
-			if (gs->e > (exp)1)
+			if (gs->e > (expo)1)
 				printf("^"EXP_FORMAT, gs->e);
 		} else {
 			PrintGen(-gs->g);
@@ -277,7 +277,7 @@ void    WordPrint(word gs) {
 		putchar('*');
 		if (gs->g > 0) {
 			PrintGen(gs->g);
-			if (gs->e > (exp)1)
+			if (gs->e > (expo)1)
 				printf("^"EXP_FORMAT, gs->e);
 		} else {
 			PrintGen(-gs->g);

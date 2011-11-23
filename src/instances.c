@@ -54,13 +54,13 @@ void    EnumerateWords(node *r, long l, word *instances, long n, long i, gen g, 
 	save_wt = wt;
 	while (!EarlyStop && g <= NrPcGens + NrCenGens && Wt(g) <= wt - (l - n)) {
 		u[i].g   = g;
-		u[i].e   = (exp)0;
+		u[i].e   = (expo)0;
 		u[i + 1].g = EOW;
 		while (!EarlyStop && Wt(g) <= wt - (l - n)) {
 			u[i].e++;
 			wt -= Wt(g);
 
-			if (Exponent[g] > (exp)0 && Exponent[g] == u[i].e) break;
+			if (Exponent[g] > (expo)0 && Exponent[g] == u[i].e) break;
 			EnumerateWords(r, l, instances, n, i + 1, g + 1, wt);
 			if (n < NrIdenticalGensNode)
 				EnumerateWords(r, l, instances, n + 1, 0, 1, wt);
@@ -70,7 +70,7 @@ void    EnumerateWords(node *r, long l, word *instances, long n, long i, gen g, 
 		g++;
 	}
 	u[i].g = EOW;
-	u[i].e = (exp)0;
+	u[i].e = (expo)0;
 }
 
 void    EvalIdenticalRelation(node *r) {

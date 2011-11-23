@@ -15,7 +15,6 @@
   - mention on website
 
 * C source code:
-  - rename datatype "exp" to avoid clash with builtin "exp()" method
   - fixup EvalFunc type to avoid warnings
 
 * Buildsystem:

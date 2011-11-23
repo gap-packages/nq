@@ -7,9 +7,9 @@
 extern  int     UseCombiCollector;
 extern  int     UseSimpleCollector;
 
-extern  int     SimpleCollect(expvec lhs, word rhs, exp e);
-extern  int     CombiCollect(expvec lhs, word rhs, exp e);
-extern  int     Collect(expvec lhs, word rhs, exp e);
+extern  int     SimpleCollect(expvec lhs, word rhs, expo e);
+extern  int     CombiCollect(expvec lhs, word rhs, expo e);
+extern  int     Collect(expvec lhs, word rhs, expo e);
 
 extern  word    Solve(word u, word v);
 extern  word    Invert(word u);

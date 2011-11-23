@@ -17,27 +17,27 @@ static int tail_cba(gen c, gen b, gen a, expvec *ev) {
 
 	/* (c b) a */
 	ev1 = ExpVecWord(Generators[c]);
-	Collect(ev1, Generators[b], (exp)1);
-	Collect(ev1, Generators[a], (exp)1);
+	Collect(ev1, Generators[b], (expo)1);
+	Collect(ev1, Generators[a], (expo)1);
 
 	/* c (b a) = c a b^a */
 	ev2 = ExpVecWord(Generators[c]);
-	Collect(ev2, Generators[a], (exp)1);
-	Collect(ev2, Conjugate[b][a], (exp)1);
+	Collect(ev2, Generators[a], (expo)1);
+	Collect(ev2, Conjugate[b][a], (expo)1);
 
 	for (i = 1; i <= NrPcGens; i++) {
 		if (ev1[i] != ev2[i]) printf(Warning3, "tail_cba", c, b, a);
-		ev1[i] = (exp)0;
+		ev1[i] = (expo)0;
 	}
 
 	for (i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
 		ev1[i] -= ev2[i];
-		if (ev1[i] != (exp)0 && Exponent[i] != (exp)0) {
+		if (ev1[i] != (expo)0 && Exponent[i] != (expo)0) {
 			ev1[i] %= Exponent[i];
-			if (ev1[i] < (exp)0) ev1[i] += Exponent[i];
+			if (ev1[i] < (expo)0) ev1[i] += Exponent[i];
 		}
 
-		if (ev1[i] != (exp)0) l++;
+		if (ev1[i] != (expo)0) l++;
 	}
 
 	Free(ev2);
@@ -56,18 +56,18 @@ static int tail_cbn(gen c, gen b, expvec *ev) {
 
 	/* c b^n */
 	ev2 = ExpVecWord(Generators[c]);
-	if (Power[b] != (word)0) Collect(ev2, Power[b], (exp)1);
+	if (Power[b] != (word)0) Collect(ev2, Power[b], (expo)1);
 
 	for (i = 1; i <= NrPcGens; i++) {
 		if (ev1[i] != ev2[i]) printf(Warning2, "tail_cbn", c, b);
-		ev1[i] = (exp)0;
+		ev1[i] = (expo)0;
 	}
 
 	for (i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
 		ev1[i] -= ev2[i];
-		if (Exponent[i] != (exp)0) {
+		if (Exponent[i] != (expo)0) {
 			ev1[i] %= Exponent[i];
-			if (ev1[i] < (exp)0) ev1[i] += Exponent[i];
+			if (ev1[i] < (expo)0) ev1[i] += Exponent[i];
 		}
 
 		if (ev1[i] != 0) l++;
@@ -89,18 +89,18 @@ static int tail_cnb(gen c, gen b, expvec *ev) {
 
 	/* c^n b */
 	ev2 = ExpVecWord(Power[c]);
-	Collect(ev2, Generators[b], (exp)1);
+	Collect(ev2, Generators[b], (expo)1);
 
 	for (i = 1; i <= NrPcGens; i++) {
 		if (ev1[i] != ev2[i]) printf(Warning2, "tail_cnb", c, b);
-		ev1[i] = (exp)0;
+		ev1[i] = (expo)0;
 	}
 
 	for (i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
 		ev1[i] -= ev2[i];
-		if (ev1[i] != (exp)0 && Exponent[i] != (exp)0) {
+		if (ev1[i] != (expo)0 && Exponent[i] != (expo)0) {
 			ev1[i] %= Exponent[i];
-			if (ev1[i] < (exp)0) ev1[i] += Exponent[i];
+			if (ev1[i] < (expo)0) ev1[i] += Exponent[i];
 		}
 
 		if (ev1[i] != 0) l++;
@@ -119,19 +119,19 @@ static int tail_cbb(gen c, gen b, expvec *ev) {
 
 	/* (c b^-1) b */
 	ev1 = ExpVecWord(Generators[c]);
-	Collect(ev1, Generators[ b], (exp)1);
-	Collect(ev1, Generators[-b], (exp)1);
+	Collect(ev1, Generators[ b], (expo)1);
+	Collect(ev1, Generators[-b], (expo)1);
 	ev1[ c ] -= 1;
 
 	for (i = 1; i <= NrPcGens; i++) {
-		if (ev1[i] != (exp)0) printf(Warning2, "tail_cnb", c, b);
+		if (ev1[i] != (expo)0) printf(Warning2, "tail_cnb", c, b);
 	}
 
 	for (i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
 		ev1[i] = -ev1[i];
-		if (ev1[i] != (exp)0 && Exponent[i] != (exp)0) {
+		if (ev1[i] != (expo)0 && Exponent[i] != (expo)0) {
 			ev1[i] %= Exponent[i];
-			if (ev1[i] < (exp)0) ev1[i] += Exponent[i];
+			if (ev1[i] < (expo)0) ev1[i] += Exponent[i];
 		}
 
 		if (ev1[i] != 0) l++;
@@ -147,19 +147,19 @@ static int tail_ccb(gen c, gen b, expvec *ev) {
 
 	/* c^-1 (c b) = c^-1 b c^b */
 	ev1 = ExpVecWord(Generators[c]);
-	Collect(ev1, Generators[b], (exp)1);
-	Collect(ev1, Conjugate[-c][b], (exp)1);
+	Collect(ev1, Generators[b], (expo)1);
+	Collect(ev1, Conjugate[-c][b], (expo)1);
 	ev1[abs(b)] -= sgn(b);
 
 	for (i = 1; i <= NrPcGens; i++) {
-		if (ev1[i] != (exp)0) printf(Warning2, "tail_cnb", c, b);
+		if (ev1[i] != (expo)0) printf(Warning2, "tail_cnb", c, b);
 	}
 
 	for (i = NrPcGens + 1; i <= NrPcGens + NrCenGens; i++) {
 		ev1[i] = -ev1[i];
-		if (Exponent[i] != (exp)0) {
+		if (Exponent[i] != (expo)0) {
 			ev1[i] %= Exponent[i];
-			if (ev1[i] < (exp)0) ev1[i] += Exponent[i];
+			if (ev1[i] < (expo)0) ev1[i] += Exponent[i];
 		}
 
 		if (ev1[i] != 0) l++;
@@ -218,14 +218,14 @@ void Tails(void) {
 			h = Definition[t].h;
 			g = Definition[t].g;
 			if (h < 0 || Wt(h) < Class) continue;
-			if (g != (gen)0 && Exponent[h] != (exp)0) {
+			if (g != (gen)0 && Exponent[h] != (expo)0) {
 				l = tail_cnb(h, g, &ev);
 				/* printf( "t: %d, ", t );
 				   for( i = 1; i <= NrPcGens+NrCenGens; i++ )
-				     if( ev[i] != (exp)0 ) printf( " %d^"EXP_FORMAT"", i, ev[i] );
+				     if( ev[i] != (expo)0 ) printf( " %d^"EXP_FORMAT"", i, ev[i] );
 				   printf( "\n" );*/
 				if (l == 1) {
-					if (ev[t] == (exp)0)
+					if (ev[t] == (expo)0)
 						printf("Error, exponent zero\n");
 					if (Verbose)
 						printf("#    Setting exponent "EXP_FORMAT" for %d\n", ev[t], t);
@@ -233,14 +233,14 @@ void Tails(void) {
 					addRow(ev);
 				}
 			}
-			if (g != (gen)0 && Exponent[g] != (exp)0) {
+			if (g != (gen)0 && Exponent[g] != (expo)0) {
 				l = tail_cbn(h, g, &ev);
 				/* printf( "t: %d, ", t );
 				for( i = 1; i <= NrPcGens+NrCenGens; i++ )
-				  if( ev[i] != (exp)0 ) printf( " %d^"EXP_FORMAT"", i, ev[i] );
+				  if( ev[i] != (expo)0 ) printf( " %d^"EXP_FORMAT"", i, ev[i] );
 				  printf( "\n" );*/
 				if (l == 1) {
-					if (ev[t] == (exp)0)
+					if (ev[t] == (expo)0)
 						printf("Error, exponent zero\n");
 					if (Verbose)
 						printf("#    Setting exponent "EXP_FORMAT" for %d\n", ev[t], t);
@@ -263,11 +263,11 @@ void Tails(void) {
 				for (i = 1; n > m && i <= Dim[b]; i++) {
 					if (b != 1)
 						Tail(n,  m);
-					if (Exponent[m] == (exp)0)
+					if (Exponent[m] == (expo)0)
 						Tail(n, -m);
-					if (Exponent[n] == (exp)0)
+					if (Exponent[n] == (expo)0)
 						Tail(-n,  m);
-					if (Exponent[m] + Exponent[n] == (exp)0)
+					if (Exponent[m] + Exponent[n] == (expo)0)
 						Tail(-n, -m);
 					m++;
 				}

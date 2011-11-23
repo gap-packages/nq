@@ -24,20 +24,20 @@ typedef short   gen;
 **    defining the macro HAVE_LONG_LONG_INT in the Makefile.
 */
 #ifdef HAVE_LONG_LONG_INT
-typedef long long       exp;
+typedef long long       expo;
 #define EXP_FORMAT	"%lld"
 #else
-typedef long            exp;
+typedef long            expo;
 #define EXP_FORMAT	"%ld"
 #endif
 
-typedef exp             *expvec;
+typedef expo             *expvec;
 
 #define EOW     ((gen)0)
 
 struct  gpower {
 	gen     g;      /* the generator */
-	exp     e;      /* its exponent  */
+	expo    e;      /* its exponent  */
 };
 typedef struct gpower   gpower;
 

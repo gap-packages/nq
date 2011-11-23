@@ -31,17 +31,17 @@ typedef large   *lvec;
 #    define ISZERO(l)  ((l)->_mp_size == 0)
 #    define ISNEG(l)   ((l)->_mp_size < 0)
 #    define NEGATE(l)  ((l)->_mp_size = -(l)->_mp_size)
-#    define SIGN(l)    (exp)(sgn((l)->_mp_size))
+#    define SIGN(l)    (expo)(sgn((l)->_mp_size))
 #    define SIZE(l)    ((l)->_mp_size)
-#    define LIMB(l,i)  (exp)((l)->_mp_d[i])
+#    define LIMB(l,i)  (expo)((l)->_mp_d[i])
 #else
 #    define NOTZERO(l) ((l)->size != 0)
 #    define ISZERO(l)  ((l)->size == 0)
 #    define ISNEG(l)   ((l)->size < 0)
 #    define NEGATE(l)  ((l)->size = -(l)->size)
-#    define SIGN(l)    (exp)(sgn((l)->size))
+#    define SIGN(l)    (expo)(sgn((l)->size))
 #    define SIZE(l)    ((l)->size)
-#    define LIMB(l,i)  (exp)((l)->d[i])
+#    define LIMB(l,i)  (expo)((l)->d[i])
 #endif
 
 
@@ -85,12 +85,12 @@ int     RawMatOutput;
 FILE    *RawMatFile = NULL;
 
 
-static large ltom(exp n) {
+static large ltom(expo n) {
 	char    x[64];
 	MP_INT  *l = (MP_INT*)Allocate(sizeof(MP_INT));
 	int     sign = 1;
 
-	if (n < (exp)0) { sign = -1; n = -n; }
+	if (n < (expo)0) { sign = -1; n = -n; }
 
 	/*
 	** There does not seem to be a function that converts from long long
@@ -164,7 +164,7 @@ static long survivingCols(expvec *M, long *surviving) {
 
 	for (i = 0; i < NrRows; i++) {
 		for (; h < Heads[i]; h++) surviving[nrSurv++] = h;
-		if (M[i][h] != (exp)1)    surviving[nrSurv++] = h;
+		if (M[i][h] != (expo)1)    surviving[nrSurv++] = h;
 		h++;
 	}
 	for (; h <= NrCols; h++) surviving[nrSurv++] = h;
@@ -197,7 +197,7 @@ static void outputMatrix(expvec *M, const char *suffix) {
 
 	fprintf(fp, "%ld    # Number of colums\n", nrSurv);
 	for (i = 0; i < NrRows; i++) {
-		if (M[i][Heads[i]] != (exp)1) {
+		if (M[i][Heads[i]] != (expo)1) {
 			for (j = 0; j < nrSurv; j++)
 				fprintf(fp, " "EXP_FORMAT, M[i][surviving[j]]);
 			fprintf(fp, "\n");
@@ -261,7 +261,7 @@ static void printGapMatrix(expvec *M) {
 
 	printf("[\n");
 	for (i = 0, first = 1; i < NrRows; i++) {
-		if (M[i][Heads[i]] != (exp)1) {
+		if (M[i][Heads[i]] != (expo)1) {
 			if (!first) printf(",\n");
 			else         first = 0;
 			printf("[");
@@ -312,7 +312,7 @@ expvec *MatrixToExpVecs(void) {
 	long    i, j, k;
 	large   m;
 
-	exp     c;
+	expo    c;
 	expvec  *M;
 
 	if (NrRows == 0) {
@@ -330,7 +330,7 @@ expvec *MatrixToExpVecs(void) {
 
 	/* Convert. */
 	for (i = 0; i < NrRows; i++) {
-		M[i] = (expvec)calloc(NrCols + 1, sizeof(exp));
+		M[i] = (expvec)calloc(NrCols + 1, sizeof(expo));
 		if (M[i] == (expvec)0) {
 			perror("MatrixToExpVecs(), M[]");
 			exit(2);
@@ -351,10 +351,10 @@ expvec *MatrixToExpVecs(void) {
 	for (i = 0; i < NrRows; i++)
 		for (j = i - 1; j >= 0; j--)
 			if (abs(M[j][ Heads[i] ]) >= M[i][ Heads[i] ] ||
-			        M[j][ Heads[i] ] > (exp)0) {
+			        M[j][ Heads[i] ] > (expo)0) {
 				c = M[j][ Heads[i] ] / M[i][ Heads[i] ];
-				if (M[j][ Heads[i] ] > (exp)0 &&
-				        M[j][ Heads[i] ] % M[i][ Heads[i] ] != (exp)0) c++;
+				if (M[j][ Heads[i] ] > (expo)0 &&
+				        M[j][ Heads[i] ] % M[i][ Heads[i] ] != (expo)0) c++;
 				for (k = Heads[i]; k <= NrCols; k++)
 					M[j][k] -= c * M[i][k];
 			}
@@ -492,7 +492,7 @@ int addRow(expvec ev) {
 			exit(2);
 		}
 		NrCols = NrCenGens;
-		MaximalEntry = ltom((exp)0);
+		MaximalEntry = ltom((expo)0);
 
 		if (RawMatOutput) {
 			char *file;

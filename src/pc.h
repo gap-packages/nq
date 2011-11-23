@@ -56,7 +56,7 @@ extern gen      **CommuteList;
 extern gen      **Commute2List;
 extern int      *NrPcGensList;
 
-extern exp      *Exponent;
+extern expo     *Exponent;
 extern word     *Power;
 extern word     **Conjugate;
 extern char     **PcGenName;

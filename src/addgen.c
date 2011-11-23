@@ -148,16 +148,16 @@ void AddGenerators(void) {
 	/* Secondly new generators are defined. */
 	/* Powers */
 	for (j = 1; j <= NrPcGens; j++)
-		if (Exponent[j] != (exp)0) {
+		if (Exponent[j] != (expo)0) {
 			G++;
 			l = 0;
 			if (Power[j] != (word)0) l = WordLength(Power[ j ]);
 			w = (word)malloc((l + 2) * sizeof(gpower));
 			if (Power[j] != (word)0) WordCopy(Power[ j ], w);
 			w[l].g   = G;
-			w[l].e   = (exp)1;
+			w[l].e   = (expo)1;
 			w[l + 1].g = EOW;
-			w[l + 1].e = (exp)0;
+			w[l + 1].e = (expo)0;
 			if (Power[ j ] != (word)0) free(Power[ j ]);
 			Power[ j ] = w;
 			Definition[ G ].h = j;
@@ -180,9 +180,9 @@ void AddGenerators(void) {
 				w = (word)malloc((l + 2) * sizeof(gpower));
 				WordCopy(Conjugate[j][i], w);
 				w[l].g   = G;
-				w[l].e   = (exp)1;
+				w[l].e   = (expo)1;
 				w[l + 1].g = EOW;
-				w[l + 1].e = (exp)0;
+				w[l + 1].e = (expo)0;
 				if (Conjugate[j][i] != Generators[j])
 					free(Conjugate[j][i]);
 				Conjugate[j][i] = w;
@@ -215,12 +215,12 @@ void AddGenerators(void) {
 	Definition = (def*)realloc(Definition, (G + 1) * sizeof(def));
 
 	/* Enlarge Exponent[] ... */
-	Exponent = (exp *)realloc(Exponent, (G + 1) * sizeof(exp));
-	if (Exponent == (exp *)0) {
+	Exponent = (expo *)realloc(Exponent, (G + 1) * sizeof(expo));
+	if (Exponent == (expo *)0) {
 		perror("addGenerators(), Exponent");
 		exit(2);
 	}
-	for (i = NrPcGens + 1; i <= G; i++) Exponent[i] = (exp)0;
+	for (i = NrPcGens + 1; i <= G; i++) Exponent[i] = (expo)0;
 
 	/* ... and Power[].       */
 	Power = (word *)realloc(Power, (G + 1) * sizeof(word));

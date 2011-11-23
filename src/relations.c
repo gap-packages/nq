@@ -75,8 +75,8 @@ void InitEpim(void) {
 	NrCenGens = nrGens;
 
 	/* Initialize Exponent[]. */
-	Exponent = (exp*) calloc((NrCenGens + 1), sizeof(exp));
-	if (Exponent == (exp*)0) {
+	Exponent = (expo*) calloc((NrCenGens + 1), sizeof(expo));
+	if (Exponent == (expo*)0) {
 		perror("initEpim(), Exponent");
 		exit(2);
 	}
@@ -98,9 +98,9 @@ void InitEpim(void) {
 			exit(2);
 		}
 		Image[i][0].g = i;
-		Image[i][0].e = (exp)1;
+		Image[i][0].e = (expo)1;
 		Image[i][1].g = EOW;
-		Image[i][1].e = (exp)0;
+		Image[i][1].e = (expo)0;
 	}
 
 	SetupCommuteList();
@@ -136,9 +136,9 @@ int     ExtendEpim(void) {
 			w = (word)malloc((l + 2) * sizeof(gpower));
 			if (Image[j] != (word)0) WordCopy(Image[ j ], w);
 			w[l].g   = G;
-			w[l].e   = (exp)1;
+			w[l].e   = (expo)1;
 			w[l + 1].g = EOW;
-			w[l + 1].e = (exp)0;
+			w[l + 1].e = (expo)0;
 			if (Image[ j ] != (word)0) free(Image[ j ]);
 			Image[ j ] = w;
 			Definition[ G ].h = -j;
@@ -210,7 +210,7 @@ void    ElimEpim(void) {
 	for (h = 1, i = 0; h <= NrCenGens; h++)
 		if (i >= NrRows || h != Heads[i])
 			renumber[ h ] = h - n;
-		else if (M[i][h] != (exp)1) {
+		else if (M[i][h] != (expo)1) {
 			/* h will become a torsion element */
 			renumber[ h ] = h - n;
 			Exponent[ renumber[h] ] = M[i][h];
@@ -256,20 +256,20 @@ void    ElimEpim(void) {
 
 		/* Copy the exponent vector M[i] into w. */
 		for (l = 0, j = h + 1; j <= NrCols; j++)
-			if (M[i][j] > (exp)0) {
+			if (M[i][j] > (expo)0) {
 				w[l].g = -renumber[j];
 				w[l].e = M[i][j];
 				l++;
-			} else if (M[i][j] < (exp)0) {
+			} else if (M[i][j] < (expo)0) {
 				w[l].g = renumber[j];
 				w[l].e = -M[i][j];
 				l++;
 			}
 		w[l].g = EOW;
-		w[l].e = (exp)0;
+		w[l].e = (expo)0;
 		l++;
 
-		if (M[i][h] == (exp)1) {
+		if (M[i][h] == (expo)1) {
 			/* generator h has to be eliminated. */
 			free(Image[h]);
 			Image[h] = (word)realloc(w, l * sizeof(gpower));
@@ -285,7 +285,7 @@ void    ElimEpim(void) {
 
 	/* Now adjust the sizes of the arrays */
 	Commute = (gen*)realloc(Commute, (NrCenGens + 1 - n) * sizeof(gen));
-	Exponent = (exp*)realloc(Exponent, (NrCenGens + 1 - n) * sizeof(exp));
+	Exponent = (expo*)realloc(Exponent, (NrCenGens + 1 - n) * sizeof(expo));
 
 	free(renumber);
 
