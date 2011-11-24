@@ -14,31 +14,6 @@
 **    Commute[] as if the current group had class c.  CommuteList[Class+1][]
 **    is the same as Commute[].
 */
-#if 0
-/*
-**    Old code to set the commute array.
-*/ 
-
-        /* We change the entries in Commute[]. A generator of weight c
-        ** did commute with all generators of weight Class-c. From here
-        ** on it will only commute with generators of weight Class-c+1
-        ** since new generators of weight Class+1 have been introduced.
-        */
-        Commute = (gen*)realloc( Commute, (G+1)*sizeof(gen) );
-        if( Commute == (gen*)0 ) {
-            perror( "addGenerators(), Commute" );
-            exit( 2 );
-        }
-        l = 1;
-        G = NrPcGens;
-        for( c = 1; 2*c <= Class+1; c++ ) {
-            for( i = 1; i <= Dimension[c]; i++, l++ )
-                Commute[l] = G;
-            G -= Dimension[ Class-c+1 ];
-        }
-        for( ; l <= NrPcGens+NrCenGens; l++ ) Commute[l] = l;
-#endif
-
 void    SetupCommuteList(void) {
 
 	int c;
