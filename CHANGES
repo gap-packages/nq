@@ -5,6 +5,8 @@
 X.X (2011-XX-XX)
 	+ Fixed crash on some systems caused by a long standing memory
 	  management bug.
+	+ Fixed crash on certain systems caused by exponents being sometimes
+	  treated as 64bit words, and sometimes as 32bit words.
 	+ Fixed spurious warnings when running "configure" that could occur
 	  when using --with-gmp-prefix
 	+ Improved build system:
