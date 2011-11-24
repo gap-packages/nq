@@ -10,22 +10,22 @@
 int      Class = 0;
 int      NrPcGens = 0;
 int      NrCenGens = 0;
-int      *Dimension;
+int      *Dimension = NULL;
 
-word     *Generators;
-int      *Weight;
+word     *Generators = NULL;
+int      *Weight = NULL;
 
-gen      *Commute;
-gen      *Commute2;
-gen      **CommuteList = (gen **)0;
-gen      **Commute2List = (gen **)0;
-int      *NrPcGensList = (int *)0;
+gen      *Commute = NULL;
+gen      *Commute2 = NULL;
+gen      **CommuteList = NULL;
+gen      **Commute2List = NULL;
+int      *NrPcGensList = NULL;
 
-expo     *Exponent;
-word     *Power;
-word     **Conjugate;
-def      *Definition;
-char     **PcGenName;
+expo     *Exponent = NULL;
+word     *Power = NULL;
+word     **Conjugate = NULL;
+def      *Definition = NULL;
+char     **PcGenName = NULL;
 
 /*
 **    InitPcPres() initializes those parts of pc-presentation which are
