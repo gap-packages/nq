@@ -16,7 +16,7 @@ distclean: clean
 
 G1.tst: G1
 	@ echo -n Testing example: $<
-	@ $(NQ) $< 18 | grep -v "Time\|time\|size\|Machine\|Input\|Version" > $@
+	@ $(NQ) $< 18 | grep -v "Time\|time\|size\|Machine\|Input\|Program\|Version" > $@
 	@ if diff $<.out $@; then                                     \
 	     echo " ok.";                                             \
 	     rm $@;                                                   \
@@ -28,7 +28,7 @@ G1.tst: G1
 
 G2.tst: G2
 	@ echo -n Testing example: $<
-	@ $(NQ) $< 11 | grep -v "Time\|time\|size\|Machine\|Input\|Version" > $@
+	@ $(NQ) $< 11 | grep -v "Time\|time\|size\|Machine\|Input\|Program\|Version" > $@
 	@ if diff $<.out $@; then                                     \
 	     echo " ok.";                                             \
 	     rm $@;                                                   \
@@ -40,7 +40,7 @@ G2.tst: G2
 
 G3.tst: G3
 	@ echo -n Testing example: $<
-	@ $(NQ) $< 20 | grep -v "Time\|time\|size\|Machine\|Input\|Version" > $@
+	@ $(NQ) $< 20 | grep -v "Time\|time\|size\|Machine\|Input\|Program\|Version" > $@
 	@ if diff $<.out $@; then                                     \
 	     echo " ok.";                                             \
 	     rm $@;                                                   \
@@ -52,7 +52,7 @@ G3.tst: G3
 
 G4.tst: G4
 	@ echo -n Testing example: $<
-	@ $(NQ) $< 12 | grep -v "Time\|time\|size\|Machine\|Input\|Version" > $@
+	@ $(NQ) $< 12 | grep -v "Time\|time\|size\|Machine\|Input\|Program\|Version" > $@
 	@ if diff $<.out $@; then                                     \
 	     echo " ok.";                                             \
 	     rm $@;                                                   \
@@ -64,7 +64,7 @@ G4.tst: G4
 
 G5.tst: G5
 	@ echo -n Testing example: $<
-	@ $(NQ) $< 12 | grep -v "Time\|time\|size\|Machine\|Input\|Version" > $@
+	@ $(NQ) $< 12 | grep -v "Time\|time\|size\|Machine\|Input\|Program\|Version" > $@
 	@ if diff $<.out $@; then                                     \
 	     echo " ok.";                                             \
 	     rm $@;                                                   \
