@@ -5,6 +5,8 @@
 */
 
 
+#include <assert.h>
+
 #include "nq.h"
 #include "glimt.h"
 #include "relations.h" /* for ElimAllEpim */
@@ -244,8 +246,10 @@ void ElimGenerators(void) {
 		}
 
 	/* Now adjust the sizes of the arrays */
+	assert(Commute == CommuteList[ Class + 1 ]);
 	Commute   = (gen*)realloc(Commute,
 	                          (NrPcGens + NrCenGens + 1 - n) * sizeof(gen));
+	CommuteList[ Class + 1 ] = Commute;
 	Exponent = (expo*)realloc(Exponent,
 	                         (NrPcGens + NrCenGens + 1 - n) * sizeof(expo));
 

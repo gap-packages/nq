@@ -3,8 +3,10 @@
 ===========================================================================
 
 X.X (2011-XX-XX)
-	+ Fixed spurious warnings when running "configure" that
-	  could occur when using --with-gmp-prefix
+	+ Fixed crash on some systems caused by a long standing memory
+	  management bug.
+	+ Fixed spurious warnings when running "configure" that could occur
+	  when using --with-gmp-prefix
 	+ Improved build system:
 	  - Improved GMP detection in configure script; it now checks if GAP
 	    built a GMP library, and if so, uses that.

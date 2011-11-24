@@ -4,6 +4,7 @@
 **                                         nickel@mathematik.tu-darmstadt.de
 */
 
+#include <assert.h>
 
 #include "relations.h"
 #include "nq.h"
@@ -199,7 +200,7 @@ void    ElimEpim(void) {
 
 	M = MatrixToExpVecs();
 
-	renumber = (gen*) malloc((NrCenGens + 1) * sizeof(gen));
+	renumber = (gen*) calloc((NrCenGens + 1), sizeof(gen));
 	if (renumber == (gen*)0) {
 		perror("ElimEpim(), renumber");
 		exit(2);
@@ -222,14 +223,14 @@ void    ElimEpim(void) {
 
 	/* allocate memory for Power[], note that n is the number of
 	   generators to be eliminated. */
-	Power = (word*) malloc((NrCenGens - n + 1) * sizeof(word));
+	Power = (word*) calloc((NrCenGens - n + 1), sizeof(word));
 	if (Power == (word*)0) {
 		perror("ElimEpim(), Power");
 		exit(2);
 	}
 
 	/* allocate memory for Definition[]. */
-	Definition = (def*)malloc((NrCenGens - n + 1) * sizeof(def));
+	Definition = (def*)calloc((NrCenGens - n + 1), sizeof(def));
 	if (Definition == (def*)0) {
 		perror("ElimEpim(), Definition");
 		exit(2);
@@ -284,7 +285,9 @@ void    ElimEpim(void) {
 	}
 
 	/* Now adjust the sizes of the arrays */
+	assert(Commute == CommuteList[ Class + 1 ]);
 	Commute = (gen*)realloc(Commute, (NrCenGens + 1 - n) * sizeof(gen));
+	CommuteList[ Class + 1 ] = Commute;
 	Exponent = (expo*)realloc(Exponent, (NrCenGens + 1 - n) * sizeof(expo));
 
 	free(renumber);
