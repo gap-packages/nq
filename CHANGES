@@ -9,6 +9,7 @@ X.X (2011-XX-XX)
 	  treated as 64bit words, and sometimes as 32bit words.
 	+ Fixed spurious warnings when running "configure" that could occur
 	  when using --with-gmp-prefix
+	+ Fixed a warning when using nq in GAP versions before 4.5.
 	+ Improved build system:
 	  - Improved GMP detection in configure script; it now checks if GAP
 	    built a GMP library, and if so, uses that.
