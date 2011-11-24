@@ -17,6 +17,8 @@
 #ifndef GENEXP_H
 #define GENEXP_H
 
+#include "config.h"
+
 typedef short   gen;
 
 /*
