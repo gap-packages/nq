@@ -104,6 +104,8 @@ BannerString     := Concatenation(
                      "  maintained by Max Horn (mhorn@tu-bs.de)\n"
                      ),
 
+TestFile := "gap/nq.tst",
+
 Keywords := [ "nilpotent quotient algorithm",
               "nilpotent presentations",
               "finitely presented groups",
