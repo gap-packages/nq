@@ -22,7 +22,7 @@ function ( ) local  NqDocDir;
   ##  loaded by RequirePackage().
   NqDocDir := DirectoriesPackageLibrary( "nq", "doc" )[1];
 
-  MakeGAPDocDoc( NqDocDir, "nqman", [ "nqbib.xml" ],
+  MakeGAPDocDoc( NqDocDir, "nqman", [ "../PackageInfo.g" ],
                  "nq", "../../../", "MathJax" );
 
   ##  Copy CSS files into the doc directory.
