@@ -3801,34 +3801,44 @@ fi
 
 
 
-GMP_HOME=
 GMP_CPPFLAGS=
 GMP_LIBS=
 
 
 # Check whether --with-gmp was given.
 if test "${with_gmp+set}" = set; then :
-  withval=$with_gmp;  if test "$with_gmp" = "yes" ; then
-      GMP_HOME="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp"
-      GMP_CPPFLAGS="-I${GMP_HOME}/include"
-      GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
-    elif test "$with_gmp" = "system" ; then
-      GMP_CPPFLAGS=""
-      GMP_LIBS="-lgmp"
-    else
-      GMP_HOME="$with_gmp"
-      GMP_CPPFLAGS="-I${GMP_HOME}/include"
-      GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
-    fi
-
+  withval=$with_gmp;
 else
-   GMP_HOME="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp"
-   GMP_CPPFLAGS="-I${GMP_HOME}/include"
-   GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
-
+   with_gmp=yes
 
 fi
 
+
+if test "x$with_gmp" = "xno" ; then
+	as_fn_error $? "GMP is required, cannot build without it" "$LINENO" 5
+elif test "x$with_gmp" = "xsystem" ; then
+	# Try using system GMP
+	GMP_CPPFLAGS=""
+	GMP_LIBS="-lgmp"
+else
+	# Try using static linked GMP in the specified location
+	if test "x$with_gmp" = "xyes" ; then
+		# Try to use GAP's GMP, if available
+		GMP_HOME="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp"
+	else
+		GMP_HOME="$with_gmp"
+	fi;
+	if test -d ${GMP_HOME}/include && test -f ${GMP_HOME}/lib/libgmp.a ; then
+		GMP_CPPFLAGS="-I${GMP_HOME}/include"
+		GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
+	elif test "x$with_gmp" = "xyes" ; then
+		# fallback to trying system wide GMP
+		GMP_CPPFLAGS=""
+		GMP_LIBS="-lgmp"
+	else
+		as_fn_error $? "Could not locate libgmp.a in the specified location" "$LINENO" 5
+	fi
+fi;
 
 nq_save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $GMP_CPPFLAGS"

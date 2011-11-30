@@ -136,7 +136,6 @@ dnl ## Otherwise, first try to use the GMP provided by GAP, or
 dnl ## any GMP version installed globally by the user.
 dnl ##
 
-GMP_HOME=
 GMP_CPPFLAGS=
 GMP_LIBS=
 
@@ -149,25 +148,34 @@ AC_ARG_WITH([gmp],
         Otherwise you give the <path> to the directory which contains the library. 
         [[default=yes]]
     ])],
-
-  [ if test "$with_gmp" = "yes" ; then
-      GMP_HOME="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp"
-      GMP_CPPFLAGS="-I${GMP_HOME}/include"
-      GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
-    elif test "$with_gmp" = "system" ; then
-      GMP_CPPFLAGS=""
-      GMP_LIBS="-lgmp"
-    else
-      GMP_HOME="$with_gmp"
-      GMP_CPPFLAGS="-I${GMP_HOME}/include"
-      GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
-    fi
- ],
- [ GMP_HOME="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp"
-   GMP_CPPFLAGS="-I${GMP_HOME}/include"
-   GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
- ]
+  [], [ with_gmp=yes ]
 )
+
+if test "x$with_gmp" = "xno" ; then
+	AC_MSG_ERROR([GMP is required, cannot build without it])
+elif test "x$with_gmp" = "xsystem" ; then
+	# Try using system GMP
+	GMP_CPPFLAGS=""
+	GMP_LIBS="-lgmp"
+else
+	# Try using static linked GMP in the specified location
+	if test "x$with_gmp" = "xyes" ; then
+		# Try to use GAP's GMP, if available
+		GMP_HOME="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp"
+	else
+		GMP_HOME="$with_gmp"
+	fi;
+	if test -d ${GMP_HOME}/include && test -f ${GMP_HOME}/lib/libgmp.a ; then
+		GMP_CPPFLAGS="-I${GMP_HOME}/include"
+		GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
+	elif test "x$with_gmp" = "xyes" ; then
+		# fallback to trying system wide GMP
+		GMP_CPPFLAGS=""
+		GMP_LIBS="-lgmp"
+	else
+		AC_MSG_ERROR([Could not locate libgmp.a in the specified location])
+	fi
+fi;
 
 nq_save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $GMP_CPPFLAGS"
