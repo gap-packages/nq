@@ -95,7 +95,7 @@ static gen GenNumber(char *gname, int status) {
 **    name of a generator given by its number.
 */
 const char *GenName(gen g) {
-	if (g > NrGens)
+	if (g > (gen)NrGens)
 		return 0;
 	return GenNames[g];
 }
@@ -230,7 +230,7 @@ static void Number(void) {
 		while (isdigit(Ch)) { fprintf(stderr, "%c", Ch); ReadCh(); }
 		fprintf(stderr, " in\n");
 		SyntaxError((char *)0);
-	} else if (n >= (1 << (8 * sizeof(unsigned int) - 1))) {
+	} else if (n >= (1U << (8 * sizeof(unsigned int) - 1))) {
 		fprintf(stderr, "Integer overflow reading %u in\n", n);
 		SyntaxError((char *)0);
 	}
@@ -1068,7 +1068,7 @@ void    PrintPresentation(FILE *fp) {
 
 	/* Print the generators first. */
 	PrintGen(1);
-	for (g = 2; g <= Pres.nragens; g++) {
+	for (g = 2; g <= (gen)Pres.nragens; g++) {
 		fprintf(OutFp, ", ");
 		PrintGen(g);
 	}
@@ -1076,7 +1076,7 @@ void    PrintPresentation(FILE *fp) {
 	if (Pres.nrigens > 0) {
 		fprintf(OutFp, "; ");
 		PrintGen(Pres.nragens + 1);
-		for (g = Pres.nragens + 2; g <= Pres.nragens + Pres.nrigens; g++) {
+		for (g = Pres.nragens + 2; g <= (gen)(Pres.nragens + Pres.nrigens); g++) {
 			fprintf(OutFp, ", ");
 			PrintGen(g);
 		}
