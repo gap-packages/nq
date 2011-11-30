@@ -129,4 +129,10 @@ distclean: clean
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
+$(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
+	$(SHELL) ./config.status --recheck
+
+$(top_srcdir)/configure: $(top_srcdir)/configure.in
+	cd $(top_srcdir) && autoreconf
+
 .PHONY: all gap compile gapmanual WWW test clean distclean

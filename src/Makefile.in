@@ -32,7 +32,6 @@ CFLAGS += \
  -Wwrite-strings\
  -W\
  -Wc++-compat\
- -ansi\
  -Wold-style-definition\
  -Wmissing-prototypes\
  -Wstrict-prototypes\
@@ -106,5 +105,21 @@ word.o: word.c nq.h config.h system.h mem.h genexp.h pc.h pcarith.h \
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+$(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
+	$(SHELL) ./config.status --recheck
+
+$(top_srcdir)/configure: $(top_srcdir)/configure.in
+	cd $(top_srcdir) && autoreconf
+
+# TODO: The following rule is problematic: If config.status detects that config.h won't be
+# changed, it does not rewrite it, which is fine. But as a result, Make will try again
+# and a gain to rebuild config.h. On the other hand, if we force a "touch" of config.h
+# this will shut up make, but will cause all files #including config.h to be rebuilt,
+# even though nothing really changed.
+# GNU automake solves this by using a "stamp" file. But before I copy that, I'd rather
+# switch to GNU automake.
+# config.h: $(top_srcdir)/src/config.hin $(top_builddir)/config.status
+# 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ && touch src/config.h
 
 .PHONY: all clean distclean
