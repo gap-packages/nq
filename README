@@ -120,7 +120,7 @@ If there are  any  warnings or  even  fatal error messages  during the
 compilation process, please send  a copy to the address  at the end of
 this  document together with  information about your operating system,
 the compiler you  used  and any  changes you  might have  made  to the
-source code. I will have a look at your problems and try to fix them.
+source code. We will have a look at your problems and try to fix them.
  
 After the compilation  is finished you   can  check if the ANU  NQ  is
 running properly on your system.  Simply type

@@ -68,7 +68,7 @@
     that found their way into the code:  Mike Newman, Michael
     Vaughan-Lee, Joachim Neubüser, Charles Sims.
 
-    <P/>I thank Volkmar Felsch and Joachim Neubüser for their careful
+    <P/>Thanks to Volkmar Felsch and Joachim Neubüser for their careful
     examination of the package prior to its release for GAP 4.
 
     <P/>This documentation was prepared with the <Package>GAPDoc</Package>
@@ -1310,7 +1310,7 @@ need not be a left 5-Engel element.
   compilation process, please send a copy to the address at the end of
   this document together with information about your operating system,
   the compiler you used and any changes you might have made to the
-  source code.  I will have a look at your problems and try to fix
+  source code.  We will have a look at your problems and try to fix
   them.
  
   <P/> After the compilation is finished you can check if the ANU NQ
