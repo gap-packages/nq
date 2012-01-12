@@ -9,11 +9,11 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.3",
-Date    := "15/09/2011",
+Version := "2.4",
+Date    := "12/01/2012",
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.3">
-##  <!ENTITY RELEASEDATE "15 September 2011">
+##  <!ENTITY VERSION "2.4">
+##  <!ENTITY RELEASEDATE "12 January 2012">
 ##  <#/GAPDoc>
 
 Persons := [

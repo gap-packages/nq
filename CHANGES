@@ -2,7 +2,7 @@
  This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
-X.X (2011-XX-XX)
+2.4 (2011-01-12)
 	+ Fixed crash on some systems caused by a long standing memory
 	  management bug.
 	+ Fixed crash on certain systems caused by exponents being sometimes
