@@ -51,8 +51,7 @@ Status         := "accepted",
 CommunicatedBy := "Joachim Neubüser (RWTH Aachen)",
 AcceptDate     := "01/2003",
 
-PackageWWWHome := 
-        "http://www.icm.tu-bs.de/ag_algebra/software/NQ/",
+PackageWWWHome := "http://www.icm.tu-bs.de/ag_algebra/software/NQ/",
 
 ArchiveFormats := ".tar.gz .tar.bz2",
 ArchiveURL     := Concatenation( ~.PackageWWWHome, "nq-", ~.Version ),
@@ -60,9 +59,10 @@ README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
 AbstractHTML   := Concatenation( 
-               "This package provides access to the ANU nilpotent quotient ",
-               "program for computing nilpotent factor groups of finitely ",
-               "presented groups." ),
+  "This package provides access to the ANU nilpotent quotient ",
+  "program for computing nilpotent factor groups of finitely ",
+  "presented groups."
+  ),
 
                   
 PackageDoc := rec(
@@ -97,27 +97,29 @@ AvailabilityTest := function()
     return true;
 end,
 
-Autoload := false,
 BannerString     := Concatenation(
-                     "Loading nq ", ~.Version, " (Nilpotent Quotient Algorithm)\n",
-                     "  by Werner Nickel\n",
-                     "  maintained by Max Horn (mhorn@tu-bs.de)\n"
-                     ),
+  "Loading nq ", ~.Version, " (Nilpotent Quotient Algorithm)\n",
+  "  by Werner Nickel\n",
+  "  maintained by Max Horn (mhorn@tu-bs.de)\n"
+  ),
+
+Autoload := false,
 
 TestFile := "gap/nq.tst",
 
-Keywords := [ "nilpotent quotient algorithm",
-              "nilpotent presentations",
-              "finitely presented groups",
-              "finite presentations   ",
-              "commutators",
-              "lower central series",
-              "identical relations",
-              "expression trees",
-              "nilpotent Engel groups",
-              "right and left Engel elements",
-              "computational"
-              ]
+Keywords := [
+  "nilpotent quotient algorithm",
+  "nilpotent presentations",
+  "finitely presented groups",
+  "finite presentations   ",
+  "commutators",
+  "lower central series",
+  "identical relations",
+  "expression trees",
+  "nilpotent Engel groups",
+  "right and left Engel elements",
+  "computational"
+  ]
 ));
 
 
