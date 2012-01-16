@@ -4,7 +4,7 @@ srcdir = @srcdir@
 VPATH = @srcdir@
 subdir = examples
 
-NQ=../bin/@GAP_ARCH@/nq -S 
+NQ=../bin/@GAPARCH@/nq -S 
 
 all: G1.tst G2.tst G3.tst G4.tst G5.tst
 

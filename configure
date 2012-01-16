@@ -606,7 +606,7 @@ ac_subst_vars='LTLIBOBJS
 LIBOBJS
 GMP_LIBS
 GMP_CPPFLAGS
-GAP_ARCH
+GAPARCH
 CONFIGNAME
 ABI_CFLAGS
 ABI
@@ -3795,12 +3795,12 @@ fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for active GAP architecture" >&5
 $as_echo_n "checking for active GAP architecture... " >&6; }
-GAP_ARCH=`fgrep "GAParch=" $SYSINFO_GAP | sed -e 's/^GAParch=\(.*\)$/\1/'`
-if test "x$GAP_ARCH" = "x" ; then
+GAPARCH=`fgrep "GAParch=" $SYSINFO_GAP | sed -e 's/^GAParch=\(.*\)$/\1/'`
+if test "x$GAPARCH" = "x" ; then
 	as_fn_error $? "GAParch not found in $GAP_ROOT_display/sysinfo.gap" "$LINENO" 5
 else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $GAP_ARCH" >&5
-$as_echo "$GAP_ARCH" >&6; }
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $GAPARCH" >&5
+$as_echo "$GAPARCH" >&6; }
 fi
 
 
@@ -3828,7 +3828,7 @@ else
 	# Try using static linked GMP in the specified location
 	if test "x$with_gmp" = "xyes" ; then
 		# Try to use GAP's GMP, if available
-		GMP_HOME="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp"
+		GMP_HOME="$GAP_ROOT_real/bin/$GAPARCH/extern/gmp"
 	else
 		GMP_HOME="$with_gmp"
 	fi;
@@ -3870,6 +3870,7 @@ fi
 
 
 
+# restore FLAGS
 CPPFLAGS="$nq_save_CPPFLAGS"
 LDFLAGS="$nq_save_LDFLAGS"
 

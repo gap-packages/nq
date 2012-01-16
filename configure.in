@@ -125,13 +125,13 @@ dnl ## Parse the GAParch from sysinfo.gap
 dnl ##
 
 AC_MSG_CHECKING([for active GAP architecture])
-GAP_ARCH=`fgrep "GAParch=" $SYSINFO_GAP | sed -e 's/^GAParch=\(.*\)$/\1/'`
-if test "x$GAP_ARCH" = "x" ; then
+GAPARCH=`fgrep "GAParch=" $SYSINFO_GAP | sed -e 's/^GAParch=\(.*\)$/\1/'`
+if test "x$GAPARCH" = "x" ; then
 	AC_MSG_ERROR([GAParch not found in $GAP_ROOT_display/sysinfo.gap])
 else
-	AC_MSG_RESULT([$GAP_ARCH])
+	AC_MSG_RESULT([$GAPARCH])
 fi
-AC_SUBST(GAP_ARCH)
+AC_SUBST(GAPARCH)
 
 dnl ##
 dnl ## Check for GMP
@@ -165,7 +165,7 @@ else
 	# Try using static linked GMP in the specified location
 	if test "x$with_gmp" = "xyes" ; then
 		# Try to use GAP's GMP, if available
-		GMP_HOME="$GAP_ROOT_real/bin/$GAP_ARCH/extern/gmp"
+		GMP_HOME="$GAP_ROOT_real/bin/$GAPARCH/extern/gmp"
 	else
 		GMP_HOME="$with_gmp"
 	fi;
@@ -202,6 +202,7 @@ AC_CHECK_HEADER( [gmp.h],
 	[ AC_MSG_ERROR([Could not locate the GMP include file gmp.h.]) ]
 	)
 
+# restore FLAGS
 CPPFLAGS="$nq_save_CPPFLAGS"
 LDFLAGS="$nq_save_LDFLAGS"
 
