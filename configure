@@ -3846,8 +3846,8 @@ fi;
 
 nq_save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $GMP_CPPFLAGS"
-nq_save_LDFLAGS="$LDFLAGS"
-LDFLAGS="$LDFLAGS $GMP_LIBS"
+nq_save_LIBS="$LIBS"
+LIBS="$LIBS $GMP_LIBS"
 
 ac_fn_c_check_header_mongrel "$LINENO" "gmp.h" "ac_cv_header_gmp_h" "$ac_includes_default"
 if test "x$ac_cv_header_gmp_h" = xyes; then :
@@ -3855,13 +3855,28 @@ if test "x$ac_cv_header_gmp_h" = xyes; then :
 	# TODO: Disable linker check for now: It causes problems on Linux, because
 	# libgmp.a is in the linker command line before the test C file. On the long
 	# run, this should be re-enabled, though perhaps in a different form.
-#     AC_MSG_CHECKING([whether linking against GMP works])
-# 	AC_TRY_LINK(
-#        [#include <gmp.h>],
-#        [__gmpz_init(0);] ,
-#        [AC_MSG_RESULT([yes])],
-#        [AC_MSG_ERROR([no])]
-#        )
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether linking against GMP works" >&5
+$as_echo_n "checking whether linking against GMP works... " >&6; }
+	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <gmp.h>
+int
+main ()
+{
+__gmpz_init(0);
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+else
+  as_fn_error $? "no" "$LINENO" 5
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
 
 else
    as_fn_error $? "Could not locate the GMP include file gmp.h." "$LINENO" 5
@@ -3872,7 +3887,7 @@ fi
 
 # restore FLAGS
 CPPFLAGS="$nq_save_CPPFLAGS"
-LDFLAGS="$nq_save_LDFLAGS"
+LIBS="$nq_save_LIBS"
 
 
 

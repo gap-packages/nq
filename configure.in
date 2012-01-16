@@ -183,28 +183,28 @@ fi;
 
 nq_save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $GMP_CPPFLAGS"
-nq_save_LDFLAGS="$LDFLAGS"
-LDFLAGS="$LDFLAGS $GMP_LIBS"
+nq_save_LIBS="$LIBS"
+LIBS="$LIBS $GMP_LIBS"
 
 AC_CHECK_HEADER( [gmp.h],
 	[
 	# TODO: Disable linker check for now: It causes problems on Linux, because
 	# libgmp.a is in the linker command line before the test C file. On the long
 	# run, this should be re-enabled, though perhaps in a different form.
-#     AC_MSG_CHECKING([whether linking against GMP works])
-# 	AC_TRY_LINK(
-#        [#include <gmp.h>],
-#        [__gmpz_init(0);] , 
-#        [AC_MSG_RESULT([yes])],
-#        [AC_MSG_ERROR([no])]
-#        )
+	AC_MSG_CHECKING([whether linking against GMP works])
+	AC_TRY_LINK(
+		[#include <gmp.h>],
+		[__gmpz_init(0);] , 
+		[AC_MSG_RESULT([yes])],
+		[AC_MSG_ERROR([no])]
+		)
 	],
 	[ AC_MSG_ERROR([Could not locate the GMP include file gmp.h.]) ]
 	)
 
 # restore FLAGS
 CPPFLAGS="$nq_save_CPPFLAGS"
-LDFLAGS="$nq_save_LDFLAGS"
+LIBS="$nq_save_LIBS"
 
 AC_SUBST(GMP_CPPFLAGS)
 AC_SUBST(GMP_LIBS)
