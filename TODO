@@ -37,6 +37,26 @@
   - Maybe example should become part of tst/ respective part
     of the test suite
 
+* Add EpimorphismNilpotentQuotientOp method(s)
+
+* Explain in the README how to build the documentation.
+
+* Do not install any writeable global objects, at least not with a prefix;
+  consider switching to GAP 4.5 namespaces
+
+* README should explain the full build procedure, esp. regarding 32 vs. 64 bit,
+  and support for GAP configs:
+     ./configure CONFIGNAME=default32 ABI=32
+
+* Consider honoring CFLAGS etc. passed as parameter to configure
+
+* Do not call Info(InfoWarning,1,"..."); in AvailabilityTest. Instead use
+  LogPackageLoadingMessage; however, that's only available in GAP 4.5+,
+  so either don't log a warning at all, or somehow do this logging
+  in a way that doesn't harm GAP 4.4 compatibility.
+
+* Document NilpotentQuotient methods for expression trees.
+
 
 =======================================================================
 THE FOLLOWING TODOS ARE TAKEN FROM WERNER'S OLD TODO FILE. SOME OF
