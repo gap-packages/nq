@@ -31,6 +31,15 @@
   GAParch_system=@target@-@CC@-@CONFIGNAME@
   GAParch_abi=@ABI@-bit
 
+* Check env variable GAPPATH (like various existing configure scripts)
+  and use that as GAPPATH if present
+
+* Consider using Max N's findgap.m4
+
+* Seems other packages are using --with-gaproot instead of --with-gap-root;
+  consider switching to that (but keep accepting the old one for backward
+  compatibility??)
+
 * Test suite:
   - Add a "proper" test suite in tst
   - Take a look at gap/nq.tst, possibly move this into tst/
