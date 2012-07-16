@@ -68,7 +68,7 @@ This directory contains the following directories and files:
         TODO            what else needs to be done
 
         configure       run this to compile NQ and then run `make'
-        configure.in    configure was made from this file by autoconf
+        configure.ac    configure was made from this file by autoconf
         Makefile.in     a Makefile is created from this when you run
                         configure 
         cnf/            scripts used by configure

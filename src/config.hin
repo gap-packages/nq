@@ -1,4 +1,4 @@
-/* src/config.hin.  Generated from configure.in by autoheader.  */
+/* src/config.hin.  Generated from configure.ac by autoheader.  */
 
 /* Define to 1 if you have the `getrusage' function. */
 #undef HAVE_GETRUSAGE

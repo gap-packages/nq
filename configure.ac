@@ -1,6 +1,6 @@
 dnl ##
 dnl ## Process this file with autoconf to produce a configure script.
-dnl ## 
+dnl ##
 AC_PREREQ([2.68])
 AC_INIT([ANU Nilpotent Quotient Program], [2.4dev], [support@gap-system.org], [nq])
 AC_CONFIG_AUX_DIR(cnf)
@@ -13,7 +13,7 @@ dnl ##
 AC_CANONICAL_HOST
 
 dnl ##
-dnl ## C is the language 
+dnl ## C is the language
 dnl ##
 AC_LANG([C])
 
@@ -43,7 +43,7 @@ AC_ARG_WITH([gap-root],
 	[GAP_ROOT='${top_srcdir}/../..' ; GAP_ROOT_real="${srcdir}/../.."; GAP_ROOT_display=../..])
 AC_MSG_CHECKING([path to GAP installation])
 
-# Try and turn GAP_ROOT_real into an absolute path 
+# Try and turn GAP_ROOT_real into an absolute path
 GAP_ROOT_real=`cd $GAP_ROOT_real && pwd`
 
 if test -d $GAP_ROOT_real ; then
@@ -99,7 +99,7 @@ dnl ##
 dnl ## Check which GAP configuration to use
 dnl ##
 AC_ARG_VAR(CONFIGNAME,[Supply a (meaningful) name for the configuration you are building.
-    This name will be appended to the architecture-dependent named 
+    This name will be appended to the architecture-dependent named
     sub-directory of bin/. Allows for multiple configurations side by
     side. Default value is "defaultXX" where "XX" is 32 or 64.])
 
@@ -143,13 +143,13 @@ dnl ##
 GMP_CPPFLAGS=
 GMP_LIBS=
 
-AC_ARG_WITH([gmp], 
+AC_ARG_WITH([gmp],
 	[AS_HELP_STRING([--with-gmp=PATH],
 	  [ Use GMP library.
         If the argument you supply is "yes" or <empty>, then the version of GMP bundled with GAP will be used (default).
         If the argument is "system" that means the library is reachable with the standard
         search path "/usr" or "/usr/local".
-        Otherwise you give the <path> to the directory which contains the library. 
+        Otherwise you give the <path> to the directory which contains the library.
         [[default=yes]]
     ])],
   [], [ with_gmp=yes ]
@@ -194,7 +194,7 @@ AC_CHECK_HEADER( [gmp.h],
 	AC_MSG_CHECKING([whether linking against GMP works])
 	AC_TRY_LINK(
 		[#include <gmp.h>],
-		[__gmpz_init(0);] , 
+		[__gmpz_init(0);] ,
 		[AC_MSG_RESULT([yes])],
 		[AC_MSG_ERROR([no])]
 		)

@@ -109,7 +109,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	$(SHELL) ./config.status --recheck
 
-$(top_srcdir)/configure: $(top_srcdir)/configure.in
+$(top_srcdir)/configure: $(top_srcdir)/configure.ac
 	cd $(top_srcdir) && autoreconf
 
 # TODO: The following rule is problematic: If config.status detects that config.h won't be

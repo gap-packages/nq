@@ -1,6 +1,6 @@
 * Release process:
   - add script which automates updating the version in all places:
-     PackageInfo.g, configure.in, configure, ...
+     PackageInfo.g, configure.ac, ...
     this is currently quite easy to forget. Also, the release date
     should be updated in files as necessary, including
       PackageInfo.g, CHANGES, ...
@@ -18,7 +18,6 @@
   - consider using a single Makefile, or alternatively automake
     (automake now has a single-Makefile mode!)
   - add dependency tracking
-  - Rename configure.in to configure.ac
   - add description in the manual of how to use CONFIGNAME, ABI, --with-gap, --with-gmp, etc
 
 * Resolve potential discrepancy between actual config.guess result, and the
