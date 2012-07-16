@@ -1,6 +1,9 @@
 /Makefile
 /config.log
 /config.status
+/configure
+/autom4te.cache
+/aclocal.m4
 
 /bin
 
