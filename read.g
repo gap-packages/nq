@@ -5,6 +5,6 @@
 ##    @(#)$Id$
 ##
 
-ReadPkg("nq", "gap/nqpcp.gi");
-ReadPkg("nq", "gap/nq.gi");
-ReadPkg("nq", "gap/exptree.gi" );
+ReadPackage("nq", "gap/nqpcp.gi");
+ReadPackage("nq", "gap/nq.gi");
+ReadPackage("nq", "gap/exptree.gi" );
