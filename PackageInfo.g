@@ -2,7 +2,7 @@
 ##  
 ##  PackageInfo.g                  NQ                           Werner Nickel
 ##  
-##  Based on Frank L�beck's template for PackageInfo.g.
+##  Based on Frank Lübeck's template for PackageInfo.g.
 ##  
 
 SetPackageInfo( rec(
@@ -21,17 +21,16 @@ Persons := [
        FirstNames    := "Max",
        IsAuthor      := false,
        IsMaintainer  := true,
-       Email         := "mhorn@tu-bs.de",
-       WWWHome       := "http://www.icm.tu-bs.de/~mhorn",
-       PostalAddress := Concatenation(
-               "AG Algebra und Diskrete Mathematik\n",
-               "Institut Computational Mathematics\n",
-               "TU Braunschweig\n",
-               "Pockelsstr. 14\n",
-               "D-38106 Braunschweig\n",
-               "Germany" ),
-       Place         := "Braunschweig",
-       Institution   := "TU Braunschweig"
+       Email         := "max.horn@math.uni-giessen.de",
+       WWWHome       := "http://www.quendi.de/math.php",
+       PostalAddress := Concatenation( "AG Algebra\n",
+                                       "Mathematisches Institut\n",
+                                       "Justus-Liebig-Universität Gießen\n",
+                                       "Arndtstraße 2\n",
+                                       "35392 Gießen\n",
+                                       "Germany" ),
+       Place         := "Gießen, Germany",
+       Institution   := "Justus-Liebig-Universität Gießen"
      ),
 
   rec( LastName      := "Nickel",
@@ -48,7 +47,7 @@ Persons := [
 ],
 
 Status         := "accepted",
-CommunicatedBy := "Joachim Neub�ser (RWTH Aachen)",
+CommunicatedBy := "Joachim Neubüser (RWTH Aachen)",
 AcceptDate     := "01/2003",
 
 PackageWWWHome := "http://www.icm.tu-bs.de/ag_algebra/software/NQ/",
@@ -100,7 +99,7 @@ end,
 BannerString     := Concatenation(
   "Loading nq ", ~.Version, " (Nilpotent Quotient Algorithm)\n",
   "  by Werner Nickel\n",
-  "  maintained by Max Horn (mhorn@tu-bs.de)\n"
+  "  maintained by Max Horn (max.horn@math.uni-giessen.de)\n"
   ),
 
 Autoload := false,
