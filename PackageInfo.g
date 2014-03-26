@@ -118,7 +118,44 @@ Keywords := [
   "nilpotent Engel groups",
   "right and left Engel elements",
   "computational"
-  ]
+  ],
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := "&copyright; 1992-2007 Werner Nickel.",
+        Acknowledgements := "\
+            The author of ANU NQ is Werner Nickel.\
+            \
+            <P/>The development of this program was started while the\
+            author was supported by an Australian National University PhD\
+            scholarship and an Overseas Postgraduate Research Scholarship.\
+            \
+            <P/>Further development of this program was done with support from the\
+            DFG-Schwerpunkt-Projekt \"`Algorithmische Zahlentheorie und Algebra\"'.\
+            \
+            <P/>Since then, maintenance of ANU NQ has been taken over by Max Horn. All\
+            credit for creating ANU NQ still goes to Werner Nickel as sole author.\
+            However, bug reports and other  inquiries should be sent to Max  Horn.\
+            \
+            <P/>The following are the original acknowledgements by Werner Nickel.\
+            \
+            <P/>Over the years a number of people have made useful suggestions\
+            that found their way into the code:  Mike Newman, Michael\
+            Vaughan-Lee, Joachim Neubüser, Charles Sims.\
+            \
+            <P/>Thanks to Volkmar Felsch and Joachim Neubüser for their careful\
+            examination of the package prior to its release for GAP 4.\
+            \
+            <P/>This documentation was prepared with the <Package>GAPDoc</Package>\
+            package by Frank Lübeck and Max Neunhöffer.",
+        Subtitle := "\
+            A &GAP; 4 Package<Br/>\
+            computing nilpotent factor groups of finitely presented groups<Br/>\
+            <Br/>\
+            Based on the ANU Nilpotent Quotient Program",
+        # HACK: We don't want a TitleComment, for now the best we can do is show an empty one
+        TitleComment := "",
+    ),
+),
+
 ));
-
-

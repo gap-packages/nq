@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <Chapter>
+  <Heading>Introduction</Heading>
+
+  This package provides an interface between &GAP; 4 and the
+  Australian National University Nilpotent Quotient Program (ANU NQ).
+  The ANU NQ was implemented as part of the author's work towards his
+  PhD at the Australian National University, hence the name of the
+  program.  The program takes as input a finite presentation of a
+  group and successively computes factor groups modulo the terms of
+  the lower central series of the group.  These factor groups are
+  computed in terms of polycyclic presentations.
+
+  <P/> The ANU NQ is implemented  in  the programming language  C. The
+  implementation has been developed in  a Unix environment and Unix is
+  currently the only operating system  supported.  It runs on a number
+  of different Unix versions, e.g.  Solaris and Linux.
+
+  <P/> For integer matrix computations it relies on the GNU MP <Cite
+  Key="GNUMP"/> package and requires this package to be installed on
+  your system.
+  
+  <P/> This package relies  on the functionality for polycyclic groups
+  provided  by the  &GAP; package  <Package>polycyclic</Package> <Cite
+  Key="polycyclic"/>       and        requires       the       package
+  <Package>polycyclic</Package> to be installed  as a &GAP; package on
+  your computer system.
+
+  <P/>
+  Comments,  bug reports and  suggestions are  very welcome.
+
+  <P/> This manual contains references to parts of the &GAP; Reference
+  Manual which are typeset in a slightly idiosyncratic way.  The
+  following example shows how such references are printed: 'For
+  further information on creating a free group see <Ref BookName="ref"
+  Func="FreeGroup"/>.'  The text in bold face refers to the &GAP;
+  Reference Manual.
+
+  <P/>Each item in the list of references at the end of this manual is
+  followed by a list of numbers that specify the pages of the manual
+  where the reference occurs.
+
+  </Chapter>

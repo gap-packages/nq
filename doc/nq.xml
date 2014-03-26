@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+[
+<!ENTITY see '<Alt Only="LaTeX">$	o$</Alt><Alt Not="LaTeX">--&gt;</Alt>'>
+<!ENTITY nq '<Package>nq</Package>'>
+]
+>
+<Book Name="nq">
+<#Include SYSTEM "title.xml">
+<TableOfContents/>
+<Body>
+<Index>&nq;</Index>
+<#Include SYSTEM "intro.xml">
+<#Include SYSTEM "general.xml">
+<#Include SYSTEM "functions.xml">
+<#Include SYSTEM "examples.xml">
+<#Include SYSTEM "install.xml">
+</Body>
+<Bibliography Databases="nqbib.xml"/>
+<TheIndex/>
+</Book>
