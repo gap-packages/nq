@@ -11,7 +11,7 @@ srcdir = @srcdir@
 VPATH = @srcdir@
 subdir = src
 
-GAP_ROOT=@GAP_ROOT@
+GAPROOT=@GAPROOT@
 BINDIR=bin/@GAPARCH@
 GMP_CPPFLAGS=@GMP_CPPFLAGS@
 GMP_LIBS=@GMP_LIBS@

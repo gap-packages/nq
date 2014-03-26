@@ -14,7 +14,7 @@ srcdir = @srcdir@
 VPATH = @srcdir@
 subdir = .
 
-GAP_ROOT=@GAP_ROOT@
+GAPROOT=@GAPROOT@
 BINDIR=bin/@GAPARCH@
 
 all: compile

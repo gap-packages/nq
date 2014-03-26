@@ -6,6 +6,7 @@ AC_INIT([ANU Nilpotent Quotient Program], [2.4dev], [support@gap-system.org], [n
 AC_CONFIG_AUX_DIR(cnf)
 AC_CONFIG_SRCDIR([src/nq.c])
 AC_CONFIG_HEADER(src/config.h:src/config.hin)
+m4_include([m4/ac_find_gap.m4])
 
 dnl ##
 dnl ## determine the system name
@@ -23,6 +24,8 @@ dnl ##
 AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_MAKE_SET
+AC_PROG_MKDIR_P
+AC_PROG_SED
 
 dnl ##
 dnl ## Checks for system header files.
@@ -33,25 +36,7 @@ AC_CHECK_HEADERS([stdlib.h string.h sys/time.h])
 dnl ##
 dnl ## Locate the GAP root dir
 dnl ##
-dnl ## If no directory is specified, then this defaults to ../..
-# TODO: Automatically expand relative paths to absolute ones... this would simplify the code below
-# considerably. Also, it's a first step towards building out-of-tree
-AC_ARG_WITH([gap-root],
-	[AS_HELP_STRING([--with-gap-root=PATH],
-		[directory where GAP is installed @<:@default=../..@:>@])],
-	[GAP_ROOT="$with_gap_root" ; GAP_ROOT_real="$with_gap_root"; GAP_ROOT_display="$with_gap_root"],
-	[GAP_ROOT='${top_srcdir}/../..' ; GAP_ROOT_real="${srcdir}/../.."; GAP_ROOT_display=../..])
-AC_MSG_CHECKING([path to GAP installation])
-
-# Try and turn GAP_ROOT_real into an absolute path
-GAP_ROOT_real=`cd $GAP_ROOT_real && pwd`
-
-if test -d $GAP_ROOT_real ; then
-	AC_MSG_RESULT([$GAP_ROOT_display])
-else
-	AC_MSG_ERROR([$GAP_ROOT_display is not a directory])
-fi
-AC_SUBST(GAP_ROOT)
+AC_FIND_GAP
 
 
 dnl ##
@@ -94,45 +79,6 @@ AC_MSG_RESULT([$ABI])
 AC_SUBST(ABI)
 AC_SUBST(ABI_CFLAGS)
 
-
-dnl ##
-dnl ## Check which GAP configuration to use
-dnl ##
-AC_ARG_VAR(CONFIGNAME,[Supply a (meaningful) name for the configuration you are building.
-    This name will be appended to the architecture-dependent named
-    sub-directory of bin/. Allows for multiple configurations side by
-    side. Default value is "defaultXX" where "XX" is 32 or 64.])
-
-AC_MSG_CHECKING([GAP config name])
-if test "x$CONFIGNAME" = "x"; then
-  CONFIGNAME="default${ABI}"
-fi
-SYSINFO_GAP="$GAP_ROOT_real/sysinfo.gap-$CONFIGNAME"
-if ! test -f $SYSINFO_GAP ; then
-	# Fall back to sysinfo.gap, to support GAP 4.4
-	SYSINFO_GAP="$GAP_ROOT_real/sysinfo.gap"
-fi
-if test -f $SYSINFO_GAP ; then
-	AC_MSG_RESULT([$CONFIGNAME])
-	#AC_SUBST(CONFIGNAME)
-else
-	AC_MSG_ERROR([sysinfo.gap-$GAP_CONFIG not found])
-fi
-
-
-dnl ##
-dnl ## Parse the GAParch from sysinfo.gap
-dnl ##
-
-AC_MSG_CHECKING([for active GAP architecture])
-GAPARCH=`fgrep "GAParch=" $SYSINFO_GAP | sed -e 's/^GAParch=\(.*\)$/\1/'`
-if test "x$GAPARCH" = "x" ; then
-	AC_MSG_ERROR([GAParch not found in $GAP_ROOT_display/sysinfo.gap])
-else
-	AC_MSG_RESULT([$GAPARCH])
-fi
-AC_SUBST(GAPARCH)
-
 dnl ##
 dnl ## Check for GMP
 dnl ## If the user specified a specific GMP, try to use that.
@@ -165,7 +111,7 @@ else
 	# Try using static linked GMP in the specified location
 	if test "x$with_gmp" = "xyes" ; then
 		# Try to use GAP's GMP, if available
-		GMP_HOME="$GAP_ROOT_real/bin/$GAPARCH/extern/gmp"
+		GMP_HOME="$GAPROOT/bin/$GAPARCH/extern/gmp"
 	else
 		GMP_HOME="$with_gmp"
 	fi;

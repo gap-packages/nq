@@ -4,10 +4,10 @@ srcdir = @srcdir@
 VPATH = @srcdir@
 subdir = doc
 
-GAP=@GAP_ROOT@/bin/gap.sh
+GAP=@GAPROOT@/bin/gap.sh
 
 gapdoc:
-	@echo 'LoadPackage("gapdoc"); MakeGAPDocDoc( "./", "nqman", [ "../PackageInfo.g" ], "nq", "'"@GAP_ROOT@"'", "MathJax" );; CopyHTMLStyleFiles("./");' | $(GAP) -A -q -T
+	@echo 'LoadPackage("gapdoc"); MakeGAPDocDoc( "./", "nqman", [ "../PackageInfo.g" ], "nq", "'"@GAPROOT@"'", "MathJax" );; CopyHTMLStyleFiles("./");' | $(GAP) -A -q -T
 
 clean:
 	@rm -f nqman.aux nqman.bbl nqman.blg nqman.idx nqman.ilg nqman.ind\
