@@ -1,3 +1,9 @@
+* document --with-gaproot in README / manual
+
+* make a new release
+
+* start using gh-pages
+
 * Release process:
   - add script which automates updating the version in all places:
      PackageInfo.g, configure.ac, ...
@@ -19,25 +25,6 @@
     (automake now has a single-Makefile mode!)
   - add dependency tracking
   - add description in the manual of how to use CONFIGNAME, ABI, --with-gap, --with-gmp, etc
-
-* Resolve potential discrepancy between actual config.guess result, and the
-  gap config (sysconfig.*) the user chose.
-
-  Maybe we need to fake GAParch ? And what is GAParch_system meant to be in contrast?
-  Note that ABI is irrelevant for nq, since we only have an external binary anyway
-
-  GAParch=@target@-@CC@-@CONFIGNAME@
-  GAParch_system=@target@-@CC@-@CONFIGNAME@
-  GAParch_abi=@ABI@-bit
-
-* Check env variable GAPPATH (like various existing configure scripts)
-  and use that as GAPPATH if present
-
-* Consider using Max N's findgap.m4
-
-* Seems other packages are using --with-gaproot instead of --with-gap-root;
-  consider switching to that (but keep accepting the old one for backward
-  compatibility??)
 
 * Test suite:
   - Add a "proper" test suite in tst
