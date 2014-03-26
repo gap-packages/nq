@@ -2,8 +2,6 @@
 ##
 ##    Makefile                      NQ                         Werner Nickel
 ##
-##    $Id$
-##
 
 top_srcdir = @top_srcdir@
 top_builddir = @top_builddir@

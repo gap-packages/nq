@@ -2,8 +2,6 @@
 ##
 ##    Makefile.in                     NQ                         Werner Nickel
 ##
-##    $Id$
-##
 
 ##
 ##    Values imported from the configure script
