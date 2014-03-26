@@ -7,19 +7,27 @@
 
 /bin
 
-/doc/Makefile
 /doc/chap*html
 /doc/chap*txt
 /doc/*.js
 /doc/*.css
 /doc/chooser.html
+/doc/*.aux
+/doc/*.bbl
+/doc/*.blg
+/doc/*.brf
+/doc/*.idx
+/doc/*.ilg
+/doc/*.ind
+/doc/*.lab
+/doc/*.log
+/doc/*.out
+/doc/*.pnr
+/doc/*.tex
+/doc/*.toc
 /doc/manual.pdf
 /doc/manual.six
 /doc/nqbib.xml.bib
-/doc/nqman.idx
-/doc/nqman.log
-/doc/nqman.out
-/doc/nqman.tex
 
 /examples/Makefile
 
