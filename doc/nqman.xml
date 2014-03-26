@@ -472,7 +472,7 @@
   section <Ref Sect="FunctionsExpTrees"/> for a description of the functions
   that produce and manipulate expression trees.
   <Example>
-gap> RequirePackage( "nq" );
+gap> LoadPackage( "nq" );
 true
 gap> gens := ExpressionTrees( 2 );
 [ x1, x2 ]
@@ -1190,7 +1190,7 @@ gap> SetInfoLevel( InfoNQ, 0 );
   the ANU NQ which we reproduce here.  We also show the cases
   <M>5>n</M>.
   <Example>
-gap> RequirePackage( "nq" );
+gap> LoadPackage( "nq" );
 true
 gap> ##  SetInfoLevel( InfoNQ, 1 );
 gap> ##

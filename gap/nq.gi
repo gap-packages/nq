@@ -19,7 +19,7 @@ InstallGlobalFunction( NqBuildManual,
 function ( ) local  NqDocDir;
 
   ##  We take the first package directory.  In most cases this is the one 
-  ##  loaded by RequirePackage().
+  ##  loaded by LoadPackage().
   NqDocDir := DirectoriesPackageLibrary( "nq", "doc" )[1];
 
   MakeGAPDocDoc( NqDocDir, "nqman", [ "../PackageInfo.g" ],
