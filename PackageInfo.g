@@ -50,12 +50,13 @@ Status         := "accepted",
 CommunicatedBy := "Joachim Neubüser (RWTH Aachen)",
 AcceptDate     := "01/2003",
 
-PackageWWWHome := "http://www.icm.tu-bs.de/ag_algebra/software/NQ/",
-
+PackageWWWHome := "http://gap-system.github.io/nq/",
+README_URL     := Concatenation(~.PackageWWWHome, "README"),
+PackageInfoURL := Concatenation(~.PackageWWWHome, "PackageInfo.g"),
+ArchiveURL     := Concatenation("https://github.com/gap-system/nq/",
+                                "releases/download/v", ~.Version,
+                                "/nq-", ~.Version),
 ArchiveFormats := ".tar.gz .tar.bz2",
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "nq-", ~.Version ),
-README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
 AbstractHTML   := Concatenation( 
   "This package provides access to the ANU nilpotent quotient ",
