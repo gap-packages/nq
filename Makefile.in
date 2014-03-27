@@ -17,34 +17,35 @@ BINDIR=bin/@GAPARCH@
 
 all: compile
 
-gap: compile gapmanual
+gap: compile doc
 
 compile:
 	(cd src; make)
 	mkdir -p $(BINDIR)
 	mv src/nq $(BINDIR)
 
-gapmanual:
-	cd doc; make
+doc:
+	gap -A makedoc.g
 
 test:
 	(cd examples; make)
 
 clean:
 	(cd src;      make clean)
-	(cd doc;      make clean)
 	(cd examples; make clean)
+	(cd doc && rm -f *.aux *.bbl *.blg *.brf *.idx *.ilg *.ind *.log *.out *.pnr *.tex *.toc)
+	(cd doc && rm -f *~ nqbib.xml.bib)
+	(cd doc && rm -f test/nqman.tst test/diffs)
 
 distclean: clean
-	rm -f Makefile
+	(cd src;      make distclean)
+	(cd examples; make distclean)
+	rm -f Makefile src/Makefile examples/Makefile
 	rm -rf bin
 	rm -rf .\#*
 	rm -f *~ */*~
 	rm -rf nq-2.? nq-2_?.tar nq-2_?.tar.gz
 	rm -f config.cache config.log config.status
-	(cd src;      make distclean)
-	(cd doc;      make distclean)
-	(cd examples; make distclean)
 
 
 .PRECIOUS: Makefile
@@ -57,4 +58,4 @@ $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENC
 $(top_srcdir)/configure: $(top_srcdir)/configure.ac $(top_srcdir)/VERSION
 	cd $(top_srcdir) && autoreconf
 
-.PHONY: all gap compile gapmanual WWW test clean distclean
+.PHONY: all gap compile doc test clean distclean
