@@ -68,9 +68,7 @@ distclean-local:
 
 doc:	doc/manual.six
 
-doc/manual.six: doc/nqbib.xml doc/intro.xml doc/general.xml \
-		doc/functions.xml doc/examples.xml doc/install.xml \
-		PackageInfo.g
+doc/manual.six: doc/*.xml PackageInfo.g
 	($(GAPROOT)/bin/gap.sh -A makedoc.g)
 
 test:
