@@ -18,6 +18,7 @@
 <#Include SYSTEM "examples.xml">
 <#Include SYSTEM "install.xml">
 </Body>
+<#Include SYSTEM "cli.xml">
 <Bibliography Databases="nqbib.xml"/>
 <TheIndex/>
 </Book>

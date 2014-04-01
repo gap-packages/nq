@@ -54,6 +54,28 @@
 
 
 =======================================================================
+THE FOLLOWING TODOS ARE TAKEN FROM THE OLD README FILE. SOME OF
+THESE MAY NO LONGER BE RELEVANT. READ WITH CAUTION.
+=======================================================================
+
+On the agenda for  future versions  of  the program are  the following
+items :
+
+    Use combinatorial collection
+    Improve the speed of checking the Engel conditions
+    Avoid consistency tests used for tail computations
+    Speed up elimination of generators and extending the pc pres
+    Use column permutations in the Kannan-Bachem algorithm
+    Add more comments to the code
+    Use the mpz-interface of the GNU multiple precision package
+    Find a more satisfying solution for generating sets for each
+         central factor.
+    Multiple precision integers as exponents of generators
+    Better control over the output
+    Output computed nilpotent quotient if the program times out
+
+
+=======================================================================
 THE FOLLOWING TODOS ARE TAKEN FROM WERNER'S OLD TODO FILE. SOME OF
 THESE MAY NO LONGER BE RELEVANT. READ WITH CAUTION.
 =======================================================================

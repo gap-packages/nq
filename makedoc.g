@@ -14,6 +14,7 @@ AutoDoc("nq" :
             "examples.xml",
             "install.xml",
         ],
+        appendix := [ "cli.xml" ],
     )
 );
 
