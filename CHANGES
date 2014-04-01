@@ -2,6 +2,17 @@
 This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
+2.5 (2014-04-01)
+  * Renamed configure option "--with-gap-root" to "--with-gaproot"
+    in order to match the io and orb packages more closely.
+  * Changed build system to use automake
+  * Changed how the manual is built (now AutoDoc is used to
+	automatically generate the title page from PackageInfo.g)
+  * Add GPL license file to make clear that nq is licensed under the GPL
+    (after discussion with Werner Nickel and getting his explicit approval)
+  * Moved the homepage to GitHub
+  * Updated Max Horn's contact details
+
 2.4 (2012-01-12)
   * Fixed crash on some systems caused by a long standing memory
     management bug.
