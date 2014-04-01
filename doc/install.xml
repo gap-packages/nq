@@ -3,79 +3,95 @@
 <Chapter>
 <Heading>Installation of the Package</Heading> 
 
-Installation of the package requires the GNU multiple precision
-library (GNU MP <Cite Key="GNUMP"/>).  If this library is not
-available on your system, it has to be installed first.  A copy of
-GNU MP can be obtained from <URL>http://gmplib.org/</URL>.
+Installation of the ANU NQ is done in two steps.
 
-Installation of the ANU NQ is done in two steps.  First the
-configure script is run:
+<Section>
+<Heading>Configuring for compilation</Heading>
+First the configure script is run:
 <Listing Type="Installation"> ./configure  </Listing>
-Among other things it will tell you whether it succeeded in locating
-the GNU MP library and the corresponding include files. If it tells
-you that it could not find the GNU MP include files or the GNU MP
-libraries, you have to run configure with additional parameters. For
-example, if you have installed GNU MP yourself in your home directory,
-you would type something like the following
-<Listing Type="Installation"> ./configure --with-gmp=/home/me/gmp </Listing>
-If configure reports no problems, the next step is to start the
+
+If you installed the package in another <Q><F>pkg</F></Q> directory than
+the standard <Q><F>pkg</F></Q> directory in your &GAP; 4 installation,
+then you have to do two things. Firstly during compilation you have to
+use the option <C>--with-gaproot=PATH</C> of the <F>configure</F> script
+where <Q>PATH</Q> is a path to the main &GAP; root directory (if not
+given the default <Q><F>../..</F></Q> is assumed). That is, run
+<Listing Type="Installation"> ./configure --with-gaproot=PATH </Listing>
+
+Secondly you have to specify the path to the directory containing your
+<Q><F>pkg</F></Q> directory to &GAP;'s list of directories. This can be
+done by starting &GAP; with the <Q><F>-l</F></Q> command line option
+followed by the name of the directory and a semicolon. Then your
+directory is prepended to the list of directories searched. Otherwise
+the package is not found by &GAP;. Of course, you can add this option to
+your &GAP; startup script.
+<P/>
+
+Another issue that can occur when running <F>configure</F> is that it
+may fail to locate the the GNU multiple precision library (GMP
+<Cite Key="GNUMP"/>) which ANU NQ requires to work. This library is also
+used by &GAP; and hence normally should be available on your system
+anyway. But if this is not the case for some reason, it has to be
+installed first. A copy of GMP can be obtained from
+<URL>http://gmplib.org/</URL>.
+<P/>
+
+In order for the <F>configure</F> script to find your copy of GMP, you
+may have tell it where to find it via <C>--with-gmp=PATH</C>, where
+<Q>PATH</Q> is the path where GMP was installed:
+
+<Listing Type="Installation"> ./configure --with-gmp=PATH </Listing>
+Yf necessary, you may combine <C>--with-gmp</C> and
+<C>--with-gaproot</C>.
+
+</Section>
+
+<Section>
+<Heading>Compiling the nq binary</Heading>
+
+If <F>configure</F> reports no problems, the next step is to start the
 compilation:
 <Listing Type="Installation"> make </Listing>
 
-<P/> A compiled version of the program named `nq' is then placed
-into the directory `bin/&tlt;complicated name&tgt;'.  The
+<P/> A compiled version of the program named <F>nq</F> is then placed
+into the directory <F>bin/&tlt;complicated name&tgt;</F>.  The
 &tlt;complicated name&tgt; component encodes the operating system
 and the compiler used.  This allows you to compile NQ on several
 architectures sharing the same files system.
 
 <P/>
 If there are any warnings or even fatal error messages during the
-compilation process, please send a copy to the address at the end of
-this document together with information about your operating system,
-the compiler you used and any changes you might have made to the
-source code.  We will have a look at your problems and try to fix
-them.
+compilation process, please submit a bug report about that
+following the instructions in Section <Ref Sect="feedback" Style="Number"/>
 
-<P/> After the compilation is finished you can check if the ANU NQ
+</Section>
+
+<Section>
+<Heading>Testing</Heading>
+
+After the compilation is finished you can check if the ANU NQ
 is running properly on your system.  Simply type
 
 <Listing Type="Installation"> make test </Listing>
 
 This runs some computations and compares their output with the output
-files in the directory `examples'. If any errors are reported, please
-follow the instruction that are printed out.
+files in the directory <F>examples</F>. If any errors are reported, please
+follow the instructions below.
 
-<P/>The installation is completed by compiling the manual of the
-package.  This is done from within &GAP;.
+</Section>
 
-<Listing Type="Installation">
-gap> NqBuildManual();
-Composing XML document . . .
-Parsing XML document . . .
-Checking XML structure . . .
-LaTeX version and calling latex and pdflatex:
-    writing LaTeX file, 3 x latex, bibtex and makeindex, 2 x pdflatex, dvips
-Text version . . .
-#I  first run, collecting cross references, index, toc, bib and so on . . .
-#I  table of contents complete.
-#I  producing the index . . .
-#I  reading bibliography data files . . . 
-#I  writing bibliography . . .
-#I  second run through document . . .
-Writing manual.six file . . .
-And finally the HTML version . . .
-#I  first run, collecting cross references, index, toc, bib and so on . . .
-#I  table of contents complete.
-#I  producing the index . . .
-#I  reading bibliography data files . . . 
-#I  writing bibliography . . .
-#I  second run through document . . .
-gap> ?NilpotentQuotient
-Help: several entries match this topic - type ?2 to get match [2]
+<Section Label="feedback">
+<Heading>Feedback</Heading>
 
-[1] ANU NQ: NilpotentQuotient
-[2] ANU NQ: NilpotentQuotient
-[3] Reference: NilpotentQuotientOfFpLieAlgebra
-gap>
-</Listing>
+If you encounter problems with any of the above steps, please do not
+hesitate to contact us about this.  You can either use the
+<URL Text="nq issue tracker">https://github.com/gap-system/nq/issues</URL>
+or contact the GAP support group via <Email>support@gap-system.org</Email>.
+Please make sure to include information about the specific issue
+you encountered (e.g. steps to reproduce it, the specific error message),
+your operating system, the compiler you used
+and also the versions of &GAP; and this package that were involved.
+
+</Section>
+
 </Chapter>
