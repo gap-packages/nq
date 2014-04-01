@@ -12,7 +12,6 @@ DeclareGlobalFunction( "NqInitFromTheLeftCollector" );
 DeclareGlobalFunction( "NqPcpGroupByCollector" );
 DeclareGlobalFunction( "NqPcpGroupByNqOutput" );
 DeclareGlobalFunction( "NqPcpElementByWord" );
-DeclareGlobalFunction( "NqBuildManual" );
 DeclareGlobalFunction( "NqElementaryDivisors" );
 DeclareGlobalFunction( "NqEpimorphismByNqOutput" );
 
