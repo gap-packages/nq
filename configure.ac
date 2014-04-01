@@ -3,15 +3,13 @@ dnl ## Process this file with autoconf to produce a configure script.
 dnl ##
 AC_PREREQ([2.68])
 AC_INIT([ANU Nilpotent Quotient Program], m4_esyscmd([tr -d '\n' < VERSION]), [support@gap-system.org], [nq])
-AC_CONFIG_AUX_DIR(cnf)
 AC_CONFIG_SRCDIR([src/nq.c])
 AC_CONFIG_HEADER(src/config.h:src/config.hin)
-m4_include([m4/ac_find_gap.m4])
-
-dnl ##
-dnl ## determine the system name
-dnl ##
-AC_CANONICAL_HOST
+AC_CONFIG_AUX_DIR([cnf])
+AC_CONFIG_MACRO_DIR([m4])
+AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects])
+AM_SILENT_RULES([yes])
+AM_MAINTAINER_MODE
 
 dnl ##
 dnl ## C is the language
@@ -171,5 +169,5 @@ AC_CHECK_FUNCS([sbrk getrusage])
 dnl ##
 dnl ## Finally, generate the Makefiles and output everything
 dnl ##
-AC_CONFIG_FILES([Makefile examples/Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile examples/Makefile])
 AC_OUTPUT
