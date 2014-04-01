@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-  <Chapter><Heading>Examples</Heading>
-  <Section><Heading>Right Engel elements</Heading>
-  An old problem in the context of Engel elements is the question:  Is
-  a right <M>n</M>-Engel element left <M>n</M>-Engel?  It is known
-  that the answer is no.  For details about the history of the
-  problem, see <Cite Key="NewmanNickel94"/>.  In this paper the
-  authors show that for <M>n>4</M> there are nilpotent groups with
-  right <M>n</M>-Engel elements no power of which is a left
-  <M>n</M>-Engel element.  The insight was based on computations with
-  the ANU NQ which we reproduce here.  We also show the cases
-  <M>5>n</M>.
-  <Example>
+<Chapter><Heading>Examples</Heading>
+<Section><Heading>Right Engel elements</Heading>
+An old problem in the context of Engel elements is the question:  Is
+a right <M>n</M>-Engel element left <M>n</M>-Engel?  It is known
+that the answer is no.  For details about the history of the
+problem, see <Cite Key="NewmanNickel94"/>.  In this paper the
+authors show that for <M>n>4</M> there are nilpotent groups with
+right <M>n</M>-Engel elements no power of which is a left
+<M>n</M>-Engel element.  The insight was based on computations with
+the ANU NQ which we reproduce here.  We also show the cases
+<M>5>n</M>.
+<Example>
 gap> LoadPackage( "nq" );
 true
 gap> ##  SetInfoLevel( InfoNQ, 1 );
@@ -96,5 +96,5 @@ infinity
 </Example>
 Finally, we see that in a torsion-free group a right 5-Engel element
 need not be a left 5-Engel element.
-  </Section>
-  </Chapter>
+</Section>
+</Chapter>

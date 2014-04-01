@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-  <Chapter>
-  <Heading>Installation of the Package</Heading> 
+<Chapter>
+<Heading>Installation of the Package</Heading> 
 
-  Installation of the package requires the GNU multiple precision
-  library (GNU MP <Cite Key="GNUMP"/>).  If this library is not
-  available on your system, it has to be installed first.  A copy of
-  GNU MP can be obtained from <URL>http://gmplib.org/</URL>.
+Installation of the package requires the GNU multiple precision
+library (GNU MP <Cite Key="GNUMP"/>).  If this library is not
+available on your system, it has to be installed first.  A copy of
+GNU MP can be obtained from <URL>http://gmplib.org/</URL>.
 
-  Installation of the ANU NQ is done in two steps.  First the
-  configure script is run:
-  <Listing Type="Installation"> ./configure  </Listing>
-  Among other things it will tell you whether it succeeded in locating
-  the GNU MP library and the corresponding include files. If it tells
-  you that it could not find the GNU MP include files or the GNU MP
-  libraries, you have to run configure with additional parameters. For
-  example, if you have installed GNU MP yourself in your home directory,
-  you would type something like the following
-  <Listing Type="Installation"> ./configure --with-gmp=/home/me/gmp </Listing>
-  If configure reports no problems, the next step is to start the
-  compilation:
-  <Listing Type="Installation"> make </Listing>
+Installation of the ANU NQ is done in two steps.  First the
+configure script is run:
+<Listing Type="Installation"> ./configure  </Listing>
+Among other things it will tell you whether it succeeded in locating
+the GNU MP library and the corresponding include files. If it tells
+you that it could not find the GNU MP include files or the GNU MP
+libraries, you have to run configure with additional parameters. For
+example, if you have installed GNU MP yourself in your home directory,
+you would type something like the following
+<Listing Type="Installation"> ./configure --with-gmp=/home/me/gmp </Listing>
+If configure reports no problems, the next step is to start the
+compilation:
+<Listing Type="Installation"> make </Listing>
 
-  <P/> A compiled version of the program named `nq' is then placed
-  into the directory `bin/&tlt;complicated name&tgt;'.  The
-  &tlt;complicated name&tgt; component encodes the operating system
-  and the compiler used.  This allows you to compile NQ on several
-  architectures sharing the same files system.
+<P/> A compiled version of the program named `nq' is then placed
+into the directory `bin/&tlt;complicated name&tgt;'.  The
+&tlt;complicated name&tgt; component encodes the operating system
+and the compiler used.  This allows you to compile NQ on several
+architectures sharing the same files system.
 
-  <P/>
-  If there are any warnings or even fatal error messages during the
-  compilation process, please send a copy to the address at the end of
-  this document together with information about your operating system,
-  the compiler you used and any changes you might have made to the
-  source code.  We will have a look at your problems and try to fix
-  them.
- 
-  <P/> After the compilation is finished you can check if the ANU NQ
-  is running properly on your system.  Simply type
+<P/>
+If there are any warnings or even fatal error messages during the
+compilation process, please send a copy to the address at the end of
+this document together with information about your operating system,
+the compiler you used and any changes you might have made to the
+source code.  We will have a look at your problems and try to fix
+them.
 
-  <Listing Type="Installation"> make test </Listing>
-  
-  This runs some computations and compares their output with the output
-  files in the directory `examples'. If any errors are reported, please
-  follow the instruction that are printed out.
+<P/> After the compilation is finished you can check if the ANU NQ
+is running properly on your system.  Simply type
 
-  <P/>The installation is completed by compiling the manual of the
-  package.  This is done from within &GAP;.
+<Listing Type="Installation"> make test </Listing>
 
-  <Listing Type="Installation">
+This runs some computations and compares their output with the output
+files in the directory `examples'. If any errors are reported, please
+follow the instruction that are printed out.
+
+<P/>The installation is completed by compiling the manual of the
+package.  This is done from within &GAP;.
+
+<Listing Type="Installation">
 gap> NqBuildManual();
 Composing XML document . . .
 Parsing XML document . . .
@@ -77,5 +77,5 @@ Help: several entries match this topic - type ?2 to get match [2]
 [2] ANU NQ: NilpotentQuotient
 [3] Reference: NilpotentQuotientOfFpLieAlgebra
 gap>
-  </Listing>
-  </Chapter>
+</Listing>
+</Chapter>
