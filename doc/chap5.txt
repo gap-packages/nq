@@ -1,0 +1,91 @@
+  
+  [1X5 [33X[0;0YInstallation of the Package[133X[101X
+  
+  [33X[0;0YInstallation of the ANU NQ is done in two steps.[133X
+  
+  
+  [1X5.1 [33X[0;0YConfiguring for compilation[133X[101X
+  
+  [33X[0;0YFirst the configure script is run:[133X
+  
+  [4X[32X  Installation  [32X[104X
+    [4X ./configure  [104X
+  [4X[32X[104X
+  
+  [33X[0;0YIf  you installed the package in another [21X[11Xpkg[111X[121X directory than the standard [21X[11Xpkg[111X[121X
+  directory  in  your  [5XGAP[105X  4  installation,  then  you have to do two things.
+  Firstly during compilation you have to use the option [10X--with-gaproot=PATH[110X of
+  the [11Xconfigure[111X script where [21XPATH[121X is a path to the main [5XGAP[105X root directory (if
+  not given the default [21X[11X../..[111X[121X is assumed). That is, run[133X
+  
+  [4X[32X  Installation  [32X[104X
+    [4X ./configure --with-gaproot=PATH [104X
+  [4X[32X[104X
+  
+  [33X[0;0YSecondly  you  have to specify the path to the directory containing your [21X[11Xpkg[111X[121X
+  directory  to  [5XGAP[105X's  list  of directories. This can be done by starting [5XGAP[105X
+  with  the [21X[11X-l[111X[121X command line option followed by the name of the directory and a
+  semicolon.  Then  your  directory  is  prepended  to the list of directories
+  searched.  Otherwise the package is not found by [5XGAP[105X. Of course, you can add
+  this option to your [5XGAP[105X startup script.[133X
+  
+  [33X[0;0YAnother  issue  that can occur when running [11Xconfigure[111X is that it may fail to
+  locate  the  the  GNU  multiple  precision  library (GMP [GMP]) which ANU NQ
+  requires to work. This library is also used by [5XGAP[105X and hence normally should
+  be  available  on  your  system anyway. But if this is not the case for some
+  reason,  it  has  to  be installed first. A copy of GMP can be obtained from
+  [7Xhttp://gmplib.org/[107X.[133X
+  
+  [33X[0;0YIn  order  for  the  [11Xconfigure[111X script to find your copy of GMP, you may have
+  tell  it  where to find it via [10X--with-gmp=PATH[110X, where [21XPATH[121X is the path where
+  GMP was installed:[133X
+  
+  [4X[32X  Installation  [32X[104X
+    [4X ./configure --with-gmp=PATH [104X
+  [4X[32X[104X
+  
+  [33X[0;0YYf necessary, you may combine [10X--with-gmp[110X and [10X--with-gaproot[110X.[133X
+  
+  
+  [1X5.2 [33X[0;0YCompiling the nq binary[133X[101X
+  
+  [33X[0;0YIf [11Xconfigure[111X reports no problems, the next step is to start the compilation:[133X
+  
+  [4X[32X  Installation  [32X[104X
+    [4X make [104X
+  [4X[32X[104X
+  
+  [33X[0;0YA compiled version of the program named [11Xnq[111X is then placed into the directory
+  [11Xbin/<complicated   name>[111X.  The  <complicated  name>  component  encodes  the
+  operating  system  and  the  compiler used. This allows you to compile NQ on
+  several architectures sharing the same files system.[133X
+  
+  [33X[0;0YIf  there  are  any  warnings  or  even  fatal  error  messages  during  the
+  compilation  process,  please  submit  a bug report about that following the
+  instructions in Section [14X5.4[114X[133X
+  
+  
+  [1X5.3 [33X[0;0YTesting[133X[101X
+  
+  [33X[0;0YAfter  the  compilation  is  finished you can check if the ANU NQ is running
+  properly on your system. Simply type[133X
+  
+  [4X[32X  Installation  [32X[104X
+    [4X make test [104X
+  [4X[32X[104X
+  
+  [33X[0;0YThis  runs some computations and compares their output with the output files
+  in  the  directory  [11Xexamples[111X.  If any errors are reported, please follow the
+  instructions below.[133X
+  
+  
+  [1X5.4 [33X[0;0YFeedback[133X[101X
+  
+  [33X[0;0YIf  you  encounter  problems  with  any  of  the  above steps, please do not
+  hesitate  to  contact us about this. You can either use the nq issue tracker
+  ([7Xhttps://github.com/gap-system/nq/issues[107X)  or  contact the GAP support group
+  via  [7Xmailto:support@gap-system.org[107X.  Please make sure to include information
+  about  the  specific  issue you encountered (e.g. steps to reproduce it, the
+  specific  error  message),  your operating system, the compiler you used and
+  also the versions of [5XGAP[105X and this package that were involved.[133X
+  

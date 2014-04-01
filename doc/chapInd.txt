@@ -1,0 +1,52 @@
+  
+  
+  [1XIndex[101X
+  
+  class  2.2
+  commutator  2.1
+  commutator relation  2.3
+  consistent  2.3
+  [2XEvaluateExpTree[102X  3.2-2
+  expression trees  2.6
+  [2XExpressionTrees[102X  3.2-1
+  [2XExpressionTrees[102X  3.2-1
+  identical generator  2.5
+  identical relation  2.5
+  law  2.5
+  left Engel element  2.5
+  left-normed commutator  2.1
+  License  .-1
+  lower central series  2.1
+  [2XLowerCentralFactors[102X  3.1-4
+  nilpotency class  2.2
+  nilpotent  2.2
+  nilpotent presentation  2.3
+  Nilpotent Quotient Package  3.
+  [2XNilpotentEngelQuotient[102X  3.1-2
+  [2XNilpotentEngelQuotient[102X  3.1-2
+  [2XNilpotentQuotient[102X  3.1-1
+  [2XNilpotentQuotient[102X  3.1-1
+  [5Xnq[105X  .-3
+  [2XNqDefaultOptions[102X  3.4-2
+  [2XNqElementaryDivisors[102X  3.3-4
+  [2XNqEpimorphismNilpotentQuotient[102X  3.1-3
+  [2XNqGlobalVariables[102X  3.4-3
+  [2XNqReadOutput[102X  3.3-1
+  [2XNqRuntime[102X  3.4-1
+  [2XNqStringExpTrees[102X  3.3-3
+  [2XNqStringFpGroup[102X  3.3-2
+  options  3.1-1
+  options, class  3.1-1
+  options, group  3.1-1
+  options, idgens  3.1-1
+  options, input\_file  3.1-1
+  options, input\_string  3.1-1
+  options, ouput\_file  3.1-1
+  polycyclic  2.2
+  polycyclic generating sequence  2.2
+  polycyclic presentation  2.3
+  power relation  2.3
+  right Engel element  2.5
+  
+  
+  -------------------------------------------------------

@@ -1,0 +1,36 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  [33X[0;0YThis package provides an interface between [5XGAP[105X 4 and the Australian National
+  University  Nilpotent  Quotient Program (ANU NQ). The ANU NQ was implemented
+  as  part  of  the  author's  work towards his PhD at the Australian National
+  University,  hence  the  name  of  the program. The program takes as input a
+  finite  presentation  of  a  group  and  successively computes factor groups
+  modulo  the  terms  of  the  lower central series of the group. These factor
+  groups are computed in terms of polycyclic presentations.[133X
+  
+  [33X[0;0YThe  ANU NQ is implemented in the programming language C. The implementation
+  has  been  developed  in  a  Unix environment and Unix is currently the only
+  operating  system supported. It runs on a number of different Unix versions,
+  e.g. Solaris and Linux.[133X
+  
+  [33X[0;0YFor  integer  matrix  computations it relies on the GNU MP [GMP] package and
+  requires this package to be installed on your system.[133X
+  
+  [33X[0;0YThis  package  relies on the functionality for polycyclic groups provided by
+  the  [5XGAP[105X package [5Xpolycyclic[105X [EN02] and requires the package [5Xpolycyclic[105X to be
+  installed as a [5XGAP[105X package on your computer system.[133X
+  
+  [33X[0;0YComments,  bug  reports and suggestions are very welcome, please submit them
+  via our issue tracker ([7Xhttps://github.com/gap-system/nq/issues[107X).[133X
+  
+  [33X[0;0YThis  manual  contains references to parts of the [5XGAP[105X Reference Manual which
+  are typeset in a slightly idiosyncratic way. The following example shows how
+  such  references  are  printed:  'For further information on creating a free
+  group see [2XFreeGroup[102X ([14XReference: FreeGroup[114X).' The text in bold face refers to
+  the [5XGAP[105X Reference Manual.[133X
+  
+  [33X[0;0YEach item in the list of references at the end of this manual is followed by
+  a  list  of numbers that specify the pages of the manual where the reference
+  occurs.[133X
+  

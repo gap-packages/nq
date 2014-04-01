@@ -1,0 +1,522 @@
+  
+  [1X3 [33X[0;0YThe Functions of the Package[133X[101X
+  
+  
+  [1X3.1 [33X[0;0YNilpotent Quotients of Finitely Presented Groups[133X[101X
+  
+  [1X3.1-1 NilpotentQuotient[101X
+  
+  [29X[2XNilpotentQuotient[102X( [[3Xoutput-file[103X, ][3Xfp-group[103X[, [3Xid-gens[103X][, [3Xc[103X] ) [32X function
+  [29X[2XNilpotentQuotient[102X( [[3Xoutput-file[103X, ][3Xinput-file[103X[, [3Xc[103X] ) [32X function
+  
+  [33X[0;0YThe  parameter  [11Xfp-group[111X  is  either  a finitely presented group or a record
+  specifying  a  presentation  by  expression  trees  (see  section  [14X2.6[114X). The
+  parameter  [11Xinput-file[111X is a string specifying the name of a file containing a
+  finite  presentation  in  the  input format (cf. section [14X2.8[114X) of the ANU NQ.
+  Such  a  file  can  be  prepared  by  a  text editor or with the help of the
+  function [2XNqStringFpGroup[102X ([14X3.3-2[114X).[133X
+  
+  [33X[0;0YLet  [22XG[122X  be the group defined by [11Xfp-group[111X or the group defined in [11Xinput-file[111X.
+  The  function  computes  a  nilpotent  presentation  for  [22XG/γ_c+1(G)[122X  if the
+  optional  parameter  [11Xc[111X  is  specified.  If [11Xc[111X is not given, then the function
+  attempts  to  compute  the  largest  nilpotent  quotient  of  [22XG[122X  and it will
+  terminate  only if [22XG[122X has a largest nilpotent quotient. See section [14X3.5[114X for a
+  possibility to follow the progress of the computation.[133X
+  
+  [33X[0;0YThe  optional  argument  [11Xid-gens[111X  is  a list of generators of the free group
+  underlying  the  finitely  presented  group [11Xfp-group[111X. The generators in this
+  list are treated as identical generators. Consequently, all relations of the
+  [11Xfp-group[111X  involving  these generators are treated as identical relations for
+  these generators.[133X
+  
+  [33X[0;0YIn  addition  to  the  arguments  explained  above, the function accepts the
+  following options as shown in the first example below:[133X
+  
+  [30X    [33X[0;6Y[9Xgroup[109X This option can be used instead of the parameter [11Xfp-group[111X.[133X
+  
+  [30X    [33X[0;6Y[9Xinput\_string[109X  This option can be used to specify a finitely presented
+        group by a string in the input format of the standalone program.[133X
+  
+  [30X    [33X[0;6Y[9Xinput\_file[109X This option specifies a file with input for the standalone
+        program.[133X
+  
+  [30X    [33X[0;6Y[9Xoutput\_file[109X  This  option  specifies  a  file  for  the output of the
+        standalone.[133X
+  
+  [30X    [33X[0;6Y[9Xidgens[109X This options specifies a list of identical generators.[133X
+  
+  [30X    [33X[0;6Y[9Xclass[109X  This  option  specifies  the  nilpotency  class up to which the
+        nilpotent quotient will be computed.[133X
+  
+  [33X[0;0YThe following example computes the class-5 quotient of the free group on two
+  generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeGroup( 2 );[127X[104X
+    [4X[28X<free group on the generators [ f1, f2 ]>[128X[104X
+    [4X[25Xgap>[125X [27X## Equivalent to:  NilpotentQuotient( : group := F, class := 5 );[127X[104X
+    [4X[25Xgap>[125X [27X##                 NilpotentQuotient( F : class := 5 );          [127X[104X
+    [4X[25Xgap>[125X [27XH := NilpotentQuotient( F, 5 );[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27Xlcs := LowerCentralSeries( H );;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..5] do Print( lcs[i] / lcs[i+1], "\n" ); od;[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that  the  lower  central  series  in  the example is part of the data
+  returned by the standalone program. Therefore, the execution of the function
+  LowerCentralSeries takes no time.[133X
+  
+  [33X[0;0YThe  next  example  computes  the  class-4 quotient of the infinite dihedral
+  group. The group is soluble but not nilpotent. The first factor of its lower
+  central series is a Klein four group and all the other factors are cyclic or
+  order [22X2[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeGroup( 2 );[127X[104X
+    [4X[28X<free group on the generators [ f1, f2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XG := F / [F.1^2, F.2^2];[127X[104X
+    [4X[28X<fp group on the generators [ f1, f2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XH := NilpotentQuotient( G, 4 ); [127X[104X
+    [4X[28XPcp-group with orders [ 2, 2, 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27Xlcs := LowerCentralSeries( H );;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..Length(lcs)-1] do[127X[104X
+    [4X[25X>[125X [27X      Print( AbelianInvariants(lcs[i] / lcs[i+1]), "\n" );[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[28X[ 2 ][128X[104X
+    [4X[25Xgap>[125X [27X[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  the  following example identical generators are used in order to express
+  the  fact  that  the  group is nilpotent of class [22X3[122X. A group is nilpotent of
+  class  [22X3[122X  if  it  satisfies  the identical relation [22X[x_1,x_2,x_3,x_4]=1[122X (cf.
+  Section  [14X2.5[114X).  The  result  is  the  free nilpotent group of class [22X3[122X on two
+  generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeGroup( "a", "b", "w", "x", "y", "z" );[127X[104X
+    [4X[28X<free group on the generators [ a, b, w, x, y, z ]>[128X[104X
+    [4X[25Xgap>[125X [27XG := F / [ LeftNormedComm( [F.3,F.4,F.5,F.6] ) ];[127X[104X
+    [4X[28X<fp group of size infinity on the generators [ a, b, w, x, y, z ]>[128X[104X
+    [4X[25Xgap>[125X [27X## The following is equivalent to: [127X[104X
+    [4X[25Xgap>[125X [27X##   NilpotentQuotient( G : idgens := [F.3,F.4,F.5,F.6] );[127X[104X
+    [4X[25Xgap>[125X [27XH := NilpotentQuotient( G, [F.3,F.4,F.5,F.6] );[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XNilpotencyClassOfGroup(H);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XLowerCentralSeries(H);[127X[104X
+    [4X[28X[ Pcp-group with orders [ 0, 0, 0, 0, 0 ], Pcp-group with orders [ 0, 0, 0 ], [128X[104X
+    [4X[28X  Pcp-group with orders [ 0, 0 ], Pcp-group with orders [  ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  following  example  uses expression trees in order to specify the third
+  Engel law for the free group on [22X3[122X generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xet := ExpressionTrees( 5 );                            [127X[104X
+    [4X[28X[ x1, x2, x3, x4, x5 ][128X[104X
+    [4X[25Xgap>[125X [27Xcomm := LeftNormedComm( [et[1], et[2], et[2], et[2]] );[127X[104X
+    [4X[28XComm( x1, x2, x2, x2 )[128X[104X
+    [4X[25Xgap>[125X [27XG := rec( generators := et, relations := [comm] );[127X[104X
+    [4X[28Xrec( generators := [ x1, x2, x3, x4, x5 ], [128X[104X
+    [4X[28X  relations := [ Comm( x1, x2, x2, x2 ) ] )[128X[104X
+    [4X[25Xgap>[125X [27XH := NilpotentQuotient( G : idgens := [et[1],et[2]] );[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 2, 2, [128X[104X
+    [4X[28X  0, 6, 6, 0, 0, 2, 10, 10, 10 ][128X[104X
+    [4X[25Xgap>[125X [27XTorsionSubgroup( H );[127X[104X
+    [4X[28XPcp-group with orders [ 2, 2, 2, 2, 2, 2, 2, 10, 10, 10 ][128X[104X
+    [4X[25Xgap>[125X [27Xlcs := LowerCentralSeries( H );;[127X[104X
+    [4X[25Xgap>[125X [27XNilpotencyClassOfGroup( H );[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..5] do Print( lcs[i] / lcs[i+1], "\n" ); od;[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 2, 4, 2, 2, 0, 6, 6, 0, 0, 2 ][128X[104X
+    [4X[28XPcp-group with orders [ 10, 10, 10 ][128X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..5] do Print( AbelianInvariants(lcs[i]/lcs[i+1]), "\n" ); od;[127X[104X
+    [4X[28X[ 0, 0, 0 ][128X[104X
+    [4X[28X[ 0, 0, 0 ][128X[104X
+    [4X[28X[ 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 0, 0, 0 ][128X[104X
+    [4X[28X[ 10, 10, 10 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  example  above  also  shows  that  the  relative  orders  of an abelian
+  polycyclic group need not be the abelian invariants (elementary divisors) of
+  the  group.  Each  zero  corresponds  to  a generator of infinite order. The
+  number of zeroes is always correct.[133X
+  
+  [1X3.1-2 NilpotentEngelQuotient[101X
+  
+  [29X[2XNilpotentEngelQuotient[102X( [[3Xoutput-file[103X, ][3Xfp-group[103X, [3Xn[103X[, [3Xid-gens[103X][, [3Xc[103X] ) [32X function
+  [29X[2XNilpotentEngelQuotient[102X( [[3Xoutput-file[103X, ][3Xinput-file[103X, [3Xn[103X[, [3Xc[103X] ) [32X function
+  
+  [33X[0;0YThis  function  is  a  special  version  of  [2XNilpotentQuotient[102X ([14X3.1-1[114X) which
+  enforces  the  [22Xn[122X-th  Engel  identity on the nilpotent quotients of the group
+  specified  by  [11Xfp-group[111X  or  by  [11Xinput-file[111X.  It accepts the same options as
+  [11XNilpotentQuotient[111X.[133X
+  
+  [33X[0;0YThe  Engel  condition can also be enforced by using identical generators and
+  the Engel law and [2XNilpotentQuotient[102X ([14X3.1-1[114X). See the examples there.[133X
+  
+  [33X[0;0YThe  following example computes the relatively free fifth Engel group on two
+  generators,  determines  its  (normal)  torsion  subgroup  and  computes the
+  corresponding  quotient  group.  The quotient modulo the torsion subgroup is
+  torsion-free.  Therefore,  there  is  a nilpotent presentation without power
+  relations.  The  example  computes  a nilpotent presentation for the torsion
+  free factor group through the upper central series. The factors of the upper
+  central  series  in  a  torsion free group are torsion free. In this way one
+  obtains  a  set  of generators of infinite order and the resulting nilpotent
+  presentation has no power relations.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XG := NilpotentEngelQuotient( FreeGroup(2), 5 );[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 10, [128X[104X
+    [4X[28X  0, 0, 30, 0, 3, 3, 10, 2, 0, 6, 0, 0, 30, 2, 0, 9, 3, 5, 2, 6, 2, 10, 5, 5, [128X[104X
+    [4X[28X  2, 0, 3, 3, 3, 3, 3, 5, 5, 3, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XNilpotencyClassOfGroup(G);[127X[104X
+    [4X[28X9[128X[104X
+    [4X[25Xgap>[125X [27XT := TorsionSubgroup( G );[127X[104X
+    [4X[28XPcp-group with orders [ 3, 3, 2, 2, 3, 3, 2, 9, 3, 5, 2, 3, 2, 10, 5, 2, 3, [128X[104X
+    [4X[28X  3, 3, 3, 3, 5, 5, 3, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XIsAbelian( T );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XAbelianInvariants( T );[127X[104X
+    [4X[28X[ 3, 3, 3, 3, 3, 3, 3, 3, 30, 30, 30, 180, 180 ][128X[104X
+    [4X[25Xgap>[125X [27XH := G / T;[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 10, [128X[104X
+    [4X[28X  0, 0, 30, 0, 5, 0, 2, 0, 0, 10, 0, 2, 5, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XH := PcpGroupBySeries( UpperCentralSeries(H), "snf" );[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [128X[104X
+    [4X[28X  0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27Xucs := UpperCentralSeries( H );;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [1..NilpotencyClassOfGroup(H)] do[127X[104X
+    [4X[25X>[125X [27X	Print( ucs[i]/ucs[i+1], "\n" );[127X[104X
+    [4X[25X>[125X [27Xod;[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0 ][128X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0 ][128X[104X
+  [4X[32X[104X
+  
+  [1X3.1-3 NqEpimorphismNilpotentQuotient[101X
+  
+  [29X[2XNqEpimorphismNilpotentQuotient[102X( [[3Xoutput-file[103X, ][3Xfp-group[103X[, [3Xid-gens[103X][, [3Xc[103X] ) [32X function
+  
+  [33X[0;0YThis  function  computes an epimorphism from the group [22XG[122X given by the finite
+  presentation  [11Xfp-group[111X  onto [22XG/γ_c+1(G).[122X If [11Xc[111X is not given, then the largest
+  nilpotent  quotient  of  [22XG[122X  is  computed  and an epimorphism from [22XG[122X onto the
+  largest  nilpotent  quotient  of  [22XG[122X.  If [22XG[122X does not have a largest nilpotent
+  quotient, the function will not terminate if [22Xc[122X is not given.[133X
+  
+  [33X[0;0YThe  optional  argument  [11Xid-gens[111X  is  a list of generators of the free group
+  underlying  the  finitely  presented  group [11Xfp-group[111X. The generators in this
+  list are treated as identical generators. Consequently, all relations of the
+  [11Xfp-group[111X  involving  these generators are treated as identical relations for
+  these generators.[133X
+  
+  [33X[0;0YIf  identical  generators  are specified, then the epimorphism returned maps
+  the  group  generated  by  the `non-identical' generators onto the nilpotent
+  factor group. See the last example below.[133X
+  
+  [33X[0;0YThe  function understands the same options as the function [2XNilpotentQuotient[102X
+  ([14X3.1-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeGroup(3);                              [127X[104X
+    [4X[28X<free group on the generators [ f1, f2, f3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xphi := NqEpimorphismNilpotentQuotient( F, 5 );[127X[104X
+    [4X[28X[ f1, f2, f3 ] -> [ g1, g2, g3 ][128X[104X
+    [4X[25Xgap>[125X [27XImage( phi, LeftNormedComm( [F.3, F.2, F.1] ) );[127X[104X
+    [4X[28Xg12[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeGroup( "a", "b" ); [127X[104X
+    [4X[28X<free group on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27XG := F / [ F.1^2, F.2^2 ];     [127X[104X
+    [4X[28X<fp group on the generators [ a, b ]>[128X[104X
+    [4X[25Xgap>[125X [27Xphi := NqEpimorphismNilpotentQuotient( G, 4 );   [127X[104X
+    [4X[28X[ a, b ] -> [ g1, g2 ][128X[104X
+    [4X[25Xgap>[125X [27XImage( phi, Comm(G.1,G.2) ); [127X[104X
+    [4X[28Xg3*g4[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeGroup( "a", "b", "u", "v", "x" );[127X[104X
+    [4X[28X<free group on the generators [ a, b, u, v, x ]>[128X[104X
+    [4X[25Xgap>[125X [27Xa := F.1;; b := F.2;; u := F.3;; v := F.4;; x := F.5;;[127X[104X
+    [4X[25Xgap>[125X [27XG := F / [ x^5, LeftNormedComm( [u,v,v,v] ) ];[127X[104X
+    [4X[28X<fp group of size infinity on the generators [ a, b, u, v, x ]>[128X[104X
+    [4X[25Xgap>[125X [27Xphi := NqEpimorphismNilpotentQuotient( G : idgens:=[u,v,x], class:=5 );[127X[104X
+    [4X[28X[ a, b ] -> [ g1, g2 ][128X[104X
+    [4X[25Xgap>[125X [27XU := Source(phi);                            [127X[104X
+    [4X[28XGroup([ a, b ])[128X[104X
+    [4X[25Xgap>[125X [27XImageElm( phi, LeftNormedComm( [U.1*U.2, U.2^-1,U.2^-1,U.2^-1,] ) );[127X[104X
+    [4X[28Xid[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that the last epimorphism is a map from the group generated by [22Xa[122X and [22Xb[122X
+  onto  the  nilpotent  quotient.  The  identical  generators are used only to
+  formulate  the  identical  relator.  They are not generators of the group [22XG[122X.
+  Also note that the left-normed commutator above is mapped to the identity as
+  [22XG[122X satisfies the specified identical law.[133X
+  
+  [1X3.1-4 LowerCentralFactors[101X
+  
+  [29X[2XLowerCentralFactors[102X( [3X...[103X ) [32X function
+  
+  [33X[0;0YThis  function  accepts  the same arguments and options as [2XNilpotentQuotient[102X
+  ([14X3.1-1[114X)  and returns a list containing the abelian invariants of the central
+  factors in the lower central series of the specified group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLowerCentralFactors( FreeGroup(2), 6 );[127X[104X
+    [4X[28X[ [ 0, 0 ], [ 0 ], [ 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0 ], [128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.2 [33X[0;0YExpression Trees[133X[101X
+  
+  [1X3.2-1 ExpressionTrees[101X
+  
+  [29X[2XExpressionTrees[102X( [3Xm[103X[, [3Xprefix[103X] ) [32X function
+  [29X[2XExpressionTrees[102X( [3Xstr1[103X, [3Xstr2[103X, [3Xstr3[103X, [3X...[103X ) [32X function
+  
+  [33X[0;0YThe  argument [11Xm[111X must be a positive integer. The function returns a list with
+  [11Xm[111X  expression  tree  symbols  named x1, x2,... The optional parameter [11Xprefix[111X
+  must be a string and is used instead of [11Xx[111X if present.[133X
+  
+  [33X[0;0YAlternatively,  the  function  can  be executed with a list of strings [11Xstr1[111X,
+  [11Xstr2[111X, .... It returns a list of symbols with these strings as names.[133X
+  
+  [33X[0;0YThe  following  operations are defined for expression trees: multiplication,
+  inversion, exponentiation, forming commutators, forming conjugates.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xt := ExpressionTrees( 3 );                      [127X[104X
+    [4X[28X[ x1, x2, x3 ][128X[104X
+    [4X[25Xgap>[125X [27Xtree := Comm( t[1], t[2] )^3/LeftNormedComm( [t[1],t[2],t[3],t[1]] );[127X[104X
+    [4X[28XComm( x1, x2 )^3/Comm( x1, x2, x3, x1 )[128X[104X
+    [4X[25Xgap>[125X [27Xt := ExpressionTrees( "a", "b", "x" );[127X[104X
+    [4X[28X[ a, b, x ][128X[104X
+    [4X[25Xgap>[125X [27Xtree := Comm( t[1], t[2] )^3/LeftNormedComm( [t[1],t[2],t[3],t[1]] );[127X[104X
+    [4X[28XComm( a, b )^3/Comm( a, b, x, a )[128X[104X
+  [4X[32X[104X
+  
+  [1X3.2-2 EvaluateExpTree[101X
+  
+  [29X[2XEvaluateExpTree[102X( [3Xtree[103X, [3Xsymbols[103X, [3Xvalues[103X ) [32X function
+  
+  [33X[0;0YThe  argument  [11Xtree[111X  is  an  expression  tree  followed by the list of those
+  symbols  [11Xsymbols[111X  from  which  the expression tree is built up. The argument
+  [11Xvalues[111X  is  a  list  containing  a  constant  for  each symbol. The function
+  substitutes  each  value  for  the  corresponding  symbol  and  computes the
+  resulting value for [11Xtree[111X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeGroup( 3 );                               [127X[104X
+    [4X[28X<free group on the generators [ f1, f2, f3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xt := ExpressionTrees( "a", "b", "x" );[127X[104X
+    [4X[28X[ a, b, x ][128X[104X
+    [4X[25Xgap>[125X [27Xtree := Comm( t[1], t[2] )^3/LeftNormedComm( [t[1],t[2],t[3],t[1]] );[127X[104X
+    [4X[28XComm( a, b )^3/Comm( a, b, x, a )[128X[104X
+    [4X[25Xgap>[125X [27XEvaluateExpTree( tree, t, GeneratorsOfGroup(F) );[127X[104X
+    [4X[28Xf1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f2^-1*f1*f2*f1^-1*f3^-1*f2^-1*f1^[128X[104X
+    [4X[28X-1*f2*f1*f3*f1^-1*f2^-1*f1*f2*f1*f2^-1*f1^-1*f2*f1*f3^-1*f1^-1*f2^-1*f1*f2*f3[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.3 [33X[0;0YAuxiliary Functions[133X[101X
+  
+  [1X3.3-1 NqReadOutput[101X
+  
+  [29X[2XNqReadOutput[102X( [3Xstream[103X ) [32X function
+  
+  [33X[0;0YThe  only  argument  [11Xstream[111X  is an output stream of the ANU NQ. The function
+  reads  the  stream and returns a record that has a component for each global
+  variable used in the output of the ANU NQ, see [2XNqGlobalVariables[102X ([14X3.4-3[114X).[133X
+  
+  [1X3.3-2 NqStringFpGroup[101X
+  
+  [29X[2XNqStringFpGroup[102X( [3Xfp-group[103X[, [3Xidgens[103X] ) [32X function
+  
+  [33X[0;0YThe  function takes a finitely presented group [11Xfp-group[111X and returns a string
+  in  the  input  format of the ANU NQ. If the list [11Xidgens[111X is present, then it
+  must  contain generators of the free group underlying the finitely presented
+  group  [2XFreeGroupOfFpGroup[102X ([14XReference: FreeGroupOfFpGroup[114X). The generators in
+  [11Xidgens[111X are treated as identical generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XF := FreeGroup(2);[127X[104X
+    [4X[28X<free group on the generators [ f1, f2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XG := F / [F.1^2, F.2^2, (F.1*F.2)^4];[127X[104X
+    [4X[28X<fp group on the generators [ f1, f2 ]>[128X[104X
+    [4X[25Xgap>[125X [27XNqStringFpGroup( G );[127X[104X
+    [4X[28X"< x1, x2 |\n    x1^2,\n    x2^2,\n    x1*x2*x1*x2*x1*x2*x1*x2\n>\n"[128X[104X
+    [4X[25Xgap>[125X [27XPrint( last );[127X[104X
+    [4X[28X< x1, x2 |[128X[104X
+    [4X[28X    x1^2,[128X[104X
+    [4X[28X    x2^2,[128X[104X
+    [4X[28X    x1*x2*x1*x2*x1*x2*x1*x2[128X[104X
+    [4X[28X>[128X[104X
+    [4X[25Xgap>[125X [27XPrintTo( "dihedral", last );[127X[104X
+    [4X[25Xgap>[125X [27X## The following is equivalent to: [127X[104X
+    [4X[25Xgap>[125X [27X##     NilpotentQuotient( : input_file := "dihedral" );[127X[104X
+    [4X[25Xgap>[125X [27XNilpotentQuotient( "dihedral" );[127X[104X
+    [4X[28XPcp-group with orders [ 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XExec( "rm dihedral" );[127X[104X
+    [4X[25Xgap>[125X [27XF := FreeGroup(3);[127X[104X
+    [4X[28X<free group on the generators [ f1, f2, f3 ]>[128X[104X
+    [4X[25Xgap>[125X [27XH := F / [ LeftNormedComm( [F.2,F.1,F.1] ),                               [127X[104X
+    [4X[25X>[125X [27X              LeftNormedComm( [F.2,F.1,F.2] ), F.3^7 ];[127X[104X
+    [4X[28X<fp group on the generators [ f1, f2, f3 ]>[128X[104X
+    [4X[25Xgap>[125X [27Xstr := NqStringFpGroup( H, [F.3] );                                  [127X[104X
+    [4X[28X"< x1, x2; x3 |\n    x1^-1*x2^-1*x1*x2*x1^-1*x2^-1*x1^-1*x2*x1^2,\n    x1^-1*x\[128X[104X
+    [4X[28X2^-1*x1*x2^-1*x1^-1*x2*x1*x2,\n    x3^7\n>\n"[128X[104X
+    [4X[25Xgap>[125X [27XNilpotentQuotient( : input_string := str );[127X[104X
+    [4X[28XPcp-group with orders [ 7, 7, 7 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X3.3-3 NqStringExpTrees[101X
+  
+  [29X[2XNqStringExpTrees[102X( [3Xfp-group[103X[, [3Xidgens[103X] ) [32X function
+  
+  [33X[0;0YThe  function  takes  a  finitely presented group [11Xfp-group[111X given in terms of
+  expression  trees and returns a string in the input format of the ANU NQ. If
+  the list [11Xidgens[111X is present, then it must contain a sublist of the generators
+  of  the  presentation.  The  generators  in  [11Xidgens[111X are treated as identical
+  generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xx := ExpressionTrees( 2 );[127X[104X
+    [4X[28X[ x1, x2 ][128X[104X
+    [4X[25Xgap>[125X [27Xrels := [x[1]^2, x[2]^2, (x[1]*x[2])^5]; [127X[104X
+    [4X[28X[ x1^2, x2^2, (x1*x2)^5 ][128X[104X
+    [4X[25Xgap>[125X [27XNqStringExpTrees( rec( generators := x, relations := rels ) );[127X[104X
+    [4X[28X"< x1, x2 |\n    x1^2,\n    x2^2,\n    (x1*x2)^5\n>\n"[128X[104X
+    [4X[25Xgap>[125X [27XPrint( last );         [127X[104X
+    [4X[28X< x1, x2 |[128X[104X
+    [4X[28X    x1^2,[128X[104X
+    [4X[28X    x2^2,[128X[104X
+    [4X[28X    (x1*x2)^5[128X[104X
+    [4X[28X>[128X[104X
+    [4X[25Xgap>[125X [27Xx := ExpressionTrees( 3 );[127X[104X
+    [4X[28X[ x1, x2, x3 ][128X[104X
+    [4X[25Xgap>[125X [27Xrels := [LeftNormedComm( [x[2],x[1],x[1]] ),                              [127X[104X
+    [4X[25X>[125X [27X            LeftNormedComm( [x[2],x[1],x[2]] ), x[3]^7 ];[127X[104X
+    [4X[28X[ Comm( x2, x1, x1 ), Comm( x2, x1, x2 ), x3^7 ][128X[104X
+    [4X[25Xgap>[125X [27XNqStringExpTrees( rec( generators := x, relations := rels ) );[127X[104X
+    [4X[28X"< x1, x2, x3 |\n    [ x2, x1, x1 ],\n    [ x2, x1, x2 ],\n    x3^7\n>\n"[128X[104X
+    [4X[25Xgap>[125X [27XPrint( last );[127X[104X
+    [4X[28X< x1, x2, x3 |[128X[104X
+    [4X[28X    [ x2, x1, x1 ],[128X[104X
+    [4X[28X    [ x2, x1, x2 ],[128X[104X
+    [4X[28X    x3^7[128X[104X
+    [4X[28X>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X3.3-4 NqElementaryDivisors[101X
+  
+  [29X[2XNqElementaryDivisors[102X( [3Xint-mat[103X ) [32X function
+  
+  [33X[0;0YThe  function  [2XElementaryDivisorsMat[102X ([14XReference: ElementaryDivisorsMat[114X) only
+  returns the non-zero elementary divisors of an integer matrix. This function
+  computes  the elementary divisors of [11Xint-mat[111X and adds the appropriate number
+  of  zeroes  in  order to make it easier to recognize the isomorphism type of
+  the abelian group presented by the integer matrix. At the same time ones are
+  stripped from the list of elementary divisors.[133X
+  
+  
+  [1X3.4 [33X[0;0YGlobal Variables[133X[101X
+  
+  [1X3.4-1 NqRuntime[101X
+  
+  [29X[2XNqRuntime[102X[32X global variable
+  
+  [33X[0;0YThis  variable  contains  the  number of milliseconds of runtime of the last
+  call of ANU NQ.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XNilpotentEngelQuotient( FreeGroup(2), 5 );[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 10, [128X[104X
+    [4X[28X  0, 0, 30, 0, 3, 3, 10, 2, 0, 6, 0, 0, 30, 2, 0, 9, 3, 5, 2, 6, 2, 10, 5, 5, [128X[104X
+    [4X[28X  2, 0, 3, 3, 3, 3, 3, 5, 5, 3, 3 ][128X[104X
+    [4X[25Xgap>[125X [27XNqRuntime;[127X[104X
+    [4X[28X18200[128X[104X
+  [4X[32X[104X
+  
+  [1X3.4-2 NqDefaultOptions[101X
+  
+  [29X[2XNqDefaultOptions[102X[32X global variable
+  
+  [33X[0;0YThis variable contains a list of strings which are the standard command line
+  options  passed  to  the ANU NQ in each call. Modifying this variable can be
+  used to pass additional options to the ANU NQ.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XNqDefaultOptions;[127X[104X
+    [4X[28X[ "-g", "-p", "-C", "-s" ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  option [3X-g[103X causes the ANU NQ to produce output in [5XGAP[105X-format. The option
+  [3X-p[103X  prevents  the  ANU  NQ from listing the pc-presentation of the nilpotent
+  quotient  at  the  end  of  the  calculation.  The  option  [3X-C[103X  invokes  the
+  combinatorial collector. The option [3X-s[103X is effective only in conjunction with
+  options  for computing with Engel identities and instructs the ANU NQ to use
+  only semigroup words in the generators as instances of an Engel law.[133X
+  
+  [1X3.4-3 NqGlobalVariables[101X
+  
+  [29X[2XNqGlobalVariables[102X[32X global variable
+  
+  [33X[0;0YThis  variable  contains  a  list  of  strings  with the names of the global
+  variables that are used in the output stream of the ANU NQ. While the output
+  stream  is  read,  these  global variables are assigned new values. To avoid
+  overwriting  these  variables in case they contain values, their contents is
+  saved before reading the output stream and restored afterwards.[133X
+  
+  
+  [1X3.5 [33X[0;0YDiagnostic Output[133X[101X
+  
+  [33X[0;0YWhile  the standalone program is running it can be asked to display progress
+  information.  This  is  done  by  setting the info class [10XInfoNQ[110X to [22X1[122X via the
+  function [2XSetInfoLevel[102X ([14XReference: SetInfoLevel[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XNilpotentQuotient(FreeGroup(2),5);[127X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XSetInfoLevel( InfoNQ, 1 );[127X[104X
+    [4X[25Xgap>[125X [27XNilpotentQuotient(FreeGroup(2),5);[127X[104X
+    [4X[28X#I  Class 1: 2 generators with relative orders  0 0[128X[104X
+    [4X[28X#I  Class 2: 1 generators with relative orders: 0[128X[104X
+    [4X[28X#I  Class 3: 2 generators with relative orders: 0 0[128X[104X
+    [4X[28X#I  Class 4: 3 generators with relative orders: 0 0 0[128X[104X
+    [4X[28X#I  Class 5: 6 generators with relative orders: 0 0 0 0 0 0[128X[104X
+    [4X[28XPcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XSetInfoLevel( InfoNQ, 0 );[127X[104X
+  [4X[32X[104X
+  

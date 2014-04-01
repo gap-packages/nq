@@ -1,1 +1,125 @@
-Placeholder
+  
+  
+                                      [1X nq [101X
+  
+  
+    [1X A [5XGAP[105X 4 Package computing nilpotent factor groups of finitely presented
+              groups  Based on the ANU Nilpotent Quotient Program [101X
+  
+  
+                                      2.5
+  
+  
+                                   01/04/2014
+  
+  
+                                    Max Horn
+  
+                                 Werner Nickel
+  
+  
+  
+  
+  
+  Max Horn
+      Email:    [7Xmailto:max.horn@math.uni-giessen.de[107X
+      Homepage: [7Xhttp://www.quendi.de/math.php[107X
+      Address:  [33X[0;14YAG Algebra[133X
+                [33X[0;14YMathematisches Institut[133X
+                [33X[0;14YJustus-Liebig-Universität Gießen[133X
+                [33X[0;14YArndtstraße 2[133X
+                [33X[0;14Y35392 Gießen[133X
+                [33X[0;14YGermany[133X
+  
+  
+  Werner Nickel
+      Homepage: [7Xhttp://www.mathematik.tu-darmstadt.de/~nickel/[107X
+  
+  -------------------------------------------------------
+  [1XCopyright[101X
+  [33X[0;0Y© 1992-2007 Werner Nickel[133X
+  
+  [33X[0;0YThe  [5Xnq[105X  package  is free software; you can redistribute it and/or modify it
+  under     the     terms     of    the    GNU    General    Public    License
+  ([7Xhttp://www.fsf.org/licenses/gpl.html[107X)  as  published  by  the Free Software
+  Foundation;  either  version 2 of the License, or (at your option) any later
+  version.[133X
+  
+  
+  -------------------------------------------------------
+  [1XAcknowledgements[101X
+  [33X[0;0YThe author of ANU NQ is Werner Nickel.[133X
+  
+  [33X[0;0YThe  development  of this program was started while the author was supported
+  by  an  Australian  National  University  PhD  scholarship  and  an Overseas
+  Postgraduate Research Scholarship.[133X
+  
+  [33X[0;0YFurther  development  of  this  program  was  done  with  support  from  the
+  DFG-Schwerpunkt-Projekt "`Algorithmische Zahlentheorie und Algebra"'.[133X
+  
+  [33X[0;0YSince  then,  maintenance  of  ANU  NQ  has been taken over by Max Horn. All
+  credit  for  creating  ANU  NQ  still  goes to Werner Nickel as sole author.
+  However, bug reports and other inquiries should be sent to Max Horn.[133X
+  
+  [33X[0;0YThe following are the original acknowledgements by Werner Nickel.[133X
+  
+  [33X[0;0YOver  the  years  a number of people have made useful suggestions that found
+  their way into the code: Mike Newman, Michael Vaughan-Lee, Joachim Neubüser,
+  Charles Sims.[133X
+  
+  [33X[0;0YThanks  to Volkmar Felsch and Joachim Neubüser for their careful examination
+  of the package prior to its release for GAP 4.[133X
+  
+  [33X[0;0YThis  documentation was prepared with the [5XGAPDoc[105X package by Frank Lübeck and
+  Max Neunhöffer.[133X
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (nq)[101X
+  
+  1 [33X[0;0YIntroduction[133X
+  2 [33X[0;0YGeneral remarks[133X
+    2.1 [33X[0;0YCommutators and the Lower Central Series[133X
+    2.2 [33X[0;0YNilpotent groups[133X
+    2.3 [33X[0;0YNilpotent presentations[133X
+    2.4 [33X[0;0YA sketch of the algorithm[133X
+    2.5 [33X[0;0YIdentical Relations[133X
+    2.6 [33X[0;0YExpression Trees[133X
+    2.7 [33X[0;0YA word about the implementation[133X
+    2.8 [33X[0;0YThe input format of the standalone[133X
+  3 [33X[0;0YThe Functions of the Package[133X
+    3.1 [33X[0;0YNilpotent Quotients of Finitely Presented Groups[133X
+      3.1-1 NilpotentQuotient
+      3.1-2 NilpotentEngelQuotient
+      3.1-3 NqEpimorphismNilpotentQuotient
+      3.1-4 LowerCentralFactors
+    3.2 [33X[0;0YExpression Trees[133X
+      3.2-1 ExpressionTrees
+      3.2-2 EvaluateExpTree
+    3.3 [33X[0;0YAuxiliary Functions[133X
+      3.3-1 NqReadOutput
+      3.3-2 NqStringFpGroup
+      3.3-3 NqStringExpTrees
+      3.3-4 NqElementaryDivisors
+    3.4 [33X[0;0YGlobal Variables[133X
+      3.4-1 NqRuntime
+      3.4-2 NqDefaultOptions
+      3.4-3 NqGlobalVariables
+    3.5 [33X[0;0YDiagnostic Output[133X
+  4 [33X[0;0YExamples[133X
+    4.1 [33X[0;0YRight Engel elements[133X
+  5 [33X[0;0YInstallation of the Package[133X
+    5.1 [33X[0;0YConfiguring for compilation[133X
+    5.2 [33X[0;0YCompiling the nq binary[133X
+    5.3 [33X[0;0YTesting[133X
+    5.4 [33X[0;0YFeedback[133X
+  A [33X[0;0YThe nq command line interface[133X
+    A.1 [33X[0;0YHow to use the ANU NQ[133X
+    A.2 [33X[0;0YThe input format for presentations[133X
+    A.3 [33X[0;0YAn example[133X
+    A.4 [33X[0;0YSome remarks about the algorithm[133X
+  
+  
+  [32X

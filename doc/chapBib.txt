@@ -1,0 +1,27 @@
+  
+  
+  [1XReferences[101X
+  
+  [[20XEN02[120X]  [16XEick,  B.  and  Nickel,  W.[116X,  [17XPolycyclic,  Algorithms  for  working with polycyclic groups[117X (2002), ((GAP
+  package)), http://www.icm.tu-bs.de/ag_algebra/software/polycyclic/.
+  
+  [[20XGMP[120X] [17XGNU MP[117X, http://gmplib.org/.
+  
+  [[20XHig59[120X] [16XHigman, G.[116X, [17XSome remarks on varieties of groups[117X, [18XQuart. J. Math. Oxford[118X, [19X2[119X, 10 (1959), 165–178.
+  
+  [[20XLS90[120X]  [16XLeedham-Green,  C.  R.  and  Soicher,  L. H.[116X, [17XCollection from the left and other strategies[117X, [18XJ. Symbolic
+  Comput.[118X, [19X9[119X, 5–6 (1990), 665–675.
+  
+  [[20XNN94[120X] [16XNewman, M. F. and Nickel, W.[116X, [17XEngel elements in groups[117X, [18XJ. Pure Appl. Algebra[118X, [19X96[119X (1994), 39–45.
+  
+  [[20XNic96[120X]  [16XNickel,  W.[116X, [17XComputing Nilpotent Quotients of Finitely Presented Groups[117X, in Geometric and Computational
+  Perspectives  on  Infinite  Groups,  Dimacs  Series in Discrete Mathematics and Theoretical Computer Science, [19X25[119X
+  (1996), 175–191.
+  
+  [[20XSim94[120X] [16XSims, C. C.[116X, [17XComputation with Finitely Presented Groups[117X, Cambridge University Press (1994).
+  
+  [[20XVau90[120X] [16XVaughan-Lee, M. R.[116X, [17XCollection from the Left[117X, [18XJ. Symbolic Comput.[118X, Academic Press, [19X9[119X (1990), 725–733.
+  
+  
+  
+  [32X

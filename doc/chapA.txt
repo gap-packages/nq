@@ -1,0 +1,268 @@
+  
+  [1XA [33X[0;0YThe nq command line interface[133X[101X
+  
+  
+  [1XA.1 [33X[0;0YHow to use the ANU NQ[133X[101X
+  
+  [33X[0;0YIf you start the ANU NQ by typing[133X
+  
+  [4X[32X  interactive  [32X[104X
+    [4X     nq -X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Yyou will get the following message:[133X
+  
+  [4X[32X  interactive  [32X[104X
+    [4X    unknown option: -X[104X
+    [4X    usage: nq [-a] [-M] [-d] [-g] [-v] [-s] [-f] [-c] [-m][104X
+    [4X              [-t <n>] [-l <n>] [-r <n>] [-n <n>] [-e <n>][104X
+    [4X              [-y] [-o] [-p] [-E] [<presentation>] [<class>][104X
+  [4X[32X[104X
+  
+  [33X[0;0YAll parameters in square brackets are optional. The parameter <presentation>
+  has  to  be the name of a file that contains a finite group presentation for
+  which  a  nilpotent  quotient  is  to be calculated. This file name must not
+  start with a digit. If it is not present, nq will read the presentation from
+  standard  input.  The  parameter  <class>  restricts  the computation of the
+  nilpotent  quotient  to  at  most  that (nilpotency) class, i.e. the program
+  calculates  the  quotient  group  of  the [22X(c+1)[122X-th term of the lower central
+  series.  If <class> is omitted, the program computes successively the factor
+  groups of the lower central series of the given group. If there is a largest
+  nilpotent  quotient, i.e., if the lower central series becomes constant, the
+  program  will  eventually  terminate with the largest nilpotent quotient. If
+  there  is  no  largest  nilpotent quotient, the program will run forever (or
+  more precisely will run out of resources). On termination the program prints
+  a  nilpotent  presentation  for  the nilpotent quotient it has computed. The
+  options  -l,  -r  and  -e  can  be  used  to enforce Engel conditions on the
+  nilpotent  quotient  to be calculated. All these options have to be followed
+  by a positive integer <n>. Their meaning is the following:[133X
+  
+  [8X-n <k>[108X
+        [33X[0;6YThis  option  forces  the first k generators to be left or right Engel
+        element if also the option -l or -r (or both) is present. Otherwise it
+        is ignored.[133X
+  
+  [8X-l <n>[108X
+        [33X[0;6YThis  forces  the  first  k  generators  [22Xg_1,...,g_k[122X  of the nilpotent
+        quotient   Q   to   be  left  n-Engel  elements,  i.e.,  they  satisfy
+        [22X[x,...,x,g_i]  =  1[122X (x occurring n-times) for all x in Q and [22X1 <= i <=
+        k[122X. If the option -n is not used, then k = 1.[133X
+  
+  [8X-r <n>[108X
+        [33X[0;6YThis  forces  the  first  k  generators  [22Xg_1,...,g_k[122X  of the nilpotent
+        quotient   Q   to   be   right  n-Engel  elements,i.e.,  they  satisfy
+        [22X[g_i,x,..,x] = 1[122X (x occurring n-times) for all x in Q and [22X1 <= i <= k[122X.
+        If the option -n is not used, then k = 1.[133X
+  
+  [8X-e <n>[108X
+        [33X[0;6YThis  enforces  the  n-th  Engel  law  on  Q,  i.e., [22X[x,y,..,y] = 1[122X (y
+        occurring n-times) for all x,y in Q.[133X
+  
+  [8X-t <n>[108X
+        [33X[0;6YThis option specifies how much CPU time the program is allowed to use.
+        It  will  terminate  after <n> seconds of CPU time. If <n> is followed
+        (without  space)  by  one  of the letters m, h or d, <n> specifies the
+        time in minutes, hours or days, respectively.[133X
+  
+  [33X[0;0YThe  other options have the following meaning. Care has to be taken when the
+  options  -s  or  -c are used since the resulting nilpotent quotient need NOT
+  satisfy  the required Engel condition. The reason for this is that a smaller
+  set  of test words is used if one of these two options are present. Although
+  this  smaller  set  of  test  words  seems  to  be sufficient to enforce the
+  required Engel condition, this fact has not been proven.[133X
+  
+  [8X-a[108X
+        [33X[0;6YFor  each  factor of the lower central series a file is created in the
+        current  directory  that  contains  an  integer  matrix describing the
+        factor  as  abelian group. The first number in that file is the number
+        of  columns of the matrix. Then the matrix follows in row major order.
+        The   matrix   for   the   i-th   factor   is   put   into   the  file
+        <presentation>.abinv.<i>.[133X
+  
+  [8X-p[108X
+        [33X[0;6Ytoggles  printing of the pc presentation for the nilpotent quotient at
+        the end of a calculation.[133X
+  
+  [8X-s[108X
+        [33X[0;6YThis  option  causes  the program to check only semigroup words in the
+        generating  set  of  the nilpotent quotient when an Engel condition is
+        enforced.  If  none  of  the  options  -l, -r or -e are present, it is
+        ignored.[133X
+  
+  [8X-f[108X
+        [33X[0;6YThis  option  causes  to  check semiwords in the generating set of the
+        nilpotent  quotient  first  and  then  all other words that need to be
+        checked. It is ignored if the option -s is used or none of the options
+        -l, -r or -e are present.[133X
+  
+  [8X-c[108X
+        [33X[0;6YThis  option  stops  checking  the  Engel law at each class if all the
+        checks  of a certain weight did not yield any non-trivial instances of
+        the law.[133X
+  
+  [8X-d[108X
+        [33X[0;6YSwitch  on  debug  mode and perform checks during the computation. Not
+        yet implemented.[133X
+  
+  [8X-o[108X
+        [33X[0;6YIn  checking  Engel  identities, instances are process in the order of
+        increased weight. This flag reverses the order.[133X
+  
+  [8X-y[108X
+        [33X[0;6YEnforce  the  identities  [22Xx^8[122X  and  [22X[  [x1,x2,x3], [x4,x5,x6] ][122X on the
+        nilpotent quotient.[133X
+  
+  [8X-v[108X
+        [33X[0;6YSwitch on verbose mode.[133X
+  
+  [8X-g[108X
+        [33X[0;6YProduce  GAP  output.  Presently  the  GAP  output  consists only of a
+        sequence  of  integer matrices whose rows are relations of the factors
+        of  the  lower  central  series as abelian groups. This will change as
+        soon as GAP can handle infinite polycyclic groups.[133X
+  
+  [8X-E[108X
+        [33X[0;6Ythe   *last*   n  generators  are  Engel  generators.  This  works  in
+        conjunction with option -n.[133X
+  
+  [8X-m[108X
+        [33X[0;6Youtput  the  relation  matrix  for  each  factor  of the lower central
+        series. The matrices are written to files with the names 'matrix.<cl>'
+        where  <cl>  is  replaced  by  the  number  of the factor in the lower
+        central  series. Each file contains first the number of columns of the
+        matrix  and then the rows of the matrix. The matrix is written as each
+        relation is produced and is not in upper triangular form.[133X
+  
+  [8X-M[108X
+        [33X[0;6Youtput  the  relation  matrix  before  and  after  relations have been
+        enforced.   This   results   in   two   groups  of  files  with  names
+        '<pres>.nilp.<cl>'  and '<pres>.mult.<cl>' where <pres> is the name of
+        the  input  files  and  <cl>  is  the class. The matrices are in upper
+        triangular form.[133X
+  
+  
+  [1XA.2 [33X[0;0YThe input format for presentations[133X[101X
+  
+  [33X[0;0YThe  input  format  for  finite  presentations resembles the way many people
+  write  down a presentation on paper. Here are some examples of presentations
+  that the ANU NQ accepts:[133X
+  
+  
+      < a, b | >                       # free group of rank 2
+  
+      < a, b, c | [a,b,c],             # a left normed commutator
+                  [b,c,c,c]^6,         # another one raised to a power
+                  a^2 = c^-3*a^2*c^3,  # a relation
+                  a^(b*c) = a,         # a conjugate relation
+                  (a*[b,(a*c)])^6      # something that looks complicated
+      >
+  
+  [33X[0;0YA presentation starts with '<' followed be a list of generators separated by
+  commas.  Generator  names are strings that contain only upper and lower case
+  letters,  digits,  dots  and underscores and that do not start with a digit.
+  The list of generator names is separated from the list of relators/relations
+  by the symbol '|'. Relators and relations are separated by commas and can be
+  mixed  arbitrarily. Parentheses can be used in order to group subexpressions
+  together.  Square  brackets  can  be  used  in  order  to  form  left normed
+  commutators.  The  symbols  '*'  and  '^'  can  be used to form products and
+  powers,  respectively.  The  presentation  finishes  with  the symbol '>'. A
+  comment  starts with the symbol '#' and finishes at the end of the line. The
+  file  src/presentation.c  contains  a complete grammar for the presentations
+  accepted by the ANU NQ.[133X
+  
+  
+  [1XA.3 [33X[0;0YAn example[133X[101X
+  
+  [33X[0;0YLet  G  be  the free group on two generators x and y. The input file (called
+  free2.fp here) contains the following:[133X
+  
+  
+          < x, y | >
+  
+  [33X[0;0YComputing the class 3 quotient with the ANU NQ by typing[133X
+  
+  
+          nq free2.fp 3
+  
+  [33X[0;0Yproduces the following output:[133X
+  
+  
+  #
+  #    The ANU Nilpotent Quotient Program (Version 2.3)
+  #    Calculating a nilpotent quotient
+  #    Input: free2.fp
+  #    Nilpotency class: 3
+  #    Program: nq
+  #    Size of exponents: 8 bytes
+  #
+  #    Calculating the abelian quotient ...
+  #    The abelian quotient has 2 generators
+  #        with the following exponents: 0 0
+  #
+  #    Calculating the class 2 quotient ...
+  ##  Sizes:  2  3
+  #    Layer 2 of the lower central series has 1 generators
+  #          with the following exponents: 0
+  #
+  #    Calculating the class 3 quotient ...
+  ##  Sizes:  2  3  5
+  #    Layer 3 of the lower central series has 2 generators
+  #          with the following exponents: 0 0
+  #
+  
+  
+  #    The epimorphism :
+  #    x |---> A
+  #    y |---> B
+  
+  
+  #    The nilpotent quotient :
+      <A,B,C,D,E
+        |
+          B^A           =: B*C,
+          B^(A^-1)      =  B*C^-1*D,
+          C^A           =: C*D,
+          C^(A^-1)      =  C*D^-1,
+          C^B           =: C*E,
+          C^(B^-1)      =  C*E^-1 >
+  
+  #    Class : 3
+  #    Nr of generators of each class : 2 1 2
+  
+  
+  #    The definitions:
+  #    C := [ B, A ]
+  #    D := [ B, A, A ]
+  #    E := [ B, A, B ]
+  #    total runtime : 1 msec
+  #    total size    : 0 byte
+  ##  Total time spent on integer matrices: 0
+  
+  [33X[0;0YMost  of  the  comments  are fairly self-explanatory. One note of caution is
+  necessary:  The  number  of  generators for each factor of the lower central
+  series  is  not  the minimal number possible but is the number of generators
+  that  the  ANU  NQ  chose to use. This will be improved in one of the future
+  version  of  the  program.  The epimorphism from the original group onto the
+  nilpotent quotient is printed in a somewhat confusing way. The generators on
+  the  left  hand  side  of  the  arrows  correspond  to the generators in the
+  original  presentation  but  are  printed with different names. This will be
+  fixed in one of the next version.[133X
+  
+  
+  [1XA.4 [33X[0;0YSome remarks about the algorithm[133X[101X
+  
+  [33X[0;0YThe  implementation of the algorithm is fairly straight forward. The program
+  uses  a  weighted  nilpotent  presentation  with  definitions to represent a
+  nilpotent  group.  Calculations  in  the  nilpotent  group  are done using a
+  collector from the left without combinatorial collection. Generators for the
+  [22Xc[122X-th  lower  central  factor  are  defined as commutators of the form [22X[y,x][122X,
+  where  [22Xx[122X is a generator of weight 1 and [22Xy[122X is a generator of weight [22Xc-1[122X. Then
+  the program calculates the necessary changes (tails) for all relations which
+  are  not  definitions,  runs through the consistency check and evaluates the
+  original  relations  on  the  polycyclic  presentation. This gives a list of
+  words,  which  have  to  be  made  trivial  in  order to obtain a consistent
+  polycyclic  presentation  representing  a  nilpotent  quotient  of the given
+  finitely  presented  group.  This  list  is converted into a integer matrix,
+  which  is  transformed  into  upper  triangular form using the Kannan-Bachem
+  algorithm. The GNU multiple precision package is used for this.[133X
+  
