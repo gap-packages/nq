@@ -385,7 +385,7 @@ static void InitParser(FILE *fp, const char *filename) {
 */
 static node     *Snumber(void) {
 
-	node    *n;
+	node    *n = 0;
 
 	if (Token == NUMBER) {
 		n = GetNode(TNUM);
@@ -471,7 +471,7 @@ static node     *Commutator(void) {
 */
 static node     *Atom(void) {
 
-	node            *n;
+	node            *n = 0;
 
 	if (Token == GEN) {
 		n = GetNode(TGEN);

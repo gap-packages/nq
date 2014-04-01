@@ -84,7 +84,7 @@ static void StackReduceExponent(expvec ev, gen g) {
 					}
 					ev[ h ] = (expo)0;
 					GenStack[ Sp ]    = WordStack[ Sp ];
-					GenStack[ Sp ]->e; /* FIXME: statement with no effect */
+					//GenStack[ Sp ]->e; /* FIXME: statement with no effect */
 				}
 
 			AddWord(ev, Power[ g ], ev[ g ] / Exponent[ g ]);
