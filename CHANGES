@@ -2,6 +2,11 @@
 This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
+2.5.1 (2014-04-02)
+  * Fix linker error on Unix systems other than Mac OS X
+  * Remove GAP function NqBuildManual (use the makedoc.g
+    script instead)
+
 2.5 (2014-04-01)
   * Renamed configure option "--with-gap-root" to "--with-gaproot"
     in order to match the io and orb packages more closely.
