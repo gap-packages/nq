@@ -26,7 +26,7 @@ nq_SOURCES = \
     src/trmetab.c \
     src/word.c
 
-nq_LDFLAGS = $(GMP_LIBS)
+nq_LDADD = $(GMP_LIBS)
 nq_CPPFLAGS = $(GMP_CPPFLAGS)
 
 #CFLAGS += -O3 -Wuninitialized
