@@ -7,10 +7,10 @@
               groups  Based on the ANU Nilpotent Quotient Program [101X
   
   
-                                     2.5.1
+                                     2.5.2
   
   
-                                   02/04/2014
+                                   07/01/2016
   
   
                                     Max Horn

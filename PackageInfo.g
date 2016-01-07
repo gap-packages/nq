@@ -9,8 +9,8 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.5.1",
-Date    := "02/04/2014", # dd/mm/yyyy format
+Version := "2.5.2",
+Date    := "07/01/2016", # dd/mm/yyyy format
 
 Persons := [
   rec( LastName      := "Horn",
@@ -46,10 +46,10 @@ Status         := "accepted",
 CommunicatedBy := "Joachim Neubüser (RWTH Aachen)",
 AcceptDate     := "01/2003",
 
-PackageWWWHome := "http://gap-system.github.io/nq/",
+PackageWWWHome := "http://gap-packages.github.io/nq/",
 README_URL     := Concatenation(~.PackageWWWHome, "README"),
 PackageInfoURL := Concatenation(~.PackageWWWHome, "PackageInfo.g"),
-ArchiveURL     := Concatenation("https://github.com/gap-system/nq/",
+ArchiveURL     := Concatenation("https://github.com/gap-packages/nq/",
                                 "releases/download/v", ~.Version,
                                 "/nq-", ~.Version),
 ArchiveFormats := ".tar.gz .tar.bz2",
