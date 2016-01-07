@@ -2,6 +2,9 @@
 This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
+2.5.2 (2016-01-07)
+  - Move website to http://gap-packages.github.io/nq/
+
 2.5.1 (2014-04-02)
   * Fix linker error on Unix systems other than Mac OS X
   * Remove GAP function NqBuildManual (use the makedoc.g
