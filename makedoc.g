@@ -1,11 +1,10 @@
 #
 # Generate the manual using AutoDoc
 #
-LoadPackage("AutoDoc", "2014.03.04");
-
-SetPackagePath("nq", ".");
-AutoDoc("nq" : scaffold := rec( MainPage := false ) );
-
-PrintTo("VERSION", PackageInfo("nq")[1].Version);
+if fail = LoadPackage("AutoDoc", ">= 2016.01.21") then
+    Error("AutoDoc 2016.01.21 or newer is required");
+fi;
+AutoDoc( rec( scaffold := rec( MainPage := false ) ) );
+PrintTo("VERSION", GAPInfo.PackageInfoCurrent.Version);
 
 QUIT;
