@@ -47,3 +47,6 @@
 /examples/Makefile
 /src/*.o
 /nq
+
+/tmp/
+/gh-pages/
