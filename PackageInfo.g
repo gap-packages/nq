@@ -101,7 +101,7 @@ BannerString     := Concatenation(
 
 Autoload := false,
 
-TestFile := "gap/nq.tst",
+TestFile := "tst/nq.tst",
 
 Keywords := [
   "nilpotent quotient algorithm",
