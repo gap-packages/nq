@@ -66,10 +66,7 @@ distclean-local:
 	(cd examples; make distclean)
 	rm -rf bin/*
 
-doc:	doc/manual.six
+doc:
+	(echo 'Read("makedoc.g");' | $(GAPROOT)/bin/gap.sh -A -q)
 
-doc/manual.six: doc/*.xml PackageInfo.g
-	($(GAPROOT)/bin/gap.sh -A makedoc.g)
-
-test:
-	(cd examples; make)
+.PHONY: doc
