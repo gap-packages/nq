@@ -7,10 +7,10 @@
               groups  Based on the ANU Nilpotent Quotient Program [101X
   
   
-                                     2.5.2
+                                     2.5.3
   
   
-                                   07/01/2016
+                                   08/03/2016
   
   
                                     Max Horn
@@ -23,7 +23,7 @@
   
   Max Horn
       Email:    [7Xmailto:max.horn@math.uni-giessen.de[107X
-      Homepage: [7Xhttp://www.quendi.de/math.php[107X
+      Homepage: [7Xhttp://www.quendi.de/math[107X
       Address:  [33X[0;14YAG Algebra[133X
                 [33X[0;14YMathematisches Institut[133X
                 [33X[0;14YJustus-Liebig-Universität Gießen[133X
