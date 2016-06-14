@@ -53,7 +53,11 @@ ArchiveURL     := Concatenation("https://github.com/gap-packages/nq/",
                                 "releases/download/v", ~.Version,
                                 "/nq-", ~.Version),
 ArchiveFormats := ".tar.gz .tar.bz2",
-
+SourceRepository := rec( 
+  Type := "git", 
+  URL := "https://github.com/gap-packages/nq"
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 AbstractHTML   := Concatenation( 
   "This package provides access to the ANU nilpotent quotient ",
   "program for computing nilpotent factor groups of finitely ",
