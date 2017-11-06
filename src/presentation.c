@@ -33,7 +33,7 @@ void    FreeNode(node *n) {
 /*
 **    GetNode() allocates space for a node of given type.
 */
-static node    *GetNode(int type) {
+static node    *GetNode(EvalType type) {
 	node    *n;
 
 	n = (node *)Allocate(sizeof(node));
