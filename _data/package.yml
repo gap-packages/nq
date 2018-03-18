@@ -1,7 +1,8 @@
 name: nq
 version: 2.5.3
-date: 08/03/2016
-description: Nilpotent Quotients of Finitely Presented Groups
+date: 2016-03-08
+description: |
+    Nilpotent Quotients of Finitely Presented Groups
 
 authors:
     - name: Werner Nickel
@@ -16,7 +17,7 @@ GAP: ">= 4.4"
 needed-pkgs:
     - name: "polycyclic"
       version: "1.0"
-      url: "http://www.icm.tu-bs.de/ag_algebra/software/polycyclic/"
+      url: "https://gap-packages.github.io/polycyclic/"
 
 suggested-pkgs:
     - name: "GAPDoc"
@@ -24,7 +25,7 @@ suggested-pkgs:
       url: "http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc"
 
 www: http://gap-packages.github.io/nq/
-readme: http://gap-packages.github.io/nq/README
+readme: README
 packageinfo: http://gap-packages.github.io/nq/PackageInfo.g
 
 downloads:
@@ -33,7 +34,8 @@ downloads:
     - name: .tar.bz2
       url: https://github.com/gap-packages/nq/releases/download/v2.5.3/nq-2.5.3.tar.bz2
 
-abstract: This package provides access to the ANU nilpotent quotient program for computing nilpotent factor groups of finitely presented groups.
+abstract: |
+    This package provides access to the ANU nilpotent quotient program for computing nilpotent factor groups of finitely presented groups.
 
 status: accepted
 doc-html: doc/chap0.html
