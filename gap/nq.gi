@@ -695,7 +695,7 @@ function( G, nqrec )
         phi := GroupHomomorphismByImagesNC( G, A, gens, images );
     fi;
 
-    SetFeatureObj( phi, IsFromFpGroupStdGensGeneralMappingByImages, true );
+    SetFilterObj( phi, IsFromFpGroupStdGensGeneralMappingByImages );
     SetIsSurjective( phi, true );
 
     return phi;

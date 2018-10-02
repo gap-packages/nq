@@ -28,7 +28,7 @@ function( nqrec )
         SetConjugate( ftl, rel[1], rel[2], rel{[3..Length(rel)]}  );
     od;
 
-    SetFeatureObj( ftl, IsConfluent, true );
+    SetFilterObj( ftl, IsConfluent );
     UpdatePolycyclicCollector( ftl );
 
     return ftl;
