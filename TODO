@@ -14,12 +14,6 @@
   - do *not* prebuild docs anymore, instead, ensure that docs are automatically
     built when the user builds nq.
 
-* Choose a license! Say, GPL
-  - add license file
-  - mention license in source files
-  - mention it in docs
-  - mention on website
-
 * Buildsystem:
   - consider using a single Makefile, or alternatively automake
     (automake now has a single-Makefile mode!)

@@ -11,6 +11,7 @@ PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
 Version := "2.5.3",
 Date    := "08/03/2016", # dd/mm/yyyy format
+License := "GPL-2.0-or-later",
 
 Persons := [
   rec( LastName      := "Horn",
