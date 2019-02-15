@@ -9,8 +9,8 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.5.3",
-Date    := "08/03/2016", # dd/mm/yyyy format
+Version := "2.5.4",
+Date    := "15/02/2019", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -78,8 +78,8 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP                    := ">= 4.9",
-  NeededOtherPackages    := [ ["polycyclic", "1.0"] ],
-  SuggestedOtherPackages := [ ["GAPDoc", "1.3"] ],
+  NeededOtherPackages    := [ ["polycyclic", "2.11"] ],
+  SuggestedOtherPackages := [  ],
   ExternalConditions     := [ "needs a UNIX system with C-compiler",
                               "needs GNU multiple precision library" ]
 ),
