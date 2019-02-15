@@ -9,8 +9,9 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.5.3",
-Date    := "08/03/2016", # dd/mm/yyyy format
+Version := "2.5.4",
+Date    := "15/02/2019", # dd/mm/yyyy format
+License := "GPL-2.0-or-later",
 
 Persons := [
   rec( LastName      := "Horn",
@@ -18,7 +19,7 @@ Persons := [
        IsAuthor      := false,
        IsMaintainer  := true,
        Email         := "max.horn@math.uni-giessen.de",
-       WWWHome       := "http://www.quendi.de/math",
+       WWWHome       := "https://www.quendi.de/math",
        PostalAddress := Concatenation( "AG Algebra\n",
                                        "Mathematisches Institut\n",
                                        "Justus-Liebig-Universität Gießen\n",
@@ -46,14 +47,18 @@ Status         := "accepted",
 CommunicatedBy := "Joachim Neubüser (RWTH Aachen)",
 AcceptDate     := "01/2003",
 
-PackageWWWHome := "http://gap-packages.github.io/nq/",
+PackageWWWHome := "https://gap-packages.github.io/nq/",
 README_URL     := Concatenation(~.PackageWWWHome, "README"),
 PackageInfoURL := Concatenation(~.PackageWWWHome, "PackageInfo.g"),
 ArchiveURL     := Concatenation("https://github.com/gap-packages/nq/",
                                 "releases/download/v", ~.Version,
                                 "/nq-", ~.Version),
 ArchiveFormats := ".tar.gz .tar.bz2",
-
+SourceRepository := rec(
+  Type := "git",
+  URL := "https://github.com/gap-packages/nq"
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 AbstractHTML   := Concatenation( 
   "This package provides access to the ANU nilpotent quotient ",
   "program for computing nilpotent factor groups of finitely ",
@@ -72,9 +77,9 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP                    := ">= 4.4",
-  NeededOtherPackages    := [ ["polycyclic", "1.0"] ],
-  SuggestedOtherPackages := [ ["GAPDoc", "1.3"] ],
+  GAP                    := ">= 4.9",
+  NeededOtherPackages    := [ ["polycyclic", "2.11"] ],
+  SuggestedOtherPackages := [  ],
   ExternalConditions     := [ "needs a UNIX system with C-compiler",
                               "needs GNU multiple precision library" ]
 ),
@@ -101,7 +106,7 @@ BannerString     := Concatenation(
 
 Autoload := false,
 
-TestFile := "tst/nq.tst",
+TestFile := "tst/testall.g",
 
 Keywords := [
   "nilpotent quotient algorithm",

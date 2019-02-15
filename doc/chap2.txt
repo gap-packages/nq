@@ -79,10 +79,11 @@
   presentation has the form[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y\langle a,\ldots,a_n | a_i^{m_i} = w_{ii}(a_{i+1},\ldots,a_n) \mbox{
-        for } i\in I;\; [a_j,a_i] = w_{ij}(a_{j+1},\ldots,a_n) \mbox{ for }
-        1\leq i < j\leq n\rangle[133X [124X[133X
+  [24X[33X[0;6Y\langle  a,\ldots,a_n  | a_i^{m_i} = w_{ii}(a_{i+1},\ldots,a_n) \mbox{ for }
+  i\in  I;\;  [a_j,a_i]  =  w_{ij}(a_{j+1},\ldots,a_n)  \mbox{ for } 1\leq i <
+  j\leq n\rangle[133X
   
+  [124X
   
   [33X[0;0YHere, [22Xw_ij(a_k,...,a_n)[122X denotes a group word in the generators [22Xa_k,...,a_n[122X.[133X
   
@@ -98,8 +99,9 @@
   an inconsistent polycyclic presentation[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y\langle a,b\mid a^2, b^a = b^2 \rangle[133X [124X[133X
+  [24X[33X[0;6Y\langle a,b\mid a^2, b^a = b^2 \rangle[133X
   
+  [124X
   
   [33X[0;0Yas  [22Xb  =  baa  =  ab^2a = a^2b^4 = b^4[122X which implies [22Xb^3=1[122X. Here we have the
   equivalent  normal  words  [22Xb^3[122X  and  the  empty  word. It can be proved that
@@ -192,8 +194,9 @@
   generators by a semicolon: For example[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y\langle a,b,c; x,y | x^5, [x,y,y,y]\rangle[133X [124X[133X
+  [24X[33X[0;6Y\langle a,b,c; x,y | x^5, [x,y,y,y]\rangle[133X
   
+  [124X
   
   [33X[0;0Yis a group on 3 generators [22Xa,b,c[122X of exponent [22X5[122X satisfying the 3rd Engel law.
   The  presentation above is equivalent to a presentation on 3 generators with
@@ -208,8 +211,9 @@
   generators as in the following example:[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y\langle a,b,c; x | [x,c], [a,x,x,x] \rangle[133X [124X[133X
+  [24X[33X[0;6Y\langle a,b,c; x | [x,c], [a,x,x,x] \rangle[133X
   
+  [124X
   
   [33X[0;0YThe  first  relator  specifies  a  law  which  says that [22Xc[122X commutes with all
   elements of the group. The second turns [22Xa[122X into a third right Engel element.[133X
@@ -233,8 +237,9 @@
   and long expression. For example,[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y[x,y,z] = y^{-1}x^{-1}yxz^{-1}x^{-1}y^{-1}xyz.[133X [124X[133X
+  [24X[33X[0;6Y[x,y,z] = y^{-1}x^{-1}yxz^{-1}x^{-1}y^{-1}xyz.[133X
   
+  [124X
   
   [33X[0;0YEvaluating  a commutator [22X[a,b][122X is done efficiently by computing the equation
   [22X(ba)^-1ab[122X.   Therefore,   for   each  commutator  we  need  to  perform  two
@@ -294,11 +299,11 @@
   environment, let me know and I'll be happy to assist if time permits.[133X
   
   [33X[0;0YThe  program  has  two  collectors:  a  simple  collector  from  the left as
-  described in [LS90] and a combinatorial from the left collector as described
-  in  [Vau90].  The  combinatorial  collector is always faster than the simple
-  collector,  therefore,  it is the collector used by this package by default.
-  This  can  be  changed  by  modifying  the  global variable [2XNqDefaultOptions[102X
-  ([14X3.4-2[114X).[133X
+  described  in  [LGS90]  and  a  combinatorial  from  the  left  collector as
+  described  in  [VL90]. The combinatorial collector is always faster than the
+  simple  collector,  therefore,  it  is the collector used by this package by
+  default.   This   can   be   changed   by   modifying  the  global  variable
+  [2XNqDefaultOptions[102X ([14X3.4-2[114X).[133X
   
   [33X[0;0YIn  a  polycyclic  group  with  generators that do not have power relations,
   exponents  may  become arbitrarily large. Experience shows that this happens
@@ -324,23 +329,26 @@
   presentation[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y\langle x, y | x^2 = y \rangle[133X [124X[133X
+  [24X[33X[0;6Y\langle x, y | x^2 = y \rangle[133X
   
+  [124X
   
   [33X[0;0YThe  group  is  clearly  isomorphic  to  the additive group of the integers.
   Applying  the  ANU  NQ  to  this  presentation gives the following nilpotent
   presentation:[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y\langle A,B | A^2 = B, [B,A] \rangle[133X [124X[133X
+  [24X[33X[0;6Y\langle A,B | A^2 = B, [B,A] \rangle[133X
   
+  [124X
   
   [33X[0;0YA   nilpotent  presentation  on  a  minimal  generating  set  would  be  the
   presentation of the free group on one generator:[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y\langle A | \; \rangle[133X [124X[133X
+  [24X[33X[0;6Y\langle A | \; \rangle[133X
   
+  [124X
   
   
   [1X2.8 [33X[0;0YThe input format of the standalone[133X[101X

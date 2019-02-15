@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (nq) - Chapter 2: General remarks</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -194,7 +194,7 @@ relations := [ Comm( x1, x2, x2 ), Comm( x1, x2, x2, x1 ) ] )
 
 <p>The ANU NQ is written in C, but not in ANSI C. I hope to make one of the next versions ANSI compliable. However, it uses a fairly restricted subset of the language so that it should be easy to compile it in new environments. The code is 64-bit clean. If you have difficulties with porting it to a new environment, let me know and I'll be happy to assist if time permits.</p>
 
-<p>The program has two collectors: a simple collector from the left as described in <a href="chapBib_mj.html#biBLS90">[LS90]</a> and a combinatorial from the left collector as described in <a href="chapBib_mj.html#biBVL90a">[Vau90]</a>. The combinatorial collector is always faster than the simple collector, therefore, it is the collector used by this package by default. This can be changed by modifying the global variable <code class="func">NqDefaultOptions</code> (<a href="chap3_mj.html#X7DFBFD1580BF024A"><span class="RefLink">3.4-2</span></a>).</p>
+<p>The program has two collectors: a simple collector from the left as described in <a href="chapBib_mj.html#biBLS90">[LGS90]</a> and a combinatorial from the left collector as described in <a href="chapBib_mj.html#biBVL90a">[VL90]</a>. The combinatorial collector is always faster than the simple collector, therefore, it is the collector used by this package by default. This can be changed by modifying the global variable <code class="func">NqDefaultOptions</code> (<a href="chap3_mj.html#X7DFBFD1580BF024A"><span class="RefLink">3.4-2</span></a>).</p>
 
 <p>In a polycyclic group with generators that do not have power relations, exponents may become arbitrarily large. Experience shows that this happens rarely in the computations done by the ANU NQ. Exponents are represented by 32-bit integers. The collectors perform an overflow check and abort the computation if an overflow occurred. In a GNU environment the program can be compiled using the `long long' 64-bit integer type. For this uncomment the relevant line in src/Makefile and recompile the program.</p>
 
