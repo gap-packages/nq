@@ -11,6 +11,12 @@ AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects])
 AM_SILENT_RULES([yes])
 AM_MAINTAINER_MODE
 
+dnl
+dnl Setup libtool (for interfacing with GAP kernel extension)
+dnl
+LT_PREREQ([2.4.2])
+LT_INIT
+
 dnl ##
 dnl ## C is the language
 dnl ##
@@ -89,83 +95,6 @@ AC_MSG_RESULT([$ABI])
 
 AC_SUBST(ABI)
 AC_SUBST(ABI_CFLAGS)
-
-dnl ##
-dnl ## Check for GMP
-dnl ## If the user specified a specific GMP, try to use that.
-dnl ## Otherwise, first try to use the GMP provided by GAP, or
-dnl ## any GMP version installed globally by the user.
-dnl ##
-
-GMP_CPPFLAGS=
-GMP_LIBS=
-
-AC_ARG_WITH([gmp],
-	[AS_HELP_STRING([--with-gmp=PATH],
-	  [ Use GMP library.
-        If the argument you supply is "yes" or <empty>, then the version of GMP bundled with GAP will be used (default).
-        If the argument is "system" that means the library is reachable with the standard
-        search path "/usr" or "/usr/local".
-        Otherwise you give the <path> to the directory which contains the library.
-        [[default=yes]]
-    ])],
-  [], [ with_gmp=yes ]
-)
-
-if test "x$with_gmp" = "xno" ; then
-	AC_MSG_ERROR([GMP is required, cannot build without it])
-elif test "x$with_gmp" = "xsystem" ; then
-	# Try using system GMP
-	GMP_CPPFLAGS=""
-	GMP_LIBS="-lgmp"
-else
-	# Try using static linked GMP in the specified location
-	if test "x$with_gmp" = "xyes" ; then
-		# Try to use GAP's GMP, if available
-		GMP_HOME="$GAPROOT/bin/$GAPARCH/extern/gmp"
-	else
-		GMP_HOME="$with_gmp"
-	fi;
-	if test -d ${GMP_HOME}/include && test -f ${GMP_HOME}/lib/libgmp.a ; then
-		GMP_CPPFLAGS="-I${GMP_HOME}/include"
-		GMP_LIBS="${GMP_HOME}/lib/libgmp.a"
-	elif test "x$with_gmp" = "xyes" ; then
-		# fallback to trying system wide GMP
-		GMP_CPPFLAGS=""
-		GMP_LIBS="-lgmp"
-	else
-		AC_MSG_ERROR([Could not locate libgmp.a in the specified location])
-	fi
-fi;
-
-nq_save_CPPFLAGS="$CPPFLAGS"
-CPPFLAGS="$CPPFLAGS $GMP_CPPFLAGS"
-nq_save_LIBS="$LIBS"
-LIBS="$LIBS $GMP_LIBS"
-
-AC_CHECK_HEADER( [gmp.h],
-	[
-	# TODO: Disable linker check for now: It causes problems on Linux, because
-	# libgmp.a is in the linker command line before the test C file. On the long
-	# run, this should be re-enabled, though perhaps in a different form.
-	AC_MSG_CHECKING([whether linking against GMP works])
-	AC_TRY_LINK(
-		[#include <gmp.h>],
-		[__gmpz_init(0);] ,
-		[AC_MSG_RESULT([yes])],
-		[AC_MSG_ERROR([no])]
-		)
-	],
-	[ AC_MSG_ERROR([Could not locate the GMP include file gmp.h.]) ]
-	)
-
-# restore FLAGS
-CPPFLAGS="$nq_save_CPPFLAGS"
-LIBS="$nq_save_LIBS"
-
-AC_SUBST(GMP_CPPFLAGS)
-AC_SUBST(GMP_LIBS)
-
 
 dnl ##
 dnl ## Checks for typedefs, structures, and compiler characteristics.

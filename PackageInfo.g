@@ -77,7 +77,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP                    := ">= 4.4",
+  GAP                    := ">= 4.9",
   NeededOtherPackages    := [ ["polycyclic", "1.0"] ],
   SuggestedOtherPackages := [ ["GAPDoc", "1.3"] ],
   ExternalConditions     := [ "needs a UNIX system with C-compiler",
