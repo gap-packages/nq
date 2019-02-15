@@ -242,29 +242,27 @@ InstallValue( NqGlobalVariables,
 ##
 InstallGlobalFunction( NqReadOutput,
 function( stream )
-    local   var,  result,  n;
+    local   tmp,  var,  var2,  result;
 
+    tmp := "local result,";
+    Append(tmp, JoinStringsWithSeparator(NqGlobalVariables));
+    Append(tmp, ";\n");
+    Append(tmp, ReadAll(stream));
+    Append(tmp, "\n");
+    Append(tmp, "result:=rec();\n");
     for var in NqGlobalVariables do
-        HideGlobalVariables( var );
+        var2 := var{[3..Length(var)]};
+        Append(tmp, Concatenation("if IsBound(", var, ") then\n"));
+        Append(tmp, Concatenation("  result.", var2, " := ", var, ";\n"));
+        Append(tmp, "else\n");
+        Append(tmp, Concatenation("  result.", var2, " := fail;\n"));
+        Append(tmp, "fi;\n");
     od;
+    Append(tmp, "return result;\n");
 
-    Read( stream );
+    result := ReadAsFunction( InputTextString( tmp ) );
+    result := result();
 
-    result := rec();
-
-    for var in NqGlobalVariables do
-        n := Length(var);
-        if IsBoundGlobal( var ) then
-            result.(var{[3..n]}) := ValueGlobal( var );
-        else
-            result.(var{[3..n]}) := fail;
-        fi;
-    od;
-
-    for var in NqGlobalVariables do
-        UnhideGlobalVariables( var );
-    od;
-    
     MakeReadWriteGlobal( "NqRuntime" );
     NqRuntime := result.Runtime;
     MakeReadOnlyGlobal( "NqRuntime" );
