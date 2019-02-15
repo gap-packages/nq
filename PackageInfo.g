@@ -106,7 +106,7 @@ BannerString     := Concatenation(
 
 Autoload := false,
 
-TestFile := "tst/nq.tst",
+TestFile := "tst/testall.g",
 
 Keywords := [
   "nilpotent quotient algorithm",
