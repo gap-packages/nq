@@ -19,7 +19,7 @@ Persons := [
        IsAuthor      := false,
        IsMaintainer  := true,
        Email         := "max.horn@math.uni-giessen.de",
-       WWWHome       := "http://www.quendi.de/math",
+       WWWHome       := "https://www.quendi.de/math",
        PostalAddress := Concatenation( "AG Algebra\n",
                                        "Mathematisches Institut\n",
                                        "Justus-Liebig-Universität Gießen\n",
@@ -54,8 +54,8 @@ ArchiveURL     := Concatenation("https://github.com/gap-packages/nq/",
                                 "releases/download/v", ~.Version,
                                 "/nq-", ~.Version),
 ArchiveFormats := ".tar.gz .tar.bz2",
-SourceRepository := rec( 
-  Type := "git", 
+SourceRepository := rec(
+  Type := "git",
   URL := "https://github.com/gap-packages/nq"
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
