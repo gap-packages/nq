@@ -9,7 +9,7 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.5.4",
+Version := "2.5.4dev",
 Date    := "15/02/2019", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
