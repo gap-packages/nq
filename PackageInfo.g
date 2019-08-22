@@ -47,7 +47,7 @@ CommunicatedBy := "Joachim Neubüser (RWTH Aachen)",
 AcceptDate     := "01/2003",
 
 PackageWWWHome := "https://gap-packages.github.io/nq/",
-README_URL     := Concatenation(~.PackageWWWHome, "README"),
+README_URL     := Concatenation(~.PackageWWWHome, "README.md"),
 PackageInfoURL := Concatenation(~.PackageWWWHome, "PackageInfo.g"),
 ArchiveURL     := Concatenation("https://github.com/gap-packages/nq/",
                                 "releases/download/v", ~.Version,

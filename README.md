@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gap-packages/nq.svg?branch=master)](https://travis-ci.org/gap-packages/nq)
+[![Code Coverage](https://codecov.io/github/gap-packages/nq/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/nq)
 
 The ANU Nilpotent Quotient Program
 ==================================
@@ -68,8 +70,8 @@ supported by an Australian National University  PhD scholarship and an
 Overseas Postgraduate Research Scholarship.
 
 Further  development  of  this  program  was  done  while  the  author
-was  supported   by   the   DFG-Schwerpunkt-Projekt   "`Algorithmische
-Zahlentheorie und Algebra"'.
+was  supported   by   the   DFG-Schwerpunkt-Projekt   "Algorithmische
+Zahlentheorie und Algebra".
 
 Since then, maintenance of ANU NQ has been taken over by Max Horn. All
 credit for creating ANU NQ still goes to Werner Nickel as sole author.
@@ -79,5 +81,4 @@ However, bug reports and other  inquiries should be sent to Max  Horn.
 Contact addresses
 -----------------
 Bug reports and other requests should be sent to the issue tracker
-
-  https://github.com/gap-packages/nq/issues
+ <https://github.com/gap-packages/nq/issues>
