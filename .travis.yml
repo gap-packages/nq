@@ -8,7 +8,7 @@ addons:
 
 matrix:
   include:
-    - env: GAPBRANCH=master"
+    - env: GAPBRANCH=master
     - env: GAPBRANCH=stable-4.10
     - env: GAPBRANCH=stable-4.9
     - env: GAPBRANCH=master ABI=32
