@@ -18,15 +18,16 @@ Persons := [
        FirstNames    := "Max",
        IsAuthor      := false,
        IsMaintainer  := true,
-       Email         := "max.horn@uni-siegen.de",
+       Email         := "horn@mathematik.uni-kl.de",
        WWWHome       := "https://www.quendi.de/math",
-       PostalAddress := Concatenation( "Department Mathematik\n",
-                                       "Universität Siegen\n",
-                                       "Walter-Flex-Straße 3\n",
-                                       "57072 Siegen\n",
-                                       "Germany" ),
-       Place         := "Siegen, Germany",
-       Institution   := "Universität Siegen"
+       PostalAddress := Concatenation(
+                          "Fachbereich Mathematik\n",
+                          "TU Kaiserslautern\n",
+                          "Gottlieb-Daimler-Straße 48\n",
+                          "67663 Kaiserslautern\n",
+                          "Germany" ),
+       Place         := "Kaiserslautern, Germany",
+       Institution   := "TU Kaiserslautern"
      ),
 
   rec( LastName      := "Nickel",
@@ -100,7 +101,7 @@ end,
 BannerString     := Concatenation(
   "Loading nq ", ~.Version, " (Nilpotent Quotient Algorithm)\n",
   "  by Werner Nickel\n",
-  "  maintained by Max Horn (max.horn@uni-siegen.de)\n"
+  "  maintained by Max Horn (horn@mathematik.uni-kl.de)\n"
   ),
 
 Autoload := false,

@@ -23,7 +23,7 @@ G1.tst: G1
 	else                                                          \
 	     echo " results in an error.";                            \
 	     echo Please mail the file $@;                            \
-	     echo "    " to max.horn@uni-siegen.de;             \
+	     echo "    " to horn@mathematik.uni-kl.de;             \
 	fi
 
 G2.tst: G2
@@ -35,7 +35,7 @@ G2.tst: G2
 	else                                                          \
 	     echo " results in an error.";                            \
 	     echo Please mail the file $@;                            \
-	     echo "    " to max.horn@uni-siegen.de;             \
+	     echo "    " to horn@mathematik.uni-kl.de;             \
 	fi
 
 G3.tst: G3
@@ -47,7 +47,7 @@ G3.tst: G3
 	else                                                          \
 	     echo " results in an error.";                            \
 	     echo Please mail the file $@;                            \
-	     echo "    " to max.horn@uni-siegen.de;             \
+	     echo "    " to horn@mathematik.uni-kl.de;             \
 	fi
 
 G4.tst: G4
@@ -59,7 +59,7 @@ G4.tst: G4
 	else                                                          \
 	     echo " results in an error.";                            \
 	     echo Please mail the file $@;                            \
-	     echo "    " to max.horn@uni-siegen.de;             \
+	     echo "    " to horn@mathematik.uni-kl.de;             \
 	fi
 
 G5.tst: G5
@@ -71,7 +71,7 @@ G5.tst: G5
 	else                                                          \
 	     echo " results in an error.";                            \
 	     echo Please mail the file $@;                            \
-	     echo "    " to max.horn@uni-siegen.de;             \
+	     echo "    " to horn@mathematik.uni-kl.de;             \
 	fi
 
 # Recreate the comparison output
