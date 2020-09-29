@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gap-packages/nq.svg?branch=master)](https://travis-ci.org/gap-packages/nq)
+[![Build Status](https://travis-ci.com/gap-packages/nq.svg?branch=master)](https://travis-ci.com/gap-packages/nq)
 [![Code Coverage](https://codecov.io/github/gap-packages/nq/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/nq)
 
 The ANU Nilpotent Quotient Program
