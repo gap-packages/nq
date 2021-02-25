@@ -42,7 +42,7 @@
 /Makefile
 /Makefile.in
 /src/config.h
-/src/config.hin
+/src/config.hin*
 /src/stamp-h1
 
 /examples/Makefile
