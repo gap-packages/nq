@@ -98,15 +98,9 @@ int main(int argc, char *argv[]) {
 	FILE    *fp;
 	long     t, time;
 	long    begin, printEpim = 1;
-#ifdef HAVE_SBRK
-	void    *start;
-#endif
 	gen     g;
 
 	CatchSignals();
-#ifdef HAVE_SBRK
-	start = sbrk(0);	/* TODO: Add HAVE_SBRK macro */
-#endif
 	begin = RunTime();
 
 	ProgramName = argv[0];
@@ -320,9 +314,6 @@ int main(int argc, char *argv[]) {
 	if (Verbose) {
 		printf("#    runtime       : %ld msec\n", RunTime() - time);
 		printf("#    total runtime : %ld msec\n", RunTime() - begin);
-#ifdef HAVE_SBRK
-		printf("#    total size    : %ld byte\n", (long)((char *)sbrk(0) - (char *)start));
-#endif
 	}
 	printf("#\n");
 
@@ -365,9 +356,6 @@ int main(int argc, char *argv[]) {
 		if (Verbose) {
 			printf("#    runtime       : %ld msec\n", RunTime() - time);
 			printf("#    total runtime : %ld msec\n", RunTime() - begin);
-#ifdef HAVE_SBRK
-			printf("#    total size    : %ld byte\n", (long)((char *)sbrk(0) - (char *)start));
-#endif
 		}
 		printf("#\n");
 
@@ -385,9 +373,6 @@ end:
 		PrintDefs();
 	}
 	printf("#    total runtime : %ld msec\n", RunTime() - begin);
-#ifdef HAVE_SBRK
-	printf("#    total size    : %ld byte\n", (long)((char *)sbrk(0) - (char *)start));
-#endif
 
 	if (Gap) printf("];\n");
 
