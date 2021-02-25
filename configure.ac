@@ -97,7 +97,7 @@ AC_TYPE_LONG_LONG_INT
 dnl ##
 dnl ## Checks for library functions.
 dnl ##
-AC_CHECK_FUNCS([sbrk getrusage])
+AC_CHECK_FUNCS([getrusage])
 
 dnl ##
 dnl ## Finally, generate the Makefiles and output everything
