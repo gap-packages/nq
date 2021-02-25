@@ -11,15 +11,9 @@ AC_CONFIG_SRCDIR([src/nq.c])
 AC_CONFIG_HEADER(src/config.h:src/config.hin)
 AC_CONFIG_AUX_DIR([cnf])
 AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects])
+AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects no-dist])
 AM_SILENT_RULES([yes])
 AM_MAINTAINER_MODE
-
-dnl
-dnl Setup libtool (for interfacing with GAP kernel extension)
-dnl
-LT_PREREQ([2.4.2])
-LT_INIT
 
 dnl ##
 dnl ## C is the language
@@ -34,11 +28,6 @@ AC_PROG_CC
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 AC_PROG_SED
-
-dnl ##
-dnl ## Checks for system header files.
-dnl ##
-AC_CHECK_HEADERS([stdlib.h string.h sys/time.h])
 
 
 dnl ##
@@ -57,7 +46,7 @@ if test "${with_gaproot+set}" != set; then :
   fi
 fi
 
-AC_FIND_GAP
+FIND_GAP
 
 
 dnl ##
@@ -108,8 +97,6 @@ AC_TYPE_LONG_LONG_INT
 dnl ##
 dnl ## Checks for library functions.
 dnl ##
-AC_FUNC_MALLOC
-AC_FUNC_REALLOC
 AC_CHECK_FUNCS([sbrk getrusage])
 
 dnl ##

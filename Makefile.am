@@ -59,13 +59,10 @@ all-local: nq
 	@echo "SUCCESS!"
 
 clean-local:
-	(cd examples; make clean)
+	rm -f examples/G?.tst examples/G?.old *~
 	(cd doc && rm -f *.aux *.bbl *.blg *.brf *.idx *.ilg *.ind *.log *.out *.pnr *.tex *.toc)
 	(cd doc && rm -f test/nqman.tst test/diffs)
-
-distclean-local:
-	(cd examples; make distclean)
-	rm -rf bin/*
+	rm -rf $(top_srcdir)/$(BINARCHDIR)
 
 doc:
 	(echo 'Read("makedoc.g");' | $(GAPROOT)/bin/gap.sh -A -q)
