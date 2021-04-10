@@ -8,7 +8,7 @@ AC_INIT([ANU Nilpotent Quotient Program],
         [nq],
         [https://gap-packages.github.io/nq/])
 AC_CONFIG_SRCDIR([src/nq.c])
-AC_CONFIG_HEADER(src/config.h:src/config.hin)
+AC_CONFIG_HEADERS(src/config.h:src/config.hin)
 AC_CONFIG_AUX_DIR([cnf])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects no-dist])
