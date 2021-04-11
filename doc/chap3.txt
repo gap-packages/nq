@@ -455,7 +455,7 @@
   
   [1X3.4-1 NqRuntime[101X
   
-  [33X[1;0Y[29X[2XNqRuntime[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XNqRuntime[102X [32X global variable[133X
   
   [33X[0;0YThis  variable  contains  the  number of milliseconds of runtime of the last
   call of ANU NQ.[133X
@@ -471,7 +471,7 @@
   
   [1X3.4-2 NqDefaultOptions[101X
   
-  [33X[1;0Y[29X[2XNqDefaultOptions[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XNqDefaultOptions[102X [32X global variable[133X
   
   [33X[0;0YThis variable contains a list of strings which are the standard command line
   options  passed  to  the ANU NQ in each call. Modifying this variable can be
@@ -491,7 +491,7 @@
   
   [1X3.4-3 NqGlobalVariables[101X
   
-  [33X[1;0Y[29X[2XNqGlobalVariables[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XNqGlobalVariables[102X [32X global variable[133X
   
   [33X[0;0YThis  variable  contains  a  list  of  strings  with the names of the global
   variables that are used in the output stream of the ANU NQ. While the output

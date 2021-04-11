@@ -1,16 +1,16 @@
 #############################################################################
-##  
+##
 ##  PackageInfo.g                  NQ                           Werner Nickel
-##  
+##
 ##  Based on Frank Lübeck's template for PackageInfo.g.
-##  
+##
 
 SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.5.4",
-Date    := "15/02/2019", # dd/mm/yyyy format
+Version := "2.5.5",
+Date    := "11/04/2021", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -18,16 +18,16 @@ Persons := [
        FirstNames    := "Max",
        IsAuthor      := false,
        IsMaintainer  := true,
-       Email         := "max.horn@math.uni-giessen.de",
+       Email         := "horn@mathematik.uni-kl.de",
        WWWHome       := "https://www.quendi.de/math",
-       PostalAddress := Concatenation( "AG Algebra\n",
-                                       "Mathematisches Institut\n",
-                                       "Justus-Liebig-Universität Gießen\n",
-                                       "Arndtstraße 2\n",
-                                       "35392 Gießen\n",
-                                       "Germany" ),
-       Place         := "Gießen, Germany",
-       Institution   := "Justus-Liebig-Universität Gießen"
+       PostalAddress := Concatenation(
+                          "Fachbereich Mathematik\n",
+                          "TU Kaiserslautern\n",
+                          "Gottlieb-Daimler-Straße 48\n",
+                          "67663 Kaiserslautern\n",
+                          "Germany" ),
+       Place         := "Kaiserslautern, Germany",
+       Institution   := "TU Kaiserslautern"
      ),
 
   rec( LastName      := "Nickel",
@@ -48,7 +48,7 @@ CommunicatedBy := "Joachim Neubüser (RWTH Aachen)",
 AcceptDate     := "01/2003",
 
 PackageWWWHome := "https://gap-packages.github.io/nq/",
-README_URL     := Concatenation(~.PackageWWWHome, "README"),
+README_URL     := Concatenation(~.PackageWWWHome, "README.md"),
 PackageInfoURL := Concatenation(~.PackageWWWHome, "PackageInfo.g"),
 ArchiveURL     := Concatenation("https://github.com/gap-packages/nq/",
                                 "releases/download/v", ~.Version,
@@ -59,13 +59,13 @@ SourceRepository := rec(
   URL := "https://github.com/gap-packages/nq"
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-AbstractHTML   := Concatenation( 
+AbstractHTML   := Concatenation(
   "This package provides access to the ANU nilpotent quotient ",
   "program for computing nilpotent factor groups of finitely ",
   "presented groups."
   ),
 
-                  
+
 PackageDoc := rec(
   BookName  := "nq",
   ArchiveURLSubset := [ "doc" ],
@@ -86,7 +86,7 @@ Dependencies := rec(
 
 AvailabilityTest := function()
     local   path;
-    
+
     # test for existence of the compiled binary
     path := DirectoriesPackagePrograms( "nq" );
 
@@ -101,7 +101,7 @@ end,
 BannerString     := Concatenation(
   "Loading nq ", ~.Version, " (Nilpotent Quotient Algorithm)\n",
   "  by Werner Nickel\n",
-  "  maintained by Max Horn (max.horn@math.uni-giessen.de)\n"
+  "  maintained by Max Horn (horn@mathematik.uni-kl.de)\n"
   ),
 
 Autoload := false,
@@ -124,46 +124,39 @@ Keywords := [
 
 AutoDoc := rec(
     TitlePage := rec(
-        Copyright := "\
-            <Index>License</Index>\
-            &copyright; 1992-2007 Werner Nickel<P/>\
-            The &nq; package is free software; \
-            you can redistribute it and/or modify it under the terms of the \
-            <URL Text=\"GNU General Public License\">http://www.fsf.org/licenses/gpl.html</URL> \
-            as published by the Free Software Foundation; either version 2 of the License, \
-            or (at your option) any later version.",
-        Acknowledgements := "\
-            The author of ANU NQ is Werner Nickel.\
-            \
-            <P/>The development of this program was started while the\
-            author was supported by an Australian National University PhD\
-            scholarship and an Overseas Postgraduate Research Scholarship.\
-            \
-            <P/>Further development of this program was done with support from the\
-            DFG-Schwerpunkt-Projekt \"`Algorithmische Zahlentheorie und Algebra\"'.\
-            \
-            <P/>Since then, maintenance of ANU NQ has been taken over by Max Horn. All\
-            credit for creating ANU NQ still goes to Werner Nickel as sole author.\
-            However, bug reports and other  inquiries should be sent to Max  Horn.\
-            \
-            <P/>The following are the original acknowledgements by Werner Nickel.\
-            \
-            <P/>Over the years a number of people have made useful suggestions\
-            that found their way into the code:  Mike Newman, Michael\
-            Vaughan-Lee, Joachim Neubüser, Charles Sims.\
-            \
-            <P/>Thanks to Volkmar Felsch and Joachim Neubüser for their careful\
-            examination of the package prior to its release for GAP 4.\
-            \
-            <P/>This documentation was prepared with the <Package>GAPDoc</Package>\
-            package by Frank Lübeck and Max Neunhöffer.",
-        Subtitle := "\
-            A &GAP; 4 Package<Br/>\
-            computing nilpotent factor groups of finitely presented groups<Br/>\
-            <Br/>\
-            Based on the ANU Nilpotent Quotient Program",
-        # HACK: We don't want a TitleComment, for now the best we can do is show an empty one
-        TitleComment := "",
+        Copyright := """
+            <Index>License</Index>
+            &copyright; 1992-2007 Werner Nickel<P/>
+            The &nq; package is free software;
+            you can redistribute it and/or modify it under the terms of the
+            <URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL>
+            as published by the Free Software Foundation; either version 2 of the License,
+            or (at your option) any later version.""",
+        Acknowledgements := """
+            The author of ANU NQ is Werner Nickel.
+
+            <P/>The development of this program was started while the
+            author was supported by an Australian National University PhD
+            scholarship and an Overseas Postgraduate Research Scholarship.
+
+            <P/>Further development of this program was done with support from the
+            DFG-Schwerpunkt-Projekt "`Algorithmische Zahlentheorie und Algebra"'.
+
+            <P/>Since then, maintenance of ANU NQ has been taken over by Max Horn. All
+            credit for creating ANU NQ still goes to Werner Nickel as sole author.
+            However, bug reports and other inquiries should be sent to Max Horn.
+
+            <P/>The following are the original acknowledgements by Werner Nickel.
+
+            <P/>Over the years a number of people have made useful suggestions
+            that found their way into the code:  Mike Newman, Michael
+            Vaughan-Lee, Joachim Neubüser, Charles Sims.
+
+            <P/>Thanks to Volkmar Felsch and Joachim Neubüser for their careful
+            examination of the package prior to its release for GAP 4.
+
+            <P/>This documentation was prepared with the <Package>GAPDoc</Package>
+            package by Frank Lübeck and Max Neunhöffer.""",
     ),
 ),
 

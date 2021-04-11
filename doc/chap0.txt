@@ -3,33 +3,17 @@
                                       [1X nq [101X
   
   
-    [1X A [5XGAP[105X 4 Package computing nilpotent factor groups of finitely presented
-              groups  Based on the ANU Nilpotent Quotient Program [101X
+               [1X Nilpotent Quotients of Finitely Presented Groups [101X
   
   
-                                     2.5.4
+                                     2.5.5
   
   
-                                15 February 2019
+                                 11 April 2021
   
-  
-                                    Max Horn
   
                                  Werner Nickel
   
-  
-  
-  
-  
-  Max Horn
-      Email:    [7Xmailto:max.horn@math.uni-giessen.de[107X
-      Homepage: [7Xhttps://www.quendi.de/math[107X
-      Address:  [33X[0;14YAG Algebra[133X
-                [33X[0;14YMathematisches Institut[133X
-                [33X[0;14YJustus-Liebig-Universität Gießen[133X
-                [33X[0;14YArndtstraße 2[133X
-                [33X[0;14Y35392 Gießen[133X
-                [33X[0;14YGermany[133X
   
   
   Werner Nickel

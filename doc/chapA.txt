@@ -235,7 +235,6 @@
   #    D := [ B, A, A ]
   #    E := [ B, A, B ]
   #    total runtime : 1 msec
-  #    total size    : 0 byte
   ##  Total time spent on integer matrices: 0
   
   [33X[0;0YMost  of  the  comments  are fairly self-explanatory. One note of caution is
