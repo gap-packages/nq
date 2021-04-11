@@ -2,6 +2,9 @@
 This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
+2.5.5 (2021-04-11)
+  - Various other janitorial updates
+
 2.5.4 (2019-02-15)
   - Update build system for compatibility with GAP 4.9 and later
   - Various other janitorial updates
