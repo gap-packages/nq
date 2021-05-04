@@ -73,7 +73,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Nilpotent Quotient Algorithm",
-  Autoload  := false
 ),
 
 Dependencies := rec(
@@ -103,8 +102,6 @@ BannerString     := Concatenation(
   "  by Werner Nickel\n",
   "  maintained by Max Horn (horn@mathematik.uni-kl.de)\n"
   ),
-
-Autoload := false,
 
 TestFile := "tst/testall.g",
 
