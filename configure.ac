@@ -48,47 +48,6 @@ fi
 
 FIND_GAP
 
-
-dnl ##
-dnl ## Check whether to use 32bit or 64bit ABI
-dnl ##
-AC_CHECK_SIZEOF(void *, 4)
-
-AC_ARG_VAR(ABI, [Set this equal to 32 or 64 to build nq
-		 in 32- or 64-bit mode. The default value
-		 for this option is determined by testing the behaviour of your
-		 compiler, so should be 32 on a 32-bit system and 64 on one
-		 which is 64-bit.])
-
-AC_MSG_CHECKING([ABI bit size])
-if test "x$ABI" = "x" ;  then
-  if test $ac_cv_sizeof_void_p = 8; then
-    ABI="64"
-  else
-    ABI="32"
-  fi
-  ABI_CFLAGS=""
-elif test "$ABI" = "64"; then
-  if test $ac_cv_sizeof_void_p = 4; then
-    AC_MSG_ERROR([ ABI=64 cannot be used on a 32-bit system.
-                   Please replace this value with 32 and retry configure.
-                   If you think this error is wrong, email
-                   support@gap-system.org with full details.])
-  else
-    ABI_CFLAGS="-m64"
-  fi
-elif test "$ABI" = "32"; then
-  ABI_CFLAGS="-m32"
-else
-  AC_MSG_ERROR([ $ABI is not a supported value for ABI. Please use ABI=64
-                 or 32, or leave it unset.])
-fi
-
-AC_MSG_RESULT([$ABI])
-
-AC_SUBST(ABI)
-AC_SUBST(ABI_CFLAGS)
-
 dnl ##
 dnl ## Checks for typedefs, structures, and compiler characteristics.
 dnl ##

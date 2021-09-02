@@ -31,7 +31,6 @@ nq_LDADD = $(GAP_LIBS)
 nq_CPPFLAGS = $(GAP_CPPFLAGS)
 
 #CFLAGS += -O3 -Wuninitialized
-#CFLAGS += $(ABI_CFLAGS) 
 
 nq_CFLAGS = \
  -Wall \

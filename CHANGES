@@ -2,6 +2,11 @@
 This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
+X.Y.Z (YYY-MMM-DD)
+  - Remove support for ABI override in configure script. This is
+    rarely useful, and anybody who cares can simply add `-m32` or `-m64` to
+    the CFLAGS
+
 2.5.5 (2021-04-11)
   - Various other janitorial updates
 
