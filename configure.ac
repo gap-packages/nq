@@ -39,19 +39,6 @@ AC_PROG_SED
 dnl ##
 dnl ## Locate the GAP root dir
 dnl ##
-
-# HACK: We used to support --with-gap-root, but this got renamed to
-# --with-gaproot for compatibility with other packages (io, orb, cvec,
-# ...). But existing build scripts may use the old name, so we translate
-# it to the new name here.
-# Note: configure warns if --with-gap-root is used, calling
-# it an unrecognized option.
-if test "${with_gaproot+set}" != set; then :
-  if test "${with_gap_root+set}" = set; then :
-    with_gaproot=$with_gap_root
-  fi
-fi
-
 FIND_GAP
 
 dnl ##
