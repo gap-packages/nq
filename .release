@@ -1,4 +1,5 @@
 #!/bin/sh
 # This file is executed by the `release` script from
 # https://github.com/gap-system/ReleaseTools
-rm -rf .travis.yml .codecov.yml
+rm -rf .codecov.yml
+perl -pi -e 's/AM_MAINTAINER_MODE\(\[enable\]\)/AM_MAINTAINER_MODE\(\[disable\]\)/' configure.ac
