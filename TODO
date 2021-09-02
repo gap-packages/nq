@@ -18,7 +18,7 @@
   - consider using a single Makefile, or alternatively automake
     (automake now has a single-Makefile mode!)
   - add dependency tracking
-  - add description in the manual of how to use CONFIGNAME, ABI, --with-gap, --with-gmp, etc
+  - add description in the manual of how to use configure arguments and environment variables
 
 * Test suite:
   - Add a "proper" test suite in tst
