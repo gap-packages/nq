@@ -1,23 +1,4 @@
-* document --with-gaproot in README / manual
-
-* make a new release
-
-* start using gh-pages
-
-* Release process:
-  - add script which automates updating the version in all places:
-     PackageInfo.g, configure.ac, ...
-    this is currently quite easy to forget. Also, the release date
-    should be updated in files as necessary, including
-      PackageInfo.g, CHANGES, ...
-  - automate packaging release tarball automatic via a script
-  - do *not* prebuild docs anymore, instead, ensure that docs are automatically
-    built when the user builds nq.
-
 * Buildsystem:
-  - consider using a single Makefile, or alternatively automake
-    (automake now has a single-Makefile mode!)
-  - add dependency tracking
   - add description in the manual of how to use configure arguments and environment variables
 
 * Test suite:
