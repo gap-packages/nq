@@ -52,9 +52,9 @@ nq_CFLAGS = \
 # -Werror
 
 
-all-local: nq
+all-local: nq$(EXEEXT)
 	$(mkdir_p) $(top_srcdir)/$(BINARCHDIR)
-	cp nq $(abs_top_srcdir)/$(BINARCHDIR)
+	cp nq$(EXEEXT) $(abs_top_srcdir)/$(BINARCHDIR)
 	@echo "SUCCESS!"
 
 clean-local:
