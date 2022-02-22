@@ -9,8 +9,8 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.5.5",
-Date    := "11/04/2021", # dd/mm/yyyy format
+Version := "2.5.6",
+Date    := "22/02/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -73,7 +73,6 @@ PackageDoc := rec(
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Nilpotent Quotient Algorithm",
-  Autoload  := false
 ),
 
 Dependencies := rec(
@@ -103,8 +102,6 @@ BannerString     := Concatenation(
   "  by Werner Nickel\n",
   "  maintained by Max Horn (horn@mathematik.uni-kl.de)\n"
   ),
-
-Autoload := false,
 
 TestFile := "tst/testall.g",
 

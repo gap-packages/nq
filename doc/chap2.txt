@@ -16,7 +16,7 @@
   [22X[h_1,h_2,...,h_n-1,h_n]=[[h_1,h_2,...,h_n-1],h_n][122X.[133X
   
   [33X[0;0YThe [13Xlower central series[113X of [22XG[122X is defined inductively as [22Xγ_1(G) = G, γ_i(G) =
-  [γ_i-1(G),G][122X  for  [22Xi ge 2[122X. Each term in the lower central series is a normal
+  [γ_i-1(G),G][122X  for  [22Xi  ≥ 2[122X. Each term in the lower central series is a normal
   (even  fully  invariant)  subgroup  of  [22XG[122X.  The factors of the lower central
   series  are  abelian  groups.  On  each  factor  the induced action of [22XG[122X via
   conjugation is the trivial action.[133X
