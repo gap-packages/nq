@@ -54,6 +54,7 @@ nq_CFLAGS = \
 
 all-local: nq$(EXEEXT)
 	$(mkdir_p) $(top_srcdir)/$(BINARCHDIR)
+	rm -f $(abs_top_srcdir)/$(BINARCHDIR)/nq$(EXEEXT)
 	cp nq$(EXEEXT) $(abs_top_srcdir)/$(BINARCHDIR)
 	@echo "SUCCESS!"
 
