@@ -140,8 +140,7 @@ NqCompleteParameters := function( params )
 
         for opt in options do
             if not opt in NqParameterStrings then
-                Error( "unknown option ", opt );
-                return fail;
+                continue;
             fi;
             
             if IsBound( params.(opt) ) then
