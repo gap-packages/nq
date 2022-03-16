@@ -2,6 +2,10 @@
 This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
+2.5.7 (2022-03-16)
+  - Don't abort certain computations just because an "unknown"
+    global option is on the GAP "Options Stack"
+
 2.5.6 (2022-02-22)
   - Remove support for ABI override in configure script. This is
     rarely useful, and anybody who cares can simply add `-m32` or `-m64` to
