@@ -9,8 +9,8 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.5.6",
-Date    := "22/02/2022", # dd/mm/yyyy format
+Version := "2.5.7",
+Date    := "16/03/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -137,7 +137,7 @@ AutoDoc := rec(
             scholarship and an Overseas Postgraduate Research Scholarship.
 
             <P/>Further development of this program was done with support from the
-            DFG-Schwerpunkt-Projekt "`Algorithmische Zahlentheorie und Algebra"'.
+            DFG-Schwerpunkt-Projekt <Q>Algorithmische Zahlentheorie und Algebra</Q>.
 
             <P/>Since then, maintenance of ANU NQ has been taken over by Max Horn. All
             credit for creating ANU NQ still goes to Werner Nickel as sole author.

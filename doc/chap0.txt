@@ -6,10 +6,10 @@
                [1X Nilpotent Quotients of Finitely Presented Groups [101X
   
   
-                                     2.5.6
+                                     2.5.7
   
   
-                                22 February 2022
+                                 16 March 2022
   
   
                                  Werner Nickel
@@ -39,7 +39,7 @@
   Postgraduate Research Scholarship.[133X
   
   [33X[0;0YFurther  development  of  this  program  was  done  with  support  from  the
-  DFG-Schwerpunkt-Projekt "`Algorithmische Zahlentheorie und Algebra"'.[133X
+  DFG-Schwerpunkt-Projekt [21XAlgorithmische Zahlentheorie und Algebra[121X.[133X
   
   [33X[0;0YSince  then,  maintenance  of  ANU  NQ  has been taken over by Max Horn. All
   credit  for  creating  ANU  NQ  still  goes to Werner Nickel as sole author.
