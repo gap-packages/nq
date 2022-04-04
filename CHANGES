@@ -2,6 +2,9 @@
 This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
+X.Y.Z (YYYY-MM-DD)
+  - Restore `--with-gmp` configure option
+
 2.5.7 (2022-03-16)
   - Don't abort certain computations just because an "unknown"
     global option is on the GAP "Options Stack"
