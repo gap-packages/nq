@@ -9,8 +9,8 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.5.7",
-Date    := "16/03/2022", # dd/mm/yyyy format
+Version := "2.5.8",
+Date    := "04/04/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -126,7 +126,7 @@ AutoDoc := rec(
             &copyright; 1992-2007 Werner Nickel<P/>
             The &nq; package is free software;
             you can redistribute it and/or modify it under the terms of the
-            <URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL>
+            <URL Text="GNU General Public License">https://www.fsf.org/licenses/gpl.html</URL>
             as published by the Free Software Foundation; either version 2 of the License,
             or (at your option) any later version.""",
         Acknowledgements := """

@@ -59,14 +59,14 @@
 
 <p>Secondly you have to specify the path to the directory containing your "<code class="file">pkg</code>" directory to <strong class="pkg">GAP</strong>'s list of directories. This can be done by starting <strong class="pkg">GAP</strong> with the "<code class="file">-l</code>" command line option followed by the name of the directory and a semicolon. Then your directory is prepended to the list of directories searched. Otherwise the package is not found by <strong class="pkg">GAP</strong>. Of course, you can add this option to your <strong class="pkg">GAP</strong> startup script.</p>
 
-<p>Another issue that can occur when running <code class="file">configure</code> is that it may fail to locate the the GNU multiple precision library (GMP <a href="chapBib_mj.html#biBGNUMP">[GMP]</a>) which ANU NQ requires to work. This library is also used by <strong class="pkg">GAP</strong> and hence normally should be available on your system anyway. But if this is not the case for some reason, it has to be installed first. A copy of GMP can be obtained from <span class="URL"><a href="http://gmplib.org/">http://gmplib.org/</a></span>.</p>
+<p>Another issue that can occur when running <code class="file">configure</code> is that it may fail to locate the the GNU multiple precision library (GMP <a href="chapBib_mj.html#biBGNUMP">[GMP]</a>) which ANU NQ requires to work. This library is also used by <strong class="pkg">GAP</strong> and hence normally should be available on your system anyway. But if this is not the case for some reason, it has to be installed first. A copy of GMP can be obtained from <span class="URL"><a href="https://gmplib.org/">https://gmplib.org/</a></span>.</p>
 
 <p>In order for the <code class="file">configure</code> script to find your copy of GMP, you may have tell it where to find it via <code class="code">--with-gmp=PATH</code>, where "PATH" is the path where GMP was installed:</p>
 
 
 <div class="example"><pre> ./configure --with-gmp=PATH </pre></div>
 
-<p>Yf necessary, you may combine <code class="code">--with-gmp</code> and <code class="code">--with-gaproot</code>.</p>
+<p>If necessary, you may combine <code class="code">--with-gmp</code> and <code class="code">--with-gaproot</code>.</p>
 
 <p><a id="X83FF596582258A74" name="X83FF596582258A74"></a></p>
 

@@ -34,7 +34,7 @@
   requires to work. This library is also used by [5XGAP[105X and hence normally should
   be  available  on  your  system anyway. But if this is not the case for some
   reason,  it  has  to  be installed first. A copy of GMP can be obtained from
-  [7Xhttp://gmplib.org/[107X.[133X
+  [7Xhttps://gmplib.org/[107X.[133X
   
   [33X[0;0YIn  order  for  the  [11Xconfigure[111X script to find your copy of GMP, you may have
   tell  it  where to find it via [10X--with-gmp=PATH[110X, where [21XPATH[121X is the path where
@@ -44,7 +44,7 @@
     [4X ./configure --with-gmp=PATH [104X
   [4X[32X[104X
   
-  [33X[0;0YYf necessary, you may combine [10X--with-gmp[110X and [10X--with-gaproot[110X.[133X
+  [33X[0;0YIf necessary, you may combine [10X--with-gmp[110X and [10X--with-gaproot[110X.[133X
   
   
   [1X5.2 [33X[0;0YCompiling the nq binary[133X[101X
