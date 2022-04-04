@@ -81,24 +81,23 @@
   </author>  
   <title><Wrap Name="Package">Polycyclic</Wrap>,
          Algorithms for working with polycyclic groups</title>
-  <howpublished><URL>http://www.icm.tu-bs.de/ag_algebra/software/polycyclic/</URL></howpublished>
+  <howpublished><URL>https://gap-packages.github.io/polycyclic/</URL></howpublished>
   <year>2002</year>
   <note><Wrap Name="Package">GAP</Wrap> package</note>
 </misc></entry>
 
 <entry id="GNUMP"><manual>
   <title>GNU MP</title>
-  <address><URL>http://gmplib.org/</URL></address>
+  <address><URL>https://gmplib.org/</URL></address>
   <key>GMP</key>
 </manual></entry>
 
 <entry id="GAP4"><manual>
   <title><C>GAP</C> -- <C>G</C>roups, <C>A</C>lgorithms, and 
-                  <C>P</C>rogramming, Version 4.4.12</title>
+                  <C>P</C>rogramming, Version 4.11.1</title>
   <organization>The GAP Group</organization>
-  <address>Aachen, St Andrews</address>
-  <year>2008</year>
-  <note><URL>http://www.gap-system.org</URL></note>
+  <year>2021</year>
+  <note><URL>https://www.gap-system.org</URL></note>
   <key>GAP</key>
   <keywords>groups; *; gap; manual</keywords>
 </manual></entry>

@@ -33,7 +33,7 @@ may fail to locate the the GNU multiple precision library (GMP
 used by &GAP; and hence normally should be available on your system
 anyway. But if this is not the case for some reason, it has to be
 installed first. A copy of GMP can be obtained from
-<URL>http://gmplib.org/</URL>.
+<URL>https://gmplib.org/</URL>.
 <P/>
 
 In order for the <F>configure</F> script to find your copy of GMP, you
