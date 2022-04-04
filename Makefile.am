@@ -67,4 +67,10 @@ clean-local:
 doc:
 	(echo 'Read("makedoc.g");' | $(GAPROOT)/bin/gap.sh -A -q)
 
-.PHONY: doc
+check:
+	(cd examples; make)
+
+test:
+	(cd examples; make)
+
+.PHONY: check doc test
