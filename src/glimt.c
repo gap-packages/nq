@@ -86,33 +86,15 @@ FILE    *RawMatFile = NULL;
 
 
 static large ltom(expo n) {
-	char    x[64];
 	MP_INT  *l = (MP_INT*)Allocate(sizeof(MP_INT));
-	int     sign = 1;
-
-	if (n < (expo)0) { sign = -1; n = -n; }
 
 	/*
 	** There does not seem to be a function that converts from long long
 	** to a large integer.  So we have to do it a bit more complicated.
 	*/
-#ifdef HAVE_LONG_LONG_INT
-	sprintf(x, "%llx", n);
-#else
-	sprintf(x, "%lx", n);
-#endif
-
-	mpz_init(l);
-	mpz_set_str(l, x, 16);
-
-	if (0) {
-		printf(EXP_FORMAT" ", n);
-		mpz_out_str(stdout, 10, l);
-		printf("\n");
-	}
-
-
-	if (sign == -1) NEGATE(l);
+	mpz_init_set_si(l, (int)(n >> 32));
+	mpz_mul_2exp(l, l, 32 );
+	mpz_add_ui(l, l, (unsigned int)n);
 
 	return l;
 }
