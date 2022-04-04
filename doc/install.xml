@@ -41,7 +41,7 @@ may have tell it where to find it via <C>--with-gmp=PATH</C>, where
 <Q>PATH</Q> is the path where GMP was installed:
 
 <Listing Type="Installation"> ./configure --with-gmp=PATH </Listing>
-Yf necessary, you may combine <C>--with-gmp</C> and
+If necessary, you may combine <C>--with-gmp</C> and
 <C>--with-gaproot</C>.
 
 </Section>
