@@ -11,7 +11,7 @@
       Arg="[output-file,] fp-group [, id-gens] [, c]"/>   
 
 <Func Name="NilpotentQuotient"
-      Arg="[output-file,] input-file [,c]"/> 
+      Arg="[output-file,] input-file [,c]" Label="for input from a file"/>
 
 <Description>
 The parameter <F>fp-group</F> is either a finitely
@@ -197,7 +197,7 @@ infinite order.  The number of zeroes is always correct.
 <Func Name="NilpotentEngelQuotient" 
       Arg="[output-file,] fp-group, n, [, id-gens] [, c]"/>
 <Func Name="NilpotentEngelQuotient" 
-      Arg="[output-file,] input-file, n, [, c]"/>
+      Arg="[output-file,] input-file, n, [, c]" Label="for input from a file"/>
 <Description>
 This function is a special version of <Ref
 Func="NilpotentQuotient" Style="Text"/> which enforces the
@@ -348,7 +348,7 @@ gap> LowerCentralFactors( FreeGroup(2), 6 );
 
 <ManSection>
 <Func Name="ExpressionTrees" Arg="m[, prefix]" />
-<Func Name="ExpressionTrees" Arg="str1, str2, str3, ..." />
+<Func Name="ExpressionTrees" Arg="str1, str2, str3, ..." Label="for a list of names"/>
 <Description>
 
 The argument <F>m</F> must be a positive integer.  The function
