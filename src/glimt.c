@@ -22,27 +22,13 @@
 typedef MP_INT  *large;
 typedef large   *lvec;
 
-/*
-**    The name of the structure components in MINT have changed.  I
-**    knew from the start that I shouldn't have done that.
-*/
-#if __GNU_MP__+0 >= 2
-#    define NOTZERO(l) ((l)->_mp_size != 0)
-#    define ISZERO(l)  ((l)->_mp_size == 0)
-#    define ISNEG(l)   ((l)->_mp_size < 0)
-#    define NEGATE(l)  ((l)->_mp_size = -(l)->_mp_size)
-#    define SIGN(l)    (expo)(sgn((l)->_mp_size))
-#    define SIZE(l)    ((l)->_mp_size)
-#    define LIMB(l,i)  (expo)((l)->_mp_d[i])
-#else
-#    define NOTZERO(l) ((l)->size != 0)
-#    define ISZERO(l)  ((l)->size == 0)
-#    define ISNEG(l)   ((l)->size < 0)
-#    define NEGATE(l)  ((l)->size = -(l)->size)
-#    define SIGN(l)    (expo)(sgn((l)->size))
-#    define SIZE(l)    ((l)->size)
-#    define LIMB(l,i)  (expo)((l)->d[i])
-#endif
+#define NOTZERO(l) ((l)->_mp_size != 0)
+#define ISZERO(l)  ((l)->_mp_size == 0)
+#define ISNEG(l)   ((l)->_mp_size < 0)
+#define NEGATE(l)  ((l)->_mp_size = -(l)->_mp_size)
+#define SIGN(l)    (expo)(sgn((l)->_mp_size))
+#define SIZE(l)    ((l)->_mp_size)
+#define LIMB(l,i)  (expo)((l)->_mp_d[i])
 
 
 /*
