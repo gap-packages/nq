@@ -43,6 +43,9 @@ FIND_GAP
 GAP="${GAP:-${GAPROOT}/bin/gap.sh}"
 AC_SUBST(GAP)
 
+# newer GAP versions may set GMP_PREFIX in sysinfo.gap, try to use that
+GMP_PREFIX=${GMP_PREFIX:-yes}
+
 dnl ##
 dnl ## Check for GMP
 dnl ##
@@ -50,7 +53,7 @@ dnl ##
 AC_ARG_WITH([gmp],
   [AS_HELP_STRING([--with-gmp@<:@=PREFIX@:>@],
     [prefix of GMP installation. e.g. /usr/local])],
-    [],[with_gmp=yes])
+    [],[with_gmp=${GMP_PREFIX}])
 
 GMP_CPPFLAGS=""
 GMP_LDFLAGS=""
