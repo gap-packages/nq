@@ -40,6 +40,8 @@ dnl ##
 dnl ## Locate the GAP root dir
 dnl ##
 FIND_GAP
+GAP="${GAP:-${GAPROOT}/bin/gap.sh}"
+AC_SUBST(GAP)
 
 dnl ##
 dnl ## Check for GMP

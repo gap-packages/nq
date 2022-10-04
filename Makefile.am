@@ -65,7 +65,7 @@ clean-local:
 	rm -rf $(top_srcdir)/$(BINARCHDIR)
 
 doc:
-	(echo 'Read("makedoc.g");' | $(GAPROOT)/bin/gap.sh -A -q)
+	$(GAP) -A --quitonbreak -b -q < makedoc.g
 
 check:
 	(cd examples; make)
