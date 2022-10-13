@@ -205,7 +205,7 @@ void Tails(void) {
 	/*
 	** Precompute exponents of the new generators which are defined
 	** as a commutator [h,g] with wt(h)=Class.  There is no conclusive
-	** evidence that is woth the effort.  One probably also has to use
+	** evidence that is worth the effort.  One probably also has to use
 	** those power relations that have a non-trivial right hand side.
 	*/
 #if 0

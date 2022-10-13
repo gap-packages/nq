@@ -319,7 +319,7 @@ function( arg )
     od;
     Unbind( str[ Length(str) ] ); Unbind( str[ Length(str) ] );
 
-    ##  Insert seperator between free and identical generators.
+    ##  Insert separator between free and identical generators.
     Append( str, "; " );
 
     for i in pos do

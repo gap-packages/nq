@@ -163,7 +163,7 @@ static void outputMatrix(expvec *M, const char *suffix) {
 	surviving = (long *)Allocate(NrCols * sizeof(long));
 	nrSurv = survivingCols(M, surviving);
 
-	fprintf(fp, "%ld    # Number of colums\n", nrSurv);
+	fprintf(fp, "%ld    # Number of columns\n", nrSurv);
 	for (i = 0; i < NrRows; i++) {
 		if (M[i][Heads[i]] != (expo)1) {
 			for (j = 0; j < nrSurv; j++)

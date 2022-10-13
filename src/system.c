@@ -79,7 +79,7 @@ void SetTimeOut(int nsec) {
 		DoTimeOut = 1;
 		return;
 	} else
-		printf("SetTimeOut(): argument negative, timout not set.\n");
+		printf("SetTimeOut(): argument negative, timeout not set.\n");
 }
 
 /*

@@ -380,7 +380,7 @@ void    sizePcPres(void) {
 	gen g, h;
 
 	nrPt += 1;
-	size += sizeof(gpower);                /* Identty */
+	size += sizeof(gpower);                /* Identity */
 
 	/* First calculate the size of all those arrays. */
 	nrPt += 1;

@@ -36,7 +36,7 @@ extern  int     Verbose;
 
 /*
 **    The input file name. Used in some routines to build a file name for
-**    outpout.
+**    output.
 */
 extern const char *InputFile;
 
@@ -66,7 +66,7 @@ extern  void    printWord(word w, char c);
 extern  void    printGen(gen g, char c);
 
 /*
-**    Early stoppping criterion.
+**    Early stopping criterion.
 */
 extern int      EarlyStop;
 

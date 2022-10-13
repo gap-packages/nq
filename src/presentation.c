@@ -476,7 +476,7 @@ static node     *Atom(void) {
 	if (Token == GEN) {
 		n = GetNode(TGEN);
 		n->cont.g = GenNumber(Gen, NOCREATE);
-		if (n->cont.g == (gen)0) SyntaxError("Unkown generator");
+		if (n->cont.g == (gen)0) SyntaxError("Unknown generator");
 		NextToken();
 	} else if (Token == LPAREN) {
 		NextToken();

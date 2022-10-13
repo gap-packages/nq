@@ -38,7 +38,7 @@ static int Error(const char *str, gen g) {
 **    The generator stack containes the current position in the corresponding
 **        word in the word stack.
 **    The generator exponent stack containes the exponent of the generator
-**        determined by the corrsponding entry in the generator stack.
+**        determined by the corresponding entry in the generator stack.
 **
 **    The maximum number of elements on each stack is determined by the macro
 **    STACKHEIGHT.
@@ -319,7 +319,7 @@ word    Exponentiate(word u, int n) {
 **    To prepare the (i+1)-th step we need to collect i^x[i] first across
 **    u' and then across v' on the left hand side of the equation.  On the
 **    right hand side of the equation we need to collect i^v''[i] across
-**    u''.  This has the effect of moving the occurrances of generator i
+**    u''.  This has the effect of moving the occurrences of generator i
 **    to the left on both sides of the equation such that it can be
 **    cancelled on both sides of the equation.
 */
