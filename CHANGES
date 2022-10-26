@@ -2,6 +2,10 @@
 This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
+2.5.9 (2022-10-26)
+  - Improve how GMP is located with GAP >= 4.12.1)
+  - Various janitorial changes
+
 2.5.8 (2022-04-04)
   - Restore `--with-gmp` configure option
   - Restore `make test`
