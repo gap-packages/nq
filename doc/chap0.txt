@@ -6,10 +6,10 @@
                [1X Nilpotent Quotients of Finitely Presented Groups [101X
   
   
-                                     2.5.8
+                                     2.5.9
   
   
-                                  4 April 2022
+                                26 October 2022
   
   
                                  Werner Nickel

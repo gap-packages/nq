@@ -41,7 +41,7 @@
       idgens 3.1-1 
       input\_file 3.1-1 
       input\_string 3.1-1 
-      ouput\_file 3.1-1 
+      output\_file 3.1-1 
   polycyclic 2.2 
   polycyclic generating sequence 2.2 
   polycyclic presentation 2.3 

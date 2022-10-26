@@ -9,8 +9,8 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.5.8",
-Date    := "04/04/2022", # dd/mm/yyyy format
+Version := "2.5.9",
+Date    := "26/10/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -69,7 +69,7 @@ AbstractHTML   := Concatenation(
 PackageDoc := rec(
   BookName  := "nq",
   ArchiveURLSubset := [ "doc" ],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Nilpotent Quotient Algorithm",

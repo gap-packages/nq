@@ -3,7 +3,7 @@
   [1XReferences[101X
   
   [[20XEN02[120X]  [16XEick,  B.  and  Nickel,  W.[116X, [17XPolycyclic, Algorithms for working with
-  polycyclic          groups[117X          (2002),         ((GAP         package)),
+  polycyclic          groups[117X          (2002),          (GAP          package),
   https://gap-packages.github.io/polycyclic/.
   
   [[20XGMP[120X] [17XGNU MP[117X, https://gmplib.org/.
