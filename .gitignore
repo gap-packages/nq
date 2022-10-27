@@ -20,6 +20,7 @@
 /doc/manual.pdf
 /doc/*.xml.bib
 /doc/title.xml
+/doc/_*.xml
 
 .deps/
 .dirstamp
