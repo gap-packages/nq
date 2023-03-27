@@ -3,7 +3,7 @@ dnl ## Process this file with autoconf to produce a configure script.
 dnl ##
 AC_PREREQ([2.68])
 AC_INIT([ANU Nilpotent Quotient Program],
-        m4_normalize(m4_include([VERSION])),
+        [package],
         [https://github.com/gap-packages/nq/issues],
         [nq],
         [https://gap-packages.github.io/nq/])
