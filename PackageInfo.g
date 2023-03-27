@@ -9,8 +9,8 @@ SetPackageInfo( rec(
 
 PackageName := "nq",
 Subtitle := "Nilpotent Quotients of Finitely Presented Groups",
-Version := "2.5.9",
-Date    := "26/10/2022", # dd/mm/yyyy format
+Version := "2.5.10",
+Date    := "27/03/2023", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -18,16 +18,16 @@ Persons := [
        FirstNames    := "Max",
        IsAuthor      := false,
        IsMaintainer  := true,
-       Email         := "horn@mathematik.uni-kl.de",
+       Email         := "mhorn@rptu.de",
        WWWHome       := "https://www.quendi.de/math",
        PostalAddress := Concatenation(
                           "Fachbereich Mathematik\n",
-                          "TU Kaiserslautern\n",
+                          "RPTU Kaiserslautern-Landau\n",
                           "Gottlieb-Daimler-Straße 48\n",
                           "67663 Kaiserslautern\n",
                           "Germany" ),
        Place         := "Kaiserslautern, Germany",
-       Institution   := "TU Kaiserslautern"
+       Institution   := "RPTU Kaiserslautern-Landau"
      ),
 
   rec( LastName      := "Nickel",
@@ -100,7 +100,7 @@ end,
 BannerString     := Concatenation(
   "Loading nq ", ~.Version, " (Nilpotent Quotient Algorithm)\n",
   "  by Werner Nickel\n",
-  "  maintained by Max Horn (horn@mathematik.uni-kl.de)\n"
+  "  maintained by Max Horn (mhorn@rptu.de)\n"
   ),
 
 TestFile := "tst/testall.g",

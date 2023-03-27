@@ -1,6 +1,6 @@
 name: nq
-version: 2.5.9
-date: 2022-10-26
+version: 2.5.10
+date: 2023-03-27
 description: |
     Nilpotent Quotients of Finitely Presented Groups
 
@@ -25,9 +25,9 @@ packageinfo: https://gap-packages.github.io/nq/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/nq/releases/download/v2.5.9/nq-2.5.9.tar.gz
+      url: https://github.com/gap-packages/nq/releases/download/v2.5.10/nq-2.5.10.tar.gz
     - name: .tar.bz2
-      url: https://github.com/gap-packages/nq/releases/download/v2.5.9/nq-2.5.9.tar.bz2
+      url: https://github.com/gap-packages/nq/releases/download/v2.5.10/nq-2.5.10.tar.bz2
 
 abstract: |
     This package provides access to the ANU nilpotent quotient program for computing nilpotent factor groups of finitely presented groups.
