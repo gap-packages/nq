@@ -18,12 +18,6 @@ DeclareGlobalFunction( "NqEpimorphismByNqOutput" );
 DeclareGlobalFunction( "NilpotentEngelQuotient" );
 DeclareGlobalFunction( "LowerCentralFactors" );
 
-DeclareGlobalVariable( "NqGlobalVariables" );
-DeclareGlobalVariable( "NqDefaultOptions" );
-DeclareGlobalVariable( "NqOneTimeOptions" );
-DeclareGlobalVariable( "NqRuntime" );
-DeclareGlobalVariable( "NqGapOutput" );
-
 
 DeclareOperation( "NilpotentQuotient", 
         [ IsObject, IsPosInt ] );
