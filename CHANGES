@@ -2,6 +2,9 @@
 This file describes changes in the GAP package 'nq'.
 ===========================================================================
 
+2.5.11 (2024-01-12)
+  - Janitorial changes
+
 2.5.10 (2023-03-27)
   - Various janitorial changes
 
