@@ -11,15 +11,12 @@
 ##
 ##  Initialize the runtime variable.
 ##
-MakeReadWriteGlobal( "NqRuntime" );
-NqRuntime := 0;
-MakeReadOnlyGlobal( "NqRuntime" );
+BindGlobal( "NqRuntime", 0 );
 
 #############################################################################
 ##
 #V  NqGapOutput
 ##
-MakeReadWriteGlobal( "NqGapOutput" );
 NqGapOutput := false;
 
 #############################################################################
@@ -34,7 +31,7 @@ NqGapOutput := false;
 ##      -s      check only instances with semigroup words - this is only
 ##              relevant if one of the Engel options is used
 ##
-InstallValue( NqDefaultOptions,  [ "-g", "-p", "-C", "-s" ] );
+BindGlobal( "NqDefaultOptions",  [ "-g", "-p", "-C", "-s" ] );
 
 
 #############################################################################
@@ -44,7 +41,6 @@ InstallValue( NqDefaultOptions,  [ "-g", "-p", "-C", "-s" ] );
 ##  This variable can be used to pass a list of options to the next call of
 ##  the nq program.
 ##
-MakeReadWriteGlobal( "NqOneTimeOptions" );
 NqOneTimeOptions := [];
 
 #############################################################################
@@ -223,7 +219,7 @@ end;
 ##
 #F  NqGlobalVariables . . global variables to communicate with the nq program
 ##
-InstallValue( NqGlobalVariables,
+BindGlobal( "NqGlobalVariables",
         [ "NqLowerCentralFactors",   ##  factors of the LCS
           "NqNrGenerators",
           "NqClass",
