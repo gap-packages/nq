@@ -1,5 +1,6 @@
 name: nq
-version: 2.5.11
+version: "2.5.11"
+license: "GPL-2.0-or-later"
 date: 2024-01-12
 description: |
     Nilpotent Quotients of Finitely Presented Groups
@@ -35,3 +36,35 @@ abstract: |
 status: accepted
 doc-html: doc/chap0_mj.html
 doc-pdf: doc/manual.pdf
+keywords: |
+    nilpotent quotient algorithm, nilpotent presentations, finitely presented groups, finite presentations   , commutators, lower central series, identical relations, expression trees, nilpotent Engel groups, right and left Engel elements, computational.
+citeas: |
+    <p class='BibEntry'>
+    [<span class='BibKey'>HN24</span>]   <b class='BibAuthor'>Horn, M. and Nickel, W.</b>,
+     <i class='BibTitle'>nq, Nilpotent Quotients of Finitely Presented Groups,
+             Version 2.5.11</i>
+     (<span class='BibYear'>2024</span>)<br />
+    (<span class='BibNote'>Refereed GAP package</span>),
+    <span class='BibHowpublished'><a href="https://gap-packages.github.io/nq/">https://gap-packages.github.io/nq/</a></span>.
+    </p>
+    
+
+bibtex: |
+    @misc{ nq2.5.11,
+      author =           {Horn, M. and Nickel, W.},
+      title =            {{nq},   Nilpotent   Quotients  of  Finitely  Presented
+                          Groups, {V}ersion 2.5.11},
+      month =            {Jan},
+      year =             {2024},
+      note =             {Refereed GAP package},
+      howpublished =     {\href             {https://gap-packages.github.io/nq/}
+                          {\texttt{https://gap-packages.github.io/}\discretionary
+                          {}{}{}\texttt{nq/}}},
+      keywords =         {nilpotent quotient algorithm; nilpotent presentations;
+                          finitely  presented  groups;  finite  presentations  ;
+                          commutators;    lower    central   series;   identical
+                          relations;  expression  trees; nilpotent Engel groups;
+                          right and left Engel elements; computational},
+      printedkey =       {HN24}
+    }
+
