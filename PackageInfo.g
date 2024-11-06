@@ -92,7 +92,7 @@ AvailabilityTest := function()
     if Filename( path, "nq" ) = fail then
         Info( InfoWarning, 1,
               "Package ``nq'': The executable program is not available" );
-        return fail;
+        return false;
     fi;
     return true;
 end,
