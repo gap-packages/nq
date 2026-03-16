@@ -420,8 +420,7 @@ The input format for finite presentations resembles the way many
 people write down a presentation on paper.  Here are some examples of
 presentations that the ANU NQ accepts:
 
-<Verb>
-<![CDATA[
+<Verb><![CDATA[
     < a, b | >                       # free group of rank 2
 
     < a, b, c; x, y | 
@@ -433,8 +432,7 @@ presentations that the ANU NQ accepts:
                 [x,y,y,y,y],         # an identical relation
                 [c,x,x,x,x,x]        # c is a fifth right Engel element
     >
-]]>
-</Verb>
+]]></Verb>
 
 A presentation starts with '&tlt;' followed by a list of generators
 separated by commas.  Generator names are strings that contain only

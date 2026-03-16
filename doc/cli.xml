@@ -181,8 +181,7 @@ The input format for finite presentations resembles the way many
 people write down a presentation on paper. Here are some examples of
 presentations that the ANU NQ accepts:
 
-<Verb>
-<![CDATA[
+<Verb><![CDATA[
     < a, b | >                       # free group of rank 2
 
     < a, b, c | [a,b,c],             # a left normed commutator
@@ -191,8 +190,7 @@ presentations that the ANU NQ accepts:
                 a^(b*c) = a,         # a conjugate relation
                 (a*[b,(a*c)])^6      # something that looks complicated
     >
-]]>
-</Verb>
+]]></Verb>
 
 A presentation starts with '&lt;' followed be a list of generators
 separated by commas. Generator names are strings that contain only upper
@@ -216,23 +214,18 @@ contains a complete grammar for the presentations accepted by the ANU NQ.
 Let G be the free group on two generators x and y. The input file
 (called free2.fp here) contains the following:
 
-<Verb>
-<![CDATA[
+<Verb><![CDATA[
         < x, y | >
-]]>
-</Verb>
+]]></Verb>
 
 Computing the class 3 quotient with the ANU NQ by typing
 
-<Verb>
-<![CDATA[
+<Verb><![CDATA[
         nq free2.fp 3
-]]>
-</Verb>
+]]></Verb>
 
 produces the following output:
-<Verb>
-<![CDATA[
+<Verb><![CDATA[
 #
 #    The ANU Nilpotent Quotient Program (Version 2.3)
 #    Calculating a nilpotent quotient
@@ -282,8 +275,7 @@ produces the following output:
 #    E := [ B, A, B ]
 #    total runtime : 1 msec
 ##  Total time spent on integer matrices: 0
-]]>
-</Verb>
+]]></Verb>
 
 Most of the comments are fairly self-explanatory. One note of caution is
 necessary: The number of generators for each factor of the lower central
