@@ -1,70 +1,81 @@
-===========================================================================
 This file describes changes in the GAP package 'nq'.
-===========================================================================
 
-2.5.11 (2024-01-12)
+# 2.5.11 (2024-01-12)
+
   - Janitorial changes
 
-2.5.10 (2023-03-27)
+# 2.5.10 (2023-03-27)
+
   - Various janitorial changes
 
-2.5.9 (2022-10-26)
+# 2.5.9 (2022-10-26)
+
   - Improve how GMP is located with GAP >= 4.12.1)
   - Various janitorial changes
 
-2.5.8 (2022-04-04)
+# 2.5.8 (2022-04-04)
+
   - Restore `--with-gmp` configure option
   - Restore `make test`
   - Various janitorial changes
 
-2.5.7 (2022-03-16)
+# 2.5.7 (2022-03-16)
+
   - Don't abort certain computations just because an "unknown"
     global option is on the GAP "Options Stack"
 
-2.5.6 (2022-02-22)
+# 2.5.6 (2022-02-22)
+
   - Remove support for ABI override in configure script. This is
     rarely useful, and anybody who cares can simply add `-m32` or `-m64` to
     the CFLAGS
   - Minor change to support execution on Windows (under Cygwin)
 
-2.5.5 (2021-04-11)
+# 2.5.5 (2021-04-11)
+
   - Various other janitorial updates
 
-2.5.4 (2019-02-15)
+# 2.5.4 (2019-02-15)
+
   - Update build system for compatibility with GAP 4.9 and later
   - Various other janitorial updates
 
-2.5.3 (2016-03-08)
+# 2.5.3 (2016-03-08)
+
   - Maintenance release
 
-2.5.2 (2016-01-07)
+# 2.5.2 (2016-01-07)
+
   - Move website to https://gap-packages.github.io/nq/
 
-2.5.1 (2014-04-02)
-  * Fix linker error on Unix systems other than Mac OS X
-  * Remove GAP function NqBuildManual (use the makedoc.g
+# 2.5.1 (2014-04-02)
+
+  - Fix linker error on Unix systems other than Mac OS X
+  - Remove GAP function NqBuildManual (use the makedoc.g
     script instead)
 
-2.5 (2014-04-01)
-  * Renamed configure option "--with-gap-root" to "--with-gaproot"
-    in order to match the io and orb packages more closely.
-  * Changed build system to use automake
-  * Changed how the manual is built (now AutoDoc is used to
-	automatically generate the title page from PackageInfo.g)
-  * Add GPL license file to make clear that nq is licensed under the GPL
-    (after discussion with Werner Nickel and getting his explicit approval)
-  * Moved the homepage to GitHub
-  * Updated Max Horn's contact details
+# 2.5 (2014-04-01)
 
-2.4 (2012-01-12)
-  * Fixed crash on some systems caused by a long standing memory
+  - Renamed configure option "--with-gap-root" to "--with-gaproot"
+    in order to match the io and orb packages more closely.
+  - Changed build system to use automake
+  - Changed how the manual is built (now AutoDoc is used to
+    automatically generate the title page from PackageInfo.g)
+  - Add GPL license file to make clear that nq is licensed under the GPL
+    (after discussion with Werner Nickel and getting his explicit approval)
+  - Moved the homepage to GitHub
+  - Updated Max Horn's contact details
+
+# 2.4 (2012-01-12)
+
+  - Fixed crash on some systems caused by a long standing memory
     management bug.
-  * Fixed crash on certain systems caused by exponents being sometimes
+  - Fixed crash on certain systems caused by exponents being sometimes
     treated as 64bit words, and sometimes as 32bit words.
-  * Fixed spurious warnings when running "configure" that could occur
+  - Fixed spurious warnings when running "configure" that could occur
     when using --with-gmp-prefix
-  * Fixed a warning when using nq in GAP versions before 4.5.
-  * Improved build system:
+  - Fixed a warning when using nq in GAP versions before 4.5.
+  - Improved build system:
     - Improved GMP detection in configure script; it now checks if GAP
       built a GMP library, and if so, uses that.
     - Unified how the user can choose which GAP config to use in the
@@ -76,122 +87,132 @@ This file describes changes in the GAP package 'nq'.
     - Changed --with-gmp-prefix to --with-gmp, with exact same semantics
       as the --with-gmp option of GAP's configure.
 
-2.3 (2011-09-15)
-  * Removed maintainer flag from Werner, added Max as new maintainer
-  * Synced cnf/config.* files with the ones used by GAP
-  * Rewrote and improved configure script and the build system
-  * Added '--with-gap-dir' option to configure
-  * Fixed compilation on modern day systems (e.g. Mac OS X),
-    by including stdlib.h and string.h instead of malloc.h 
-  * Stopped insisting on static linking the nq binary
-  * Dropped compatibility with GAP versions prior to 4.4
-  * Made test cases ignore the version string nq outputs
-  * Fixed crash on Mac OS X when compiling in 64 bit mode
-  * Updated documentation
-  * Enabled extra warnings for the C code, and fix many of resulting warnings
-  * Converted History file to this CHANGES file.
+# 2.3 (2011-09-15)
 
-2.2 (2007-02-07)
-  * filter out the identity word as relator
+  - Removed maintainer flag from Werner, added Max as new maintainer
+  - Synced cnf/config.* files with the ones used by GAP
+  - Rewrote and improved configure script and the build system
+  - Added '--with-gap-dir' option to configure
+  - Fixed compilation on modern day systems (e.g. Mac OS X),
+    by including stdlib.h and string.h instead of malloc.h
+  - Stopped insisting on static linking the nq binary
+  - Dropped compatibility with GAP versions prior to 4.4
+  - Made test cases ignore the version string nq outputs
+  - Fixed crash on Mac OS X when compiling in 64 bit mode
+  - Updated documentation
+  - Enabled extra warnings for the C code, and fix many of resulting warnings
+  - Converted History file to this CHANGES file.
 
-2.1 (2003-10-20)
-  * removed instances of `share package'
-  * removed obsolete files doc/manual.in gap/nqrest.gi
+# 2.2 (2007-02-07)
 
-2.0 (2003-02-12)
-  * GAP4 print routines (gap.c) added.  The -g option now
+  - filter out the identity word as relator
+
+# 2.1 (2003-10-20)
+
+  - removed instances of `share package'
+  - removed obsolete files doc/manual.in gap/nqrest.gi
+
+# 2.0 (2003-02-12)
+
+  - GAP4 print routines (gap.c) added.  The -g option now
     prints a pc-presentation in GAP4 style at the end of a
-    run. 
-  * Evaluation of an Engel identity redefines the Commute
+    run.
+  - Evaluation of an Engel identity redefines the Commute
     array.  As a consequence, commutator calculations are
     carried out only with the precision required to evaluate
     an iterated commutator.  This gives a speedup of a factor
     of 3-4 in Engel-4 and Engel-5 groups.
-  * Implementation of parsing Engel-n commutators and
+  - Implementation of parsing Engel-n commutators and
     evaluation of those commutators with redefined Commute[]
-    arrays. 
-  * turned NQ into a GAP 4 package
-  * modified the GAP 4 output routines
-  * wrote new setup for nq using autoconf
-  * replaced in glimt.c all BSD compatible integer functions
+    arrays.
+  - turned NQ into a GAP 4 package
+  - modified the GAP 4 output routines
+  - wrote new setup for nq using autoconf
+  - replaced in glimt.c all BSD compatible integer functions
     by GMP functions.  Now libmp.a is not needed anymore.
-  * extended the input grammar to accept identical generators
+  - extended the input grammar to accept identical generators
     as part of the generator list separated from the other
     generators by a semicolon
-  * added machinery to evaluate identical relations
-  * added a combinatorial collector
-  * reconstruction of the integer matrix code
-  * rewrite of the examples code
+  - added machinery to evaluate identical relations
+  - added a combinatorial collector
+  - reconstruction of the integer matrix code
+  - rewrite of the examples code
 
+# 1.2 (1998-03-??)
 
-1.2 (1998-03-??)
-  * added option that allows to check the Engel condition in
+  - added option that allows to check the Engel condition in
     reverse order
-  * added -m option that outputs all non-zero vectors handed
+  - added -m option that outputs all non-zero vectors handed
     to addRow() to file.
-  * built integer overflow check into function Number() in
+  - built integer overflow check into function Number() in
     presentation.c .
-  * replaced the function Commutator() in collect.c.  Instead
+  - replaced the function Commutator() in collect.c.  Instead
     of using Solve to solve uv x = vu the equation is solved
-    directly. 
-  * Added support for metabelian identities.
-  * Added the option -p to toggle the printing of the epimorphism
+    directly.
+  - Added support for metabelian identities.
+  - Added the option -p to toggle the printing of the epimorphism
     and the nilpotent quotient at the end of a run.  I also added
     code to print the definitions of each generator of weight at
     least 2.
-  * print statements for the definitions of new generators.
-  * added option -E to reverse the order in which Engel
+  - print statements for the definitions of new generators.
+  - added option -E to reverse the order in which Engel
     generators are processes.
-  * NQ now reads from stdin when the file name argument is missing
+  - NQ now reads from stdin when the file name argument is missing
 
-1.1e (1994-08-04)
-  * fixed printing of preimages in PrintEpim() in relation.c.
-  * the error function of Collect() now prints the generator
+# 1.1e (1994-08-04)
+
+  - fixed printing of preimages in PrintEpim() in relation.c.
+  - the error function of Collect() now prints the generator
     which caused the error. Collect() was also slightly
     reformatted.
 
-1.1d (1994-03-??)
-  * changed the functions buildPairs() and buildWord()
+# 1.1d (1994-03-??)
+
+  - changed the functions buildPairs() and buildWord()
     such that they also build words with negative exponents.
     This can be switched off using the option -s (s for
     semigroup words).
-  * Added a check for the identity matrix to the function 
+  - Added a check for the identity matrix to the function
     addRow(). A flag EarlyStop is set if the check is
     positive. This flag is now used in the files
     consistency.c, relations.c and engel.c to stop the
     computation as soon as all new generators are eliminated.
-  * Fixed the last printing of the total runtime in main().
-  * changed the function evalEngel() in engel.c such that it
+  - Fixed the last printing of the total runtime in main().
+  - changed the function evalEngel() in engel.c such that it
     stops checking instances of the Engel law as soon as all
     instances of a certain weight did not yield anything new.
     This is not proved to be mathematically sound.
-  * the function buildPairs() in engel.c now checks if an
+  - the function buildPairs() in engel.c now checks if an
     instance [x, ny] of the n-th Engel law is trivial for
     weight reasons.
-  * the function Collect() in collect.c aborts a run if it
+  - the function Collect() in collect.c aborts a run if it
     runs into an integer overflow.
-  * the functions outputMatrix() and printGapMatrix() in
+  - the functions outputMatrix() and printGapMatrix() in
     glimt.c have been changed to print only rows and columns
     whose pivot entry is not 1.
-  * the function MatrixToExpVec() in glimt.c now frees the
+  - the function MatrixToExpVec() in glimt.c now frees the
     large matrix row by row.
-  * Update the README file.
+  - Update the README file.
 
-1.1c (1993-08-12)
-  * modified the file engel.c to allow checking of more
+# 1.1c (1993-08-12)
+
+  - modified the file engel.c to allow checking of more
     identities. This entry has been made in Oct 93; it
     has to be checked what the modifications are and which
     options have been added.
 
-1.1b (1993-02-26)
-  * added the option -a to nq and the corresponding
+# 1.1b (1993-02-26)
+
+  - added the option -a to nq and the corresponding
     output routine outputMatrix() to glimt.c.
 
-1.1 (1993-01-22)
-  * introduction of this file and the file README
-  * added option -t to nq
-  * improvements to testNq
-  * added target clean to the make file
+# 1.1 (1993-01-22)
 
-1.0 (1992-12-??)
-  * Version 1.0 of the ANU NQ
+  - introduction of this file and the file README
+  - added option -t to nq
+  - improvements to testNq
+  - added target clean to the make file
+
+# 1.0 (1992-12-??)
+
+  - Version 1.0 of the ANU NQ
