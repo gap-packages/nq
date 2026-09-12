@@ -5,6 +5,7 @@
 */
 
 #include <assert.h>
+#include <stdint.h>
 
 #include "relations.h"
 #include "nq.h"
@@ -127,10 +128,10 @@ int     ExtendEpim(void) {
 	** to the right hand side of images which are not definitions. */
 	for (j = 1; j <= Dimension[1]; j++)
 		Image[ -Definition[j].h ] =
-		    (word)((unsigned long)(Image[-Definition[j].h]) | 0x1);
+		    (word)((uintptr_t)(Image[-Definition[j].h]) | 0x1);
 
 	for (j = 1; j <= nrGens; j++)
-		if (!((unsigned long)(Image[j]) & 0x1)) {
+		if (!((uintptr_t)(Image[j]) & 0x1)) {
 			G++;
 			l = 0;
 			if (Image[j] != (word)0) l = WordLength(Image[ j ]);
@@ -148,7 +149,7 @@ int     ExtendEpim(void) {
 
 	for (j = 1; j <= Dimension[1]; j++)
 		Image[ -Definition[j].h ] =
-		    (word)((unsigned long)(Image[-Definition[j].h]) & ~0x1);
+		    (word)((uintptr_t)(Image[-Definition[j].h]) & ~0x1);
 
 	return G - NrPcGens;
 }
@@ -163,10 +164,10 @@ int     ElimAllEpim(int n, expvec *M, gen *renumber) {
 	** epimorphism. */
 	for (j = 1; j <= Dimension[1]; j++)
 		Image[ -Definition[j].h ] =
-		    (word)((unsigned long)(Image[-Definition[j].h]) | 0x1);
+		    (word)((uintptr_t)(Image[-Definition[j].h]) | 0x1);
 
 	for (j = 1, i = 0; j <= nrGens; j++)
-		if (!((unsigned long)(Image[j]) & 0x1)) {
+		if (!((uintptr_t)(Image[j]) & 0x1)) {
 			l = WordLength(Image[j]);
 			w = (word)Allocate((l + NrCenGens + 1 - n) * sizeof(gpower));
 			WordCopy(Image[j], w);
@@ -184,7 +185,7 @@ int     ElimAllEpim(int n, expvec *M, gen *renumber) {
 
 	for (j = 1; j <= Dimension[1]; j++)
 		Image[ -Definition[j].h ] =
-		    (word)((unsigned long)(Image[-Definition[j].h]) & ~0x1);
+		    (word)((uintptr_t)(Image[-Definition[j].h]) & ~0x1);
 
 	return i;
 }

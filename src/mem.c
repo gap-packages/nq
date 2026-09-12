@@ -5,6 +5,7 @@
 */
 
 #include <stdio.h>
+#include <stdint.h>
 #include "mem.h"
 
 static void AllocError(const char *str) {
@@ -21,7 +22,7 @@ void    *Allocate(unsigned nchars) {
 	ptr = (void *)calloc(nchars, sizeof(char));
 	if (ptr == 0) AllocError("Allocate");
 
-	if ((unsigned long)ptr & 0x3)
+	if ((uintptr_t)ptr & 0x3)
 		printf("Warning, pointer not aligned.\n");
 	return ptr;
 }
@@ -30,7 +31,7 @@ void    *ReAllocate(void *optr, unsigned nchars) {
 	optr = (void *)realloc((char *)optr, nchars);
 	if (optr == (void *)0) AllocError("ReAllocate");
 
-	if ((unsigned long)optr & 0x3)
+	if ((uintptr_t)optr & 0x3)
 		printf("Warning, pointer not aligned.\n");
 	return optr;
 }

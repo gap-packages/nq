@@ -5,6 +5,7 @@
 */
 
 #include "config.h"
+#include <stdint.h>
 #include "nq.h"
 #include "presentation.h"
 #include "relations.h" /* for ExtendEpim */
@@ -117,7 +118,7 @@ void AddGenerators(void) {
 	/* Firstly mark all definitions in the pc-presentation. */
 	for (j = Dimension[1] + 1; j <= NrPcGens; j++)
 		Conjugate[ Definition[j].h ][ Definition[j].g ] =
-		    (word)((unsigned long)
+		    (word)((uintptr_t)
 		           (Conjugate[Definition[j].h][Definition[j].g]) | 0x1);
 
 	/* Secondly new generators are defined. */
@@ -149,7 +150,7 @@ void AddGenerators(void) {
 	** form [x,1], the rest is computed in Tails(). */
 	for (j = 1; j <= NrPcGens; j++)
 		for (i = 1; i <= min(j - 1, Dimension[1]); i++)
-			if (!((unsigned long)(Conjugate[j][i]) & 0x1)) {
+			if (!((uintptr_t)(Conjugate[j][i]) & 0x1)) {
 				G++;
 				l = WordLength(Conjugate[ j ][ i ]);
 				w = (word)malloc((l + 2) * sizeof(gpower));
@@ -180,7 +181,7 @@ void AddGenerators(void) {
 	/* Thirdly remove the marks from the definitions.*/
 	for (j = Dimension[1] + 1; j <= NrPcGens; j++)
 		Conjugate[Definition[j].h][Definition[j].g] =
-		    (word)((unsigned long)
+		    (word)((uintptr_t)
 		           (Conjugate[Definition[j].h][Definition[j].g]) & ~0x1);
 
 	/* Fourthly enlarge the necessary arrays, so that the collector
