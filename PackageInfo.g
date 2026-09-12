@@ -80,7 +80,7 @@ Dependencies := rec(
   GAP                    := ">= 4.9",
   NeededOtherPackages    := [ ["polycyclic", "2.11"] ],
   SuggestedOtherPackages := [  ],
-  ExternalConditions     := [ "needs a UNIX system with C-compiler",
+  ExternalConditions     := [ "needs a UNIX system with a C compiler",
                               "needs GNU multiple precision library" ]
 ),
 
@@ -92,7 +92,7 @@ AvailabilityTest := function()
 
     if Filename( path, "nq" ) = fail then
         Info( InfoWarning, 1,
-              "Package ``nq'': The executable program is not available" );
+              "Package \"nq\": The executable program is not available" );
         return false;
     fi;
     return true;
@@ -110,7 +110,7 @@ Keywords := [
   "nilpotent quotient algorithm",
   "nilpotent presentations",
   "finitely presented groups",
-  "finite presentations   ",
+  "finite presentations",
   "commutators",
   "lower central series",
   "identical relations",

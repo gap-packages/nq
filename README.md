@@ -25,14 +25,14 @@ presentation.    The ANU NQ  computes  successively  the factor groups
 modulo  the terms of the lower  central series.   Each factor group is
 represented by a special  form of polycyclic presentation, a nilpotent
 presentation, that makes use of the  nilpotent structure of the factor
-group.  Chapters  9 and 11 of the  book by C.C.  Sims, "Computing with
-finitely presented groups", discusses  polycyclic presentations  and a
+group.  Chapters  9 and 11 of the  book by C.C.  Sims, "Computation with
+finitely presented groups", discuss  polycyclic presentations  and a
 nilpotent quotient algorithm.  A description of this implementation is
-contained in 
+contained in
 
 Werner  Nickel  (1996) "Computing    Nilpotent Quotients   of Finitely
-Presented    Groups" in  Dimacs  Series  in   Discrete Mathematics and
-Theoretical Computer Science, Volume 25, pp 175-191.
+Presented    Groups" in  DIMACS  Series  in   Discrete Mathematics and
+Theoretical Computer Science, Volume 25, pp. 175-191.
 
 
 About this version
@@ -53,11 +53,12 @@ How to install the ANU NQ
 -------------------------
 
 Please refer to the manual for installation instructions.
- 
+
+
 How to use the ANU NQ
 ---------------------
 
-Please refer to the manual for instructions on how to use ANU NQ via
+Please refer to the manual for instructions on how to use the ANU NQ via
 the GAP interface or directly via the command line interface.
 
 
@@ -81,4 +82,4 @@ However, bug reports and other  inquiries should be sent to Max  Horn.
 Contact addresses
 -----------------
 Bug reports and other requests should be sent to the issue tracker
- <https://github.com/gap-packages/nq/issues>
+<https://github.com/gap-packages/nq/issues>.

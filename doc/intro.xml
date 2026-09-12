@@ -28,9 +28,9 @@ Key="polycyclic"/>       and        requires       the       package
 your computer system.
 
 <P/>
-Comments,  bug reports and  suggestions are  very welcome, please
+Comments,  bug reports and  suggestions are  very welcome; please
 submit them via our
-<URL Text="issue tracker">https://github.com/gap-system/nq/issues</URL>.
+<URL Text="issue tracker">https://github.com/gap-packages/nq/issues</URL>.
 
 <P/> This manual contains references to parts of the &GAP; Reference
 Manual which are typeset in a slightly idiosyncratic way.  The

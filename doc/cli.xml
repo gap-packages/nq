@@ -24,8 +24,8 @@ group presentation for which a nilpotent quotient is to be calculated.
 This file name must not start with a digit. If it is not present, nq
 will read the presentation from standard input. The parameter &lt;class&gt;
 restricts the computation of the nilpotent quotient to at most that
-(nilpotency) class, i.e. the program calculates the quotient group of
-the <M>(c+1)</M>-th term of the lower central series. If &lt;class&gt; is omitted,
+(nilpotency) class, i.e. the program calculates the quotient of the group by
+the <M>(c+1)</M>-th term of the lower central series, where <M>c</M> is &lt;class&gt;. If &lt;class&gt; is omitted,
 the program computes successively the factor groups of the lower
 central series of the given group. If there is a largest nilpotent
 quotient, i.e., if the lower central series becomes constant, the
@@ -43,29 +43,29 @@ followed by a positive integer &lt;n&gt;. Their meaning is the following:
 <Mark>-n &lt;k&gt;</Mark>
 <Item>
 This option forces the first k generators to be left
-or right Engel element if also the option -l or -r 
+or right Engel elements if also the option -l or -r 
 (or both) is present. Otherwise it is ignored.
 </Item>
 
 <Mark>-l &lt;n&gt;</Mark>
 <Item>This forces the first k generators <M>g_1,...,g_k</M> of the
 nilpotent quotient Q to be left n-Engel elements, i.e.,
-they satisfy <M>[x,...,x,g_i] = 1</M> (x occurring n-times)
-for all x in Q and <M>1 &lt;= i &lt;= k</M>. If the option -n is not
+they satisfy <M>[x,\ldots,x,g_i] = 1</M> (x occurring n times)
+for all x in Q and <M>1 \leq i \leq k</M>. If the option -n is not
 used, then k = 1.
 </Item>
 
 <Mark>-r &lt;n&gt;</Mark>
 <Item>This forces the first k generators <M>g_1,...,g_k</M> of the
-nilpotent quotient Q to be right n-Engel elements,i.e.,
-they satisfy <M>[g_i,x,..,x] = 1</M> (x occurring n-times) 
-for all x in Q and <M>1 &lt;= i &lt;= k</M>. If the option -n is not
+nilpotent quotient Q to be right n-Engel elements, i.e.,
+they satisfy <M>[g_i,x,\ldots,x] = 1</M> (x occurring n times) 
+for all x in Q and <M>1 \leq i \leq k</M>. If the option -n is not
 used, then k = 1.
 </Item>
 
 <Mark>-e &lt;n&gt;</Mark>
-<Item>This enforces the n-th Engel law on Q, i.e., <M>[x,y,..,y]
-= 1</M> (y occurring n-times) for all x,y in Q.
+<Item>This enforces the n-th Engel law on Q, i.e., <M>[x,y,\ldots,y]
+= 1</M> (y occurring n times) for all x,y in Q.
 </Item>
 
 <Mark>-t &lt;n&gt;</Mark>
@@ -81,7 +81,7 @@ The other options have the following meaning. Care has to be taken
 when the options -s or -c are used since the resulting nilpotent
 quotient need NOT satisfy the required Engel condition. The reason
 for this is that a smaller set of test words is used if one of these
-two options are present. Although this smaller set of test words seems
+two options is present. Although this smaller set of test words seems
 to be sufficient to enforce the required Engel condition, this fact
 has not been proven.
 
@@ -97,7 +97,7 @@ the i-th factor is put into the file
 </Item>
 
 <Mark>-p</Mark>
-<Item>toggles printing of the pc presentation for the nilpotent
+<Item>Toggles printing of the pc presentation for the nilpotent
 quotient at the end of a calculation.
 </Item>
 
@@ -109,7 +109,7 @@ an Engel condition is enforced. If none of the options -l,
 </Item>
 
 <Mark>-f</Mark>
-<Item>This option causes to check semiwords in the generating set
+<Item>This option causes the program to check semigroup words in the generating set
 of the nilpotent quotient first and then all other words
 that need to be checked. It is ignored if the option -s is
 used or none of the options -l, -r or -e are present.
@@ -127,8 +127,8 @@ computation. Not yet implemented.
 </Item>
 
 <Mark>-o</Mark>
-<Item>In checking Engel identities, instances are process in the
-order of increased weight. This flag reverses the order.
+<Item>In checking Engel identities, instances are processed in the
+order of increasing weight. This flag reverses the order.
 </Item>
 
 <Mark>-y</Mark>
@@ -149,12 +149,12 @@ polycyclic groups.
 </Item>
 
 <Mark>-E</Mark>
-<Item>the *last* n generators are Engel generators. This works
+<Item>The <E>last</E> n generators are Engel generators. This works
 in conjunction with option -n.
 </Item>
 
 <Mark>-m</Mark>
-<Item>output the relation matrix for each factor of the lower
+<Item>Output the relation matrix for each factor of the lower
 central series. The matrices are written to files with the
 names 'matrix.&lt;cl&gt;' where &lt;cl&gt; is replaced by the number of
 the factor in the lower central series. Each file contains
@@ -164,10 +164,10 @@ produced and is not in upper triangular form.
 </Item>
 
 <Mark>-M</Mark>
-<Item>output the relation matrix before and after relations have
+<Item>Output the relation matrix before and after relations have
 been enforced. This results in two groups of files with
 names '&lt;pres&gt;.nilp.&lt;cl&gt;' and '&lt;pres&gt;.mult.&lt;cl&gt;' where
-&lt;pres&gt; is the name of the input files and &lt;cl&gt; is the
+&lt;pres&gt; is the name of the input file and &lt;cl&gt; is the
 class. The matrices are in upper triangular form.
 </Item>
 </List>
@@ -184,7 +184,7 @@ presentations that the ANU NQ accepts:
 <Verb><![CDATA[
     < a, b | >                       # free group of rank 2
 
-    < a, b, c | [a,b,c],             # a left normed commutator
+    < a, b, c | [a,b,c],             # a left-normed commutator
                 [b,c,c,c]^6,         # another one raised to a power
                 a^2 = c^-3*a^2*c^3,  # a relation
                 a^(b*c) = a,         # a conjugate relation
@@ -192,17 +192,17 @@ presentations that the ANU NQ accepts:
     >
 ]]></Verb>
 
-A presentation starts with '&lt;' followed be a list of generators
+A presentation starts with '&lt;' followed by a list of generators
 separated by commas. Generator names are strings that contain only upper
 and lower case letters, digits, dots and underscores and that do not
 start with a digit. The list of generator names is separated from the
 list of relators/relations by the symbol '|'. Relators and relations are
 separated by commas and can be mixed arbitrarily. Parentheses can be
 used in order to group subexpressions together. Square brackets can be
-used in order to form left normed commutators. The symbols '*' and '^'
+used in order to form left-normed commutators. The symbols '*' and '^'
 can be used to form products and powers, respectively. The presentation
 finishes with the symbol '&gt;'. A comment starts with the symbol '#'
-and finishes at the end of the line. The file src/presentation.c
+and finishes at the end of the line. The file <F>src/presentation.c</F>
 contains a complete grammar for the presentations accepted by the ANU NQ.
 
 
@@ -212,13 +212,13 @@ contains a complete grammar for the presentations accepted by the ANU NQ.
 <Heading>An example</Heading>
 
 Let G be the free group on two generators x and y. The input file
-(called free2.fp here) contains the following:
+(called <F>free2.fp</F> here) contains the following:
 
 <Verb><![CDATA[
         < x, y | >
 ]]></Verb>
 
-Computing the class 3 quotient with the ANU NQ by typing
+Computing the class-3 quotient with the ANU NQ by typing
 
 <Verb><![CDATA[
         nq free2.fp 3
@@ -281,17 +281,17 @@ Most of the comments are fairly self-explanatory. One note of caution is
 necessary: The number of generators for each factor of the lower central
 series is not the minimal number possible but is the number of
 generators that the ANU NQ chose to use. This will be improved in one of
-the future version of the program. The epimorphism from the original
+the future versions of the program. The epimorphism from the original
 group onto the nilpotent quotient is printed in a somewhat confusing
-way. The generators on the left hand side of the arrows correspond to
+way. The generators on the left-hand side of the arrows correspond to
 the generators in the original presentation but are printed with
-different names. This will be fixed in one of the next version.
+different names. This will be fixed in one of the next versions.
 </Section>
 
 <Section>
 <Heading>Some remarks about the algorithm</Heading>
 
-The implementation of the algorithm is fairly straight forward. The
+The implementation of the algorithm is fairly straightforward. The
 program uses a weighted nilpotent presentation with definitions to
 represent a nilpotent group. Calculations in the nilpotent group are
 done using a collector from the left without combinatorial collection.
@@ -303,7 +303,7 @@ are not definitions, runs through the consistency check and evaluates
 the original relations on the polycyclic presentation. This gives a list
 of words, which have to be made trivial in order to obtain a consistent
 polycyclic presentation representing a nilpotent quotient of the given
-finitely presented group. This list is converted into a integer matrix,
+finitely presented group. This list is converted into an integer matrix,
 which is transformed into upper triangular form using the Kannan-Bachem
 algorithm. The GNU multiple precision package is used for this.
 </Section>

@@ -54,18 +54,18 @@ first example below:
 This option can be used
 instead of the parameter <F>fp-group</F>.
 </Item>
-<Item><Keyword>input\_string</Keyword>
+<Item><Keyword>input_string</Keyword>
 <Index Subkey="input\_string">options</Index>
 This option can be
 used to specify a finitely presented group by a string in
 the input format of the standalone program.
 </Item>
-<Item><Keyword>input\_file</Keyword>
+<Item><Keyword>input_file</Keyword>
 <Index Subkey="input\_file">options</Index>
 This option specifies
 a file with input for the standalone program.
 </Item>
-<Item><Keyword>output\_file</Keyword> 
+<Item><Keyword>output_file</Keyword> 
 <Index Subkey="output\_file">options</Index>
 This option specifies
 a file for the output of the standalone.
@@ -73,7 +73,7 @@ a file for the output of the standalone.
 
 <Item><Keyword>idgens</Keyword>
 <Index Subkey="idgens">options</Index>
-This options specifies a list of identical generators.
+This option specifies a list of identical generators.
 </Item>
 <Item><Keyword>class</Keyword> 
 <Index Subkey="class">options</Index>
@@ -102,12 +102,12 @@ Pcp-group with orders [ 0, 0, 0, 0, 0, 0 ]
 
 Note that the lower central series in the example is part of
 the data returned by the standalone program.  Therefore, the
-execution of the function LowerCentralSeries takes no time.
+execution of the function <C>LowerCentralSeries</C> takes no time.
 
 <P/>The next example computes the class-4 quotient of the
 infinite dihedral group.  The group is soluble but not
 nilpotent.  The first factor of its lower central series is a
-Klein four group and all the other factors are cyclic or order
+Klein four group and all the other factors are cyclic of order
 <M>2</M>. 
 <Example><![CDATA[
 gap> F := FreeGroup( 2 );
@@ -187,15 +187,15 @@ infinite order.  The number of zeroes is always correct.
 
 <ManSection>
 <Func Name="NilpotentEngelQuotient" 
-      Arg="[output-file,] fp-group, n, [, id-gens] [, c]"/>
+      Arg="[output-file,] fp-group, n [, id-gens] [, c]"/>
 <Func Name="NilpotentEngelQuotient" 
-      Arg="[output-file,] input-file, n, [, c]" Label="for input from a file"/>
+      Arg="[output-file,] input-file, n [, c]" Label="for input from a file"/>
 <Description>
 This function is a special version of <Ref
 Func="NilpotentQuotient" Style="Text"/> which enforces the
 <M>n</M>-th Engel identity on the nilpotent quotients of the
 group specified by <F>fp-group</F> or by <F>input-file</F>.
-It accepts the same options as <F>NilpotentQuotient</F>.
+It accepts the same options as <Ref Func="NilpotentQuotient"/>.
 
 <P/>The Engel condition can also be enforced by using
 identical generators and the Engel law and <Ref
@@ -208,10 +208,10 @@ fifth Engel group on two generators, determines its
 quotient group.  The quotient modulo the torsion subgroup
 is torsion-free.  Therefore, there is a nilpotent
 presentation without power relations.  The example
-computes a nilpotent presentation for the torsion free
+computes a nilpotent presentation for the torsion-free
 factor group through the upper central series.  The factors
-of the upper central series in a torsion free group are
-torsion free.  In this way one obtains a set of generators
+of the upper central series in a torsion-free group are
+torsion-free.  In this way one obtains a set of generators
 of infinite order and the resulting nilpotent presentation
 has no power relations.
 <Example>
@@ -257,10 +257,9 @@ Pcp-group with orders [ 0, 0, 0 ]
 <Description>
 This function computes an epimorphism from the group
 <M>G</M> given by the finite presentation <F>fp-group</F>
-onto <M>G/\gamma_{c+1}(G).</M> If <F>c</F> is not given,
-then the largest nilpotent quotient of <M>G</M> is computed
-and an epimorphism from <M>G</M> onto the largest nilpotent
-quotient of <M>G</M>.  If <M>G</M> does not have a largest
+onto <M>G/\gamma_{c+1}(G)</M>. If <F>c</F> is not given,
+then it computes an epimorphism from <M>G</M> onto the largest
+nilpotent quotient of <M>G</M>.  If <M>G</M> does not have a largest
 nilpotent quotient, the function will not terminate if
 <M>c</M> is not given.
 
@@ -274,7 +273,7 @@ generators.
 
 <P/>If  identical   generators  are  specified,   then  the
 epimorphism  returned  maps  the  group  generated  by  the
-`non-identical' generators onto the nilpotent factor group.
+<Q>non-identical</Q> generators onto the nilpotent factor group.
 See the last example below.
 
 <P/>The function understands the same options as the
@@ -342,9 +341,9 @@ gap> LowerCentralFactors( FreeGroup(2), 6 );
 <Description>
 
 The argument <F>m</F> must be a positive integer.  The function
-returns a list with <F>m</F> expression tree symbols named x1,
-x2,...  The optional parameter <F>prefix</F> must be a string and
-is used instead of <F>x</F> if present.
+returns a list with <F>m</F> expression tree symbols named <C>x1</C>,
+<C>x2</C>, ....  The optional parameter <F>prefix</F> must be a string and
+is used instead of <C>x</C> if present.
 
 <P/> Alternatively, the function can be executed with a list of
 strings <F>str1</F>, <F>str2</F>, ....  It returns a list of
@@ -370,9 +369,8 @@ Comm( a, b )^3/Comm( a, b, x, a )
 <ManSection>
 <Func Name="EvaluateExpTree" Arg="tree, symbols, values" />
 <Description>
-The argument <F>tree</F> is an expression tree followed by the
-list of those symbols <F>symbols</F> from which the expression tree is
-built up.  The argument <F>values</F> is a list containing a
+The argument <F>tree</F> is an expression tree and <F>symbols</F> is
+the list of symbols from which the expression tree is built up.  The argument <F>values</F> is a list containing a
 constant for each symbol.  The function substitutes each value
 for the corresponding symbol and computes the resulting value for
 <F>tree</F>.
@@ -410,8 +408,8 @@ NQ, see <Ref Var="NqGlobalVariables" Style="Text"/>.
 The function takes a finitely presented group <F>fp-group</F> and
 returns a string in the input format of the ANU NQ.  If the list
 <F>idgens</F> is present, then it must contain generators of the
-free group underlying the finitely presented group <Ref
-BookName="ref" Oper="FreeGroupOfFpGroup"/>.  The generators in
+free group underlying the finitely presented group (see <Ref
+BookName="ref" Oper="FreeGroupOfFpGroup"/>).  The generators in
 <F>idgens</F> are treated as identical generators.
 <Example><![CDATA[
 gap> F := FreeGroup(2);
@@ -506,7 +504,7 @@ ones are stripped from the list of elementary divisors.
 <Var Name="NqRuntime"/>  
 <Description>
 This variable contains the number of milliseconds of runtime of
-the last call of ANU NQ.
+the last call of the ANU NQ.
 <Log>
 gap> NilpotentEngelQuotient( FreeGroup(2), 5 );
 Pcp-group with orders [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 10, 
@@ -530,7 +528,7 @@ gap> NqDefaultOptions;
 [ "-g", "-p", "-C", "-s" ]
 </Example>
 The option <Arg>-g</Arg> causes the ANU NQ to produce output in
-&GAP;-format.  The option <Arg>-p</Arg> prevents the ANU NQ from
+&GAP; format.  The option <Arg>-p</Arg> prevents the ANU NQ from
 listing the pc-presentation of the nilpotent quotient at the end
 of the calculation.  The option <Arg>-C</Arg> invokes the
 combinatorial collector.  The option <Arg>-s</Arg> is effective
@@ -547,7 +545,7 @@ This variable contains a list of strings with the names of the
 global variables that are used in the output stream of the ANU
 NQ.  While the output stream is read, these global variables are
 assigned new values.  To avoid overwriting these variables in
-case they contain values, their contents is saved before reading
+case they contain values, their contents are saved before reading
 the output stream and restored afterwards.
 </Description>
 </ManSection>

@@ -10,7 +10,7 @@ authors show that for <M>n>4</M> there are nilpotent groups with
 right <M>n</M>-Engel elements no power of which is a left
 <M>n</M>-Engel element.  The insight was based on computations with
 the ANU NQ which we reproduce here.  We also show the cases
-<M>5>n</M>.
+<M>n &lt; 5</M>.
 <Example>
 gap> LoadPackage( "nq" );
 true
