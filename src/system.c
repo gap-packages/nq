@@ -51,7 +51,7 @@ static void handler(int sig) {
 	fflush(stdout);
 
 	signal(sig, SIG_DFL);
-	kill(getpid(), sig);
+	raise(sig);
 }
 
 static int TimeOutReached = 0;
@@ -61,6 +61,9 @@ static int DoTimeOut = 1;
 **    Set the alarm.
 */
 void SetTimeOut(int nsec) {
+#ifndef ITIMER_VIRTUAL
+	printf("#\n#    Timeouts are not available on this system.\n");
+#else
 	struct itimerval  si;
 
 	if (nsec > 0) {
@@ -80,6 +83,7 @@ void SetTimeOut(int nsec) {
 		return;
 	} else
 		printf("SetTimeOut(): argument negative, timeout not set.\n");
+#endif
 }
 
 /*
@@ -103,12 +107,14 @@ void TimeOutOff(void) {
 	DoTimeOut = 0;
 }
 
+#ifdef SIGVTALRM
 static void alarmClock(int sig) {
 	TimeOutReached = 1;
 
 	if (DoTimeOut)
 		TimeOutOn();
 }
+#endif
 
 void CatchSignals(void) {
 
@@ -116,9 +122,13 @@ void CatchSignals(void) {
 	**    Catch the following signal in order to exit gracefully
 	**    if the process is killed.
 	*/
+#ifdef SIGHUP
 	signal(SIGHUP,  handler);
+#endif
 	signal(SIGINT,  handler);
+#ifdef SIGQUIT
 	signal(SIGQUIT, handler);
+#endif
 	signal(SIGABRT, handler);
 	signal(SIGTERM, handler);
 	/*
@@ -127,12 +137,16 @@ void CatchSignals(void) {
 	*/
 	signal(SIGILL,  handler);
 	signal(SIGFPE,  handler);
+#ifdef SIGBUS
 	signal(SIGBUS,  handler);
+#endif
 	signal(SIGSEGV, handler);
 	/*
 	**    Catch the virtual alarm signal so that the process can time out.
 	*/
+#ifdef SIGVTALRM
 	signal(SIGVTALRM, alarmClock);
+#endif
 }
 
 /*
@@ -152,6 +166,25 @@ long RunTime(void) {
 		exit(1);
 	}
 	return buf.ru_utime.tv_sec * 1000 + buf.ru_utime.tv_usec / 1000;
+}
+
+#elif defined(_WIN32)
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+/* nq has a src/time.h of its own, which shadows the system header, so
+   clock() is out of reach here; GetProcessTimes is the better source of
+   CPU time anyway. */
+long RunTime(void) {
+	FILETIME creation, exit, kernel, user;
+	ULARGE_INTEGER t;
+
+	GetProcessTimes(GetCurrentProcess(), &creation, &exit, &kernel, &user);
+	t.LowPart = user.dwLowDateTime;
+	t.HighPart = user.dwHighDateTime;
+	/* FILETIME counts 100ns intervals */
+	return (long)(t.QuadPart / 10000);
 }
 
 #else
