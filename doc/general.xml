@@ -358,12 +358,11 @@ relations := [ Comm( x1, x2, x2 ), Comm( x1, x2, x2, x1 ) ] )
 
 <Section><Heading>A word about the implementation</Heading>
 
-The ANU NQ is written in C, but not in ANSI C.  I hope to make one
-of the next versions ANSI compliant.  However, it uses a fairly
-restricted subset of the language so that it should be easy to
-compile it in new environments.  The code is 64-bit clean.  If you
-have difficulties with porting it to a new environment, let me know
-and I'll be happy to assist if time permits.
+The ANU NQ is written in C.  It uses a fairly restricted subset of
+the language so that it should be easy to compile it in new
+environments.  The code is 64-bit clean.  If you have difficulties
+with porting it to a new environment, please report them as described
+in Section <Ref Sect="feedback" Style="Number"/>.
 
 <P/>The program has two collectors:  a simple collector from the left
 as described in <Cite Key="LS90"/> and a combinatorial collector from

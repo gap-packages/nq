@@ -80,7 +80,7 @@ Dependencies := rec(
   GAP                    := ">= 4.9",
   NeededOtherPackages    := [ ["polycyclic", "2.11"] ],
   SuggestedOtherPackages := [  ],
-  ExternalConditions     := [ "needs a UNIX system with a C compiler",
+  ExternalConditions     := [ "needs a Unix-like system (such as Linux, macOS or Cygwin) with a C compiler",
                               "needs GNU multiple precision library" ]
 ),
 

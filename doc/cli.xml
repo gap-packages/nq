@@ -36,8 +36,9 @@ the program prints a nilpotent presentation for the nilpotent quotient
 it has computed.
 
 The options -l, -r and -e can be used to enforce Engel conditions on
-the nilpotent quotient to be calculated. All these options have to be
-followed by a positive integer &lt;n&gt;. Their meaning is the following:
+the nilpotent quotient to be calculated. These options, as well as -n
+and -t, have to be followed by a positive integer. Their meaning is the
+following:
 
 <List>
 <Mark>-n &lt;k&gt;</Mark>
@@ -122,8 +123,8 @@ non-trivial instances of the law.
 </Item>
 
 <Mark>-d</Mark>
-<Item>Switch on debug mode and perform checks during the
-computation. Not yet implemented.
+<Item>Switch on debug mode, which prints the result of each
+consistency check.
 </Item>
 
 <Mark>-o</Mark>
@@ -141,11 +142,10 @@ on the nilpotent quotient.
 </Item>
 
 <Mark>-g</Mark>
-<Item>Produce GAP output. Presently the GAP output consists only
-of a sequence of integer matrices whose rows are relations
-of the factors of the lower central series as abelian
-groups. This will change as soon as GAP can handle infinite
-polycyclic groups.
+<Item>Produce &GAP; output: the relation matrices of the factors of
+the lower central series as abelian groups, followed by the nilpotent
+presentation and the epimorphism. The &GAP; interface of this package
+reads this output.
 </Item>
 
 <Mark>-E</Mark>
@@ -169,6 +169,19 @@ been enforced. This results in two groups of files with
 names '&lt;pres&gt;.nilp.&lt;cl&gt;' and '&lt;pres&gt;.mult.&lt;cl&gt;' where
 &lt;pres&gt; is the name of the input file and &lt;cl&gt; is the
 class. The matrices are in upper triangular form.
+</Item>
+
+<Mark>-C</Mark>
+<Item>Use the combinatorial collector.
+</Item>
+
+<Mark>-S</Mark>
+<Item>Use the simple collector, which is also the default. Together
+with -C, both collectors are run and their results compared.
+</Item>
+
+<Mark>-h</Mark>
+<Item>Print the usage message and exit.
 </Item>
 </List>
 
@@ -227,7 +240,7 @@ Computing the class-3 quotient with the ANU NQ by typing
 produces the following output:
 <Verb><![CDATA[
 #
-#    The ANU Nilpotent Quotient Program (Version 2.3)
+#    The ANU Nilpotent Quotient Program (Version package)
 #    Calculating a nilpotent quotient
 #    Input: free2.fp
 #    Nilpotency class: 3
@@ -273,19 +286,14 @@ produces the following output:
 #    C := [ B, A ]
 #    D := [ B, A, A ]
 #    E := [ B, A, B ]
-#    total runtime : 1 msec
+#    total runtime : 0 msec
 ##  Total time spent on integer matrices: 0
 ]]></Verb>
 
 Most of the comments are fairly self-explanatory. One note of caution is
 necessary: The number of generators for each factor of the lower central
 series is not the minimal number possible but is the number of
-generators that the ANU NQ chose to use. This will be improved in one of
-the future versions of the program. The epimorphism from the original
-group onto the nilpotent quotient is printed in a somewhat confusing
-way. The generators on the left-hand side of the arrows correspond to
-the generators in the original presentation but are printed with
-different names. This will be fixed in one of the next versions.
+generators that the ANU NQ chose to use.
 </Section>
 
 <Section>
@@ -294,7 +302,8 @@ different names. This will be fixed in one of the next versions.
 The implementation of the algorithm is fairly straightforward. The
 program uses a weighted nilpotent presentation with definitions to
 represent a nilpotent group. Calculations in the nilpotent group are
-done using a collector from the left without combinatorial collection.
+done using a collector from the left, by default without combinatorial
+collection (see option -C).
 Generators for the <M>c</M>-th lower central factor are defined as
 commutators of the form <M>[y,x]</M>, where <M>x</M> is a generator of
 weight 1 and <M>y</M> is a generator of weight <M>c-1</M>. Then the

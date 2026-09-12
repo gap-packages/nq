@@ -18,13 +18,14 @@ where <Q>PATH</Q> is a path to the main &GAP; root directory (if not
 given the default <Q><F>../..</F></Q> is assumed). That is, run
 <Listing Type="Installation"> ./configure --with-gaproot=PATH </Listing>
 
-Second, you have to add the path to the directory containing your
-<Q><F>pkg</F></Q> directory to &GAP;'s list of directories. This can be
-done by starting &GAP; with the <Q><F>-l</F></Q> command line option
-followed by the name of the directory and a semicolon. Then your
-directory is prepended to the list of directories searched. Otherwise
-the package is not found by &GAP;. Of course, you can add this option to
-your &GAP; startup script.
+Second, you have to tell &GAP; where to find your <Q><F>pkg</F></Q>
+directory, otherwise &GAP; does not find the package. With &GAP; 4.15
+or later, start &GAP; with the command line option
+<C>--packagedirs DIR</C>, where <Q>DIR</Q> is your <Q><F>pkg</F></Q>
+directory. With older versions, use <C>-l "ROOT;"</C>, where
+<Q>ROOT</Q> is the directory containing your <Q><F>pkg</F></Q>
+directory; the trailing semicolon prepends it to the list of &GAP; root
+directories. You can add this option to your &GAP; startup script.
 <P/>
 
 Another issue that can occur when running <F>configure</F> is that it

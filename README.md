@@ -40,9 +40,8 @@ About this version
 
 This directory  contains the Australian National  University Nilpotent
 Quotient Program (ANU  NQ), an implementation of  a nilpotent quotient
-algorithm  in C.  This implementation  has  been developed  in a  Unix
-environment and Unix is currently the only operating system supported.
-It runs on a number of  different Unix versions. An earlier version of
+algorithm in C. It runs on Unix-like systems such as Linux and macOS,
+and on Windows under Cygwin. An earlier version of
 the ANU NQ is also available as  part of quotpic (Derek F. Holt, Sarah
 Rees: A  graphics system for  displaying finite quotients  of finitely
 presented groups.  DIMACS Workshop on Groups  and Computation, AMS-ACM
