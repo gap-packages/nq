@@ -1,5 +1,13 @@
 This file describes changes in the nq package.
 
+# 2.6.0 (2026-09-13)
+
+  - Support systems without POSIX signals and interval timers, such as
+    native Windows; the `-t` timeout option is unavailable there
+  - Document the `-C`, `-S` and `-h` options of the standalone program
+  - Update outdated sections of the manual and fix many typos
+  - Various janitorial changes
+
 # 2.5.11 (2024-01-12)
 
   - Janitorial changes
