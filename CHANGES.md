@@ -1,5 +1,9 @@
 This file describes changes in the nq package.
 
+# 2.6.1 (2026-09-14)
+
+  - One more fix for native Windows support
+
 # 2.6.0 (2026-09-13)
 
   - Support systems without POSIX signals and interval timers, such as
