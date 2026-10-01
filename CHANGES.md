@@ -1,10 +1,10 @@
 This file describes changes in the nq package.
 
-# 2.6.1 (2026-09-14)
+## 2.6.1 (2026-09-14)
 
   - One more fix for native Windows support
 
-# 2.6.0 (2026-09-13)
+## 2.6.0 (2026-09-13)
 
   - Support systems without POSIX signals and interval timers, such as
     native Windows; the `-t` timeout option is unavailable there
@@ -12,61 +12,61 @@ This file describes changes in the nq package.
   - Update outdated sections of the manual and fix many typos
   - Various janitorial changes
 
-# 2.5.11 (2024-01-12)
+## 2.5.11 (2024-01-12)
 
   - Janitorial changes
 
-# 2.5.10 (2023-03-27)
+## 2.5.10 (2023-03-27)
 
   - Various janitorial changes
 
-# 2.5.9 (2022-10-26)
+## 2.5.9 (2022-10-26)
 
   - Improve how GMP is located with GAP >= 4.12.1
   - Various janitorial changes
 
-# 2.5.8 (2022-04-04)
+## 2.5.8 (2022-04-04)
 
   - Restore `--with-gmp` configure option
   - Restore `make test`
   - Various janitorial changes
 
-# 2.5.7 (2022-03-16)
+## 2.5.7 (2022-03-16)
 
   - Don't abort certain computations just because an "unknown"
     global option is on the GAP "Options Stack"
 
-# 2.5.6 (2022-02-22)
+## 2.5.6 (2022-02-22)
 
   - Remove support for ABI override in configure script. This is
     rarely useful, and anybody who cares can simply add `-m32` or `-m64` to
     the `CFLAGS`
   - Minor change to support execution on Windows (under Cygwin)
 
-# 2.5.5 (2021-04-11)
+## 2.5.5 (2021-04-11)
 
   - Various other janitorial updates
 
-# 2.5.4 (2019-02-15)
+## 2.5.4 (2019-02-15)
 
   - Update build system for compatibility with GAP 4.9 and later
   - Various other janitorial updates
 
-# 2.5.3 (2016-03-08)
+## 2.5.3 (2016-03-08)
 
   - Maintenance release
 
-# 2.5.2 (2016-01-07)
+## 2.5.2 (2016-01-07)
 
   - Move website to <https://gap-packages.github.io/nq/>
 
-# 2.5.1 (2014-04-02)
+## 2.5.1 (2014-04-02)
 
   - Fix linker error on Unix systems other than Mac OS X
   - Remove GAP function `NqBuildManual` (use the `makedoc.g`
     script instead)
 
-# 2.5 (2014-04-01)
+## 2.5 (2014-04-01)
 
   - Renamed configure option `--with-gap-root` to `--with-gaproot`
     in order to match the io and orb packages more closely
@@ -78,7 +78,7 @@ This file describes changes in the nq package.
   - Moved the homepage to GitHub
   - Updated Max Horn's contact details
 
-# 2.4 (2012-01-12)
+## 2.4 (2012-01-12)
 
   - Fixed crash on some systems caused by a long standing memory
     management bug
@@ -99,7 +99,7 @@ This file describes changes in the nq package.
     - Changed `--with-gmp-prefix` to `--with-gmp`, with exact same semantics
       as the `--with-gmp` option of GAP's `configure`
 
-# 2.3 (2011-09-15)
+## 2.3 (2011-09-15)
 
   - Removed maintainer flag from Werner, added Max as new maintainer
   - Synced `cnf/config.*` files with the ones used by GAP
@@ -116,16 +116,16 @@ This file describes changes in the nq package.
     warnings
   - Converted `History` file to this `CHANGES` file
 
-# 2.2 (2007-02-07)
+## 2.2 (2007-02-07)
 
   - Filter out the identity word as relator
 
-# 2.1 (2003-10-20)
+## 2.1 (2003-10-20)
 
   - Removed instances of "share package"
   - Removed obsolete files `doc/manual.in` and `gap/nqrest.gi`
 
-# 2.0 (2003-02-12)
+## 2.0 (2003-02-12)
 
   - GAP 4 print routines (`gap.c`) added. The `-g` option now
     prints a pc-presentation in GAP 4 style at the end of a
@@ -151,7 +151,7 @@ This file describes changes in the nq package.
   - Reconstruction of the integer matrix code
   - Rewrite of the examples code
 
-# 1.2 (1998-03-??)
+## 1.2 (1998-03-??)
 
   - Added option that allows to check the Engel condition in
     reverse order
@@ -172,14 +172,14 @@ This file describes changes in the nq package.
     generators are processed
   - NQ now reads from stdin when the file name argument is missing
 
-# 1.1e (1994-08-04)
+## 1.1e (1994-08-04)
 
   - Fixed printing of preimages in `PrintEpim()` in `relation.c`
   - The error function of `Collect()` now prints the generator
     which caused the error. `Collect()` was also slightly
     reformatted
 
-# 1.1d (1994-03-??)
+## 1.1d (1994-03-??)
 
   - Changed the functions `buildPairs()` and `buildWord()`
     such that they also build words with negative exponents.
@@ -207,25 +207,25 @@ This file describes changes in the nq package.
     large matrix row by row
   - Update the `README` file
 
-# 1.1c (1993-08-12)
+## 1.1c (1993-08-12)
 
   - Modified the file `engel.c` to allow checking of more
     identities. This entry has been made in Oct 93; it
     has to be checked what the modifications are and which
     options have been added
 
-# 1.1b (1993-02-26)
+## 1.1b (1993-02-26)
 
   - Added the option `-a` to nq and the corresponding
     output routine `outputMatrix()` to `glimt.c`
 
-# 1.1 (1993-01-22)
+## 1.1 (1993-01-22)
 
   - Introduction of this file and the file `README`
   - Added option `-t` to nq
   - Improvements to `testNq`
   - Added target `clean` to the makefile
 
-# 1.0 (1992-12-??)
+## 1.0 (1992-12-??)
 
   - Version 1.0 of the ANU NQ
